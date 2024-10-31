@@ -1,5 +1,10 @@
 import { sql } from "@vercel/postgres";
 
+// Verifica que la conexión esté configurada correctamente
+if (!process.env.POSTGRES_URL) {
+  throw new Error('POSTGRES_URL is not set in the environment variables');
+}
+
 export async function getCanvases(userId: string) {
   const { rows } = await sql`SELECT * FROM canvas WHERE user_id = ${userId}`;
   return rows;
