@@ -1,41 +1,34 @@
-import { openDB } from 'idb';
+import { sql } from "@vercel/postgres";
 
-const DB_NAME = 'value-proposition-canvas';
-const DB_VERSION = 1;
-
-export const db = openDB(DB_NAME, DB_VERSION, {
-  upgrade(db) {
-    // Canvas store
-    if (!db.objectStoreNames.contains('canvases')) {
-      const canvasStore = db.createObjectStore('canvases', { keyPath: 'id' });
-      canvasStore.createIndex('userId', 'userId');
-    }
-
-    // Users store
-    if (!db.objectStoreNames.contains('users')) {
-      db.createObjectStore('users', { keyPath: 'email' });
-    }
-  },
-});
-
-export async function saveCanvas(canvas) {
-  const db = await openDB(DB_NAME, DB_VERSION);
-  await db.put('canvases', canvas);
+export async function getCanvases(userId: string) {
+  const { rows } = await sql`SELECT * FROM canvas WHERE user_id = ${userId}`;
+  return rows;
 }
 
-export async function getCanvas(id) {
-  const db = await openDB(DB_NAME, DB_VERSION);
-  return db.get('canvases', id);
+export async function getCanvas(id: string) {
+  const { rows } = await sql`SELECT * FROM canvas WHERE id = ${id}`;
+  return rows[0];
 }
 
-export async function getAllCanvases(userId) {
-  const db = await openDB(DB_NAME, DB_VERSION);
-  const tx = db.transaction('canvases', 'readonly');
-  const index = tx.store.index('userId');
-  return index.getAll(userId);
+export async function createCanvas(userId: string, title: string, content: any) {
+  const { rows } = await sql`
+    INSERT INTO canvas (user_id, title, content)
+    VALUES (${userId}, ${title}, ${JSON.stringify(content)})
+    RETURNING *
+  `;
+  return rows[0];
 }
 
-export async function deleteCanvas(id) {
-  const db = await openDB(DB_NAME, DB_VERSION);
-  await db.delete('canvases', id);
+export async function updateCanvas(id: string, title: string, content: any) {
+  const { rows } = await sql`
+    UPDATE canvas
+    SET title = ${title}, content = ${JSON.stringify(content)}, updated_at = CURRENT_TIMESTAMP
+    WHERE id = ${id}
+    RETURNING *
+  `;
+  return rows[0];
+}
+
+export async function deleteCanvas(id: string) {
+  await sql`DELETE FROM canvas WHERE id = ${id}`;
 }

@@ -1,23 +1,41 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download, Share2 } from 'lucide-react';
-import { useCanvasStore } from '../stores/canvasStore';
+import { useAuth0 } from '@auth0/auth0-react';
+import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/pdfExport';
 
 export function Canvas() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { getCanvas, updateCanvas, generateShareId } = useCanvasStore();
-  const [canvas, setCanvas] = useState(id ? getCanvas(id) : null);
+  const { user } = useAuth0();
+  const [canvas, setCanvas] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [showShareMessage, setShowShareMessage] = useState(false);
 
   useEffect(() => {
-    if (id) {
-      const loadedCanvas = getCanvas(id);
-      setCanvas(loadedCanvas);
+    async function fetchCanvas() {
+      if (id) {
+        setIsLoading(true);
+        try {
+          const fetchedCanvas = await getCanvas(id);
+          setCanvas(fetchedCanvas);
+        } catch (error) {
+          console.error('Error fetching canvas:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
     }
-  }, [id, getCanvas]);
+    fetchCanvas();
+  }, [id]);
+
+  if (isLoading) {
+    return <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+    </div>;
+  }
 
   if (!canvas) {
     return (
@@ -35,15 +53,24 @@ export function Canvas() {
     );
   }
 
-  const handleUpdateTitle = (title: string) => {
+  const handleUpdateTitle = async (title: string) => {
     if (!title.trim()) return;
-    updateCanvas(canvas.id, { title });
-    setCanvas({ ...canvas, title });
+    try {
+      const updatedCanvas = await updateCanvas(canvas.id, title, canvas.content);
+      setCanvas(updatedCanvas);
+    } catch (error) {
+      console.error('Error updating canvas title:', error);
+    }
   };
 
-  const handleSectionUpdate = (section: keyof typeof canvas, items: string[]) => {
-    updateCanvas(canvas.id, { [section]: items });
-    setCanvas({ ...canvas, [section]: items });
+  const handleSectionUpdate = async (section: string, items: string[]) => {
+    const updatedContent = { ...canvas.content, [section]: items };
+    try {
+      const updatedCanvas = await updateCanvas(canvas.id, canvas.title, updatedContent);
+      setCanvas(updatedCanvas);
+    } catch (error) {
+      console.error('Error updating canvas section:', error);
+    }
   };
 
   const handleExportPDF = () => {
@@ -51,8 +78,7 @@ export function Canvas() {
   };
 
   const handleShare = () => {
-    const shareId = generateShareId(canvas.id);
-    const url = `${window.location.origin}/share/${shareId}`;
+    const url = `${window.location.origin}/share/${canvas.id}`;
     navigator.clipboard.writeText(url);
     setShowShareMessage(true);
     setTimeout(() => setShowShareMessage(false), 3000);
@@ -103,76 +129,65 @@ export function Canvas() {
       />
 
       <div className="grid grid-cols-5 gap-4">
-        {/* Top Row */}
-        <div className="col-span-1">
-          <CanvasSection
-            title="Key Partners"
-            items={canvas.keyPartners}
-            onUpdate={(items) => handleSectionUpdate('keyPartners', items)}
-            description="Who are your key partners and suppliers?"
-          />
-        </div>
-        
+        {/* Canvas sections */}
+        <CanvasSection
+          title="Key Partners"
+          items={canvas.content.keyPartners || []}
+          onUpdate={(items) => handleSectionUpdate('keyPartners', items)}
+          description="Who are your key partners and suppliers?"
+        />
         <div className="col-span-1 space-y-4">
           <CanvasSection
             title="Key Activities"
-            items={canvas.keyActivities}
+            items={canvas.content.keyActivities || []}
             onUpdate={(items) => handleSectionUpdate('keyActivities', items)}
             description="What key activities does your value proposition require?"
           />
           <CanvasSection
             title="Key Resources"
-            items={canvas.keyResources}
+            items={canvas.content.keyResources || []}
             onUpdate={(items) => handleSectionUpdate('keyResources', items)}
             description="What key resources does your value proposition require?"
           />
         </div>
-        
-        <div className="col-span-1">
-          <CanvasSection
-            title="Value Propositions"
-            items={canvas.valuePropositions}
-            onUpdate={(items) => handleSectionUpdate('valuePropositions', items)}
-            description="What value do you deliver to the customer?"
-          />
-        </div>
-        
+        <CanvasSection
+          title="Value Propositions"
+          items={canvas.content.valuePropositions || []}
+          onUpdate={(items) => handleSectionUpdate('valuePropositions', items)}
+          description="What value do you deliver to the customer?"
+        />
         <div className="col-span-1 space-y-4">
           <CanvasSection
             title="Customer Relationships"
-            items={canvas.customerRelationships}
+            items={canvas.content.customerRelationships || []}
             onUpdate={(items) => handleSectionUpdate('customerRelationships', items)}
             description="What type of relationship does each customer segment expect?"
           />
           <CanvasSection
             title="Channels"
-            items={canvas.channels}
+            items={canvas.content.channels || []}
             onUpdate={(items) => handleSectionUpdate('channels', items)}
             description="Through which channels do your customers want to be reached?"
           />
         </div>
-        
-        <div className="col-span-1">
-          <CanvasSection
-            title="Customer Segments"
-            items={canvas.customerSegments}
-            onUpdate={(items) => handleSectionUpdate('customerSegments', items)}
-            description="For whom are you creating value?"
-          />
-        </div>
+        <CanvasSection
+          title="Customer Segments"
+          items={canvas.content.customerSegments || []}
+          onUpdate={(items) => handleSectionUpdate('customerSegments', items)}
+          description="For whom are you creating value?"
+        />
       </div>
 
-      {/* Bottom Row */}
       <div className="grid grid-cols-2 gap-4 mt-4">
         <CanvasSection
           title="Cost Structure"
-          items={canvas.costStructure}
+          items={canvas.content.costStructure || []}
           onUpdate={(items) => handleSectionUpdate('costStructure', items)}
           description="What are the most important costs inherent in your business model?"
         />
         <CanvasSection
           title="Revenue Streams"
-          items={canvas.revenueStreams}
+          items={canvas.content.revenueStreams || []}
           onUpdate={(items) => handleSectionUpdate('revenueStreams', items)}
           description="For what value are your customers really willing to pay?"
         />
