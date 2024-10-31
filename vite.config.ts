@@ -1,12 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import envCompatible from 'vite-plugin-env-compatible'
+import dotenv from 'dotenv'
+
+// Carga las variables de entorno de .env.local
+dotenv.config({ path: '.env.local' })
 
 export default defineConfig({
-  plugins: [
-    react(),
-    envCompatible()
-  ],
-  // Asegúrate de que Vite cargue las variables de entorno del archivo .env.local
-  envPrefix: 'REACT_APP_',
+  plugins: [react()],
+  define: {
+    'process.env': process.env
+  }
 })
