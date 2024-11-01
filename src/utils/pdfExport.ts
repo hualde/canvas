@@ -1,4 +1,5 @@
 import jsPDF from 'jspdf';
+import { icons } from './icons';
 
 interface CanvasData {
   id: string;
@@ -29,16 +30,19 @@ export function exportToPDF(canvas: CanvasData) {
   const topRowHeight = (pageHeight - (margin * 2)) * 0.6;
   const bottomRowHeight = (pageHeight - (margin * 2)) * 0.4;
 
-  const drawSection = (x: number, y: number, width: number, height: number, title: string, items: string[] = []) => {
+  const drawSection = (x: number, y: number, width: number, height: number, title: string, items: string[] = [], iconKey: keyof typeof icons) => {
     // Draw box
     doc.setDrawColor(70, 70, 70);
     doc.setLineWidth(0.1);
     doc.rect(x, y, width, height);
 
+    // Draw icon
+    doc.addImage(icons[iconKey], 'PNG', x + 3, y + 3, 5, 5);
+
     // Draw title
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
-    doc.text(title, x + 3, y + 6);
+    doc.text(title, x + 10, y + 6);
 
     // Draw items
     if (Array.isArray(items) && items.length > 0) {
@@ -66,17 +70,17 @@ export function exportToPDF(canvas: CanvasData) {
     doc.text(canvas.title || 'Business Model Canvas', pageWidth / 2, margin, { align: 'center' });
 
     // Draw sections
-    drawSection(margin, margin + 10, colWidth, topRowHeight, 'KEY PARTNERS', canvas.keyPartners);
-    drawSection(margin + colWidth, margin + 10, colWidth, topRowHeight / 2, 'KEY ACTIVITIES', canvas.keyActivities);
-    drawSection(margin + colWidth, margin + 10 + topRowHeight / 2, colWidth, topRowHeight / 2, 'KEY RESOURCES', canvas.keyResources);
-    drawSection(margin + colWidth * 2, margin + 10, colWidth, topRowHeight, 'VALUE PROPOSITIONS', canvas.valuePropositions);
-    drawSection(margin + colWidth * 3, margin + 10, colWidth, topRowHeight / 2, 'CUSTOMER RELATIONSHIPS', canvas.customerRelationships);
-    drawSection(margin + colWidth * 3, margin + 10 + topRowHeight / 2, colWidth, topRowHeight / 2, 'CHANNELS', canvas.channels);
-    drawSection(margin + colWidth * 4, margin + 10, colWidth, topRowHeight, 'CUSTOMER SEGMENTS', canvas.customerSegments);
+    drawSection(margin, margin + 10, colWidth, topRowHeight, 'KEY PARTNERS', canvas.keyPartners, 'keyPartnerships');
+    drawSection(margin + colWidth, margin + 10, colWidth, topRowHeight / 2, 'KEY ACTIVITIES', canvas.keyActivities, 'keyActivities');
+    drawSection(margin + colWidth, margin + 10 + topRowHeight / 2, colWidth, topRowHeight / 2, 'KEY RESOURCES', canvas.keyResources, 'keyResources');
+    drawSection(margin + colWidth * 2, margin + 10, colWidth, topRowHeight, 'VALUE PROPOSITIONS', canvas.valuePropositions, 'valuePropositions');
+    drawSection(margin + colWidth * 3, margin + 10, colWidth, topRowHeight / 2, 'CUSTOMER RELATIONSHIPS', canvas.customerRelationships, 'customerRelationships');
+    drawSection(margin + colWidth * 3, margin + 10 + topRowHeight / 2, colWidth, topRowHeight / 2, 'CHANNELS', canvas.channels, 'channels');
+    drawSection(margin + colWidth * 4, margin + 10, colWidth, topRowHeight, 'CUSTOMER SEGMENTS', canvas.customerSegments, 'customerSegments');
 
     // Bottom row
-    drawSection(margin, margin + 10 + topRowHeight, (pageWidth - margin * 2) / 2, bottomRowHeight, 'COST STRUCTURE', canvas.costStructure);
-    drawSection(margin + (pageWidth - margin * 2) / 2, margin + 10 + topRowHeight, (pageWidth - margin * 2) / 2, bottomRowHeight, 'REVENUE STREAMS', canvas.revenueStreams);
+    drawSection(margin, margin + 10 + topRowHeight, (pageWidth - margin * 2) / 2, bottomRowHeight, 'COST STRUCTURE', canvas.costStructure, 'costStructure');
+    drawSection(margin + (pageWidth - margin * 2) / 2, margin + 10 + topRowHeight, (pageWidth - margin * 2) / 2, bottomRowHeight, 'REVENUE STREAMS', canvas.revenueStreams, 'revenueStreams');
 
     // Add metadata
     doc.setFontSize(6);
