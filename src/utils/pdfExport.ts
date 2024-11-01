@@ -36,8 +36,14 @@ export function exportToPDF(canvas: CanvasData) {
     doc.setLineWidth(0.1);
     doc.rect(x, y, width, height);
 
-    // Draw icon
-    doc.addImage(icons[iconKey], 'PNG', x + 3, y + 3, 5, 5);
+    // Draw icon (if available)
+    try {
+      if (icons[iconKey]) {
+        doc.addImage(icons[iconKey], 'PNG', x + 3, y + 3, 5, 5);
+      }
+    } catch (error) {
+      console.warn(`Failed to add icon for ${iconKey}:`, error);
+    }
 
     // Draw title
     doc.setFontSize(12);
