@@ -4,6 +4,10 @@ import { icons } from './icons';
 interface CanvasData {
   id: string;
   title: string;
+  projectName: string;
+  author: string;
+  date: string;
+  comments: string;
   content: {
     keyPartners: string[];
     keyActivities: string[];
@@ -17,6 +21,43 @@ interface CanvasData {
   };
 }
 
+const drawGeneralInfoPage = (doc: jsPDF, canvas: CanvasData) => {
+  doc.addPage();
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 20;
+
+  // Add title
+  doc.setFontSize(24);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Canvas Information', pageWidth / 2, margin + 10, { align: 'center' });
+
+  // Add info boxes
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'normal');
+  const boxWidth = (pageWidth - margin * 3) / 2;
+  const boxHeight = 30;
+  const startY = margin + 40;
+
+  const drawInfoBox = (label: string, value: string, x: number, y: number) => {
+    doc.setFillColor(240, 240, 240);
+    doc.rect(x, y, boxWidth, boxHeight, 'F');
+    doc.setTextColor(100, 100, 100);
+    doc.text(label, x + 5, y + 15);
+    doc.setTextColor(0, 0, 0);
+    doc.text(value, x + 5, y + 25);
+  };
+
+  drawInfoBox('Project Name', canvas.projectName, margin, startY);
+  drawInfoBox('Author', canvas.author, margin * 2 + boxWidth, startY);
+  drawInfoBox('Date', canvas.date, margin, startY + boxHeight + 10);
+  
+  // Add comments
+  doc.text('Comments:', margin, startY + boxHeight * 2 + 30);
+  const splitComments = doc.splitTextToSize(canvas.comments, pageWidth - margin * 2);
+  doc.text(splitComments, margin, startY + boxHeight * 2 + 45);
+};
+
 export function exportToPDF(canvas: CanvasData) {
   if (!canvas) {
     console.error('No canvas data provided for PDF export');
@@ -27,7 +68,7 @@ export function exportToPDF(canvas: CanvasData) {
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 10;
-  const bottomMargin = 5; // Reduced from 15 to 5
+  const bottomMargin = 10; 
   
   const colWidth = (pageWidth - (margin * 2)) / 5;
   const topRowHeight = (pageHeight - (margin * 2) - bottomMargin) * 0.6;
@@ -90,6 +131,9 @@ export function exportToPDF(canvas: CanvasData) {
     // Bottom row with adjusted height
     drawSection(margin, margin + 10 + topRowHeight, (pageWidth - margin * 2) / 2, bottomRowHeight - 10, 'COST STRUCTURE', canvas.content.costStructure, 'costStructure');
     drawSection(margin + (pageWidth - margin * 2) / 2, margin + 10 + topRowHeight, (pageWidth - margin * 2) / 2, bottomRowHeight - 10, 'REVENUE STREAMS', canvas.content.revenueStreams, 'revenueStreams');
+
+    // Add the general information page
+    drawGeneralInfoPage(doc, canvas);
 
     // Add metadata
     doc.setFontSize(6);
