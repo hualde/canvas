@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Download, Share2 } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
@@ -12,7 +12,7 @@ export function Canvas() {
   const { user } = useAuth0();
   const [canvas, setCanvas] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [showShareMessage, setShowShareMessage] = useState(false);
+  const [generalInfo, setGeneralInfo] = useState(canvas?.generalInfo || '');
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -21,6 +21,7 @@ export function Canvas() {
         try {
           const fetchedCanvas = await getCanvas(id);
           setCanvas(fetchedCanvas);
+          setGeneralInfo(fetchedCanvas?.generalInfo || '');
         } catch (error) {
           console.error('Error fetching canvas:', error);
         } finally {
@@ -77,11 +78,14 @@ export function Canvas() {
     exportToPDF(canvas);
   };
 
-  const handleShare = () => {
-    const url = `${window.location.origin}/share/${canvas.id}`;
-    navigator.clipboard.writeText(url);
-    setShowShareMessage(true);
-    setTimeout(() => setShowShareMessage(false), 3000);
+  const handleUpdateGeneralInfo = async (info: string) => {
+    try {
+      const updatedCanvas = await updateCanvas(canvas.id, canvas.title, { ...canvas.content, generalInfo: info });
+      setCanvas(updatedCanvas);
+      setGeneralInfo(info);
+    } catch (error) {
+      console.error('Error updating canvas general info:', error);
+    }
   };
 
   return (
@@ -94,16 +98,8 @@ export function Canvas() {
           <ArrowLeft className="h-5 w-5 mr-2" />
           Back to Dashboard
         </button>
-        
+
         <div className="flex items-center space-x-4">
-          <button
-            onClick={handleShare}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            <Share2 className="h-4 w-4 mr-2" />
-            Share
-          </button>
-          
           <button
             onClick={handleExportPDF}
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -114,18 +110,20 @@ export function Canvas() {
         </div>
       </div>
 
-      {showShareMessage && (
-        <div className="fixed bottom-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-          Share link copied to clipboard!
-        </div>
-      )}
-
       <input
         type="text"
         value={canvas.title}
         onChange={(e) => handleUpdateTitle(e.target.value)}
         className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
         placeholder="Untitled Business Model Canvas"
+      />
+
+      <textarea
+        value={generalInfo}
+        onChange={(e) => handleUpdateGeneralInfo(e.target.value)}
+        className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none mb-8"
+        rows={3}
+        placeholder="Enter general information about this canvas..."
       />
 
       <div className="grid grid-cols-5 gap-4">
