@@ -27,7 +27,7 @@ export function exportToPDF(canvas: CanvasData) {
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 10;
-  const bottomMargin = 15; // Increased bottom margin
+  const bottomMargin = 10; // Reduced from 15 to 10
   
   const colWidth = (pageWidth - (margin * 2)) / 5;
   const topRowHeight = (pageHeight - (margin * 2) - bottomMargin) * 0.6;
@@ -39,7 +39,7 @@ export function exportToPDF(canvas: CanvasData) {
     doc.setLineWidth(0.1);
     doc.rect(x, y, width, height);
 
-    // Draw icon (if available)
+    // Draw icon
     try {
       if (icons[iconKey]) {
         doc.addImage(icons[iconKey], 'PNG', x + 3, y + 3, 5, 5);
