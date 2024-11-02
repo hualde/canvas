@@ -6,7 +6,7 @@ interface CanvasData {
   title: string;
   project_name: string;
   author: string;
-  date: string;
+  date: string | Date;
   comments: string;
   content: {
     keyPartners: string[];
@@ -20,6 +20,16 @@ interface CanvasData {
     revenueStreams: string[];
   };
 }
+
+const formatDate = (date: string | Date): string => {
+  if (date instanceof Date) {
+    return date.toLocaleDateString();
+  }
+  if (typeof date === 'string') {
+    return new Date(date).toLocaleDateString();
+  }
+  return 'N/A';
+};
 
 const drawGeneralInfoPage = (doc: jsPDF, canvas: CanvasData) => {
   doc.addPage();
@@ -50,7 +60,7 @@ const drawGeneralInfoPage = (doc: jsPDF, canvas: CanvasData) => {
 
   drawInfoBox('Project Name', canvas.project_name || 'N/A', margin, startY);
   drawInfoBox('Author', canvas.author || 'N/A', margin * 2 + boxWidth, startY);
-  drawInfoBox('Date', canvas.date || 'N/A', margin, startY + boxHeight + 10);
+  drawInfoBox('Date', formatDate(canvas.date), margin, startY + boxHeight + 10);
   
   // Add comments
   doc.text('Comments:', margin, startY + boxHeight * 2 + 30);
