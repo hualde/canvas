@@ -30,7 +30,7 @@ export function exportToPDF(canvas: CanvasData) {
   const topRowHeight = (pageHeight - (margin * 2)) * 0.6;
   const bottomRowHeight = (pageHeight - (margin * 2)) * 0.4;
 
-  const drawSection = (x: number, y: number, width: number, height: number, title: string, items: string[] = [], iconKey: keyof typeof icons) => {
+  const drawSection = (x: number, y: number, width: number, height: number, title: string, items: string[], iconKey: keyof typeof icons) => {
     // Draw box
     doc.setDrawColor(70, 70, 70);
     doc.setLineWidth(0.1);
