@@ -12,11 +12,10 @@ export function Canvas() {
   const { user } = useAuth0();
   const [canvas, setCanvas] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [projectName, setProjectName] = useState(canvas?.projectName || '');
-  const [author, setAuthor] = useState(canvas?.author || '');
-  const [date, setDate] = useState(canvas?.date || new Date().toISOString().split('T')[0]);
-  const [comments, setComments] = useState(canvas?.comments || '');
-
+  const [projectName, setProjectName] = useState('');
+  const [author, setAuthor] = useState('');
+  const [date, setDate] = useState('');
+  const [comments, setComments] = useState('');
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -27,7 +26,7 @@ export function Canvas() {
           setCanvas(fetchedCanvas);
           setProjectName(fetchedCanvas?.projectName || '');
           setAuthor(fetchedCanvas?.author || '');
-          setDate(fetchedCanvas?.date || new Date().toISOString().split('T')[0]);
+          setDate(fetchedCanvas?.date ? new Date(fetchedCanvas.date).toISOString().split('T')[0] : '');
           setComments(fetchedCanvas?.comments || '');
         } catch (error) {
           console.error('Error fetching canvas:', error);
@@ -64,7 +63,7 @@ export function Canvas() {
   const handleUpdateTitle = async (title: string) => {
     if (!title.trim()) return;
     try {
-      const updatedCanvas = await updateCanvas(canvas.id, title, canvas.content);
+      const updatedCanvas = await updateCanvas(canvas.id, { ...canvas, title });
       setCanvas(updatedCanvas);
     } catch (error) {
       console.error('Error updating canvas title:', error);
@@ -74,7 +73,7 @@ export function Canvas() {
   const handleSectionUpdate = async (section: string, items: string[]) => {
     const updatedContent = { ...canvas.content, [section]: items };
     try {
-      const updatedCanvas = await updateCanvas(canvas.id, canvas.title, updatedContent);
+      const updatedCanvas = await updateCanvas(canvas.id, { ...canvas, content: updatedContent });
       setCanvas(updatedCanvas);
     } catch (error) {
       console.error('Error updating canvas section:', error);
@@ -124,7 +123,7 @@ export function Canvas() {
 
       <input
         type="text"
-        value={canvas?.title}
+        value={canvas.title}
         onChange={(e) => handleUpdateTitle(e.target.value)}
         className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
         placeholder="Untitled Business Model Canvas"
@@ -165,7 +164,6 @@ export function Canvas() {
       </div>
 
       <div className="grid grid-cols-5 gap-4">
-        {/* Key Partners */}
         <CanvasSection
           title="Key Partners"
           items={canvas.content.keyPartners || []}
@@ -173,7 +171,6 @@ export function Canvas() {
           description="Who are your key partners and suppliers?"
           className="h-full"
         />
-        {/* Key Activities and Key Resources */}
         <div className="grid grid-rows-2 gap-4">
           <CanvasSection
             title="Key Activities"
@@ -190,7 +187,6 @@ export function Canvas() {
             className="h-full"
           />
         </div>
-        {/* Value Propositions */}
         <CanvasSection
           title="Value Propositions"
           items={canvas.content.valuePropositions || []}
@@ -198,7 +194,6 @@ export function Canvas() {
           description="What value do you deliver to the customer?"
           className="h-full"
         />
-        {/* Customer Relationships and Channels */}
         <div className="grid grid-rows-2 gap-4">
           <CanvasSection
             title="Customer Relationships"
@@ -215,7 +210,6 @@ export function Canvas() {
             className="h-full"
           />
         </div>
-        {/* Customer Segments */}
         <CanvasSection
           title="Customer Segments"
           items={canvas.content.customerSegments || []}

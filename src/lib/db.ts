@@ -41,7 +41,7 @@ export async function updateCanvas(id: string, canvasData: any) {
       content = ${JSON.stringify(canvasData.content)},
       project_name = ${canvasData.projectName},
       author = ${canvasData.author},
-      date = ${canvasData.date},
+      date = ${canvasData.date ? new Date(canvasData.date) : null},
       comments = ${canvasData.comments},
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ${id}
