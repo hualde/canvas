@@ -16,7 +16,7 @@ export function CanvasSection({ title, items = [], onUpdate, description }: Canv
   // Función para normalizar el título y obtener la clave correcta del icono
   const getIconKey = (title: string): keyof typeof icons => {
     const normalizedTitle = title.toLowerCase().replace(/\s+/g, '');
-    if (normalizedTitle === 'keypartners' || normalizedTitle === 'keypartnerships') return 'keyPartners';
+    if (normalizedTitle === 'keypartners' || normalizedTitle === 'keypartnerships') return 'keyPartnerships';
     if (normalizedTitle === 'keyactivities') return 'keyActivities';
     if (normalizedTitle === 'keyresources') return 'keyResources';
     if (normalizedTitle === 'valuepropositions') return 'valuePropositions';
