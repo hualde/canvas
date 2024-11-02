@@ -13,8 +13,23 @@ export function CanvasSection({ title, items = [], onUpdate, description }: Canv
   const [newItem, setNewItem] = useState('');
   const [isAdding, setIsAdding] = useState(false);
 
-  const sectionKey = title.replace(/\s+/g, '').toLowerCase() as keyof typeof icons;
-  const iconSrc = icons[sectionKey];
+  // Función para normalizar el título y obtener la clave correcta del icono
+  const getIconKey = (title: string): keyof typeof icons => {
+    const normalizedTitle = title.toLowerCase().replace(/\s+/g, '');
+    if (normalizedTitle === 'keypartners') return 'keyPartners';
+    if (normalizedTitle === 'keyactivities') return 'keyActivities';
+    if (normalizedTitle === 'keyresources') return 'keyResources';
+    if (normalizedTitle === 'valuepropositions') return 'valuePropositions';
+    if (normalizedTitle === 'customerrelationships') return 'customerRelationships';
+    if (normalizedTitle === 'channels') return 'channels';
+    if (normalizedTitle === 'customersegments') return 'customerSegments';
+    if (normalizedTitle === 'coststructure') return 'costStructure';
+    if (normalizedTitle === 'revenuestreams') return 'revenueStreams';
+    return 'channels'; // Default fallback
+  };
+
+  const iconKey = getIconKey(title);
+  const iconSrc = icons[iconKey];
 
   const handleAddItem = () => {
     if (newItem.trim()) {
