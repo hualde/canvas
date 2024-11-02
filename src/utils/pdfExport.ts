@@ -149,7 +149,7 @@ export function exportToPDF(canvas: CanvasData) {
     // Add the general information page
     drawGeneralInfoPage(doc, canvas);
 
-    // Add metadata
+    // Add metadata.
     doc.setFontSize(6);
     doc.setTextColor(128, 128, 128);
     doc.text(`Generated on ${new Date().toLocaleDateString()}`, margin, pageHeight - 5);
