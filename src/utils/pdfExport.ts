@@ -45,8 +45,8 @@ export function exportToPDF(canvas: CanvasData) {
       console.warn(`Failed to add icon for ${iconKey}:`, error);
     }
 
-    // Draw title
-    doc.setFontSize(12);
+    // Draw title with reduced font size
+    doc.setFontSize(9); // Reduced from 12 to 9
     doc.setFont('helvetica', 'bold');
     doc.text(title, x + 10, y + 6);
 
