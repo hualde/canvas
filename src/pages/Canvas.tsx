@@ -86,6 +86,7 @@ export function Canvas() {
 
   const handleUpdateCanvasInfo = async () => {
     try {
+      console.log('Updating canvas with:', { projectName, author, date, comments });
       const updatedCanvas = await updateCanvas(canvas.id, {
         ...canvas,
         projectName,
@@ -93,6 +94,7 @@ export function Canvas() {
         date,
         comments
       });
+      console.log('Updated canvas:', updatedCanvas);
       setCanvas(updatedCanvas);
     } catch (error) {
       console.error('Error updating canvas info:', error);

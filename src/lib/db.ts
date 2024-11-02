@@ -34,6 +34,7 @@ export async function createCanvas(userId: string, title: string, content: any) 
 }
 
 export async function updateCanvas(id: string, canvasData: any) {
+  console.log('Updating canvas with data:', canvasData);
   const { rows } = await sql`
     UPDATE canvas
     SET 
@@ -47,6 +48,7 @@ export async function updateCanvas(id: string, canvasData: any) {
     WHERE id = ${id}
     RETURNING *
   `;
+  console.log('Updated canvas:', rows[0]);
   return rows[0];
 }
 
