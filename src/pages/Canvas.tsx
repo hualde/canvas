@@ -129,52 +129,63 @@ export function Canvas() {
       />
 
       <div className="grid grid-cols-5 gap-4">
-        {/* Canvas sections */}
+        {/* Key Partners */}
         <CanvasSection
           title="Key Partners"
           items={canvas.content.keyPartners || []}
           onUpdate={(items) => handleSectionUpdate('keyPartners', items)}
           description="Who are your key partners and suppliers?"
+          className="h-full"
         />
-        <div className="col-span-1 space-y-4">
+        {/* Key Activities and Key Resources */}
+        <div className="grid grid-rows-2 gap-4">
           <CanvasSection
             title="Key Activities"
             items={canvas.content.keyActivities || []}
             onUpdate={(items) => handleSectionUpdate('keyActivities', items)}
             description="What key activities does your value proposition require?"
+            className="h-full"
           />
           <CanvasSection
             title="Key Resources"
             items={canvas.content.keyResources || []}
             onUpdate={(items) => handleSectionUpdate('keyResources', items)}
             description="What key resources does your value proposition require?"
+            className="h-full"
           />
         </div>
+        {/* Value Propositions */}
         <CanvasSection
           title="Value Propositions"
           items={canvas.content.valuePropositions || []}
           onUpdate={(items) => handleSectionUpdate('valuePropositions', items)}
           description="What value do you deliver to the customer?"
+          className="h-full"
         />
-        <div className="col-span-1 space-y-4">
+        {/* Customer Relationships and Channels */}
+        <div className="grid grid-rows-2 gap-4">
           <CanvasSection
             title="Customer Relationships"
             items={canvas.content.customerRelationships || []}
             onUpdate={(items) => handleSectionUpdate('customerRelationships', items)}
             description="What relationship does each customer segment expect?"
+            className="h-full"
           />
           <CanvasSection
             title="Channels"
             items={canvas.content.channels || []}
             onUpdate={(items) => handleSectionUpdate('channels', items)}
             description="Which channels do your customers prefer?"
+            className="h-full"
           />
         </div>
+        {/* Customer Segments */}
         <CanvasSection
           title="Customer Segments"
           items={canvas.content.customerSegments || []}
           onUpdate={(items) => handleSectionUpdate('customerSegments', items)}
           description="For whom are you creating value?"
+          className="h-full"
         />
       </div>
 
@@ -184,12 +195,14 @@ export function Canvas() {
           items={canvas.content.costStructure || []}
           onUpdate={(items) => handleSectionUpdate('costStructure', items)}
           description="What are the most important costs inherent in your business model?"
+          className="h-full"
         />
         <CanvasSection
           title="Revenue Streams"
           items={canvas.content.revenueStreams || []}
           onUpdate={(items) => handleSectionUpdate('revenueStreams', items)}
           description="For what value are your customers really willing to pay?"
+          className="h-full"
         />
       </div>
     </div>
