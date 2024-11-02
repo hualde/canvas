@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Plus, X } from 'lucide-react';
-import { iconComponents } from '../utils/icons';
+import { icons } from '../utils/icons';
 
 interface CanvasSectionProps {
   title: string;
@@ -13,7 +13,8 @@ export function CanvasSection({ title, items = [], onUpdate, description }: Canv
   const [newItem, setNewItem] = useState('');
   const [isAdding, setIsAdding] = useState(false);
 
-  const IconComponent = iconComponents[title.replace(/\s+/g, '') as keyof typeof iconComponents];
+  const sectionKey = title.replace(/\s+/g, '').toLowerCase() as keyof typeof icons;
+  const iconSrc = icons[sectionKey];
 
   const handleAddItem = () => {
     if (newItem.trim()) {
@@ -31,7 +32,7 @@ export function CanvasSection({ title, items = [], onUpdate, description }: Canv
     <div className="bg-white rounded-lg shadow-md p-4">
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center gap-2">
-          {IconComponent && <IconComponent className="h-5 w-5 text-blue-600" />}
+          {iconSrc && <img src={iconSrc} alt={title} className="h-5 w-5" />}
           <div>
             <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
             <p className="text-sm text-gray-500 mt-1">{description}</p>
