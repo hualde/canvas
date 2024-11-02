@@ -12,7 +12,11 @@ export function Canvas() {
   const { user } = useAuth0();
   const [canvas, setCanvas] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [generalInfo, setGeneralInfo] = useState(canvas?.generalInfo || '');
+  const [projectName, setProjectName] = useState(canvas?.projectName || '');
+  const [author, setAuthor] = useState(canvas?.author || '');
+  const [date, setDate] = useState(canvas?.date || new Date().toISOString().split('T')[0]);
+  const [comments, setComments] = useState(canvas?.comments || '');
+
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -21,7 +25,10 @@ export function Canvas() {
         try {
           const fetchedCanvas = await getCanvas(id);
           setCanvas(fetchedCanvas);
-          setGeneralInfo(fetchedCanvas?.generalInfo || '');
+          setProjectName(fetchedCanvas?.projectName || '');
+          setAuthor(fetchedCanvas?.author || '');
+          setDate(fetchedCanvas?.date || new Date().toISOString().split('T')[0]);
+          setComments(fetchedCanvas?.comments || '');
         } catch (error) {
           console.error('Error fetching canvas:', error);
         } finally {
@@ -78,13 +85,18 @@ export function Canvas() {
     exportToPDF(canvas);
   };
 
-  const handleUpdateGeneralInfo = async (info: string) => {
+  const handleUpdateCanvasInfo = async () => {
     try {
-      const updatedCanvas = await updateCanvas(canvas.id, canvas.title, { ...canvas.content, generalInfo: info });
+      const updatedCanvas = await updateCanvas(canvas.id, {
+        ...canvas,
+        projectName,
+        author,
+        date,
+        comments
+      });
       setCanvas(updatedCanvas);
-      setGeneralInfo(info);
     } catch (error) {
-      console.error('Error updating canvas general info:', error);
+      console.error('Error updating canvas info:', error);
     }
   };
 
@@ -112,19 +124,45 @@ export function Canvas() {
 
       <input
         type="text"
-        value={canvas.title}
+        value={canvas?.title}
         onChange={(e) => handleUpdateTitle(e.target.value)}
         className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
         placeholder="Untitled Business Model Canvas"
       />
 
-      <textarea
-        value={generalInfo}
-        onChange={(e) => handleUpdateGeneralInfo(e.target.value)}
-        className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none mb-8"
-        rows={3}
-        placeholder="Enter general information about this canvas..."
-      />
+      <div className="mb-8 grid grid-cols-2 gap-4">
+        <input
+          type="text"
+          value={projectName}
+          onChange={(e) => setProjectName(e.target.value)}
+          onBlur={handleUpdateCanvasInfo}
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Project Name"
+        />
+        <input
+          type="text"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          onBlur={handleUpdateCanvasInfo}
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Author"
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          onBlur={handleUpdateCanvasInfo}
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <textarea
+          value={comments}
+          onChange={(e) => setComments(e.target.value)}
+          onBlur={handleUpdateCanvasInfo}
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          rows={2}
+          placeholder="Comments"
+        />
+      </div>
 
       <div className="grid grid-cols-5 gap-4">
         {/* Key Partners */}
