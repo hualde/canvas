@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Plus, X, Handshake, Cog, Gem, Diamond, MessageCircle, Target, Users, DollarSign, TrendingUp } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
+import { iconComponents } from '../utils/icons';
 
 interface CanvasSectionProps {
   title: string;
@@ -8,23 +9,11 @@ interface CanvasSectionProps {
   description: string;
 }
 
-const sectionIcons = {
-  'Key Partners': Handshake,
-  'Key Activities': Cog,
-  'Key Resources': Gem,
-  'Value Propositions': Diamond,
-  'Customer Relationships': MessageCircle,
-  'Channels': Target,
-  'Customer Segments': Users,
-  'Cost Structure': DollarSign,
-  'Revenue Streams': TrendingUp,
-};
-
 export function CanvasSection({ title, items = [], onUpdate, description }: CanvasSectionProps) {
   const [newItem, setNewItem] = useState('');
   const [isAdding, setIsAdding] = useState(false);
 
-  const Icon = sectionIcons[title as keyof typeof sectionIcons];
+  const IconComponent = iconComponents[title.replace(/\s+/g, '') as keyof typeof iconComponents];
 
   const handleAddItem = () => {
     if (newItem.trim()) {
@@ -42,7 +31,7 @@ export function CanvasSection({ title, items = [], onUpdate, description }: Canv
     <div className="bg-white rounded-lg shadow-md p-4">
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center gap-2">
-          {Icon && <Icon className="h-5 w-5 text-blue-600" />}
+          {IconComponent && <IconComponent className="h-5 w-5 text-blue-600" />}
           <div>
             <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
             <p className="text-sm text-gray-500 mt-1">{description}</p>
