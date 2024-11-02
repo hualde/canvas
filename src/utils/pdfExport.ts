@@ -72,7 +72,7 @@ export function exportToPDF(canvas: CanvasData) {
   };
 
   try {
-    // Set title
+    // Set title.
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
     doc.text(canvas.title || 'Business Model Canvas', pageWidth / 2, margin, { align: 'center' });
