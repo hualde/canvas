@@ -161,13 +161,13 @@ export function Canvas() {
             title="Customer Relationships"
             items={canvas.content.customerRelationships || []}
             onUpdate={(items) => handleSectionUpdate('customerRelationships', items)}
-            description="What type of relationship does each customer segment expect?"
+            description="What relationship does each customer segment expect?"
           />
           <CanvasSection
             title="Channels"
             items={canvas.content.channels || []}
             onUpdate={(items) => handleSectionUpdate('channels', items)}
-            description="Through which channels do your customers want to be reached?"
+            description="Which channels do your customers prefer?"
           />
         </div>
         <CanvasSection
