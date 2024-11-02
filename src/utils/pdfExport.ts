@@ -4,7 +4,7 @@ import { icons } from './icons';
 interface CanvasData {
   id: string;
   title: string;
-  projectName: string;
+  project_name: string;
   author: string;
   date: string;
   comments: string;
@@ -45,16 +45,16 @@ const drawGeneralInfoPage = (doc: jsPDF, canvas: CanvasData) => {
     doc.setTextColor(100, 100, 100);
     doc.text(label, x + 5, y + 15);
     doc.setTextColor(0, 0, 0);
-    doc.text(value, x + 5, y + 25);
+    doc.text(value || 'N/A', x + 5, y + 25);
   };
 
-  drawInfoBox('Project Name', canvas.projectName, margin, startY);
-  drawInfoBox('Author', canvas.author, margin * 2 + boxWidth, startY);
-  drawInfoBox('Date', canvas.date, margin, startY + boxHeight + 10);
+  drawInfoBox('Project Name', canvas.project_name || 'N/A', margin, startY);
+  drawInfoBox('Author', canvas.author || 'N/A', margin * 2 + boxWidth, startY);
+  drawInfoBox('Date', canvas.date || 'N/A', margin, startY + boxHeight + 10);
   
   // Add comments
   doc.text('Comments:', margin, startY + boxHeight * 2 + 30);
-  const splitComments = doc.splitTextToSize(canvas.comments, pageWidth - margin * 2);
+  const splitComments = doc.splitTextToSize(canvas.comments || 'No comments', pageWidth - margin * 2);
   doc.text(splitComments, margin, startY + boxHeight * 2 + 45);
 };
 
@@ -110,6 +110,10 @@ export function exportToPDF(canvas: CanvasData) {
           });
         }
       });
+    } else {
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'italic');
+      doc.text('No items', x + 3, y + 12);
     }
   };
 
@@ -120,17 +124,17 @@ export function exportToPDF(canvas: CanvasData) {
     doc.text(canvas.title || 'Business Model Canvas', pageWidth / 2, margin, { align: 'center' });
 
     // Draw sections
-    drawSection(margin, margin + 10, colWidth, topRowHeight, 'KEY PARTNERS', canvas.content.keyPartners, 'keyPartnerships');
-    drawSection(margin + colWidth, margin + 10, colWidth, topRowHeight / 2, 'KEY ACTIVITIES', canvas.content.keyActivities, 'keyActivities');
-    drawSection(margin + colWidth, margin + 10 + topRowHeight / 2, colWidth, topRowHeight / 2, 'KEY RESOURCES', canvas.content.keyResources, 'keyResources');
-    drawSection(margin + colWidth * 2, margin + 10, colWidth, topRowHeight, 'VALUE PROPOSITIONS', canvas.content.valuePropositions, 'valuePropositions');
-    drawSection(margin + colWidth * 3, margin + 10, colWidth, topRowHeight / 2, 'CUSTOMER RELATIONSHIPS', canvas.content.customerRelationships, 'customerRelationships');
-    drawSection(margin + colWidth * 3, margin + 10 + topRowHeight / 2, colWidth, topRowHeight / 2, 'CHANNELS', canvas.content.channels, 'channels');
-    drawSection(margin + colWidth * 4, margin + 10, colWidth, topRowHeight, 'CUSTOMER SEGMENTS', canvas.content.customerSegments, 'customerSegments');
+    drawSection(margin, margin + 10, colWidth, topRowHeight, 'KEY PARTNERS', canvas.content.keyPartners || [], 'keyPartnerships');
+    drawSection(margin + colWidth, margin + 10, colWidth, topRowHeight / 2, 'KEY ACTIVITIES', canvas.content.keyActivities || [], 'keyActivities');
+    drawSection(margin + colWidth, margin + 10 + topRowHeight / 2, colWidth, topRowHeight / 2, 'KEY RESOURCES', canvas.content.keyResources || [], 'keyResources');
+    drawSection(margin + colWidth * 2, margin + 10, colWidth, topRowHeight, 'VALUE PROPOSITIONS', canvas.content.valuePropositions || [], 'valuePropositions');
+    drawSection(margin + colWidth * 3, margin + 10, colWidth, topRowHeight / 2, 'CUSTOMER RELATIONSHIPS', canvas.content.customerRelationships || [], 'customerRelationships');
+    drawSection(margin + colWidth * 3, margin + 10 + topRowHeight / 2, colWidth, topRowHeight / 2, 'CHANNELS', canvas.content.channels || [], 'channels');
+    drawSection(margin + colWidth * 4, margin + 10, colWidth, topRowHeight, 'CUSTOMER SEGMENTS', canvas.content.customerSegments || [], 'customerSegments');
 
     // Bottom row with adjusted height
-    drawSection(margin, margin + 10 + topRowHeight, (pageWidth - margin * 2) / 2, bottomRowHeight - 10, 'COST STRUCTURE', canvas.content.costStructure, 'costStructure');
-    drawSection(margin + (pageWidth - margin * 2) / 2, margin + 10 + topRowHeight, (pageWidth - margin * 2) / 2, bottomRowHeight - 10, 'REVENUE STREAMS', canvas.content.revenueStreams, 'revenueStreams');
+    drawSection(margin, margin + 10 + topRowHeight, (pageWidth - margin * 2) / 2, bottomRowHeight - 10, 'COST STRUCTURE', canvas.content.costStructure || [], 'costStructure');
+    drawSection(margin + (pageWidth - margin * 2) / 2, margin + 10 + topRowHeight, (pageWidth - margin * 2) / 2, bottomRowHeight - 10, 'REVENUE STREAMS', canvas.content.revenueStreams || [], 'revenueStreams');
 
     // Add the general information page
     drawGeneralInfoPage(doc, canvas);
