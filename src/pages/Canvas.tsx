@@ -12,7 +12,7 @@ export function Canvas() {
   const { user } = useAuth0();
   const [canvas, setCanvas] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [projectName, setProjectName] = useState('');
+  const [project_name, setProject_name] = useState('');
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
@@ -24,7 +24,7 @@ export function Canvas() {
         try {
           const fetchedCanvas = await getCanvas(id);
           setCanvas(fetchedCanvas);
-          setProjectName(fetchedCanvas?.projectName || '');
+          setProject_name(fetchedCanvas?.project_name || '');
           setAuthor(fetchedCanvas?.author || '');
           setDate(fetchedCanvas?.date ? new Date(fetchedCanvas.date).toISOString().split('T')[0] : '');
           setComments(fetchedCanvas?.comments || '');
@@ -86,16 +86,16 @@ export function Canvas() {
 
   const handleUpdateCanvasInfo = async () => {
     try {
-      console.log('Updating canvas info:', { id: canvas.id, projectName, author, date, comments });
+      console.log('Updating canvas info:', { id: canvas.id, project_name, author, date, comments });
       const updatedCanvas = await updateCanvas(canvas.id, {
         ...canvas,
-        projectName,
+        project_name,
         author,
         date,
         comments
       });
       console.log('Response from updateCanvas:', updatedCanvas);
-      if (updatedCanvas.projectName !== projectName) {
+      if (updatedCanvas.project_name !== project_name) {
         console.error('Project name not updated correctly');
       }
       setCanvas(updatedCanvas);
@@ -137,8 +137,8 @@ export function Canvas() {
       <div className="mb-8 grid grid-cols-2 gap-4">
         <input
           type="text"
-          value={projectName}
-          onChange={(e) => setProjectName(e.target.value)}
+          value={project_name}
+          onChange={(e) => setProject_name(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Project Name"

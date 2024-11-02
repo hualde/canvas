@@ -40,7 +40,7 @@ export async function updateCanvas(id: string, canvasData: any) {
     SET 
       title = ${canvasData.title},
       content = ${JSON.stringify(canvasData.content)},
-      project_name = ${canvasData.projectName},
+      project_name = ${canvasData.project_name},
       author = ${canvasData.author},
       date = ${canvasData.date ? new Date(canvasData.date) : null},
       comments = ${canvasData.comments},
