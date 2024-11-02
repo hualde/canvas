@@ -46,7 +46,7 @@ export function exportToPDF(canvas: CanvasData) {
     }
 
     // Draw title with reduced font size
-    doc.setFontSize(9); // Reduced from 12 to 9
+    doc.setFontSize(9);
     doc.setFont('helvetica', 'bold');
     doc.text(title, x + 10, y + 6);
 
@@ -56,7 +56,7 @@ export function exportToPDF(canvas: CanvasData) {
       doc.setFont('helvetica', 'normal');
       let itemY = y + 12;
       items.forEach((item) => {
-        if (item) {
+        if (item && typeof item === 'string') {
           const lines = doc.splitTextToSize(item, width - 6);
           lines.forEach((line: string) => {
             if (itemY < y + height - 2) {
