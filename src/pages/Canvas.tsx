@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft, Download, Sparkles } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
@@ -37,28 +37,6 @@ export function Canvas() {
     }
     fetchCanvas();
   }, [id]);
-
-  if (isLoading) {
-    return <div className="flex justify-center items-center h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
-    </div>;
-  }
-
-  if (!canvas) {
-    return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="text-center">
-          <p className="text-gray-600">Canvas not found</p>
-          <button
-            onClick={() => navigate('/')}
-            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
-          >
-            Return to Dashboard
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   const handleUpdateTitle = async (title: string) => {
     if (!title.trim()) return;
@@ -104,8 +82,30 @@ export function Canvas() {
     }
   };
 
+  if (isLoading) {
+    return <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+    </div>;
+  }
+
+  if (!canvas) {
+    return (
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <div className="text-center">
+          <p className="text-gray-600">Canvas not found</p>
+          <button
+            onClick={() => navigate('/')}
+            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+          >
+            Return to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-[1600px] mx-auto p-6">
+    <div className="max-w-[1600px] mx-auto p-6 relative">
       <div className="mb-6 flex justify-between items-center">
         <button
           onClick={() => navigate('/')}
@@ -240,6 +240,15 @@ export function Canvas() {
           className="h-full"
         />
       </div>
+
+      {/* Floating AI Button */}
+      <button
+        onClick={() => {/* AI functionality will be implemented later */}}
+        className="fixed bottom-6 right-6 p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 hover:scale-110"
+        aria-label="AI Assistant"
+      >
+        <Sparkles className="h-6 w-6" />
+      </button>
     </div>
   );
 }
