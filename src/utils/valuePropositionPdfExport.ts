@@ -62,6 +62,25 @@ const drawGeneralInfoPage = (doc: jsPDF, canvas: ValuePropositionCanvasData) => 
   doc.text(splitComments, margin, startY + boxHeight * 2 + 45);
 };
 
+const drawValuePropositionSquare = (doc: jsPDF, startX: number, startY: number, size: number) => {
+  const padding = 10; // Espacio para el texto
+  const totalSize = size + (padding * 2);
+  
+  // Calcular el punto central
+  const centerX = startX + (size/2);
+  const centerY = startY + (size/2);
+
+  // Cuadrado exterior
+  doc.rect(startX, startY, size, size);
+
+  // Línea desde el centro hacia la izquierda
+  doc.line(centerX, centerY, startX, centerY);
+  
+  // Líneas diagonales hacia las esquinas derechas
+  doc.line(centerX, centerY, startX + size, startY);
+  doc.line(centerX, centerY, startX + size, startY + size);
+};
+
 export function exportToPDF(canvas: ValuePropositionCanvasData) {
   if (!canvas) {
     console.error('No canvas data provided for PDF export');
@@ -89,14 +108,10 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text(canvas.title || 'Value Proposition Canvas', pageWidth / 2, margin, { align: 'center' });
 
-    // Dibujar el cuadrado y las líneas diagonales que lo dividen en tres secciones
+    // Draw the Value Proposition Square
     doc.setDrawColor(70, 70, 70);
     doc.setLineWidth(0.1);
-    doc.rect(startX, startY, squareSize, squareSize);
-
-    // Dibuja las líneas diagonales para crear las tres secciones
-    doc.line(startX + squareSize / 2, startY, startX, startY + squareSize); // Línea diagonal hacia la esquina inferior izquierda
-    doc.line(startX + squareSize / 2, startY, startX + squareSize, startY + squareSize); // Línea diagonal hacia la esquina inferior derecha
+    drawValuePropositionSquare(doc, startX, startY, squareSize);
 
     // Centrar el icono del regalo en el centro del cuadrado
     if (icons.gift) {
