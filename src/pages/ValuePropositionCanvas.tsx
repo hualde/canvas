@@ -165,7 +165,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.productsAndServices || []}
                 onUpdate={(items) => handleSectionUpdate('productsAndServices', items)}
                 description="What products and services do you offer?"
-                icon={<Package className="w-5 h-5" />}
+                icon={<products className="w-5 h-5" />}
                 className="h-full"
               />
             </div>
@@ -175,7 +175,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.gainCreators || []}
                 onUpdate={(items) => handleSectionUpdate('gainCreators', items)}
                 description="How do you create customer gains?"
-                icon={<TrendingUp className="w-5 h-5" />}
+                icon={<gainCreators className="w-5 h-5" />}
                 className="h-full"
               />
             </div>
@@ -185,7 +185,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.painRelievers || []}
                 onUpdate={(items) => handleSectionUpdate('painRelievers', items)}
                 description="How do you relieve customer pains?"
-                icon={<Pill className="w-5 h-5" />}
+                icon={<painRelievers className="w-5 h-5" />}
                 className="h-full"
               />
             </div>
@@ -201,7 +201,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.customerJobs || []}
                 onUpdate={(items) => handleSectionUpdate('customerJobs', items)}
                 description="What jobs do your customers need to get done?"
-                icon={<List className="w-5 h-5" />}
+                icon={<customerJobs className="w-5 h-5" />}
                 className="h-full"
               />
             </div>
@@ -211,7 +211,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.gains || []}
                 onUpdate={(items) => handleSectionUpdate('gains', items)}
                 description="What gains do your customers desire?"
-                icon={<SmilePlus className="w-5 h-5" />}
+                icon={<gains className="w-5 h-5" />}
                 className="h-full"
               />
             </div>
@@ -221,7 +221,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.pains || []}
                 onUpdate={(items) => handleSectionUpdate('pains', items)}
                 description="What pains do your customers experience?"
-                icon={<Frown className="w-5 h-5" />}
+                icon={<pains className="w-5 h-5" />}
                 className="h-full"
               />
             </div>
