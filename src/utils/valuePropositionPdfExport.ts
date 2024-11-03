@@ -133,26 +133,27 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
       });
     };
 
-    // Products and Services section
-    drawSectionTitle('Products and Services', startX + squareSize - 5, startY + squareSize - 10, 'right');
-    if (icons.products) {
-      doc.addImage(icons.products, 'PNG', startX + squareSize - 25, startY + squareSize - 25, 15, 15);
-    }
-    drawContent(canvas.content.productsAndServices || [], startX + squareSize - 50, startY + squareSize - 40, squareSize / 3);
-
-    // Gain Creators section
-    drawSectionTitle('Gain Creators', startX + 5, startY + 15, 'left');
+    // Square section
+    // Gain Creators (top)
+    drawSectionTitle('Gain Creators', startX + 5, startY + 25, 'left');
     if (icons.gainCreators) {
-      doc.addImage(icons.gainCreators, 'PNG', startX + 10, startY + 20, 15, 15);
+      doc.addImage(icons.gainCreators, 'PNG', startX + 10, startY + 30, 15, 15);
     }
-    drawContent(canvas.content.gainCreators || [], startX + 5, startY + 40, squareSize / 3);
+    drawContent(canvas.content.gainCreators || [], startX + 10, startY + 50, squareSize / 3);
 
-    // Pain Relievers section
-    drawSectionTitle('Pain Relievers', startX + 5, startY + squareSize - 10, 'left');
+    // Pain Relievers (bottom left)
+    drawSectionTitle('Pain Relievers', startX + 5, startY + squareSize - 25, 'left');
     if (icons.painRelievers) {
-      doc.addImage(icons.painRelievers, 'PNG', startX + 10, startY + squareSize - 25, 15, 15);
+      doc.addImage(icons.painRelievers, 'PNG', startX + 10, startY + squareSize - 40, 15, 15);
     }
-    drawContent(canvas.content.painRelievers || [], startX + 5, startY + squareSize - 40, squareSize / 3);
+    drawContent(canvas.content.painRelievers || [], startX + 10, startY + squareSize - 20, squareSize / 3);
+
+    // Products and Services (bottom right)
+    drawSectionTitle('Products and Services', startX + squareSize - 5, startY + squareSize - 25, 'right');
+    if (icons.products) {
+      doc.addImage(icons.products, 'PNG', startX + squareSize - 25, startY + squareSize - 40, 15, 15);
+    }
+    drawContent(canvas.content.productsAndServices || [], startX + squareSize - 60, startY + squareSize - 20, squareSize / 3);
 
     // Draw circle section
     doc.circle(circleX, circleY, circleRadius);
@@ -179,26 +180,27 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.line(circleX - circleRadius - 5, centerY - 2, circleX - circleRadius, centerY);
     doc.line(circleX - circleRadius - 5, centerY + 2, circleX - circleRadius, centerY);
 
-    // Customer Jobs section
-    drawSectionTitle('Customer Jobs', circleX + circleRadius - 10, centerY - circleRadius + 15, 'right');
-    if (icons.customerJobs) {
-      doc.addImage(icons.customerJobs, 'PNG', circleX + circleRadius - 30, centerY - circleRadius + 20, 15, 15);
-    }
-    drawContent(canvas.content.customerJobs || [], circleX + 20, centerY - 30, circleRadius - 25);
-
-    // Gains section
-    drawSectionTitle('Gains', circleX, centerY - circleRadius - 5, 'center');
+    // Circle section
+    // Gains (top)
+    drawSectionTitle('Gains', circleX, centerY - circleRadius + 15, 'center');
     if (icons.gains) {
-      doc.addImage(icons.gains, 'PNG', circleX - 7.5, centerY - circleRadius + 5, 15, 15);
+      doc.addImage(icons.gains, 'PNG', circleX - 7.5, centerY - circleRadius + 25, 15, 15);
     }
-    drawContent(canvas.content.gains || [], circleX - circleRadius + 10, centerY - circleRadius + 25, circleRadius - 25);
+    drawContent(canvas.content.gains || [], circleX - 30, centerY - circleRadius + 45, circleRadius - 20);
 
-    // Pains section
-    drawSectionTitle('Pains', circleX - circleRadius + 10, centerY + circleRadius - 5, 'left');
-    if (icons.pains) {
-      doc.addImage(icons.pains, 'PNG', circleX - circleRadius + 15, centerY + circleRadius - 20, 15, 15);
+    // Customer Jobs (right)
+    drawSectionTitle('Customer Jobs', circleX + circleRadius - 15, centerY, 'right');
+    if (icons.customerJobs) {
+      doc.addImage(icons.customerJobs, 'PNG', circleX + circleRadius - 35, centerY - 7.5, 15, 15);
     }
-    drawContent(canvas.content.pains || [], circleX - circleRadius + 10, centerY + 25, circleRadius - 25);
+    drawContent(canvas.content.customerJobs || [], circleX + 20, centerY + 15, circleRadius - 20);
+
+    // Pains (bottom)
+    drawSectionTitle('Pains', circleX - circleRadius + 15, centerY + circleRadius - 15, 'left');
+    if (icons.pains) {
+      doc.addImage(icons.pains, 'PNG', circleX - circleRadius + 25, centerY + circleRadius - 35, 15, 15);
+    }
+    drawContent(canvas.content.pains || [], circleX - circleRadius + 45, centerY + 20, circleRadius - 20);
 
     // Add the general information page
     drawGeneralInfoPage(doc, canvas);
