@@ -5,6 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/pdfExport';
+import { icons } from '../utils/icons';
 
 export function ValuePropositionCanvas() {
   const { id } = useParams();
@@ -165,7 +166,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.productsAndServices || []}
                 onUpdate={(items) => handleSectionUpdate('productsAndServices', items)}
                 description="What products and services do you offer?"
-                icon={<products className="w-5 h-5" />}
+                icon={icons.products}
                 className="h-full"
               />
             </div>
@@ -175,7 +176,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.gainCreators || []}
                 onUpdate={(items) => handleSectionUpdate('gainCreators', items)}
                 description="How do you create customer gains?"
-                icon={<gainCreators className="w-5 h-5" />}
+                icon={icons.gainCreators}
                 className="h-full"
               />
             </div>
@@ -185,7 +186,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.painRelievers || []}
                 onUpdate={(items) => handleSectionUpdate('painRelievers', items)}
                 description="How do you relieve customer pains?"
-                icon={<painRelievers className="w-5 h-5" />}
+                icon={icons.painRelievers}
                 className="h-full"
               />
             </div>
@@ -201,7 +202,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.customerJobs || []}
                 onUpdate={(items) => handleSectionUpdate('customerJobs', items)}
                 description="What jobs do your customers need to get done?"
-                icon={<customerJobs className="w-5 h-5" />}
+                icon={icons.customerJobs}
                 className="h-full"
               />
             </div>
@@ -211,7 +212,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.gains || []}
                 onUpdate={(items) => handleSectionUpdate('gains', items)}
                 description="What gains do your customers desire?"
-                icon={<gains className="w-5 h-5" />}
+                icon={icons.gains}
                 className="h-full"
               />
             </div>
@@ -221,7 +222,7 @@ export function ValuePropositionCanvas() {
                 items={canvas.content.pains || []}
                 onUpdate={(items) => handleSectionUpdate('pains', items)}
                 description="What pains do your customers experience?"
-                icon={<pains className="w-5 h-5" />}
+                icon={icons.pains}
                 className="h-full"
               />
             </div>
