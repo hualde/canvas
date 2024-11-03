@@ -128,25 +128,6 @@ export function ValuePropositionCanvas() {
           onChange={(e) => setProject_name(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Value Proposition"
-        />
-        <input
-          type="text"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-          onBlur={handleUpdateCanvasInfo}
-          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Customer Segment"
-        />
-      </div>
-
-      <div className="mb-8 grid grid-cols-2 gap-4">
-        <input
-          type="text"
-          value={project_name}
-          onChange={(e) => setProject_name(e.target.value)}
-          onBlur={handleUpdateCanvasInfo}
-          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Project Name"
         />
         <input
