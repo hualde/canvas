@@ -157,7 +157,7 @@ export function ValuePropositionCanvas() {
 
       <div className="grid grid-cols-2 gap-8">
         {/* Left side - Square section */}
-        <div className="relative border-2 border-gray-200 rounded-lg p-4 aspect-square">
+        <div className="relative border-2 border-gray-200 bg-white bg-opacity-10 rounded-lg p-4 aspect-square">
           <div className="grid grid-cols-2 gap-4 h-full">
             <div className="relative">
               <CanvasSection
@@ -193,7 +193,7 @@ export function ValuePropositionCanvas() {
         </div>
 
         {/* Right side - Circle section */}
-        <div className="relative border-2 border-gray-200 rounded-full p-4 aspect-square">
+        <div className="relative border-2 border-gray-200 bg-white bg-opacity-10 rounded-full p-4 aspect-square">
           <div className="grid grid-cols-2 gap-4 h-full">
             <div className="relative">
               <CanvasSection
