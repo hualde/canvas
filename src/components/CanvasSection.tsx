@@ -52,7 +52,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
           {items.map((item, index) => (
             <li
               key={index}
-              className="flex items-center justify-between group bg-white bg-opacity-30 rounded-md p-2"
+              className="flex items-center justify-between group bg-white bg-opacity-10 rounded-md p-2"
             >
               <span className="text-gray-700">{item}</span>
               <button
