@@ -152,7 +152,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
       doc.addImage(icons.customer, 'PNG', circleX - 10, circleY - 10, 20, 20);
     }
 
-    // Draw connecting arrows
+    // Draw connecting arrow
     doc.line(startX + squareSize, centerY, circleX - circleRadius, centerY);
     doc.line(circleX - circleRadius - 5, centerY - 2, circleX - circleRadius, centerY);
     doc.line(circleX - circleRadius - 5, centerY + 2, circleX - circleRadius, centerY);
