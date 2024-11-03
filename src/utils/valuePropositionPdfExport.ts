@@ -94,12 +94,13 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setLineWidth(0.1);
     doc.rect(startX, startY, squareSize, squareSize);
 
-    // Draw diagonal lines in square to create three sections
-    doc.line(startX + squareSize/2, startY, startX + squareSize/2, startY + squareSize); // Vertical line
-    doc.line(startX, startY + squareSize, startX + squareSize/2, startY + squareSize/2); // Bottom left diagonal
-    doc.line(startX + squareSize, startY + squareSize, startX + squareSize/2, startY + squareSize/2); // Bottom right diagonal
+    // Draw single diagonal line from top-left to bottom-right
+    doc.line(startX, startY, startX + squareSize, startY + squareSize);
 
-    // Draw gift box in center of square
+    // Draw horizontal line for the arrow
+    doc.line(startX + squareSize/2, startY + squareSize/2, startX + squareSize, startY + squareSize/2);
+
+    // Draw gift box in center
     if (icons.gift) {
       doc.addImage(icons.gift, 'PNG', centerX - 10, centerY - 10, 20, 20);
     }
@@ -138,7 +139,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
 
     // Square section titles
     drawSectionTitle('Products and Services', startX + 5, startY + squareSize - 5);
-    drawSectionTitle('Gain Creators', centerX, startY + 15, 'center');
+    drawSectionTitle('Gain Creators', startX + squareSize - 5, startY + 15, 'right');
     drawSectionTitle('Pain Relievers', startX + squareSize - 5, startY + squareSize - 5, 'right');
 
     // Circle section titles
@@ -159,8 +160,8 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     };
 
     // Draw content for each section
-    drawContent(canvas.content.productsAndServices || [], startX + 5, startY + squareSize - 40, squareSize / 3);
-    drawContent(canvas.content.gainCreators || [], centerX - 20, startY + 25, squareSize / 2);
+    drawContent(canvas.content.productsAndServices || [], startX + 5, startY + 40, squareSize / 3);
+    drawContent(canvas.content.gainCreators || [], startX + squareSize - 60, startY + 25, squareSize / 3);
     drawContent(canvas.content.painRelievers || [], startX + squareSize - 60, startY + squareSize - 40, squareSize / 3);
     drawContent(canvas.content.customerJobs || [], circleX + 20, centerY - 30, circleRadius);
     drawContent(canvas.content.gains || [], circleX, centerY - circleRadius + 20, circleRadius);
