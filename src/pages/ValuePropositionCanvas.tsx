@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft, Download, Package, TrendingUp, Pill, List, SmilePlus, Frown } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
@@ -121,14 +121,6 @@ export function ValuePropositionCanvas() {
         </div>
       </div>
 
-      <input
-        type="text"
-        value={canvas.title}
-        onChange={(e) => handleUpdateTitle(e.target.value)}
-        className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
-        placeholder="Untitled Value Proposition Canvas"
-      />
-
       <div className="mb-8 grid grid-cols-2 gap-4">
         <input
           type="text"
@@ -136,7 +128,7 @@ export function ValuePropositionCanvas() {
           onChange={(e) => setProject_name(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Project Name"
+          placeholder="Value Proposition"
         />
         <input
           type="text"
@@ -144,71 +136,92 @@ export function ValuePropositionCanvas() {
           onChange={(e) => setAuthor(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Author"
-        />
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          onBlur={handleUpdateCanvasInfo}
-          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <textarea
-          value={comments}
-          onChange={(e) => setComments(e.target.value)}
-          onBlur={handleUpdateCanvasInfo}
-          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          rows={2}
-          placeholder="Comments"
+          placeholder="Customer Segment"
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
-        <CanvasSection
-          title="Customer Jobs"
-          items={canvas.content.customerJobs || []}
-          onUpdate={(items) => handleSectionUpdate('customerJobs', items)}
-          description="What jobs do your customers need to get done?"
-          className="h-full"
-        />
-        <CanvasSection
-          title="Pains"
-          items={canvas.content.pains || []}
-          onUpdate={(items) => handleSectionUpdate('pains', items)}
-          description="What pains do your customers experience?"
-          className="h-full"
-        />
-        <CanvasSection
-          title="Gains"
-          items={canvas.content.gains || []}
-          onUpdate={(items) => handleSectionUpdate('gains', items)}
-          description="What gains do your customers desire?"
-          className="h-full"
-        />
-      </div>
+      <div className="grid grid-cols-2 gap-8">
+        {/* Left side - Square section */}
+        <div className="relative border-2 border-gray-200 rounded-lg p-4 aspect-square">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center">
+              <Package className="w-8 h-8 text-blue-600" />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 h-full">
+            <div className="relative">
+              <CanvasSection
+                title="Products and Services"
+                items={canvas.content.productsAndServices || []}
+                onUpdate={(items) => handleSectionUpdate('productsAndServices', items)}
+                description="What products and services do you offer?"
+                icon={<Package className="w-5 h-5" />}
+                className="h-full"
+              />
+            </div>
+            <div className="relative">
+              <CanvasSection
+                title="Gain Creators"
+                items={canvas.content.gainCreators || []}
+                onUpdate={(items) => handleSectionUpdate('gainCreators', items)}
+                description="How do you create customer gains?"
+                icon={<TrendingUp className="w-5 h-5" />}
+                className="h-full"
+              />
+            </div>
+            <div className="relative col-span-2">
+              <CanvasSection
+                title="Pain Relievers"
+                items={canvas.content.painRelievers || []}
+                onUpdate={(items) => handleSectionUpdate('painRelievers', items)}
+                description="How do you relieve customer pains?"
+                icon={<Pill className="w-5 h-5" />}
+                className="h-full"
+              />
+            </div>
+          </div>
+        </div>
 
-      <div className="grid grid-cols-3 gap-4 mt-4">
-        <CanvasSection
-          title="Products & Services"
-          items={canvas.content.productsAndServices || []}
-          onUpdate={(items) => handleSectionUpdate('productsAndServices', items)}
-          description="What products and services do you offer?"
-          className="h-full"
-        />
-        <CanvasSection
-          title="Pain Relievers"
-          items={canvas.content.painRelievers || []}
-          onUpdate={(items) => handleSectionUpdate('painRelievers', items)}
-          description="How do your products and services alleviate customer pains?"
-          className="h-full"
-        />
-        <CanvasSection
-          title="Gain Creators"
-          items={canvas.content.gainCreators || []}
-          onUpdate={(items) => handleSectionUpdate('gainCreators', items)}
-          description="How do your products and services create customer gains?"
-          className="h-full"
-        />
+        {/* Right side - Circle section */}
+        <div className="relative border-2 border-gray-200 rounded-full p-4 aspect-square">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+              <List className="w-8 h-8 text-blue-600" />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 h-full">
+            <div className="relative">
+              <CanvasSection
+                title="Customer Jobs"
+                items={canvas.content.customerJobs || []}
+                onUpdate={(items) => handleSectionUpdate('customerJobs', items)}
+                description="What jobs do your customers need to get done?"
+                icon={<List className="w-5 h-5" />}
+                className="h-full"
+              />
+            </div>
+            <div className="relative">
+              <CanvasSection
+                title="Gains"
+                items={canvas.content.gains || []}
+                onUpdate={(items) => handleSectionUpdate('gains', items)}
+                description="What gains do your customers desire?"
+                icon={<SmilePlus className="w-5 h-5" />}
+                className="h-full"
+              />
+            </div>
+            <div className="relative col-span-2">
+              <CanvasSection
+                title="Pains"
+                items={canvas.content.pains || []}
+                onUpdate={(items) => handleSectionUpdate('pains', items)}
+                description="What pains do your customers experience?"
+                icon={<Frown className="w-5 h-5" />}
+                className="h-full"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

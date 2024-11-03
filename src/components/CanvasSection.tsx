@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Plus, X } from 'lucide-react';
-import { icons } from '../utils/icons';
 
 interface CanvasSectionProps {
   title: string;
@@ -8,30 +7,12 @@ interface CanvasSectionProps {
   onUpdate: (items: string[]) => void;
   description: string;
   className?: string;
+  icon?: React.ReactNode;
 }
 
-export function CanvasSection({ title, items = [], onUpdate, description, className }: CanvasSectionProps) {
+export function CanvasSection({ title, items = [], onUpdate, description, className, icon }: CanvasSectionProps) {
   const [newItem, setNewItem] = useState('');
   const [isAdding, setIsAdding] = useState(false);
-
-  // Function to get the correct icon key
-  const getIconKey = (title: string): keyof typeof icons => {
-    const normalizedTitle = title.toLowerCase().replace(/\s+/g, '');
-    if (normalizedTitle === 'keypartners' || normalizedTitle === 'keypartnerships') return 'keyPartnerships';
-    if (normalizedTitle === 'keyactivities') return 'keyActivities';
-    if (normalizedTitle === 'keyresources') return 'keyResources';
-    if (normalizedTitle === 'valuepropositions') return 'valuePropositions';
-    if (normalizedTitle === 'customerrelationships') return 'customerRelationships';
-    if (normalizedTitle === 'channels') return 'channels';
-    if (normalizedTitle === 'customersegments') return 'customerSegments';
-    if (normalizedTitle === 'coststructure') return 'costStructure';
-    if (normalizedTitle === 'revenuestreams') return 'revenueStreams';
-    console.warn(`No matching icon found for title: ${title}`);
-    return 'keyPartners'; // Default fallback
-  };
-
-  const iconKey = getIconKey(title);
-  const iconSrc = icons[iconKey];
 
   const handleAddItem = () => {
     if (newItem.trim()) {
@@ -46,10 +27,10 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-md p-4 flex flex-col ${className}`}>
+    <div className={`bg-white rounded-lg shadow-sm p-4 flex flex-col ${className}`}>
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center gap-2">
-          {iconSrc && <img src={iconSrc} alt={title} className="h-5 w-5" />}
+          {icon}
           <div>
             <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
             <p className="text-sm text-gray-500 mt-1">{description}</p>
