@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download, Package, TrendingUp, Pill, List, SmilePlus, Frown } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
-import { exportToPDF } from '../utils/pdfExport';
+import { exportToPDF } from '../utils/valuePropositionPdfExport';
 import { icons } from '../utils/icons';
 
 export function ValuePropositionCanvas() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth0();
-  const [canvas, setCanvas] = useState(null);
+  const [canvas, setCanvas] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [project_name, setProject_name] = useState('');
   const [author, setAuthor] = useState('');
@@ -60,7 +60,11 @@ export function ValuePropositionCanvas() {
   };
 
   const handleExportPDF = () => {
-    exportToPDF(canvas);
+    if (canvas) {
+      exportToPDF(canvas);
+    } else {
+      console.error('Cannot export PDF: Canvas data is not available');
+    }
   };
 
   const handleUpdateCanvasInfo = async () => {
@@ -79,9 +83,11 @@ export function ValuePropositionCanvas() {
   };
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
-    </div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   if (!canvas) {
@@ -121,6 +127,14 @@ export function ValuePropositionCanvas() {
           </button>
         </div>
       </div>
+
+      <input
+        type="text"
+        value={canvas.title}
+        onChange={(e) => handleUpdateTitle(e.target.value)}
+        className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
+        placeholder="Untitled Value Proposition Canvas"
+      />
 
       <div className="mb-8 grid grid-cols-2 gap-4">
         <input
