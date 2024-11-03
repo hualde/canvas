@@ -100,7 +100,7 @@ export function ValuePropositionCanvas() {
   }
 
   return (
-    <div className="max-w-[1600px] mx-auto p-6 relative bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="max-w-[1600px] mx-auto p-6 relative">
       <div className="mb-6 flex justify-between items-center">
         <button
           onClick={() => navigate('/')}
@@ -157,7 +157,7 @@ export function ValuePropositionCanvas() {
 
       <div className="grid grid-cols-2 gap-8">
         {/* Left side - Square section */}
-        <div className="relative border-2 border-gray-200 bg-white bg-opacity-30 rounded-lg p-4 aspect-square">
+        <div className="relative border-2 border-gray-200 rounded-lg p-4 aspect-square">
           <div className="grid grid-cols-2 gap-4 h-full">
             <div className="relative">
               <CanvasSection
@@ -193,7 +193,7 @@ export function ValuePropositionCanvas() {
         </div>
 
         {/* Right side - Circle section */}
-        <div className="relative border-2 border-gray-200 bg-white bg-opacity-30 rounded-full p-4 aspect-square">
+        <div className="relative border-2 border-gray-200 rounded-full p-4 aspect-square">
           <div className="grid grid-cols-2 gap-4 h-full">
             <div className="relative">
               <CanvasSection
