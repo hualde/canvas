@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Sparkles, Download, Share2 } from 'lucide-react';
+import { ArrowLeft, Sparkles, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function Tutorial() {
@@ -87,15 +87,6 @@ export function Tutorial() {
             </div>
             <div>
               <div className="flex items-center space-x-2 mb-2">
-                <Share2 className="h-5 w-5 text-green-600" />
-                <h3 className="text-xl font-medium text-gray-800">Share Canvas</h3>
-              </div>
-              <p className="text-gray-600">
-                Share your canvas with others using a unique link. This feature allows for collaboration and feedback from team members or stakeholders.
-              </p>
-            </div>
-            <div>
-              <div className="flex items-center space-x-2 mb-2">
                 <Sparkles className="h-5 w-5 text-purple-600" />
                 <h3 className="text-xl font-medium text-gray-800">AI Assistant</h3>
               </div>
@@ -121,7 +112,6 @@ export function Tutorial() {
           <ul className="list-disc list-inside text-gray-600 space-y-2">
             <li>Regularly update your canvas as your business model evolves</li>
             <li>Use the AI assistant for inspiration when you're stuck</li>
-            <li>Share your canvas with team members to get diverse perspectives</li>
             <li>Export to PDF for presentations or offline discussions</li>
             <li>Use the comments section to note important decisions or changes</li>
           </ul>
