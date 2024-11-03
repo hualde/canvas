@@ -63,22 +63,18 @@ const drawGeneralInfoPage = (doc: jsPDF, canvas: ValuePropositionCanvasData) => 
 };
 
 const drawValuePropositionSquare = (doc: jsPDF, startX: number, startY: number, size: number) => {
-  const padding = 10; // Espacio para el texto
-  const totalSize = size + (padding * 2);
-  
-  // Calcular el punto central
   const centerX = startX + (size/2);
   const centerY = startY + (size/2);
 
   // Cuadrado exterior
   doc.rect(startX, startY, size, size);
 
-  // Línea desde el centro hacia la izquierda
-  doc.line(centerX, centerY, startX, centerY);
+  // Línea desde el centro hacia la derecha (rotado 180 grados)
+  doc.line(centerX, centerY, startX + size, centerY);
   
-  // Líneas diagonales hacia las esquinas derechas
-  doc.line(centerX, centerY, startX + size, startY);
-  doc.line(centerX, centerY, startX + size, startY + size);
+  // Líneas diagonales hacia las esquinas izquierdas (rotado 180 grados)
+  doc.line(centerX, centerY, startX, startY);
+  doc.line(centerX, centerY, startX, startY + size);
 };
 
 export function exportToPDF(canvas: ValuePropositionCanvasData) {
@@ -125,10 +121,10 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
       doc.text(title, x, y, { align });
     };
 
-    // Posición de los títulos dentro de cada triángulo del cuadrado
-    drawSectionTitle('Products and Services', startX + 5, startY + squareSize - 10);
-    drawSectionTitle('Gain Creators', startX + squareSize - 5, startY + 15, 'right');
-    drawSectionTitle('Pain Relievers', startX + squareSize - 5, startY + squareSize - 10, 'right');
+    // Posición de los títulos dentro de cada triángulo del cuadrado (rotado 180 grados)
+    drawSectionTitle('Products and Services', startX + squareSize - 5, startY + squareSize - 10, 'right');
+    drawSectionTitle('Gain Creators', startX + 5, startY + 15, 'left');
+    drawSectionTitle('Pain Relievers', startX + 5, startY + squareSize - 10, 'left');
 
     // Dibujar el contenido de cada sección
     const drawContent = (items: string[], x: number, y: number, width: number) => {
@@ -142,10 +138,10 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
       });
     };
 
-    // Añadir el contenido para cada sección
-    drawContent(canvas.content.productsAndServices || [], startX + 5, startY + squareSize - 30, squareSize / 3);
-    drawContent(canvas.content.gainCreators || [], startX + squareSize - 50, startY + 25, squareSize / 3);
-    drawContent(canvas.content.painRelievers || [], startX + squareSize - 50, startY + squareSize - 30, squareSize / 3);
+    // Añadir el contenido para cada sección (rotado 180 grados)
+    drawContent(canvas.content.productsAndServices || [], startX + squareSize - 50, startY + squareSize - 30, squareSize / 3);
+    drawContent(canvas.content.gainCreators || [], startX + 5, startY + 25, squareSize / 3);
+    drawContent(canvas.content.painRelievers || [], startX + 5, startY + squareSize - 30, squareSize / 3);
 
     // Draw circle section
     doc.circle(circleX, circleY, circleRadius);
