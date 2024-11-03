@@ -34,12 +34,10 @@ const drawGeneralInfoPage = (doc: jsPDF, canvas: ValuePropositionCanvasData) => 
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 20;
 
-  // Add title
   doc.setFontSize(24);
   doc.setFont('helvetica', 'bold');
   doc.text('Canvas Information', pageWidth / 2, margin + 10, { align: 'center' });
 
-  // Add info boxes
   doc.setFontSize(12);
   doc.setFont('helvetica', 'normal');
   const boxWidth = (pageWidth - margin * 3) / 2;
@@ -59,7 +57,6 @@ const drawGeneralInfoPage = (doc: jsPDF, canvas: ValuePropositionCanvasData) => 
   drawInfoBox('Author', canvas.author || 'N/A', margin * 2 + boxWidth, startY);
   drawInfoBox('Date', formatDate(canvas.date), margin, startY + boxHeight + 10);
   
-  // Add comments
   doc.text('Comments:', margin, startY + boxHeight * 2 + 30);
   const splitComments = doc.splitTextToSize(canvas.comments || 'No comments', pageWidth - margin * 2);
   doc.text(splitComments, margin, startY + boxHeight * 2 + 45);
@@ -74,55 +71,17 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
   const doc = new jsPDF('l', 'mm', 'a4');
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 10;
-  const bottomMargin = 10;
+  const margin = 20;
 
-  const leftWidth = (pageWidth - (margin * 3)) / 2;
-  const rightWidth = leftWidth;
-  const height = pageHeight - (margin * 2) - bottomMargin;
-
-  const drawSection = (x: number, y: number, width: number, height: number, title: string, items: string[], iconKey: keyof typeof icons) => {
-    // Draw box
-    doc.setDrawColor(70, 70, 70);
-    doc.setLineWidth(0.1);
-    doc.rect(x, y, width, height);
-
-    // Draw icon
-    try {
-      if (icons[iconKey]) {
-        doc.addImage(icons[iconKey], 'PNG', x + 3, y + 3, 5, 5);
-      }
-    } catch (error) {
-      console.warn(`Failed to add icon for ${iconKey}:`, error);
-    }
-
-    // Draw title with reduced font size
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'bold');
-    doc.text(title, x + 10, y + 6);
-
-    // Draw items
-    if (Array.isArray(items) && items.length > 0) {
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      let itemY = y + 12;
-      items.forEach((item) => {
-        if (item && typeof item === 'string') {
-          const lines = doc.splitTextToSize(item, width - 6);
-          lines.forEach((line: string) => {
-            if (itemY < y + height - 2) {
-              doc.text(`• ${line}`, x + 3, itemY);
-              itemY += 4;
-            }
-          });
-        }
-      });
-    } else {
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'italic');
-      doc.text('No items', x + 3, y + 12);
-    }
-  };
+  // Calculate dimensions
+  const squareSize = 120;
+  const circleRadius = 60;
+  const startX = margin;
+  const startY = margin + 20;
+  const centerX = startX + squareSize / 2;
+  const centerY = startY + squareSize / 2;
+  const circleX = startX + squareSize + margin + circleRadius;
+  const circleY = centerY;
 
   try {
     // Set title
@@ -130,19 +89,81 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text(canvas.title || 'Value Proposition Canvas', pageWidth / 2, margin, { align: 'center' });
 
-    // Draw left side (square)
-    drawSection(margin, margin + 10, leftWidth, height / 3, 'PRODUCTS AND SERVICES', canvas.content.productsAndServices || [], 'products');
-    drawSection(margin, margin + 10 + height / 3, leftWidth, height / 3, 'GAIN CREATORS', canvas.content.gainCreators || [], 'gainCreators');
-    drawSection(margin, margin + 10 + (height / 3) * 2, leftWidth, height / 3, 'PAIN RELIEVERS', canvas.content.painRelievers || [], 'painRelievers');
-
-    // Draw right side (circle)
+    // Draw square section
     doc.setDrawColor(70, 70, 70);
     doc.setLineWidth(0.1);
-    doc.circle(margin * 2 + leftWidth + rightWidth / 2, margin + 10 + height / 2, height / 2);
+    doc.rect(startX, startY, squareSize, squareSize);
 
-    drawSection(margin * 2 + leftWidth, margin + 10, rightWidth, height / 3, 'CUSTOMER JOBS', canvas.content.customerJobs || [], 'customerJobs');
-    drawSection(margin * 2 + leftWidth, margin + 10 + height / 3, rightWidth, height / 3, 'GAINS', canvas.content.gains || [], 'gains');
-    drawSection(margin * 2 + leftWidth, margin + 10 + (height / 3) * 2, rightWidth, height / 3, 'PAINS', canvas.content.pains || [], 'pains');
+    // Draw diagonal lines in square
+    doc.line(startX, startY, startX + squareSize, startY + squareSize);
+    doc.line(startX + squareSize, startY, startX, startY + squareSize);
+
+    // Draw gift box in center of square
+    if (icons.gift) {
+      doc.addImage(icons.gift, 'PNG', centerX - 10, centerY - 10, 20, 20);
+    }
+
+    // Draw circle section
+    doc.circle(circleX, circleY, circleRadius);
+
+    // Draw lines in circle (three equal sections)
+    const angleStep = (2 * Math.PI) / 3;
+    for (let i = 0; i < 3; i++) {
+      const angle = i * angleStep;
+      doc.line(
+        circleX,
+        circleY,
+        circleX + circleRadius * Math.cos(angle),
+        circleY + circleRadius * Math.sin(angle)
+      );
+    }
+
+    // Draw face icon in center of circle
+    if (icons.customer) {
+      doc.addImage(icons.customer, 'PNG', circleX - 10, circleY - 10, 20, 20);
+    }
+
+    // Draw connecting arrows
+    doc.line(startX + squareSize, centerY, circleX - circleRadius, centerY);
+    doc.line(circleX - circleRadius - 5, centerY - 2, circleX - circleRadius, centerY);
+    doc.line(circleX - circleRadius - 5, centerY + 2, circleX - circleRadius, centerY);
+
+    // Add section titles and content
+    const drawSectionTitle = (title: string, x: number, y: number, align: 'left' | 'center' | 'right' = 'left') => {
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text(title, x, y, { align });
+    };
+
+    // Square section titles
+    drawSectionTitle('Products and Services', startX + 5, startY + squareSize - 5);
+    drawSectionTitle('Gain Creators', centerX, startY + 15, 'center');
+    drawSectionTitle('Pain Relievers', startX + squareSize - 5, startY + squareSize - 5, 'right');
+
+    // Circle section titles
+    drawSectionTitle('Customer Jobs', circleX + circleRadius - 10, centerY - circleRadius + 15, 'right');
+    drawSectionTitle('Gains', circleX, centerY - circleRadius - 5, 'center');
+    drawSectionTitle('Pains', circleX - circleRadius + 10, centerY + circleRadius - 5, 'left');
+
+    // Add content for each section
+    const drawContent = (items: string[], x: number, y: number, width: number) => {
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      items.forEach((item, index) => {
+        const lines = doc.splitTextToSize(item, width);
+        lines.forEach((line: string, lineIndex: number) => {
+          doc.text(`• ${line}`, x, y + (index * 4) + (lineIndex * 4));
+        });
+      });
+    };
+
+    // Draw content for each section
+    drawContent(canvas.content.productsAndServices || [], startX + 5, startY + 40, squareSize / 3);
+    drawContent(canvas.content.gainCreators || [], centerX - 20, startY + 25, squareSize / 3);
+    drawContent(canvas.content.painRelievers || [], startX + squareSize - 60, startY + 40, squareSize / 3);
+    drawContent(canvas.content.customerJobs || [], circleX + 20, centerY - 30, circleRadius);
+    drawContent(canvas.content.gains || [], circleX, centerY - circleRadius + 20, circleRadius);
+    drawContent(canvas.content.pains || [], circleX - circleRadius + 10, centerY + 20, circleRadius);
 
     // Add the general information page
     drawGeneralInfoPage(doc, canvas);
@@ -152,7 +173,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setTextColor(128, 128, 128);
     doc.text(`Generated on ${new Date().toLocaleDateString()}`, margin, pageHeight - 5);
 
-    // Save the PDF with a sanitized filename
+    // Save the PDF
     const filename = `${(canvas.title || 'value-proposition-canvas').toLowerCase().replace(/[^a-z0-9]/g, '-')}.pdf`;
     doc.save(filename);
   } catch (error) {
