@@ -13,17 +13,14 @@ interface CanvasItem {
   customerSegments: string[];
   costStructure: string[];
   revenueStreams: string[];
-  shareId?: string;
 }
 
 interface CanvasStore {
   canvases: CanvasItem[];
   createCanvas: () => string;
   getCanvas: (id: string) => CanvasItem | undefined;
-  getCanvasByShareId: (shareId: string) => CanvasItem | undefined;
   updateCanvas: (id: string, updates: Partial<CanvasItem>) => void;
   deleteCanvas: (id: string) => void;
-  generateShareId: (id: string) => string;
 }
 
 export const useCanvasStore = create<CanvasStore>()(
@@ -58,10 +55,6 @@ export const useCanvasStore = create<CanvasStore>()(
         return get().canvases.find(canvas => canvas.id === id);
       },
 
-      getCanvasByShareId: (shareId) => {
-        return get().canvases.find(canvas => canvas.shareId === shareId);
-      },
-
       updateCanvas: (id, updates) => {
         set((state) => ({
           canvases: state.canvases.map((canvas) =>
@@ -74,22 +67,6 @@ export const useCanvasStore = create<CanvasStore>()(
         set((state) => ({
           canvases: state.canvases.filter((canvas) => canvas.id !== id)
         }));
-      },
-
-      generateShareId: (id) => {
-        const canvas = get().canvases.find(c => c.id === id);
-        if (!canvas) return '';
-
-        const shareId = Math.random().toString(36).substring(2, 15) + 
-                       Math.random().toString(36).substring(2, 15);
-
-        set((state) => ({
-          canvases: state.canvases.map((c) =>
-            c.id === id ? { ...c, shareId } : c
-          )
-        }));
-
-        return shareId;
       }
     }),
     {

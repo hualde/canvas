@@ -1,10 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { Canvas } from './pages/Canvas';
-import { SharedCanvas } from './pages/SharedCanvas';
 import { Login } from './pages/Login';
 import { Tutorial } from './components/Tutorial';
 import { Auth0ProviderWithNavigate } from './auth/auth0-provider';
@@ -31,7 +29,6 @@ function AppContent() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/share/:shareId" element={<SharedCanvas />} />
       
       <Route
         path="/"

@@ -55,22 +55,3 @@ export async function updateCanvas(id: string, canvasData: any) {
 export async function deleteCanvas(id: string) {
   await sql`DELETE FROM canvas WHERE id = ${id}`;
 }
-
-export async function getCanvasByShareId(shareId: string) {
-  const { rows } = await sql`
-    SELECT id, title, content, project_name, author, date, comments
-    FROM canvas
-    WHERE share_id = ${shareId}
-  `;
-  return rows[0];
-}
-
-export async function updateShareId(id: string, shareId: string) {
-  const { rows } = await sql`
-    UPDATE canvas
-    SET share_id = ${shareId}
-    WHERE id = ${id}
-    RETURNING *
-  `;
-  return rows[0];
-}
