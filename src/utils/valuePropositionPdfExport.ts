@@ -89,21 +89,48 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text(canvas.title || 'Value Proposition Canvas', pageWidth / 2, margin, { align: 'center' });
 
-    // Draw square section
+    // Dibujar el cuadrado y las líneas diagonales que lo dividen en tres secciones
     doc.setDrawColor(70, 70, 70);
     doc.setLineWidth(0.1);
     doc.rect(startX, startY, squareSize, squareSize);
 
-    // Draw single diagonal line from top-left to bottom-right
-    doc.line(startX, startY, startX + squareSize, startY + squareSize);
+    // Dibuja las líneas diagonales para crear las tres secciones
+    doc.line(startX + squareSize / 2, startY, startX, startY + squareSize); // Línea diagonal hacia la esquina inferior izquierda
+    doc.line(startX + squareSize / 2, startY, startX + squareSize, startY + squareSize); // Línea diagonal hacia la esquina inferior derecha
 
-    // Draw horizontal line for the arrow
-    doc.line(startX + squareSize/2, startY + squareSize/2, startX + squareSize, startY + squareSize/2);
-
-    // Draw gift box in center
+    // Centrar el icono del regalo en el centro del cuadrado
     if (icons.gift) {
       doc.addImage(icons.gift, 'PNG', centerX - 10, centerY - 10, 20, 20);
     }
+
+    // Agregar los títulos de cada sección
+    const drawSectionTitle = (title: string, x: number, y: number, align: 'left' | 'center' | 'right' = 'left') => {
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text(title, x, y, { align });
+    };
+
+    // Posición de los títulos dentro de cada triángulo del cuadrado
+    drawSectionTitle('Products and Services', startX + 5, startY + squareSize - 10);
+    drawSectionTitle('Gain Creators', startX + squareSize - 5, startY + 15, 'right');
+    drawSectionTitle('Pain Relievers', startX + squareSize - 5, startY + squareSize - 10, 'right');
+
+    // Dibujar el contenido de cada sección
+    const drawContent = (items: string[], x: number, y: number, width: number) => {
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      items.forEach((item, index) => {
+        const lines = doc.splitTextToSize(item, width);
+        lines.forEach((line: string, lineIndex: number) => {
+          doc.text(`• ${line}`, x, y + (index * 4) + (lineIndex * 4));
+        });
+      });
+    };
+
+    // Añadir el contenido para cada sección
+    drawContent(canvas.content.productsAndServices || [], startX + 5, startY + squareSize - 30, squareSize / 3);
+    drawContent(canvas.content.gainCreators || [], startX + squareSize - 50, startY + 25, squareSize / 3);
+    drawContent(canvas.content.painRelievers || [], startX + squareSize - 50, startY + squareSize - 30, squareSize / 3);
 
     // Draw circle section
     doc.circle(circleX, circleY, circleRadius);
@@ -130,39 +157,12 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.line(circleX - circleRadius - 5, centerY - 2, circleX - circleRadius, centerY);
     doc.line(circleX - circleRadius - 5, centerY + 2, circleX - circleRadius, centerY);
 
-    // Add section titles and content
-    const drawSectionTitle = (title: string, x: number, y: number, align: 'left' | 'center' | 'right' = 'left') => {
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
-      doc.text(title, x, y, { align });
-    };
-
-    // Square section titles
-    drawSectionTitle('Products and Services', startX + 5, startY + squareSize - 5);
-    drawSectionTitle('Gain Creators', startX + squareSize - 5, startY + 15, 'right');
-    drawSectionTitle('Pain Relievers', startX + squareSize - 5, startY + squareSize - 5, 'right');
-
     // Circle section titles
     drawSectionTitle('Customer Jobs', circleX + circleRadius - 10, centerY - circleRadius + 15, 'right');
     drawSectionTitle('Gains', circleX, centerY - circleRadius - 5, 'center');
     drawSectionTitle('Pains', circleX - circleRadius + 10, centerY + circleRadius - 5, 'left');
 
-    // Add content for each section
-    const drawContent = (items: string[], x: number, y: number, width: number) => {
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      items.forEach((item, index) => {
-        const lines = doc.splitTextToSize(item, width);
-        lines.forEach((line: string, lineIndex: number) => {
-          doc.text(`• ${line}`, x, y + (index * 4) + (lineIndex * 4));
-        });
-      });
-    };
-
-    // Draw content for each section
-    drawContent(canvas.content.productsAndServices || [], startX + 5, startY + 40, squareSize / 3);
-    drawContent(canvas.content.gainCreators || [], startX + squareSize - 60, startY + 25, squareSize / 3);
-    drawContent(canvas.content.painRelievers || [], startX + squareSize - 60, startY + squareSize - 40, squareSize / 3);
+    // Draw content for circle sections
     drawContent(canvas.content.customerJobs || [], circleX + 20, centerY - 30, circleRadius);
     drawContent(canvas.content.gains || [], circleX, centerY - circleRadius + 20, circleRadius);
     drawContent(canvas.content.pains || [], circleX - circleRadius + 10, centerY + 20, circleRadius);
