@@ -27,7 +27,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
   };
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm p-4 flex flex-col ${className}`}>
+    <div className={`bg-white bg-opacity-70 backdrop-blur-sm rounded-lg shadow-sm p-4 flex flex-col ${className}`}>
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center gap-2">
           {icon}
@@ -52,7 +52,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
           {items.map((item, index) => (
             <li
               key={index}
-              className="flex items-center justify-between group bg-gray-50 rounded-md p-2"
+              className="flex items-center justify-between group bg-white bg-opacity-80 rounded-md p-2"
             >
               <span className="text-gray-700">{item}</span>
               <button
