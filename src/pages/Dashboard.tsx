@@ -27,11 +27,11 @@ export function Dashboard() {
     fetchCanvases();
   }, [isAuthenticated, user]);
 
-  const handleCreateCanvas = async () => {
+  const handleCreateCanvas = async (type: 'business' | 'value-proposition') => {
     if (isAuthenticated && user?.sub) {
       try {
-        const newCanvas = await createCanvas(user.sub, 'Untitled Canvas', {});
-        navigate(`/canvas/${newCanvas.id}`);
+        const newCanvas = await createCanvas(user.sub, `Untitled ${type === 'business' ? 'Business Model' : 'Value Proposition'} Canvas`, {});
+        navigate(type === 'business' ? `/canvas/${newCanvas.id}` : `/value-proposition/${newCanvas.id}`);
       } catch (error) {
         console.error('Error creating canvas:', error);
       }
@@ -56,14 +56,23 @@ export function Dashboard() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Value Proposition Canvases</h1>
-        <button
-          onClick={handleCreateCanvas}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-        >
-          <Plus className="w-5 h-5 mr-2" />
-          Create New Canvas
-        </button>
+        <h1 className="text-3xl font-bold text-gray-900">My Canvases</h1>
+        <div className="space-x-4">
+          <button
+            onClick={() => handleCreateCanvas('business')}
+            className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            New Business Model Canvas
+          </button>
+          <button
+            onClick={() => handleCreateCanvas('value-proposition')}
+            className="flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            New Value Proposition Canvas
+          </button>
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -72,12 +81,13 @@ export function Dashboard() {
             key={canvas.id}
             className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
           >
+            
             <h3 className="text-xl font-semibold text-gray-900 mb-4">
               {canvas.title}
             </h3>
             <div className="flex justify-end space-x-2">
               <button
-                onClick={() => navigate(`/canvas/${canvas.id}`)}
+                onClick={() => navigate(canvas.title.includes('Value Proposition') ? `/value-proposition/${canvas.id}` : `/canvas/${canvas.id}`)}
                 className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
               >
                 <Edit3 className="w-5 h-5" />
