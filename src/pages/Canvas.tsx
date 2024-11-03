@@ -5,6 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/pdfExport';
+import { icons } from '../utils/icons';
 
 export function Canvas() {
   const { id } = useParams();
@@ -175,6 +176,7 @@ export function Canvas() {
           onUpdate={(items) => handleSectionUpdate('keyPartners', items)}
           description="Who are your key partners and suppliers?"
           className="h-full"
+          icon={icons.keyPartnerships}
         />
         <div className="grid grid-rows-2 gap-4">
           <CanvasSection
@@ -183,6 +185,7 @@ export function Canvas() {
             onUpdate={(items) => handleSectionUpdate('keyActivities', items)}
             description="What key activities does your value proposition require?"
             className="h-full"
+            icon={icons.keyActivities}
           />
           <CanvasSection
             title="Key Resources"
@@ -190,6 +193,7 @@ export function Canvas() {
             onUpdate={(items) => handleSectionUpdate('keyResources', items)}
             description="What key resources does your value proposition require?"
             className="h-full"
+            icon={icons.keyResources}
           />
         </div>
         <CanvasSection
@@ -198,6 +202,7 @@ export function Canvas() {
           onUpdate={(items) => handleSectionUpdate('valuePropositions', items)}
           description="What value do you deliver to the customer?"
           className="h-full"
+          icon={icons.valuePropositions}
         />
         <div className="grid grid-rows-2 gap-4">
           <CanvasSection
@@ -206,6 +211,7 @@ export function Canvas() {
             onUpdate={(items) => handleSectionUpdate('customerRelationships', items)}
             description="What relationship does each customer segment expect?"
             className="h-full"
+            icon={icons.customerRelationships}
           />
           <CanvasSection
             title="Channels"
@@ -213,6 +219,7 @@ export function Canvas() {
             onUpdate={(items) => handleSectionUpdate('channels', items)}
             description="Which channels do your customers prefer?"
             className="h-full"
+            icon={icons.channels}
           />
         </div>
         <CanvasSection
@@ -221,6 +228,7 @@ export function Canvas() {
           onUpdate={(items) => handleSectionUpdate('customerSegments', items)}
           description="For whom are you creating value?"
           className="h-full"
+          icon={icons.customerSegments}
         />
       </div>
 
@@ -231,6 +239,7 @@ export function Canvas() {
           onUpdate={(items) => handleSectionUpdate('costStructure', items)}
           description="What are the most important costs inherent in your business model?"
           className="h-full"
+          icon={icons.costStructure}
         />
         <CanvasSection
           title="Revenue Streams"
@@ -238,10 +247,10 @@ export function Canvas() {
           onUpdate={(items) => handleSectionUpdate('revenueStreams', items)}
           description="For what value are your customers really willing to pay?"
           className="h-full"
+          icon={icons.revenueStreams}
         />
       </div>
 
-      {/* Floating AI Button */}
       <button
         onClick={() => {/* AI functionality will be implemented later. */}}
         className="fixed bottom-6 right-6 p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 hover:scale-110"
