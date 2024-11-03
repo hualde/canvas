@@ -140,6 +140,40 @@ export function ValuePropositionCanvas() {
         />
       </div>
 
+      <div className="mb-8 grid grid-cols-2 gap-4">
+        <input
+          type="text"
+          value={project_name}
+          onChange={(e) => setProject_name(e.target.value)}
+          onBlur={handleUpdateCanvasInfo}
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Project Name"
+        />
+        <input
+          type="text"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          onBlur={handleUpdateCanvasInfo}
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Author"
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          onBlur={handleUpdateCanvasInfo}
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <textarea
+          value={comments}
+          onChange={(e) => setComments(e.target.value)}
+          onBlur={handleUpdateCanvasInfo}
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          rows={2}
+          placeholder="Comments"
+        />
+      </div>
+
       <div className="grid grid-cols-2 gap-8">
         {/* Left side - Square section */}
         <div className="relative border-2 border-gray-200 rounded-lg p-4 aspect-square">
