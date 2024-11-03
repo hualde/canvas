@@ -243,7 +243,7 @@ export function Canvas() {
 
       {/* Floating AI Button */}
       <button
-        onClick={() => {/* AI functionality will be implemented later */}}
+        onClick={() => {/* AI functionality will be implemented later. */}}
         className="fixed bottom-6 right-6 p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 hover:scale-110"
         aria-label="AI Assistant"
       >
