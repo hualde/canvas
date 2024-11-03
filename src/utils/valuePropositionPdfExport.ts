@@ -94,9 +94,10 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setLineWidth(0.1);
     doc.rect(startX, startY, squareSize, squareSize);
 
-    // Draw diagonal lines in square
-    doc.line(startX, startY, startX + squareSize, startY + squareSize);
-    doc.line(startX + squareSize, startY, startX, startY + squareSize);
+    // Draw diagonal lines in square to create three sections
+    doc.line(startX + squareSize/2, startY, startX + squareSize/2, startY + squareSize); // Vertical line
+    doc.line(startX, startY + squareSize, startX + squareSize/2, startY + squareSize/2); // Bottom left diagonal
+    doc.line(startX + squareSize, startY + squareSize, startX + squareSize/2, startY + squareSize/2); // Bottom right diagonal
 
     // Draw gift box in center of square
     if (icons.gift) {
@@ -158,9 +159,9 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     };
 
     // Draw content for each section
-    drawContent(canvas.content.productsAndServices || [], startX + 5, startY + 40, squareSize / 3);
-    drawContent(canvas.content.gainCreators || [], centerX - 20, startY + 25, squareSize / 3);
-    drawContent(canvas.content.painRelievers || [], startX + squareSize - 60, startY + 40, squareSize / 3);
+    drawContent(canvas.content.productsAndServices || [], startX + 5, startY + squareSize - 40, squareSize / 3);
+    drawContent(canvas.content.gainCreators || [], centerX - 20, startY + 25, squareSize / 2);
+    drawContent(canvas.content.painRelievers || [], startX + squareSize - 60, startY + squareSize - 40, squareSize / 3);
     drawContent(canvas.content.customerJobs || [], circleX + 20, centerY - 30, circleRadius);
     drawContent(canvas.content.gains || [], circleX, centerY - circleRadius + 20, circleRadius);
     drawContent(canvas.content.pains || [], circleX - circleRadius + 10, centerY + 20, circleRadius);
