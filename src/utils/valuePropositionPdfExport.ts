@@ -62,21 +62,6 @@ const drawGeneralInfoPage = (doc: jsPDF, canvas: ValuePropositionCanvasData) => 
   doc.text(splitComments, margin, startY + boxHeight * 2 + 45);
 };
 
-const drawValuePropositionSquare = (doc: jsPDF, startX: number, startY: number, size: number) => {
-  const centerX = startX + (size/2);
-  const centerY = startY + (size/2);
-
-  // Cuadrado exterior
-  doc.rect(startX, startY, size, size);
-
-  // Línea desde el centro hacia la derecha (rotado 180 grados)
-  doc.line(centerX, centerY, startX + size, centerY);
-  
-  // Líneas diagonales hacia las esquinas izquierdas (rotado 180 grados)
-  doc.line(centerX, centerY, startX, startY);
-  doc.line(centerX, centerY, startX, startY + size);
-};
-
 export function exportToPDF(canvas: ValuePropositionCanvasData) {
   if (!canvas) {
     console.error('No canvas data provided for PDF export');
@@ -107,53 +92,12 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     // Draw the Value Proposition Square
     doc.setDrawColor(70, 70, 70);
     doc.setLineWidth(0.1);
-    drawValuePropositionSquare(doc, startX, startY, squareSize);
+    doc.rect(startX, startY, squareSize, squareSize);
 
-    // Centrar el icono del regalo en el centro del cuadrado
-    if (icons.gift) {
-      doc.addImage(icons.gift, 'PNG', centerX - 10, centerY - 10, 20, 20);
-    }
-
-    // Agregar los títulos de cada sección
-    const drawSectionTitle = (title: string, x: number, y: number, align: 'left' | 'center' | 'right' = 'left') => {
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
-      doc.text(title, x, y, { align });
-    };
-
-    // Dibujar el contenido de cada sección
-    const drawContent = (items: string[], x: number, y: number, width: number) => {
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      items.forEach((item, index) => {
-        const lines = doc.splitTextToSize(item, width);
-        lines.forEach((line: string, lineIndex: number) => {
-          doc.text(`• ${line}`, x, y + (index * 4) + (lineIndex * 4));
-        });
-      });
-    };
-
-    // Square section
-    // Gain Creators (top)
-    drawSectionTitle('Gain Creators', startX + 5, startY + 25, 'left');
-    if (icons.gainCreators) {
-      doc.addImage(icons.gainCreators, 'PNG', startX + 10, startY + 30, 15, 15);
-    }
-    drawContent(canvas.content.gainCreators || [], startX + 10, startY + 50, squareSize / 3);
-
-    // Pain Relievers (bottom left)
-    drawSectionTitle('Pain Relievers', startX + 5, startY + squareSize - 25, 'left');
-    if (icons.painRelievers) {
-      doc.addImage(icons.painRelievers, 'PNG', startX + 10, startY + squareSize - 40, 15, 15);
-    }
-    drawContent(canvas.content.painRelievers || [], startX + 10, startY + squareSize - 20, squareSize / 3);
-
-    // Products and Services (bottom right)
-    drawSectionTitle('Products and Services', startX + squareSize - 5, startY + squareSize - 25, 'right');
-    if (icons.products) {
-      doc.addImage(icons.products, 'PNG', startX + squareSize - 25, startY + squareSize - 40, 15, 15);
-    }
-    drawContent(canvas.content.productsAndServices || [], startX + squareSize - 60, startY + squareSize - 20, squareSize / 3);
+    // Draw lines in square
+    doc.line(centerX, centerY, startX + squareSize, centerY);
+    doc.line(centerX, centerY, startX, startY);
+    doc.line(centerX, centerY, startX, startY + squareSize);
 
     // Draw circle section
     doc.circle(circleX, circleY, circleRadius);
@@ -170,15 +114,55 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
       );
     }
 
-    // Draw face icon in center of circle
-    if (icons.customer) {
-      doc.addImage(icons.customer, 'PNG', circleX - 10, circleY - 10, 20, 20);
-    }
-
     // Draw connecting arrow
     doc.line(startX + squareSize, centerY, circleX - circleRadius, centerY);
     doc.line(circleX - circleRadius - 5, centerY - 2, circleX - circleRadius, centerY);
     doc.line(circleX - circleRadius - 5, centerY + 2, circleX - circleRadius, centerY);
+
+    // Draw content for each section
+    const drawContent = (items: string[], x: number, y: number, width: number, height: number) => {
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      let currentY = y;
+      items.forEach((item) => {
+        const lines = doc.splitTextToSize(item, width);
+        lines.forEach((line: string) => {
+          if (currentY < y + height) {
+            doc.text(`• ${line}`, x, currentY);
+            currentY += 4;
+          }
+        });
+      });
+    };
+
+    // Draw section titles
+    const drawSectionTitle = (title: string, x: number, y: number, align: 'left' | 'center' | 'right' = 'left') => {
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text(title, x, y, { align });
+    };
+
+    // Square section
+    // Gain Creators (top)
+    drawSectionTitle('Gain Creators', startX + 5, startY + 15, 'left');
+    if (icons.gainCreators) {
+      doc.addImage(icons.gainCreators, 'PNG', startX + 10, startY + 20, 15, 15);
+    }
+    drawContent(canvas.content.gainCreators || [], startX + 10, startY + 40, squareSize / 2, squareSize / 2 - 40);
+
+    // Pain Relievers (bottom left)
+    drawSectionTitle('Pain Relievers', startX + 5, startY + squareSize - 15, 'left');
+    if (icons.painRelievers) {
+      doc.addImage(icons.painRelievers, 'PNG', startX + 10, startY + squareSize - 30, 15, 15);
+    }
+    drawContent(canvas.content.painRelievers || [], startX + 10, startY + squareSize - 10, squareSize / 2, squareSize / 2 - 40);
+
+    // Products and Services (bottom right)
+    drawSectionTitle('Products and Services', startX + squareSize - 5, startY + squareSize - 15, 'right');
+    if (icons.products) {
+      doc.addImage(icons.products, 'PNG', startX + squareSize - 25, startY + squareSize - 30, 15, 15);
+    }
+    drawContent(canvas.content.productsAndServices || [], startX + squareSize / 2 + 10, startY + squareSize - 10, squareSize / 2 - 20, squareSize / 2 - 40);
 
     // Circle section
     // Gains (top)
@@ -186,21 +170,21 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     if (icons.gains) {
       doc.addImage(icons.gains, 'PNG', circleX - 7.5, centerY - circleRadius + 25, 15, 15);
     }
-    drawContent(canvas.content.gains || [], circleX - 30, centerY - circleRadius + 45, circleRadius - 20);
+    drawContent(canvas.content.gains || [], circleX - 30, centerY - circleRadius + 45, circleRadius - 20, circleRadius - 40);
 
     // Customer Jobs (right)
     drawSectionTitle('Customer Jobs', circleX + circleRadius - 15, centerY, 'right');
     if (icons.customerJobs) {
       doc.addImage(icons.customerJobs, 'PNG', circleX + circleRadius - 35, centerY - 7.5, 15, 15);
     }
-    drawContent(canvas.content.customerJobs || [], circleX + 20, centerY + 15, circleRadius - 20);
+    drawContent(canvas.content.customerJobs || [], circleX + 20, centerY + 15, circleRadius - 20, circleRadius - 40);
 
     // Pains (bottom)
     drawSectionTitle('Pains', circleX - circleRadius + 15, centerY + circleRadius - 15, 'left');
     if (icons.pains) {
       doc.addImage(icons.pains, 'PNG', circleX - circleRadius + 25, centerY + circleRadius - 35, 15, 15);
     }
-    drawContent(canvas.content.pains || [], circleX - circleRadius + 45, centerY + 20, circleRadius - 20);
+    drawContent(canvas.content.pains || [], circleX - circleRadius + 45, centerY + 20, circleRadius - 20, circleRadius - 40);
 
     // Add the general information page
     drawGeneralInfoPage(doc, canvas);
