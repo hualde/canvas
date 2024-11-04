@@ -132,14 +132,16 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     );
 
     // Products & Services (lower right triangle)
-    doc.text('Products and Services', centerX + 10, centerY + 15);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Products and Services', centerX + 0, centerY + 0);
     if (icons.products) {
-      doc.addImage(icons.products, 'PNG', centerX + 15, centerY + 20, 12, 12);
+      doc.addImage(icons.products, 'PNG', centerX + 5, centerY + 5, 12, 12);
     }
     drawContent(
       canvas.content.productsAndServices || [],
-      centerX + 10,
-      centerY + 35,
+      centerX - 10,
+      centerY + 15,
       (startX + squareSize - centerX) - 15,
       (startY + squareSize - centerY) - 20
     );
