@@ -110,8 +110,8 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     }
     drawContent(
       canvas.content.gainCreators || [], 
-      startX + 30, 
-      startY + 35, 
+      startX + 45, 
+      startY + 5, 
       (squareSize / 2) - 15,
       (centerY - startY) - 40
     );
