@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Download, Package, TrendingUp, Pill, List, SmilePlus, Frown } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
@@ -191,8 +191,8 @@ export function ValuePropositionCanvas() {
 
       <div className="grid grid-cols-2 gap-8">
         {/* Left side - Square section */}
-        <div className="relative border-2 border-gray-200 bg-white bg-opacity-10 rounded-lg p-4 aspect-square">
-          <div className="grid grid-cols-2 gap-4 h-full">
+        <div className="relative border-2 border-gray-200 bg-white rounded-lg p-4 aspect-square overflow-hidden">
+          <div className="grid grid-cols-2 gap-4 h-full relative z-10">
             <div className="relative">
               <CanvasSection
                 title="Products and Services"
@@ -200,7 +200,7 @@ export function ValuePropositionCanvas() {
                 onUpdate={(items) => handleSectionUpdate('productsAndServices', items)}
                 description="What products and services do you offer?"
                 icon={icons.products}
-                className="h-full"
+                className="h-full bg-white bg-opacity-80 backdrop-blur-sm"
               />
             </div>
             <div className="relative">
@@ -210,7 +210,7 @@ export function ValuePropositionCanvas() {
                 onUpdate={(items) => handleSectionUpdate('gainCreators', items)}
                 description="How do you create customer gains?"
                 icon={icons.gainCreators}
-                className="h-full"
+                className="h-full bg-white bg-opacity-80 backdrop-blur-sm"
               />
             </div>
             <div className="relative col-span-2">
@@ -220,15 +220,16 @@ export function ValuePropositionCanvas() {
                 onUpdate={(items) => handleSectionUpdate('painRelievers', items)}
                 description="How do you relieve customer pains?"
                 icon={icons.painRelievers}
-                className="h-full"
+                className="h-full bg-white bg-opacity-80 backdrop-blur-sm"
               />
             </div>
           </div>
         </div>
 
         {/* Right side - Circle section */}
-        <div className="relative border-2 border-gray-200 bg-white bg-opacity-10 rounded-full p-4 aspect-square">
-          <div className="grid grid-cols-2 gap-4 h-full">
+        <div className="relative border-2 border-gray-200 rounded-full p-4 aspect-square overflow-hidden">
+          <div className="absolute inset-0 bg-blue-100 rounded-full"></div>
+          <div className="grid grid-cols-2 gap-4 h-full relative z-10">
             <div className="relative">
               <CanvasSection
                 title="Customer Jobs"
@@ -236,7 +237,7 @@ export function ValuePropositionCanvas() {
                 onUpdate={(items) => handleSectionUpdate('customerJobs', items)}
                 description="What jobs do your customers need to get done?"
                 icon={icons.customerJobs}
-                className="h-full"
+                className="h-full bg-white bg-opacity-80 backdrop-blur-sm"
               />
             </div>
             <div className="relative">
@@ -246,7 +247,7 @@ export function ValuePropositionCanvas() {
                 onUpdate={(items) => handleSectionUpdate('gains', items)}
                 description="What gains do your customers desire?"
                 icon={icons.gains}
-                className="h-full"
+                className="h-full bg-white bg-opacity-80 backdrop-blur-sm"
               />
             </div>
             <div className="relative col-span-2">
@@ -256,7 +257,7 @@ export function ValuePropositionCanvas() {
                 onUpdate={(items) => handleSectionUpdate('pains', items)}
                 description="What pains do your customers experience?"
                 icon={icons.pains}
-                className="h-full"
+                className="h-full bg-white bg-opacity-80 backdrop-blur-sm"
               />
             </div>
           </div>
