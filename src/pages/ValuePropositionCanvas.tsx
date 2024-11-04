@@ -7,11 +7,28 @@ import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/valuePropositionPdfExport';
 import { icons } from '../utils/icons';
 
+interface CanvasData {
+  id: string;
+  title: string;
+  content: {
+    productsAndServices: string[];
+    gainCreators: string[];
+    painRelievers: string[];
+    customerJobs: string[];
+    gains: string[];
+    pains: string[];
+  };
+  project_name: string;
+  author: string;
+  date: string;
+  comments: string;
+}
+
 export function ValuePropositionCanvas() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth0();
-  const [canvas, setCanvas] = useState<any>(null);
+  const [canvas, setCanvas] = useState<CanvasData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [project_name, setProject_name] = useState('');
   const [author, setAuthor] = useState('');
@@ -27,7 +44,7 @@ export function ValuePropositionCanvas() {
           setCanvas(fetchedCanvas);
           setProject_name(fetchedCanvas?.project_name || '');
           setAuthor(fetchedCanvas?.author || '');
-          setDate(fetchedCanvas?.date ? new Date(fetchedCanvas.date).toISOString().split('T')[0] : '');
+          setDate(fetchedCanvas?.date || '');
           setComments(fetchedCanvas?.comments || '');
         } catch (error) {
           console.error('Error fetching canvas:', error);
@@ -40,7 +57,7 @@ export function ValuePropositionCanvas() {
   }, [id]);
 
   const handleUpdateTitle = async (title: string) => {
-    if (!title.trim()) return;
+    if (!title.trim() || !canvas) return;
     try {
       const updatedCanvas = await updateCanvas(canvas.id, { ...canvas, title });
       setCanvas(updatedCanvas);
@@ -49,7 +66,8 @@ export function ValuePropositionCanvas() {
     }
   };
 
-  const handleSectionUpdate = async (section: string, items: string[]) => {
+  const handleSectionUpdate = async (section: keyof CanvasData['content'], items: string[]) => {
+    if (!canvas) return;
     const updatedContent = { ...canvas.content, [section]: items };
     try {
       const updatedCanvas = await updateCanvas(canvas.id, { ...canvas, content: updatedContent });
@@ -68,6 +86,7 @@ export function ValuePropositionCanvas() {
   };
 
   const handleUpdateCanvasInfo = async () => {
+    if (!canvas) return;
     try {
       const updatedCanvas = await updateCanvas(canvas.id, {
         ...canvas,
