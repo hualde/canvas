@@ -28,10 +28,6 @@ const formatDate = (date: string | Date): string => {
   return 'N/A';
 };
 
-const drawGeneralInfoPage = (doc: jsPDF, canvas: ValuePropositionCanvasData) => {
-  // ... (mantenemos esta función igual ya que no afecta al posicionamiento del contenido principal)
-};
-
 export function exportToPDF(canvas: ValuePropositionCanvasData) {
   if (!canvas) {
     console.error('No canvas data provided for PDF export');
@@ -43,7 +39,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 20;
 
-  // Calculate dimensions
+  // Calculate dimensions (manteniendo las dimensiones originales)
   const squareSize = 120;
   const circleRadius = 60;
   const startX = margin;
@@ -59,20 +55,23 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text(canvas.title || 'Value Proposition Canvas', pageWidth / 2, margin, { align: 'center' });
 
-    // Draw the shapes first
+    // Draw the Value Proposition Square (manteniendo la estructura original)
     doc.setDrawColor(70, 70, 70);
     doc.setLineWidth(0.1);
-    
-    // Draw square and its divisions
     doc.rect(startX, startY, squareSize, squareSize);
-    doc.line(centerX, startY, centerX, startY + squareSize); // Vertical line
-    doc.line(startX, centerY, startX + squareSize, centerY); // Horizontal line
 
-    // Draw circle and its divisions
+    // Draw lines in square (manteniendo las líneas originales)
+    doc.line(centerX, centerY, startX + squareSize, centerY);
+    doc.line(centerX, centerY, startX, startY);
+    doc.line(centerX, centerY, startX, startY + squareSize);
+
+    // Draw circle section (manteniendo la estructura original)
     doc.circle(circleX, circleY, circleRadius);
+
+    // Draw lines in circle (manteniendo las divisiones originales)
     const angleStep = (2 * Math.PI) / 3;
     for (let i = 0; i < 3; i++) {
-      const angle = i * angleStep - Math.PI / 2; // Start from top (subtract PI/2)
+      const angle = i * angleStep;
       doc.line(
         circleX,
         circleY,
@@ -81,12 +80,11 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
       );
     }
 
-    // Draw connecting arrow
+    // Draw connecting arrow (manteniendo la flecha original)
     doc.line(startX + squareSize, centerY, circleX - circleRadius, centerY);
     doc.line(circleX - circleRadius - 5, centerY - 2, circleX - circleRadius, centerY);
     doc.line(circleX - circleRadius - 5, centerY + 2, circleX - circleRadius, centerY);
 
-    // Content drawing function
     const drawContent = (items: string[], x: number, y: number, width: number, height: number) => {
       doc.setFontSize(8);
       doc.setFont('helvetica', 'normal');
@@ -102,55 +100,49 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
       });
     };
 
-    // Draw sections with corrected positioning
+    // Square content positioning
+    // Gain Creators (upper triangle)
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-
-    // Square sections
-    // Gain Creators (top half)
-    doc.text('Gain Creators', startX + 5, startY + 10);
+    doc.text('Gain Creators', startX + 10, startY + 15);
     if (icons.gainCreators) {
-      doc.addImage(icons.gainCreators, 'PNG', startX + 5, startY + 15, 12, 12);
+      doc.addImage(icons.gainCreators, 'PNG', startX + 15, startY + 20, 12, 12);
     }
     drawContent(
-      canvas.content.gainCreators || [],
-      startX + 5,
-      startY + 30,
-      squareSize - 10,
-      (squareSize / 2) - 35
+      canvas.content.gainCreators || [], 
+      startX + 10, 
+      startY + 35, 
+      (squareSize / 2) - 15,
+      (centerY - startY) - 40
     );
 
-    // Pain Relievers (bottom left)
-    doc.text('Pain Relievers', startX + 5, centerY + 10);
+    // Pain Relievers (lower left triangle)
+    doc.text('Pain Relievers', startX + 10, centerY + 15);
     if (icons.painRelievers) {
-      doc.addImage(icons.painRelievers, 'PNG', startX + 5, centerY + 15, 12, 12);
+      doc.addImage(icons.painRelievers, 'PNG', startX + 15, centerY + 20, 12, 12);
     }
     drawContent(
       canvas.content.painRelievers || [],
-      startX + 5,
-      centerY + 30,
-      (squareSize / 2) - 10,
-      (squareSize / 2) - 35
+      startX + 10,
+      centerY + 35,
+      (centerX - startX) - 15,
+      (startY + squareSize - centerY) - 20
     );
 
-    // Products and Services (bottom right)
-    doc.text('Products and Services', centerX + 5, centerY + 10);
+    // Products & Services (lower right triangle)
+    doc.text('Products and Services', centerX + 10, centerY + 15);
     if (icons.products) {
-      doc.addImage(icons.products, 'PNG', centerX + 5, centerY + 15, 12, 12);
+      doc.addImage(icons.products, 'PNG', centerX + 15, centerY + 20, 12, 12);
     }
     drawContent(
       canvas.content.productsAndServices || [],
-      centerX + 5,
-      centerY + 30,
-      (squareSize / 2) - 10,
-      (squareSize / 2) - 35
+      centerX + 10,
+      centerY + 35,
+      (startX + squareSize - centerX) - 15,
+      (startY + squareSize - centerY) - 20
     );
 
-    // Circle sections
-    const angleTop = -Math.PI / 2;
-    const angleRight = angleTop + (2 * Math.PI / 3);
-    const angleLeft = angleRight + (2 * Math.PI / 3);
-
+    // Circle content positioning
     // Gains (top section)
     doc.text('Gains', circleX - 15, circleY - circleRadius + 15);
     if (icons.gains) {
@@ -158,40 +150,37 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     }
     drawContent(
       canvas.content.gains || [],
-      circleX - circleRadius + 15,
+      circleX - 25,
       circleY - circleRadius + 35,
-      circleRadius * 1.5,
-      circleRadius - 40
+      50,
+      40
     );
 
     // Customer Jobs (right section)
-    doc.text('Customer Jobs', circleX + circleRadius/2 - 15, circleY - 5);
+    doc.text('Customer Jobs', circleX + 20, circleY);
     if (icons.customerJobs) {
-      doc.addImage(icons.customerJobs, 'PNG', circleX + circleRadius/2 - 6, circleY + 5, 12, 12);
+      doc.addImage(icons.customerJobs, 'PNG', circleX + 25, circleY + 5, 12, 12);
     }
     drawContent(
       canvas.content.customerJobs || [],
       circleX + 15,
       circleY + 20,
-      circleRadius - 20,
-      circleRadius - 40
+      40,
+      40
     );
 
     // Pains (bottom left section)
-    doc.text('Pains', circleX - circleRadius + 15, circleY + circleRadius/2);
+    doc.text('Pains', circleX - circleRadius + 10, circleY + 20);
     if (icons.pains) {
-      doc.addImage(icons.pains, 'PNG', circleX - circleRadius + 25, circleY + circleRadius/2 + 5, 12, 12);
+      doc.addImage(icons.pains, 'PNG', circleX - circleRadius + 15, circleY + 25, 12, 12);
     }
     drawContent(
       canvas.content.pains || [],
-      circleX - circleRadius + 15,
-      circleY + 15,
-      circleRadius - 20,
-      circleRadius - 40
+      circleX - circleRadius + 10,
+      circleY + 40,
+      40,
+      40
     );
-
-    // Add the general information page
-    drawGeneralInfoPage(doc, canvas);
 
     // Add metadata
     doc.setFontSize(6);
