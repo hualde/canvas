@@ -152,7 +152,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text('Gains', circleX - 15, circleY - circleRadius + 7);
     if (icons.gains) {
-      doc.addImage(icons.gains, 'PNG', circleX - 10, circleY - circleRadius + 10, 12, 12);
+      doc.addImage(icons.gains, 'PNG', circleX - 5, circleY - circleRadius + 10, 12, 12);
     }
     drawContent(
       canvas.content.gains || [],
@@ -167,7 +167,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text('Customer Jobs', circleX + 10, circleY + 5);
     if (icons.customerJobs) {
-      doc.addImage(icons.customerJobs, 'PNG', circleX + 0, circleY + 35, 12, 12);
+      doc.addImage(icons.customerJobs, 'PNG', circleX - 7, circleY + 35, 12, 12);
     }
     drawContent(
       canvas.content.customerJobs || [],
@@ -180,14 +180,14 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     // Pains (bottom left section)
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.text('Pains', circleX - circleRadius + 17, circleY - 32);
+    doc.text('Pains', circleX - circleRadius + 17, circleY - 26);
     if (icons.pains) {
-      doc.addImage(icons.pains, 'PNG', circleX - circleRadius + 15, circleY - 45, 12, 12);
+      doc.addImage(icons.pains, 'PNG', circleX - circleRadius + 18, circleY - 45, 12, 12);
     }
     drawContent(
       canvas.content.pains || [],
       circleX - circleRadius + 10,
-      circleY - 25,
+      circleY - 20,
       40,
       40
     );
