@@ -24,7 +24,7 @@ interface CanvasData {
   comments: string;
 }
 
-export default function ValuePropositionCanvas() {
+export function ValuePropositionCanvas() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth0();
