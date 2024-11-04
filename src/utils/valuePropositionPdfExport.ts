@@ -121,7 +121,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text('Pain Relievers', startX + 2, centerY - 25);
     if (icons.painRelievers) {
-      doc.addImage(icons.painRelievers, 'PNG', startX + 5, centerY - 40, 12, 12);
+      doc.addImage(icons.painRelievers, 'PNG', startX + 5, centerY - 42, 12, 12);
     }
     drawContent(
       canvas.content.painRelievers || [],
