@@ -191,8 +191,9 @@ export function ValuePropositionCanvas() {
 
       <div className="grid grid-cols-2 gap-8">
         {/* Left side - Square section */}
-        <div className="relative border-2 border-gray-200 bg-white rounded-lg p-6 aspect-square">
-          <div className="grid grid-cols-2 gap-4 h-full">
+        <div className="relative border-2 border-gray-200 rounded-lg p-6 aspect-square overflow-hidden">
+          <div className="absolute inset-0 bg-blue-200/30"></div>
+          <div className="relative grid grid-cols-2 gap-4 h-full z-10">
             <div className="relative">
               <CanvasSection
                 title="Products and Services"
@@ -200,7 +201,7 @@ export function ValuePropositionCanvas() {
                 onUpdate={(items) => handleSectionUpdate('productsAndServices', items)}
                 description="What products and services do you offer?"
                 icon={icons.products}
-                className="h-full"
+                className="h-full bg-white/50"
               />
             </div>
             <div className="relative">
@@ -210,7 +211,7 @@ export function ValuePropositionCanvas() {
                 onUpdate={(items) => handleSectionUpdate('gainCreators', items)}
                 description="How do you create customer gains?"
                 icon={icons.gainCreators}
-                className="h-full"
+                className="h-full bg-white/50"
               />
             </div>
             <div className="relative col-span-2">
@@ -220,16 +221,16 @@ export function ValuePropositionCanvas() {
                 onUpdate={(items) => handleSectionUpdate('painRelievers', items)}
                 description="How do you relieve customer pains?"
                 icon={icons.painRelievers}
-                className="h-full"
+                className="h-full bg-white/50"
               />
             </div>
           </div>
         </div>
 
         {/* Right side - Circle section */}
-        <div className="relative border-2 border-gray-200 rounded-full aspect-square">
+        <div className="relative border-2 border-gray-200 rounded-full aspect-square overflow-hidden">
           <div className="absolute inset-0 bg-blue-200/30 rounded-full"></div>
-          <div className="relative h-full grid grid-cols-2 gap-4 p-8">
+          <div className="relative h-full grid grid-cols-2 gap-4 p-8 z-10">
             <div className="relative">
               <CanvasSection
                 title="Customer Jobs"
