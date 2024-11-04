@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Download, Sparkles } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/pdfExport';
 import { icons } from '../utils/icons';
+import { AIChat } from './AIChat';
 
 interface CanvasData {
   id: string;
@@ -282,13 +283,7 @@ export function Canvas() {
         </div>
       </div>
 
-      <button
-        onClick={() => {/* AI functionality will be implemented later. */}}
-        className="fixed bottom-6 right-6 p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 hover:scale-110"
-        aria-label="AI Assistant"
-      >
-        <Sparkles className="h-6 w-6" />
-      </button>
+      <AIChat canvasContent={canvas.content} />
     </div>
   );
 }
