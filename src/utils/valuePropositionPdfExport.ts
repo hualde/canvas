@@ -28,6 +28,43 @@ const formatDate = (date: string | Date): string => {
   return 'N/A';
 };
 
+const drawGeneralInfoPage = (doc: jsPDF, canvas: ValuePropositionCanvasData) => {
+  doc.addPage();
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 20;
+
+  // Add title
+  doc.setFontSize(24);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Canvas Information', pageWidth / 2, margin + 10, { align: 'center' });
+
+  // Add info boxes
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'normal');
+  const boxWidth = (pageWidth - margin * 3) / 2;
+  const boxHeight = 30;
+  const startY = margin + 40;
+
+  const drawInfoBox = (label: string, value: string, x: number, y: number) => {
+    doc.setFillColor(240, 240, 240);
+    doc.rect(x, y, boxWidth, boxHeight, 'F');
+    doc.setTextColor(100, 100, 100);
+    doc.text(label, x + 5, y + 15);
+    doc.setTextColor(0, 0, 0);
+    doc.text(value || 'N/A', x + 5, y + 25);
+  };
+
+  drawInfoBox('Project Name', canvas.project_name || 'N/A', margin, startY);
+  drawInfoBox('Author', canvas.author || 'N/A', margin * 2 + boxWidth, startY);
+  drawInfoBox('Date', formatDate(canvas.date), margin, startY + boxHeight + 10);
+  
+  // Add comments
+  doc.text('Comments:', margin, startY + boxHeight * 2 + 30);
+  const splitComments = doc.splitTextToSize(canvas.comments || 'No comments', pageWidth - margin * 2);
+  doc.text(splitComments, margin, startY + boxHeight * 2 + 45);
+};
+
 export function exportToPDF(canvas: ValuePropositionCanvasData) {
   if (!canvas) {
     console.error('No canvas data provided for PDF export');
@@ -39,7 +76,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 20;
 
-  // Calculate dimensions (manteniendo las dimensiones originales)
+  // Calculate dimensions
   const squareSize = 120;
   const circleRadius = 60;
   const startX = margin;
@@ -55,20 +92,20 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text(canvas.title || 'Value Proposition Canvas', pageWidth / 2, margin, { align: 'center' });
 
-    // Draw the Value Proposition Square (manteniendo la estructura original)
+    // Draw the Value Proposition Square
     doc.setDrawColor(70, 70, 70);
     doc.setLineWidth(0.1);
     doc.rect(startX, startY, squareSize, squareSize);
 
-    // Draw lines in square (manteniendo las líneas originales)
+    // Draw lines in square
     doc.line(centerX, centerY, startX + squareSize, centerY);
     doc.line(centerX, centerY, startX, startY);
     doc.line(centerX, centerY, startX, startY + squareSize);
 
-    // Draw circle section (manteniendo la estructura original)
+    // Draw circle section
     doc.circle(circleX, circleY, circleRadius);
 
-    // Draw lines in circle (manteniendo las divisiones originales)
+    // Draw lines in circle
     const angleStep = (2 * Math.PI) / 3;
     for (let i = 0; i < 3; i++) {
       const angle = i * angleStep;
@@ -80,7 +117,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
       );
     }
 
-    // Draw connecting arrow (manteniendo la flecha original)
+    // Draw connecting arrow
     doc.line(startX + squareSize, centerY, circleX - circleRadius, centerY);
     doc.line(circleX - circleRadius - 5, centerY - 2, circleX - circleRadius, centerY);
     doc.line(circleX - circleRadius - 5, centerY + 2, circleX - circleRadius, centerY);
@@ -191,6 +228,9 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
       40,
       40
     );
+
+    // Add the general information page
+    drawGeneralInfoPage(doc, canvas);
 
     // Add metadata
     doc.setFontSize(6);
