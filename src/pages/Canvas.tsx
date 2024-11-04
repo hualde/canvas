@@ -7,10 +7,30 @@ import { exportToPDF } from '../utils/pdfExport';
 import { icons } from '../utils/icons';
 import { format, parseISO } from 'date-fns';
 
+interface CanvasData {
+  id: string;
+  title: string;
+  content: {
+    keyPartners: string[];
+    keyActivities: string[];
+    keyResources: string[];
+    valuePropositions: string[];
+    customerRelationships: string[];
+    channels: string[];
+    customerSegments: string[];
+    costStructure: string[];
+    revenueStreams: string[];
+  };
+  project_name: string;
+  author: string;
+  date: string;
+  comments: string;
+}
+
 export function Canvas() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [canvas, setCanvas] = useState(null);
+  const [canvas, setCanvas] = useState<CanvasData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [project_name, setProject_name] = useState('');
   const [author, setAuthor] = useState('');
@@ -26,7 +46,12 @@ export function Canvas() {
           setCanvas(fetchedCanvas);
           setProject_name(fetchedCanvas?.project_name || '');
           setAuthor(fetchedCanvas?.author || '');
-          setDate(fetchedCanvas?.date ? format(parseISO(fetchedCanvas.date), 'yyyy-MM-dd') : '');
+          if (fetchedCanvas?.date) {
+            const parsedDate = parseISO(fetchedCanvas.date);
+            setDate(format(parsedDate, 'yyyy-MM-dd'));
+          } else {
+            setDate('');
+          }
           setComments(fetchedCanvas?.comments || '');
         } catch (error) {
           console.error('Error fetching canvas:', error);
@@ -39,7 +64,7 @@ export function Canvas() {
   }, [id]);
 
   const handleUpdateTitle = async (title: string) => {
-    if (!title.trim()) return;
+    if (!title.trim() || !canvas) return;
     try {
       const updatedCanvas = await updateCanvas(canvas.id, { ...canvas, title });
       setCanvas(updatedCanvas);
@@ -48,7 +73,8 @@ export function Canvas() {
     }
   };
 
-  const handleSectionUpdate = async (section: string, items: string[]) => {
+  const handleSectionUpdate = async (section: keyof CanvasData['content'], items: string[]) => {
+    if (!canvas) return;
     const updatedContent = { ...canvas.content, [section]: items };
     try {
       const updatedCanvas = await updateCanvas(canvas.id, { ...canvas, content: updatedContent });
@@ -59,10 +85,13 @@ export function Canvas() {
   };
 
   const handleExportPDF = () => {
-    exportToPDF(canvas);
+    if (canvas) {
+      exportToPDF(canvas);
+    }
   };
 
   const handleUpdateCanvasInfo = async () => {
+    if (!canvas) return;
     try {
       console.log('Updating canvas info:', { id: canvas.id, project_name, author, date, comments });
       const updatedCanvas = await updateCanvas(canvas.id, {
@@ -83,9 +112,11 @@ export function Canvas() {
   };
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
-    </div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   if (!canvas) {
@@ -174,7 +205,7 @@ export function Canvas() {
       <div className="grid grid-cols-5 gap-4">
         <CanvasSection
           title="Key Partners"
-          items={canvas.content.keyPartners || []}
+          items={canvas.content.keyPartners}
           onUpdate={(items) => handleSectionUpdate('keyPartners', items)}
           description="Who are your key partners and suppliers?"
           className="h-full"
@@ -183,7 +214,7 @@ export function Canvas() {
         <div className="grid grid-rows-2 gap-4">
           <CanvasSection
             title="Key Activities"
-            items={canvas.content.keyActivities || []}
+            items={canvas.content.keyActivities}
             onUpdate={(items) => handleSectionUpdate('keyActivities', items)}
             description="What key activities does your value proposition require?"
             className="h-full"
@@ -191,7 +222,7 @@ export function Canvas() {
           />
           <CanvasSection
             title="Key Resources"
-            items={canvas.content.keyResources || []}
+            items={canvas.content.keyResources}
             onUpdate={(items) => handleSectionUpdate('keyResources', items)}
             description="What key resources does your value proposition require?"
             className="h-full"
@@ -200,7 +231,7 @@ export function Canvas() {
         </div>
         <CanvasSection
           title="Value Propositions"
-          items={canvas.content.valuePropositions || []}
+          items={canvas.content.valuePropositions}
           onUpdate={(items) => handleSectionUpdate('valuePropositions', items)}
           description="What value do you deliver to the customer?"
           className="h-full"
@@ -209,7 +240,7 @@ export function Canvas() {
         <div className="grid grid-rows-2 gap-4">
           <CanvasSection
             title="Customer Relationships"
-            items={canvas.content.customerRelationships || []}
+            items={canvas.content.customerRelationships}
             onUpdate={(items) => handleSectionUpdate('customerRelationships', items)}
             description="What relationship does each customer segment expect?"
             className="h-full"
@@ -217,7 +248,7 @@ export function Canvas() {
           />
           <CanvasSection
             title="Channels"
-            items={canvas.content.channels || []}
+            items={canvas.content.channels}
             onUpdate={(items) => handleSectionUpdate('channels', items)}
             description="Which channels do your customers prefer?"
             className="h-full"
@@ -226,7 +257,7 @@ export function Canvas() {
         </div>
         <CanvasSection
           title="Customer Segments"
-          items={canvas.content.customerSegments || []}
+          items={canvas.content.customerSegments}
           onUpdate={(items) => handleSectionUpdate('customerSegments', items)}
           description="For whom are you creating value?"
           className="h-full"
@@ -237,7 +268,7 @@ export function Canvas() {
       <div className="grid grid-cols-2 gap-4 mt-4">
         <CanvasSection
           title="Cost Structure"
-          items={canvas.content.costStructure || []}
+          items={canvas.content.costStructure}
           onUpdate={(items) => handleSectionUpdate('costStructure', items)}
           description="What are the most important costs inherent in your business model?"
           className="h-full"
@@ -245,7 +276,7 @@ export function Canvas() {
         />
         <CanvasSection
           title="Revenue Streams"
-          items={canvas.content.revenueStreams || []}
+          items={canvas.content.revenueStreams}
           onUpdate={(items) => handleSectionUpdate('revenueStreams', items)}
           description="For what value are your customers really willing to pay?"
           className="h-full"
