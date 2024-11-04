@@ -134,9 +134,9 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     // Products & Services (lower right triangle)
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.text('Products and Services', centerX + 0, centerY + 0);
+    doc.text('Products and Services', centerX + 0, centerY + 10);
     if (icons.products) {
-      doc.addImage(icons.products, 'PNG', centerX + 5, centerY + 5, 12, 12);
+      doc.addImage(icons.products, 'PNG', centerX - 35, centerY + 60, 12, 12);
     }
     drawContent(
       canvas.content.productsAndServices || [],
