@@ -104,7 +104,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     // Gain Creators (upper triangle)
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.text('Gain Creators', startX + 10, startY + 15);
+    doc.text('Gain Creators', startX + 25, startY + 5);
     if (icons.gainCreators) {
       doc.addImage(icons.gainCreators, 'PNG', startX + 25, startY + 10, 12, 12);
     }
