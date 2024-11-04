@@ -228,37 +228,37 @@ export function ValuePropositionCanvas() {
         </div>
 
         {/* Right side - Circle section */}
-        <div className="relative border-2 border-gray-200 rounded-full aspect-square overflow-hidden">
+        <div className="relative border-2 border-gray-200 rounded-full aspect-square">
           <div className="absolute inset-0 bg-blue-200/30 rounded-full"></div>
-          <div className="relative h-full grid grid-cols-2 gap-2 p-4 z-10">
-            <div className="relative">
+          <div className="absolute inset-0 grid grid-cols-2 gap-2 p-4">
+            <div className="relative z-20">
               <CanvasSection
                 title="Customer Jobs"
                 items={canvas.content.customerJobs || []}
                 onUpdate={(items) => handleSectionUpdate('customerJobs', items)}
                 description="What jobs do your customers need to get done?"
                 icon={icons.customerJobs}
-                className="h-full bg-white/50 text-sm overflow-auto"
+                className="h-full bg-white/50"
               />
             </div>
-            <div className="relative">
+            <div className="relative z-20">
               <CanvasSection
                 title="Gains"
                 items={canvas.content.gains || []}
                 onUpdate={(items) => handleSectionUpdate('gains', items)}
                 description="What gains do your customers desire?"
                 icon={icons.gains}
-                className="h-full bg-white/50 text-sm overflow-auto"
+                className="h-full bg-white/50"
               />
             </div>
-            <div className="relative col-span-2">
+            <div className="relative col-span-2 z-20">
               <CanvasSection
                 title="Pains"
                 items={canvas.content.pains || []}
                 onUpdate={(items) => handleSectionUpdate('pains', items)}
                 description="What pains do your customers experience?"
                 icon={icons.pains}
-                className="h-full bg-white/50 text-sm overflow-auto"
+                className="h-full bg-white/50"
               />
             </div>
           </div>
