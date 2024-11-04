@@ -24,7 +24,7 @@ interface CanvasData {
   comments: string;
 }
 
-export function ValuePropositionCanvas() {
+export default function ValuePropositionCanvas() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth0();
@@ -191,73 +191,73 @@ export function ValuePropositionCanvas() {
 
       <div className="grid grid-cols-2 gap-8">
         {/* Left side - Square section */}
-        <div className="relative border-2 border-gray-200 bg-white rounded-lg p-4 aspect-square overflow-hidden">
-          <div className="grid grid-cols-2 gap-4 h-full relative z-10">
-            <div className="relative p-2">
+        <div className="relative border-2 border-gray-200 bg-white rounded-lg p-6 aspect-square">
+          <div className="grid grid-cols-2 gap-4 h-full">
+            <div className="relative">
               <CanvasSection
                 title="Products and Services"
                 items={canvas.content.productsAndServices || []}
                 onUpdate={(items) => handleSectionUpdate('productsAndServices', items)}
                 description="What products and services do you offer?"
                 icon={icons.products}
-                className="h-full bg-white/70 backdrop-blur-sm rounded-lg p-3"
+                className="h-full"
               />
             </div>
-            <div className="relative p-2">
+            <div className="relative">
               <CanvasSection
                 title="Gain Creators"
                 items={canvas.content.gainCreators || []}
                 onUpdate={(items) => handleSectionUpdate('gainCreators', items)}
                 description="How do you create customer gains?"
                 icon={icons.gainCreators}
-                className="h-full bg-white/70 backdrop-blur-sm rounded-lg p-3"
+                className="h-full"
               />
             </div>
-            <div className="relative col-span-2 p-2">
+            <div className="relative col-span-2">
               <CanvasSection
                 title="Pain Relievers"
                 items={canvas.content.painRelievers || []}
                 onUpdate={(items) => handleSectionUpdate('painRelievers', items)}
                 description="How do you relieve customer pains?"
                 icon={icons.painRelievers}
-                className="h-full bg-white/70 backdrop-blur-sm rounded-lg p-3"
+                className="h-full"
               />
             </div>
           </div>
         </div>
 
         {/* Right side - Circle section */}
-        <div className="relative border-2 border-gray-200 rounded-full aspect-square overflow-hidden">
-          <div className="absolute inset-0 bg-blue-200 rounded-full"></div>
-          <div className="absolute inset-0 grid grid-cols-2 gap-2 p-6 z-10">
-            <div className="relative p-2">
+        <div className="relative border-2 border-gray-200 rounded-full aspect-square">
+          <div className="absolute inset-0 bg-blue-200/30 rounded-full"></div>
+          <div className="relative h-full grid grid-cols-2 gap-4 p-8">
+            <div className="relative">
               <CanvasSection
                 title="Customer Jobs"
                 items={canvas.content.customerJobs || []}
                 onUpdate={(items) => handleSectionUpdate('customerJobs', items)}
                 description="What jobs do your customers need to get done?"
                 icon={icons.customerJobs}
-                className="h-full bg-white/70 backdrop-blur-sm rounded-lg p-3"
+                className="h-full bg-white/50"
               />
             </div>
-            <div className="relative p-2">
+            <div className="relative">
               <CanvasSection
                 title="Gains"
                 items={canvas.content.gains || []}
                 onUpdate={(items) => handleSectionUpdate('gains', items)}
                 description="What gains do your customers desire?"
                 icon={icons.gains}
-                className="h-full bg-white/70 backdrop-blur-sm rounded-lg p-3"
+                className="h-full bg-white/50"
               />
             </div>
-            <div className="relative col-span-2 p-2">
+            <div className="relative col-span-2">
               <CanvasSection
                 title="Pains"
                 items={canvas.content.pains || []}
                 onUpdate={(items) => handleSectionUpdate('pains', items)}
                 description="What pains do your customers experience?"
                 icon={icons.pains}
-                className="h-full bg-white/70 backdrop-blur-sm rounded-lg p-3"
+                className="h-full bg-white/50"
               />
             </div>
           </div>
