@@ -197,86 +197,89 @@ export function Canvas() {
         />
       </div>
 
-      <div className="grid grid-cols-5 gap-4">
-        <CanvasSection
-          title="Key Partners"
-          items={canvas.content.keyPartners}
-          onUpdate={(items) => handleSectionUpdate('keyPartners', items)}
-          description="Who are your key partners and suppliers?"
-          className="h-full"
-          icon={icons.keyPartnerships}
-        />
-        <div className="grid grid-rows-2 gap-4">
+      <div className="relative border-2 border-gray-200 rounded-lg p-6 overflow-hidden">
+        <div className="absolute inset-0 bg-blue-200/30"></div>
+        <div className="relative z-10 grid grid-cols-5 gap-4">
           <CanvasSection
-            title="Key Activities"
-            items={canvas.content.keyActivities}
-            onUpdate={(items) => handleSectionUpdate('keyActivities', items)}
-            description="What key activities does your value proposition require?"
-            className="h-full"
-            icon={icons.keyActivities}
+            title="Key Partners"
+            items={canvas.content.keyPartners}
+            onUpdate={(items) => handleSectionUpdate('keyPartners', items)}
+            description="Who are your key partners and suppliers?"
+            className="h-full bg-white/50"
+            icon={icons.keyPartnerships}
           />
+          <div className="grid grid-rows-2 gap-4">
+            <CanvasSection
+              title="Key Activities"
+              items={canvas.content.keyActivities}
+              onUpdate={(items) => handleSectionUpdate('keyActivities', items)}
+              description="What key activities does your value proposition require?"
+              className="h-full bg-white/50"
+              icon={icons.keyActivities}
+            />
+            <CanvasSection
+              title="Key Resources"
+              items={canvas.content.keyResources}
+              onUpdate={(items) => handleSectionUpdate('keyResources', items)}
+              description="What key resources does your value proposition require?"
+              className="h-full bg-white/50"
+              icon={icons.keyResources}
+            />
+          </div>
           <CanvasSection
-            title="Key Resources"
-            items={canvas.content.keyResources}
-            onUpdate={(items) => handleSectionUpdate('keyResources', items)}
-            description="What key resources does your value proposition require?"
-            className="h-full"
-            icon={icons.keyResources}
+            title="Value Propositions"
+            items={canvas.content.valuePropositions}
+            onUpdate={(items) => handleSectionUpdate('valuePropositions', items)}
+            description="What value do you deliver to the customer?"
+            className="h-full bg-white/50"
+            icon={icons.valuePropositions}
+          />
+          <div className="grid grid-rows-2 gap-4">
+            <CanvasSection
+              title="Customer Relationships"
+              items={canvas.content.customerRelationships}
+              onUpdate={(items) => handleSectionUpdate('customerRelationships', items)}
+              description="What relationship does each customer segment expect?"
+              className="h-full bg-white/50"
+              icon={icons.customerRelationships}
+            />
+            <CanvasSection
+              title="Channels"
+              items={canvas.content.channels}
+              onUpdate={(items) => handleSectionUpdate('channels', items)}
+              description="Which channels do your customers prefer?"
+              className="h-full bg-white/50"
+              icon={icons.channels}
+            />
+          </div>
+          <CanvasSection
+            title="Customer Segments"
+            items={canvas.content.customerSegments}
+            onUpdate={(items) => handleSectionUpdate('customerSegments', items)}
+            description="For whom are you creating value?"
+            className="h-full bg-white/50"
+            icon={icons.customerSegments}
           />
         </div>
-        <CanvasSection
-          title="Value Propositions"
-          items={canvas.content.valuePropositions}
-          onUpdate={(items) => handleSectionUpdate('valuePropositions', items)}
-          description="What value do you deliver to the customer?"
-          className="h-full"
-          icon={icons.valuePropositions}
-        />
-        <div className="grid grid-rows-2 gap-4">
-          <CanvasSection
-            title="Customer Relationships"
-            items={canvas.content.customerRelationships}
-            onUpdate={(items) => handleSectionUpdate('customerRelationships', items)}
-            description="What relationship does each customer segment expect?"
-            className="h-full"
-            icon={icons.customerRelationships}
-          />
-          <CanvasSection
-            title="Channels"
-            items={canvas.content.channels}
-            onUpdate={(items) => handleSectionUpdate('channels', items)}
-            description="Which channels do your customers prefer?"
-            className="h-full"
-            icon={icons.channels}
-          />
-        </div>
-        <CanvasSection
-          title="Customer Segments"
-          items={canvas.content.customerSegments}
-          onUpdate={(items) => handleSectionUpdate('customerSegments', items)}
-          description="For whom are you creating value?"
-          className="h-full"
-          icon={icons.customerSegments}
-        />
-      </div>
 
-      <div className="grid grid-cols-2 gap-4 mt-4">
-        <CanvasSection
-          title="Cost Structure"
-          items={canvas.content.costStructure}
-          onUpdate={(items) => handleSectionUpdate('costStructure', items)}
-          description="What are the most important costs inherent in your business model?"
-          className="h-full"
-          icon={icons.costStructure}
-        />
-        <CanvasSection
-          title="Revenue Streams"
-          items={canvas.content.revenueStreams}
-          onUpdate={(items) => handleSectionUpdate('revenueStreams', items)}
-          description="For what value are your customers really willing to pay?"
-          className="h-full"
-          icon={icons.revenueStreams}
-        />
+        <div className="relative z-10 grid grid-cols-2 gap-4 mt-4">
+          <CanvasSection
+            title="Cost Structure"
+            items={canvas.content.costStructure}
+            onUpdate={(items) => handleSectionUpdate('costStructure', items)}
+            description="What are the most important costs inherent in your business model?"
+            className="h-full bg-white/50"
+            icon={icons.costStructure}
+          />
+          <CanvasSection
+            title="Revenue Streams"
+            items={canvas.content.revenueStreams}
+            onUpdate={(items) => handleSectionUpdate('revenueStreams', items)}
+            description="For what value are your customers really willing to pay?"
+            className="h-full bg-white/50"
+            icon={icons.revenueStreams}
+          />
+        </div>
       </div>
 
       <button
