@@ -152,7 +152,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text('Gains', circleX - 15, circleY - circleRadius + 7);
     if (icons.gains) {
-      doc.addImage(icons.gains, 'PNG', circleX - 5, circleY - circleRadius + 10, 12, 12);
+      doc.addImage(icons.gains, 'PNG', circleX - 15, circleY - circleRadius + 10, 12, 12);
     }
     drawContent(
       canvas.content.gains || [],
@@ -167,7 +167,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text('Customer Jobs', circleX + 10, circleY + 5);
     if (icons.customerJobs) {
-      doc.addImage(icons.customerJobs, 'PNG', circleX - 7, circleY + 35, 12, 12);
+      doc.addImage(icons.customerJobs, 'PNG', circleX - 12, circleY + 35, 12, 12);
     }
     drawContent(
       canvas.content.customerJobs || [],
