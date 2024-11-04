@@ -5,7 +5,6 @@ import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/pdfExport';
 import { icons } from '../utils/icons';
-import { format, parseISO } from 'date-fns';
 
 interface CanvasData {
   id: string;
@@ -46,12 +45,7 @@ export function Canvas() {
           setCanvas(fetchedCanvas);
           setProject_name(fetchedCanvas?.project_name || '');
           setAuthor(fetchedCanvas?.author || '');
-          if (fetchedCanvas?.date) {
-            const parsedDate = parseISO(fetchedCanvas.date);
-            setDate(format(parsedDate, 'yyyy-MM-dd'));
-          } else {
-            setDate('');
-          }
+          setDate(fetchedCanvas?.date || '');
           setComments(fetchedCanvas?.comments || '');
         } catch (error) {
           console.error('Error fetching canvas:', error);
@@ -102,10 +96,11 @@ export function Canvas() {
         comments
       });
       console.log('Response from updateCanvas:', updatedCanvas);
-      if (updatedCanvas.project_name !== project_name) {
-        console.error('Project name not updated correctly');
-      }
       setCanvas(updatedCanvas);
+      setProject_name(updatedCanvas.project_name);
+      setAuthor(updatedCanvas.author);
+      setDate(updatedCanvas.date);
+      setComments(updatedCanvas.comments);
     } catch (error) {
       console.error('Error updating canvas info:', error);
     }
