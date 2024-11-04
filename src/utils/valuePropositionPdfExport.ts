@@ -148,40 +148,46 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
 
     // Circle content positioning
     // Gains (top section)
-    doc.text('Gains', circleX - 15, circleY - circleRadius + 15);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Gains', circleX - 15, circleY - circleRadius + 10);
     if (icons.gains) {
-      doc.addImage(icons.gains, 'PNG', circleX - 6, circleY - circleRadius + 20, 12, 12);
+      doc.addImage(icons.gains, 'PNG', circleX - 15, circleY - circleRadius + 5, 12, 12);
     }
     drawContent(
       canvas.content.gains || [],
-      circleX - 25,
-      circleY - circleRadius + 35,
+      circleX + 5,
+      circleY - circleRadius + 15,
       50,
       40
     );
 
     // Customer Jobs (right section)
-    doc.text('Customer Jobs', circleX + 20, circleY);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Customer Jobs', circleX + 10, circleY + 5);
     if (icons.customerJobs) {
-      doc.addImage(icons.customerJobs, 'PNG', circleX + 25, circleY + 5, 12, 12);
+      doc.addImage(icons.customerJobs, 'PNG', circleX + 40, circleY + 5, 12, 12);
     }
     drawContent(
       canvas.content.customerJobs || [],
-      circleX + 15,
-      circleY + 20,
+      circleX - 5,
+      circleY + 5,
       40,
       40
     );
 
     // Pains (bottom left section)
-    doc.text('Pains', circleX - circleRadius + 10, circleY + 20);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Pains', circleX - circleRadius + 10, circleY - 40);
     if (icons.pains) {
-      doc.addImage(icons.pains, 'PNG', circleX - circleRadius + 15, circleY + 25, 12, 12);
+      doc.addImage(icons.pains, 'PNG', circleX - circleRadius + 10, circleY - 50, 12, 12);
     }
     drawContent(
       canvas.content.pains || [],
       circleX - circleRadius + 10,
-      circleY + 40,
+      circleY + 5,
       40,
       40
     );
