@@ -106,7 +106,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text('Gain Creators', startX + 10, startY + 15);
     if (icons.gainCreators) {
-      doc.addImage(icons.gainCreators, 'PNG', startX + 35, startY + 20, 12, 12);
+      doc.addImage(icons.gainCreators, 'PNG', startX + 25, startY + 10, 12, 12);
     }
     drawContent(
       canvas.content.gainCreators || [], 
