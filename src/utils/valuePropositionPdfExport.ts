@@ -126,7 +126,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     drawContent(
       canvas.content.painRelievers || [],
       startX + 5,
-      centerY - 25,
+      centerY - 40,
       (centerX - startX) - 15,
       (startY + squareSize - centerY) - 20
     );
