@@ -119,14 +119,14 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     // Pain Relievers (lower left triangle)
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.text('Pain Relievers', startX + 10, centerY - 35);
+    doc.text('Pain Relievers', startX + 2, centerY - 25);
     if (icons.painRelievers) {
-      doc.addImage(icons.painRelievers, 'PNG', startX + 10, centerY - 35, 12, 12);
+      doc.addImage(icons.painRelievers, 'PNG', startX + 5, centerY - 40, 12, 12);
     }
     drawContent(
       canvas.content.painRelievers || [],
-      startX + 10,
-      centerY - 35,
+      startX + 5,
+      centerY - 25,
       (centerX - startX) - 15,
       (startY + squareSize - centerY) - 20
     );
