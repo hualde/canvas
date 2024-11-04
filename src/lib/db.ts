@@ -7,7 +7,13 @@ if (!process.env.POSTGRES_URL) {
 
 export async function getCanvases(userId: string) {
   const { rows } = await sql`
-    SELECT id, title, project_name, author, date, updated_at
+    SELECT 
+      id, 
+      title, 
+      project_name, 
+      author, 
+      date AT TIME ZONE 'UTC' as date, 
+      updated_at AT TIME ZONE 'UTC' as updated_at
     FROM canvas
     WHERE user_id = ${userId}
     ORDER BY updated_at DESC
@@ -17,7 +23,15 @@ export async function getCanvases(userId: string) {
 
 export async function getCanvas(id: string) {
   const { rows } = await sql`
-    SELECT id, title, content, project_name, author, date, comments
+    SELECT 
+      id, 
+      title, 
+      content, 
+      project_name, 
+      author, 
+      date AT TIME ZONE 'UTC' as date, 
+      comments,
+      updated_at AT TIME ZONE 'UTC' as updated_at
     FROM canvas
     WHERE id = ${id}
   `;
@@ -26,8 +40,17 @@ export async function getCanvas(id: string) {
 
 export async function createCanvas(userId: string, title: string, content: any) {
   const { rows } = await sql`
-    INSERT INTO canvas (user_id, title, content, project_name, author, date, comments)
-    VALUES (${userId}, ${title}, ${JSON.stringify(content)}, '', '', CURRENT_DATE, '')
+    INSERT INTO canvas (user_id, title, content, project_name, author, date, comments, updated_at)
+    VALUES (
+      ${userId}, 
+      ${title}, 
+      ${JSON.stringify(content)}, 
+      '', 
+      '', 
+      CURRENT_DATE AT TIME ZONE 'UTC', 
+      '',
+      CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
+    )
     RETURNING *
   `;
   return rows[0];
@@ -42,11 +65,19 @@ export async function updateCanvas(id: string, canvasData: any) {
       content = ${JSON.stringify(canvasData.content)},
       project_name = ${canvasData.project_name},
       author = ${canvasData.author},
-      date = ${canvasData.date}, -- Usa directamente el valor de date sin crear un nuevo objeto Date
+      date = ${canvasData.date}::date AT TIME ZONE 'UTC',
       comments = ${canvasData.comments},
-      updated_at = CURRENT_TIMESTAMP
+      updated_at = CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
     WHERE id = ${id}
-    RETURNING *
+    RETURNING 
+      id, 
+      title, 
+      content, 
+      project_name, 
+      author, 
+      date AT TIME ZONE 'UTC' as date, 
+      comments,
+      updated_at AT TIME ZONE 'UTC' as updated_at
   `;
   console.log('Database update result:', rows[0]);
   return rows[0];

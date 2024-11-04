@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download, Sparkles } from 'lucide-react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/pdfExport';
 import { icons } from '../utils/icons';
+import { format, parseISO } from 'date-fns';
 
 export function Canvas() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth0();
   const [canvas, setCanvas] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [project_name, setProject_name] = useState('');
@@ -27,7 +26,7 @@ export function Canvas() {
           setCanvas(fetchedCanvas);
           setProject_name(fetchedCanvas?.project_name || '');
           setAuthor(fetchedCanvas?.author || '');
-          setDate(fetchedCanvas?.date ? new Date(fetchedCanvas.date).toISOString().split('T')[0] : '');
+          setDate(fetchedCanvas?.date ? format(parseISO(fetchedCanvas.date), 'yyyy-MM-dd') : '');
           setComments(fetchedCanvas?.comments || '');
         } catch (error) {
           console.error('Error fetching canvas:', error);
@@ -70,7 +69,7 @@ export function Canvas() {
         ...canvas,
         project_name,
         author,
-        date: date || null, // Envía la fecha como string o null si está vacía
+        date,
         comments
       });
       console.log('Response from updateCanvas:', updatedCanvas);
@@ -155,7 +154,10 @@ export function Canvas() {
         <input
           type="date"
           value={date}
-          onChange={(e) => setDate(e.target.value)}
+          onChange={(e) => {
+            console.log('Date changed:', e.target.value);
+            setDate(e.target.value);
+          }}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
