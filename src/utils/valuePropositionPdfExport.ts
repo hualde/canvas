@@ -237,7 +237,7 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
     doc.setTextColor(128, 128, 128);
     doc.text(`Generated on ${new Date().toLocaleDateString()}`, margin, pageHeight - 5);
 
-    // Save the PDF
+    // Save the PDF.
     const filename = `${(canvas.title || 'value-proposition-canvas').toLowerCase().replace(/[^a-z0-9]/g, '-')}.pdf`;
     doc.save(filename);
   } catch (error) {
