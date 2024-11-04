@@ -5,7 +5,7 @@ import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/pdfExport';
 import { icons } from '../utils/icons';
-import { AIChat } from './AIChat';
+import { AIChat } from '../components/AIChat';
 
 interface CanvasData {
   id: string;
