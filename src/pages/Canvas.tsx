@@ -70,7 +70,7 @@ export function Canvas() {
         ...canvas,
         project_name,
         author,
-        date: date ? date : null, // Send the date string directly, or null if it's empty
+        date: date || null, // Envía la fecha como string o null si está vacía
         comments
       });
       console.log('Response from updateCanvas:', updatedCanvas);

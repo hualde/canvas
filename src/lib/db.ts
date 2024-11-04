@@ -42,7 +42,7 @@ export async function updateCanvas(id: string, canvasData: any) {
       content = ${JSON.stringify(canvasData.content)},
       project_name = ${canvasData.project_name},
       author = ${canvasData.author},
-      date = ${canvasData.date ? new Date(canvasData.date) : null},
+      date = ${canvasData.date}, -- Usa directamente el valor de date sin crear un nuevo objeto Date
       comments = ${canvasData.comments},
       updated_at = CURRENT_TIMESTAMP
     WHERE id = ${id}
