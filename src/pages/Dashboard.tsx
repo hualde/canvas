@@ -27,11 +27,19 @@ export function Dashboard() {
     fetchCanvases();
   }, [isAuthenticated, user]);
 
-  const handleCreateCanvas = async (type: 'business' | 'value-proposition') => {
+  const handleCreateCanvas = async (type: 'business' | 'value-proposition' | 'swot') => {
     if (isAuthenticated && user?.sub) {
       try {
-        const newCanvas = await createCanvas(user.sub, `Untitled ${type === 'business' ? 'Business Model' : 'Value Proposition'} Canvas`, {});
-        navigate(type === 'business' ? `/canvas/${newCanvas.id}` : `/value-proposition/${newCanvas.id}`);
+        const newCanvas = await createCanvas(user.sub, `Untitled ${
+          type === 'business' ? 'Business Model' : 
+          type === 'value-proposition' ? 'Value Proposition' : 
+          'SWOT Analysis'
+        } Canvas`, {});
+        navigate(
+          type === 'business' ? `/canvas/${newCanvas.id}` : 
+          type === 'value-proposition' ? `/value-proposition/${newCanvas.id}` : 
+          `/swot/${newCanvas.id}`
+        );
       } catch (error) {
         console.error('Error creating canvas:', error);
       }
@@ -72,6 +80,13 @@ export function Dashboard() {
             <Plus className="w-5 h-5 mr-2" />
             New Value Proposition Canvas
           </button>
+          <button
+            onClick={() => handleCreateCanvas('swot')}
+            className="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-sm"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            New SWOT Analysis
+          </button>
         </div>
       </div>
 
@@ -86,7 +101,11 @@ export function Dashboard() {
             </h3>
             <div className="flex justify-end space-x-2">
               <button
-                onClick={() => navigate(canvas.title.includes('Value Proposition') ? `/value-proposition/${canvas.id}` : `/canvas/${canvas.id}`)}
+                onClick={() => navigate(
+                  canvas.title.includes('Value Proposition') ? `/value-proposition/${canvas.id}` : 
+                  canvas.title.includes('SWOT Analysis') ? `/swot/${canvas.id}` :
+                  `/canvas/${canvas.id}`
+                )}
                 className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
               >
                 <Edit3 className="w-5 h-5" />
