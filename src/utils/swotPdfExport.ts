@@ -90,7 +90,7 @@ export function exportSWOTToPDF(canvas: SWOTCanvasData) {
     doc.setFont('helvetica', 'bold');
     doc.text(canvas.title || 'SWOT Analysis', pageWidth / 2, margin, { align: 'center' });
 
-    const drawSection = (title: string, items: string[], x: number, y: number, iconKey: keyof typeof icons) => {
+    const drawSection = (title: string, items: string[] | undefined, x: number, y: number, iconKey: keyof typeof icons) => {
       // Draw box
       doc.setDrawColor(70, 70, 70);
       doc.setLineWidth(0.1);
@@ -108,22 +108,29 @@ export function exportSWOTToPDF(canvas: SWOTCanvasData) {
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       let itemY = y + 25;
-      items.forEach((item) => {
-        const lines = doc.splitTextToSize(item, sectionWidth - 10);
-        lines.forEach((line: string) => {
-          if (itemY < y + sectionHeight - 5) {
-            doc.text(`• ${line}`, x + 5, itemY);
-            itemY += 5;
+      
+      if (Array.isArray(items) && items.length > 0) {
+        items.forEach((item) => {
+          if (typeof item === 'string') {
+            const lines = doc.splitTextToSize(item, sectionWidth - 10);
+            lines.forEach((line: string) => {
+              if (itemY < y + sectionHeight - 5) {
+                doc.text(`• ${line}`, x + 5, itemY);
+                itemY += 5;
+              }
+            });
           }
         });
-      });
+      } else {
+        doc.text('No items', x + 5, itemY);
+      }
     };
 
     // Draw SWOT sections
-    drawSection('Strengths', canvas.content.strengths, margin, margin + 20, 'strength');
-    drawSection('Weaknesses', canvas.content.weaknesses, margin * 2 + sectionWidth, margin + 20, 'weakness');
-    drawSection('Opportunities', canvas.content.opportunities, margin, margin * 2 + sectionHeight, 'opportunity');
-    drawSection('Threats', canvas.content.threats, margin * 2 + sectionWidth, margin * 2 + sectionHeight, 'threat');
+    drawSection('Strengths', canvas.content?.strengths, margin, margin + 20, 'strength');
+    drawSection('Weaknesses', canvas.content?.weaknesses, margin * 2 + sectionWidth, margin + 20, 'weakness');
+    drawSection('Opportunities', canvas.content?.opportunities, margin, margin * 2 + sectionHeight, 'opportunity');
+    drawSection('Threats', canvas.content?.threats, margin * 2 + sectionWidth, margin * 2 + sectionHeight, 'threat');
 
     // Add the general information page
     drawGeneralInfoPage(doc, canvas);
