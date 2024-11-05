@@ -222,7 +222,9 @@ export function EmpathyMap() {
         />
       </div>
       
-      <AIChat canvasContent={canvas.content} />
+      <div className="mt-8">
+        <AIChat canvasContent={canvas.content} />
+      </div>
     </div>
   );
 }
