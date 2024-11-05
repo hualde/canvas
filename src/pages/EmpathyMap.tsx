@@ -181,14 +181,14 @@ export function EmpathyMap() {
             </div>
           </div>
 
-          {/* Back section - Think & Feel */}
-          <div className="absolute inset-0 flex items-center justify-center">
+          {/* Top section - Think & Feel */}
+          <div className="absolute top-0 left-0 right-0 h-1/2 z-10">
             <CanvasSection
               title="Think & Feel?"
               items={canvas.content.thinkAndFeel || []}
               onUpdate={(items) => handleSectionUpdate('thinkAndFeel', items)}
               description="What might your user be thinking and feeling?"
-              className="h-full w-full bg-purple-50 z-0"
+              className="h-full bg-purple-50"
               icon={icons.thinkAndFeel}
             />
           </div>
