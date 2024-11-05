@@ -5,15 +5,16 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { AIChat } from '../components/AIChat';
+import { icons } from '../utils/icons';
 
 interface EmpathyMapData {
   id: string;
   title: string;
   content: {
-    says: string[];
-    thinks: string[];
-    does: string[];
-    feels: string[];
+    thinkAndFeel: string[];
+    see: string[];
+    hear: string[];
+    sayAndDo: string[];
     pains: string[];
     gains: string[];
   };
@@ -170,51 +171,86 @@ export function EmpathyMap() {
         />
       </div>
 
+      <div className="relative border-2 border-gray-200 rounded-lg aspect-[16/10] mb-8">
+        <div className="absolute inset-0">
+          {/* Central circle */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border-4 border-gray-200 rounded-full bg-white z-10 flex items-center justify-center">
+            <div className="text-center text-gray-600">
+              <div className="font-semibold">User/Customer</div>
+              <div className="text-sm">Profile</div>
+            </div>
+          </div>
+
+          {/* Top section - Think & Feel */}
+          <div className="absolute top-0 left-0 right-0 h-1/2">
+            <CanvasSection
+              title="Think & Feel?"
+              items={canvas.content.thinkAndFeel || []}
+              onUpdate={(items) => handleSectionUpdate('thinkAndFeel', items)}
+              description="What might your user be thinking and feeling?"
+              className="h-full bg-purple-50"
+              icon={icons.thinkAndFeel}
+            />
+          </div>
+
+          {/* Right section - See */}
+          <div className="absolute top-0 right-0 w-1/2 h-1/2">
+            <CanvasSection
+              title="See?"
+              items={canvas.content.see || []}
+              onUpdate={(items) => handleSectionUpdate('see', items)}
+              description="What does your user see in their environment?"
+              className="h-full bg-blue-50"
+              icon={icons.see}
+            />
+          </div>
+
+          {/* Left section - Hear */}
+          <div className="absolute top-0 left-0 w-1/2 h-1/2">
+            <CanvasSection
+              title="Hear?"
+              items={canvas.content.hear || []}
+              onUpdate={(items) => handleSectionUpdate('hear', items)}
+              description="What does your user hear from others?"
+              className="h-full bg-green-50"
+              icon={icons.hear}
+            />
+          </div>
+
+          {/* Bottom section - Say & Do */}
+          <div className="absolute bottom-0 left-0 right-0 h-1/2">
+            <CanvasSection
+              title="Say & Do?"
+              items={canvas.content.sayAndDo || []}
+              onUpdate={(items) => handleSectionUpdate('sayAndDo', items)}
+              description="What does your user say and do?"
+              className="h-full bg-yellow-50"
+              icon={icons.sayAndDo}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom sections - Pains and Gains */}
       <div className="grid grid-cols-2 gap-4">
         <CanvasSection
-          title="Says"
-          items={canvas.content.says || []}
-          onUpdate={(items) => handleSectionUpdate('says', items)}
-          description="What the user says out loud in an interview or some other usability study?"
-          className="bg-blue-100"
-        />
-        <CanvasSection
-          title="Thinks"
-          items={canvas.content.thinks || []}
-          onUpdate={(items) => handleSectionUpdate('thinks', items)}
-          description="What might the user be thinking? What does this tell you about their beliefs and motivations?"
-          className="bg-green-100"
-        />
-        <CanvasSection
-          title="Does"
-          items={canvas.content.does || []}
-          onUpdate={(items) => handleSectionUpdate('does', items)}
-          description="What actions and behaviors did you notice?"
-          className="bg-yellow-100"
-        />
-        <CanvasSection
-          title="Feels"
-          items={canvas.content.feels || []}
-          onUpdate={(items) => handleSectionUpdate('feels', items)}
-          description="What emotions might the user be feeling?"
-          className="bg-red-100"
-        />
-        <CanvasSection
-          title="Pains"
+          title="Pain"
           items={canvas.content.pains || []}
           onUpdate={(items) => handleSectionUpdate('pains', items)}
-          description="What are the user's pain points or frustrations?"
-          className="bg-purple-100"
+          description="What are your user's fears, frustrations, and anxieties?"
+          className="bg-red-50"
+          icon={icons.pains}
         />
         <CanvasSection
-          title="Gains"
+          title="Gain"
           items={canvas.content.gains || []}
           onUpdate={(items) => handleSectionUpdate('gains', items)}
-          description="What are the user's wants, needs, and measures of success?"
-          className="bg-indigo-100"
+          description="What are your user's wants, needs, and measures of success?"
+          className="bg-emerald-50"
+          icon={icons.gains}
         />
       </div>
-      
+
       <AIChat canvasContent={canvas.content} />
     </div>
   );
