@@ -81,7 +81,7 @@ export function exportSWOTToPDF(canvas: SWOTCanvasData) {
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 20;
   
-  const squareSize = Math.min(pageWidth - margin * 2, pageHeight - margin * 3 - 30); // Añadido -30 para el margen inferior
+  const squareSize = Math.min(pageWidth - margin, pageHeight - margin * 3 - 30);
   const sectionSize = squareSize / 2;
 
   try {
@@ -105,14 +105,14 @@ export function exportSWOTToPDF(canvas: SWOTCanvasData) {
       doc.text(title, x + 20, y + 15);
 
       // Draw items
-      doc.setFontSize(10);
+      doc.setFontSize(11); // Cambiado de 10 a 11
       doc.setFont('helvetica', 'normal');
       let itemY = y + 25;
       
       if (Array.isArray(items) && items.length > 0) {
         items.forEach((item) => {
           if (typeof item === 'string') {
-            const lines = doc.splitTextToSize(item, sectionSize - 10);
+            const lines = doc.splitTextToSize(item, sectionSize - 15); // Cambiado de -10 a -15
             lines.forEach((line: string) => {
               if (itemY < y + sectionSize - 5) {
                 doc.text(`• ${line}`, x + 5, itemY);
@@ -127,7 +127,7 @@ export function exportSWOTToPDF(canvas: SWOTCanvasData) {
     };
 
     const startX = (pageWidth - squareSize) / 2;
-    const startY = margin + 30; // Aumentado de 20 a 30 para añadir más espacio en la parte superior
+    const startY = margin + 30; 
 
     // Draw SWOT sections
     drawSection('Strengths', canvas.content?.strengths, startX, startY, 'strength');
