@@ -227,7 +227,7 @@ export function EmpathyMap() {
             items={canvas.content.pains || []}
             onUpdate={(items) => handleSectionUpdate('pains', items)}
             description="What are your user's fears, frustrations, and anxieties?"
-            className="bg-green-50/70 border border-gray-200"
+            className="bg-green-100 border border-green-200" 
             icon={icons.pain}
           />
           <CanvasSection
