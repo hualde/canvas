@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { AIChat } from '../components/AIChat';
+import { icons } from '../utils/icons';
 
 interface SWOTCanvasData {
   id: string;
@@ -175,6 +176,7 @@ export function SWOTCanvas() {
           onUpdate={(items) => handleSectionUpdate('strengths', items)}
           description="Internal factors that give an advantage over others"
           className="bg-green-100"
+          icon={icons.strength}
         />
         <CanvasSection
           title="Weaknesses"
@@ -182,6 +184,7 @@ export function SWOTCanvas() {
           onUpdate={(items) => handleSectionUpdate('weaknesses', items)}
           description="Internal factors that place the business at a disadvantage"
           className="bg-red-100"
+          icon={icons.weakness}
         />
         <CanvasSection
           title="Opportunities"
@@ -189,6 +192,7 @@ export function SWOTCanvas() {
           onUpdate={(items) => handleSectionUpdate('opportunities', items)}
           description="External factors that the business could exploit to its advantage"
           className="bg-blue-100"
+          icon={icons.opportunity}
         />
         <CanvasSection
           title="Threats"
@@ -196,6 +200,7 @@ export function SWOTCanvas() {
           onUpdate={(items) => handleSectionUpdate('threats', items)}
           description="External factors that could cause trouble for the business"
           className="bg-yellow-100"
+          icon={icons.threat}
         />
       </div>
       
