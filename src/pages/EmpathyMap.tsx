@@ -5,6 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { AIChat } from '../components/AIChat';
+import { icons } from '../utils/icons';
 
 interface EmpathyMapData {
   id: string;
@@ -173,9 +174,11 @@ export function EmpathyMap() {
       <div className="grid gap-4">
         {/* First row */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
-            <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
-            <h2 className="text-2xl font-bold mb-2">THINK & FEEL?</h2>
+          <div className="bg-blue-100 border-2 border-gray-200 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              {icons.think && <icons.think className="w-6 h-6" />}
+              <h2 className="text-2xl font-bold">THINK & FEEL?</h2>
+            </div>
             <div className="text-sm text-gray-600 space-y-1 mb-4">
               <div>What really counts</div>
               <div>Major preoccupations</div>
@@ -188,9 +191,11 @@ export function EmpathyMap() {
               description=""
             />
           </div>
-          <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
-            <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
-            <h2 className="text-2xl font-bold mb-2">SEE?</h2>
+          <div className="bg-blue-100 border-2 border-gray-200 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              {icons.see && <icons.see className="w-6 h-6" />}
+              <h2 className="text-2xl font-bold">SEE?</h2>
+            </div>
             <div className="text-sm text-gray-600 space-y-1 mb-4">
               <div>Environment</div>
               <div>Friends</div>
@@ -207,9 +212,11 @@ export function EmpathyMap() {
 
         {/* Second row */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
-            <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
-            <h2 className="text-2xl font-bold mb-2">HEAR?</h2>
+          <div className="bg-blue-100 border-2 border-gray-200 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              {icons.hear && <icons.hear className="w-6 h-6" />}
+              <h2 className="text-2xl font-bold">HEAR?</h2>
+            </div>
             <div className="text-sm text-gray-600 space-y-1 mb-4">
               <div>What friends say</div>
               <div>What the boss says</div>
@@ -222,9 +229,11 @@ export function EmpathyMap() {
               description=""
             />
           </div>
-          <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
-            <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
-            <h2 className="text-2xl font-bold mb-2">SAY & DO?</h2>
+          <div className="bg-blue-100 border-2 border-gray-200 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              {icons.sayDo && <icons.sayDo className="w-6 h-6" />}
+              <h2 className="text-2xl font-bold">SAY & DO?</h2>
+            </div>
             <div className="text-sm text-gray-600 space-y-1 mb-4">
               <div>Attitude in public</div>
               <div>Appearance</div>
@@ -243,7 +252,7 @@ export function EmpathyMap() {
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-2xl">☹</span>
+              {icons.pain && <icons.pain className="w-6 h-6" />}
               <h2 className="text-2xl font-bold">PAINS</h2>
             </div>
             <div className="text-sm text-gray-600 space-y-1 mb-4">
@@ -260,8 +269,8 @@ export function EmpathyMap() {
           </div>
           <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
+              {icons.gain && <icons.gain className="w-6 h-6" />}
               <h2 className="text-2xl font-bold">GAINS</h2>
-              <span className="text-2xl">☺</span>
             </div>
             <div className="text-sm text-gray-600 space-y-1 mb-4">
               <div>"wants"/needs</div>
