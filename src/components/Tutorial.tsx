@@ -120,7 +120,7 @@ export function Tutorial() {
         <section>
           <h2 className="text-2xl font-semibold mb-4">Need Help?</h2>
           <p className="text-gray-600">
-            If you have any questions or need further assistance, don't hesitate to contact our support team or use the AI assistant for guidance
+            If you have any questions or need further assistance, don't hesitate to contact our support team or use the AI assistant for guidance.
           </p>
         </section>
       </div>
