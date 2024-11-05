@@ -79,22 +79,30 @@ export function exportSWOTToPDF(canvas: SWOTCanvasData) {
   const doc = new jsPDF('l', 'mm', 'a4');
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 20;
+  const margin = 10; // Reducido de 20 a 10
   
-  const squareSize = Math.min(pageWidth - margin, pageHeight - margin * 3 - 30);
+  // Calculamos el tamaño del cuadrado para que ocupe casi todo el ancho de la página
+  const squareSize = pageWidth - (margin * 2); // Ahora usamos el ancho de la página menos márgenes
   const sectionSize = squareSize / 2;
+  
+  // Calculamos la altura máxima disponible
+  const maxHeight = pageHeight - (margin * 3) - 30; // 30 para el título y metadata
+  
+  // Usamos el valor más pequeño entre el ancho y alto disponible para mantener el aspecto cuadrado
+  const finalSize = Math.min(squareSize, maxHeight);
+  const finalSectionSize = finalSize / 2;
 
   try {
     // Set title
     doc.setFontSize(24);
     doc.setFont('helvetica', 'bold');
-    doc.text(canvas.title || 'SWOT Analysis', pageWidth / 2, margin, { align: 'center' });
+    doc.text(canvas.title || 'SWOT Analysis', pageWidth / 2, margin + 10, { align: 'center' });
 
     const drawSection = (title: string, items: string[] | undefined, x: number, y: number, iconKey: keyof typeof icons) => {
       // Draw box
       doc.setDrawColor(70, 70, 70);
       doc.setLineWidth(0.1);
-      doc.rect(x, y, sectionSize, sectionSize);
+      doc.rect(x, y, finalSectionSize, finalSectionSize);
 
       // Draw icon
       addIconToPDF(doc, iconKey, x + 5, y + 5, 10, 10);
@@ -105,16 +113,16 @@ export function exportSWOTToPDF(canvas: SWOTCanvasData) {
       doc.text(title, x + 20, y + 15);
 
       // Draw items
-      doc.setFontSize(11); // Cambiado de 10 a 11
+      doc.setFontSize(11);
       doc.setFont('helvetica', 'normal');
       let itemY = y + 25;
       
       if (Array.isArray(items) && items.length > 0) {
         items.forEach((item) => {
           if (typeof item === 'string') {
-            const lines = doc.splitTextToSize(item, sectionSize - 15); // Cambiado de -10 a -15
+            const lines = doc.splitTextToSize(item, finalSectionSize - 15);
             lines.forEach((line: string) => {
-              if (itemY < y + sectionSize - 5) {
+              if (itemY < y + finalSectionSize - 5) {
                 doc.text(`• ${line}`, x + 5, itemY);
                 itemY += 5;
               }
@@ -126,14 +134,15 @@ export function exportSWOTToPDF(canvas: SWOTCanvasData) {
       }
     };
 
-    const startX = (pageWidth - squareSize) / 2;
-    const startY = margin + 30; 
+    // Calculamos la posición inicial para centrar el cuadrado
+    const startX = (pageWidth - finalSize) / 2;
+    const startY = margin + 20;
 
     // Draw SWOT sections
     drawSection('Strengths', canvas.content?.strengths, startX, startY, 'strength');
-    drawSection('Weaknesses', canvas.content?.weaknesses, startX + sectionSize, startY, 'weakness');
-    drawSection('Opportunities', canvas.content?.opportunities, startX, startY + sectionSize, 'opportunity');
-    drawSection('Threats', canvas.content?.threats, startX + sectionSize, startY + sectionSize, 'threat');
+    drawSection('Weaknesses', canvas.content?.weaknesses, startX + finalSectionSize, startY, 'weakness');
+    drawSection('Opportunities', canvas.content?.opportunities, startX, startY + finalSectionSize, 'opportunity');
+    drawSection('Threats', canvas.content?.threats, startX + finalSectionSize, startY + finalSectionSize, 'threat');
 
     // Add the general information page
     drawGeneralInfoPage(doc, canvas);
