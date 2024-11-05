@@ -6,6 +6,7 @@ import { Canvas } from './pages/Canvas';
 import { ValuePropositionCanvas } from './pages/ValuePropositionCanvas';
 import { SWOTCanvas } from './pages/SWOTCanvas';
 import { EmpathyMap } from './pages/EmpathyMap';
+import { PESTELCanvas } from './pages/PESTELCanvas';
 import { Login } from './pages/Login';
 import { Tutorial } from './components/Tutorial';
 import { Auth0ProviderWithNavigate } from './auth/auth0-provider';
@@ -46,6 +47,7 @@ function AppContent() {
         <Route path="value-proposition/:id" element={<ValuePropositionCanvas />} />
         <Route path="swot/:id" element={<SWOTCanvas />} />
         <Route path="empathy-map/:id" element={<EmpathyMap />} />
+        <Route path="pestel/:id" element={<PESTELCanvas />} />
         <Route path="tutorial" element={<Tutorial />} />
       </Route>
     </Routes>

@@ -27,20 +27,22 @@ export function Dashboard() {
     fetchCanvases();
   }, [isAuthenticated, user]);
 
-  const handleCreateCanvas = async (type: 'business' | 'value-proposition' | 'swot' | 'empathy-map') => {
+  const handleCreateCanvas = async (type: 'business' | 'value-proposition' | 'swot' | 'empathy-map' | 'pestel') => {
     if (isAuthenticated && user?.sub) {
       try {
         const newCanvas = await createCanvas(user.sub, `Untitled ${
           type === 'business' ? 'Business Model' : 
           type === 'value-proposition' ? 'Value Proposition' : 
           type === 'swot' ? 'SWOT Analysis' :
-          'Empathy Map'
+          type === 'empathy-map' ? 'Empathy Map' :
+          'PESTEL Analysis'
         } Canvas`, {});
         navigate(
           type === 'business' ? `/canvas/${newCanvas.id}` : 
           type === 'value-proposition' ? `/value-proposition/${newCanvas.id}` : 
           type === 'swot' ? `/swot/${newCanvas.id}` :
-          `/empathy-map/${newCanvas.id}`
+          type === 'empathy-map' ? `/empathy-map/${newCanvas.id}` :
+          `/pestel/${newCanvas.id}`
         );
       } catch (error) {
         console.error('Error creating canvas:', error);
@@ -96,6 +98,13 @@ export function Dashboard() {
             <Plus className="w-5 h-5 mr-2" />
             New Empathy Map
           </button>
+          <button
+            onClick={() => handleCreateCanvas('pestel')}
+            className="flex items-center justify-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-sm"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            New PESTEL Analysis
+          </button>
         </div>
       </div>
 
@@ -114,6 +123,7 @@ export function Dashboard() {
                   canvas.title.includes('Value Proposition') ? `/value-proposition/${canvas.id}` : 
                   canvas.title.includes('SWOT Analysis') ? `/swot/${canvas.id}` :
                   canvas.title.includes('Empathy Map') ? `/empathy-map/${canvas.id}` :
+                  canvas.title.includes('PESTEL Analysis') ? `/pestel/${canvas.id}` :
                   `/canvas/${canvas.id}`
                 )}
                 className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
@@ -138,7 +148,6 @@ export function Dashboard() {
           </p>
         </div>
       )}
-    
     </div>
   );
 }
