@@ -5,7 +5,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { AIChat } from '../components/AIChat';
-import { icons } from '../utils/icons';
 
 interface EmpathyMapData {
   id: string;
@@ -171,24 +170,13 @@ export function EmpathyMap() {
         />
       </div>
 
-      <div className="relative border-2 border-gray-200 rounded-lg aspect-[16/10] mb-8 overflow-hidden bg-white">
-        {/* Diagonal dotted lines */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full border-b border-dotted border-gray-300 transform rotate-45 origin-center" />
-          <div className="absolute top-0 left-0 w-full h-full border-b border-dotted border-gray-300 transform -rotate-45 origin-center" />
-        </div>
-
-        {/* Center circle with smiley */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full border-4 border-gray-900 bg-white z-20 flex items-center justify-center">
-          <div className="w-24 h-24 text-4xl">☺</div>
-        </div>
-
-        {/* Think & Feel section */}
-        <div className="absolute top-0 left-0 right-0 h-1/2 flex items-start justify-center pt-4">
-          <div className="w-2/3 text-center">
+      <div className="grid gap-4">
+        {/* First row */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
             <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
             <h2 className="text-2xl font-bold mb-2">THINK & FEEL?</h2>
-            <div className="text-sm text-gray-600 space-y-1">
+            <div className="text-sm text-gray-600 space-y-1 mb-4">
               <div>What really counts</div>
               <div>Major preoccupations</div>
               <div>Worries & aspirations</div>
@@ -198,37 +186,12 @@ export function EmpathyMap() {
               items={canvas.content.thinkAndFeel || []}
               onUpdate={(items) => handleSectionUpdate('thinkAndFeel', items)}
               description=""
-              className="mt-2"
             />
           </div>
-        </div>
-
-        {/* Hear section */}
-        <div className="absolute top-0 left-0 w-1/2 h-1/2 flex items-center justify-start pl-8">
-          <div className="w-2/3">
-            <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
-            <h2 className="text-2xl font-bold mb-2">HEAR?</h2>
-            <div className="text-sm text-gray-600 space-y-1">
-              <div>What friends say</div>
-              <div>What the boss says</div>
-              <div>What influencers say</div>
-            </div>
-            <CanvasSection
-              title=""
-              items={canvas.content.hear || []}
-              onUpdate={(items) => handleSectionUpdate('hear', items)}
-              description=""
-              className="mt-2"
-            />
-          </div>
-        </div>
-
-        {/* See section */}
-        <div className="absolute top-0 right-0 w-1/2 h-1/2 flex items-center justify-end pr-8">
-          <div className="w-2/3 text-right">
+          <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
             <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
             <h2 className="text-2xl font-bold mb-2">SEE?</h2>
-            <div className="text-sm text-gray-600 space-y-1">
+            <div className="text-sm text-gray-600 space-y-1 mb-4">
               <div>Environment</div>
               <div>Friends</div>
               <div>What the market offers</div>
@@ -238,17 +201,31 @@ export function EmpathyMap() {
               items={canvas.content.see || []}
               onUpdate={(items) => handleSectionUpdate('see', items)}
               description=""
-              className="mt-2"
             />
           </div>
         </div>
 
-        {/* Say & Do section */}
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 flex items-end justify-center pb-4">
-          <div className="w-2/3 text-center">
+        {/* Second row */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
+            <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
+            <h2 className="text-2xl font-bold mb-2">HEAR?</h2>
+            <div className="text-sm text-gray-600 space-y-1 mb-4">
+              <div>What friends say</div>
+              <div>What the boss says</div>
+              <div>What influencers say</div>
+            </div>
+            <CanvasSection
+              title=""
+              items={canvas.content.hear || []}
+              onUpdate={(items) => handleSectionUpdate('hear', items)}
+              description=""
+            />
+          </div>
+          <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
             <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
             <h2 className="text-2xl font-bold mb-2">SAY & DO?</h2>
-            <div className="text-sm text-gray-600 space-y-1">
+            <div className="text-sm text-gray-600 space-y-1 mb-4">
               <div>Attitude in public</div>
               <div>Appearance</div>
               <div>Behaviour towards others</div>
@@ -258,18 +235,14 @@ export function EmpathyMap() {
               items={canvas.content.sayAndDo || []}
               onUpdate={(items) => handleSectionUpdate('sayAndDo', items)}
               description=""
-              className="mt-2"
             />
           </div>
         </div>
-      </div>
 
-      {/* Bottom sections with dotted separator */}
-      <div className="relative">
-        <div className="absolute left-1/2 top-0 bottom-0 w-0 border-l border-dotted border-gray-300"></div>
-        <div className="grid grid-cols-2 gap-8">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
+        {/* Third row */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">☹</span>
               <h2 className="text-2xl font-bold">PAINS</h2>
             </div>
@@ -285,8 +258,8 @@ export function EmpathyMap() {
               description=""
             />
           </div>
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
+          <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
               <h2 className="text-2xl font-bold">GAINS</h2>
               <span className="text-2xl">☺</span>
             </div>
