@@ -174,27 +174,27 @@ export function EmpathyMap() {
       <div className="relative border-2 border-gray-200 rounded-lg aspect-[16/10] mb-8">
         <div className="absolute inset-0">
           {/* Central circle */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border-4 border-gray-200 rounded-full bg-white z-10 flex items-center justify-center">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border-4 border-gray-200 rounded-full bg-white z-20 flex items-center justify-center">
             <div className="text-center text-gray-600">
               <div className="font-semibold">User/Customer</div>
               <div className="text-sm">Profile</div>
             </div>
           </div>
 
-          {/* Top section - Think & Feel */}
-          <div className="absolute top-0 left-0 right-0 h-1/2">
+          {/* Back section - Think & Feel */}
+          <div className="absolute inset-0 flex items-center justify-center">
             <CanvasSection
               title="Think & Feel?"
               items={canvas.content.thinkAndFeel || []}
               onUpdate={(items) => handleSectionUpdate('thinkAndFeel', items)}
               description="What might your user be thinking and feeling?"
-              className="h-full bg-purple-50"
+              className="h-full w-full bg-purple-50 z-0"
               icon={icons.thinkAndFeel}
             />
           </div>
 
           {/* Right section - See */}
-          <div className="absolute top-0 right-0 w-1/2 h-1/2">
+          <div className="absolute top-0 right-0 w-1/2 h-1/2 z-10">
             <CanvasSection
               title="See?"
               items={canvas.content.see || []}
@@ -206,7 +206,7 @@ export function EmpathyMap() {
           </div>
 
           {/* Left section - Hear */}
-          <div className="absolute top-0 left-0 w-1/2 h-1/2">
+          <div className="absolute top-0 left-0 w-1/2 h-1/2 z-10">
             <CanvasSection
               title="Hear?"
               items={canvas.content.hear || []}
@@ -218,7 +218,7 @@ export function EmpathyMap() {
           </div>
 
           {/* Bottom section - Say & Do */}
-          <div className="absolute bottom-0 left-0 right-0 h-1/2">
+          <div className="absolute bottom-0 left-0 right-0 h-1/2 z-10">
             <CanvasSection
               title="Say & Do?"
               items={canvas.content.sayAndDo || []}
