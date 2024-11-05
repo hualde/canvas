@@ -177,7 +177,7 @@ export function EmpathyMap() {
           items={canvas.content.thinkAndFeel || []}
           onUpdate={(items) => handleSectionUpdate('thinkAndFeel', items)}
           description="What might your user be thinking and feeling?"
-          className="bg-blue-100"
+          className="bg-blue-500"
           icon={icons.think}
         />
         <CanvasSection
@@ -185,7 +185,7 @@ export function EmpathyMap() {
           items={canvas.content.see || []}
           onUpdate={(items) => handleSectionUpdate('see', items)}
           description="What does your user see in their environment?"
-          className="bg-blue-100"
+          className="bg-blue-500"
           icon={icons.see}
         />
         <CanvasSection
@@ -193,7 +193,7 @@ export function EmpathyMap() {
           items={canvas.content.hear || []}
           onUpdate={(items) => handleSectionUpdate('hear', items)}
           description="What does your user hear from others?"
-          className="bg-blue-100"
+          className="bg-blue-500"
           icon={icons.hear}
         />
         <CanvasSection
@@ -201,7 +201,7 @@ export function EmpathyMap() {
           items={canvas.content.sayAndDo || []}
           onUpdate={(items) => handleSectionUpdate('sayAndDo', items)}
           description="What does your user say and do?"
-          className="bg-blue-100"
+          className="bg-blue-500"
           icon={icons.sayDo}
         />
         <CanvasSection
