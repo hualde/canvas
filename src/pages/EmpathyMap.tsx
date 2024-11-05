@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { AIChat } from '../components/AIChat';
 import { icons } from '../utils/icons';
+import { exportEmpathyMapToPDF } from '../utils/empathyMapPdfExport';
 
 interface EmpathyMapData {
   id: string;
@@ -93,6 +94,12 @@ export function EmpathyMap() {
     }
   };
 
+  const handleExportPDF = () => {
+    if (canvas) {
+      exportEmpathyMapToPDF(canvas);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -127,6 +134,15 @@ export function EmpathyMap() {
           <ArrowLeft className="h-5 w-5 mr-2" />
           Back to Dashboard
         </button>
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={handleExportPDF}
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Export PDF
+          </button>
+        </div>
       </div>
 
       <input
@@ -171,55 +187,58 @@ export function EmpathyMap() {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <CanvasSection
-          title="Think & Feel?"
-          items={canvas.content.thinkAndFeel || []}
-          onUpdate={(items) => handleSectionUpdate('thinkAndFeel', items)}
-          description="What might your user be thinking and feeling?"
-          className="bg-blue-500"
-          icon={icons.think}
-        />
-        <CanvasSection
-          title="See?"
-          items={canvas.content.see || []}
-          onUpdate={(items) => handleSectionUpdate('see', items)}
-          description="What does your user see in their environment?"
-          className="bg-blue-500"
-          icon={icons.see}
-        />
-        <CanvasSection
-          title="Hear?"
-          items={canvas.content.hear || []}
-          onUpdate={(items) => handleSectionUpdate('hear', items)}
-          description="What does your user hear from others?"
-          className="bg-blue-500"
-          icon={icons.hear}
-        />
-        <CanvasSection
-          title="Say & Do?"
-          items={canvas.content.sayAndDo || []}
-          onUpdate={(items) => handleSectionUpdate('sayAndDo', items)}
-          description="What does your user say and do?"
-          className="bg-blue-500"
-          icon={icons.sayDo}
-        />
-        <CanvasSection
-          title="Pain"
-          items={canvas.content.pains || []}
-          onUpdate={(items) => handleSectionUpdate('pains', items)}
-          description="What are your user's fears, frustrations, and anxieties?"
-          className="bg-white"
-          icon={icons.pain}
-        />
-        <CanvasSection
-          title="Gain"
-          items={canvas.content.gains || []}
-          onUpdate={(items) => handleSectionUpdate('gains', items)}
-          description="What are your user's wants, needs, and measures of success?"
-          className="bg-white"
-          icon={icons.gain}
-        />
+      <div className="relative border-2 border-gray-200 rounded-lg overflow-hidden">
+        <div className="absolute inset-0 bg-blue-200/30"></div>
+        <div className="relative z-10 grid grid-cols-2 gap-4 p-4">
+          <CanvasSection
+            title="Think & Feel?"
+            items={canvas.content.thinkAndFeel || []}
+            onUpdate={(items) => handleSectionUpdate('thinkAndFeel', items)}
+            description="What might your user be thinking and feeling?"
+            className="bg-white/50 border border-gray-200"
+            icon={icons.think}
+          />
+          <CanvasSection
+            title="See?"
+            items={canvas.content.see || []}
+            onUpdate={(items) => handleSectionUpdate('see', items)}
+            description="What does your user see in their environment?"
+            className="bg-white/50 border border-gray-200"
+            icon={icons.see}
+          />
+          <CanvasSection
+            title="Hear?"
+            items={canvas.content.hear || []}
+            onUpdate={(items) => handleSectionUpdate('hear', items)}
+            description="What does your user hear from others?"
+            className="bg-white/50 border border-gray-200"
+            icon={icons.hear}
+          />
+          <CanvasSection
+            title="Say & Do?"
+            items={canvas.content.sayAndDo || []}
+            onUpdate={(items) => handleSectionUpdate('sayAndDo', items)}
+            description="What does your user say and do?"
+            className="bg-white/50 border border-gray-200"
+            icon={icons.sayDo}
+          />
+          <CanvasSection
+            title="Pain"
+            items={canvas.content.pains || []}
+            onUpdate={(items) => handleSectionUpdate('pains', items)}
+            description="What are your user's fears, frustrations, and anxieties?"
+            className="bg-white/50 border border-gray-200"
+            icon={icons.pain}
+          />
+          <CanvasSection
+            title="Gain"
+            items={canvas.content.gains || []}
+            onUpdate={(items) => handleSectionUpdate('gains', items)}
+            description="What are your user's wants, needs, and measures of success?"
+            className="bg-white/50 border border-gray-200"
+            icon={icons.gain}
+          />
+        </div>
       </div>
       
       <div className="mt-8">
