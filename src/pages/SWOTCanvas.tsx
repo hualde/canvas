@@ -6,7 +6,7 @@ import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { AIChat } from '../components/AIChat';
 import { icons } from '../utils/icons';
-import { exportToPDF } from '../utils/pdfExport';
+import { exportSWOTToPDF } from '../utils/swotPdfExport';
 
 interface SWOTCanvasData {
   id: string;
@@ -94,7 +94,7 @@ export function SWOTCanvas() {
 
   const handleExportPDF = () => {
     if (canvas) {
-      exportToPDF(canvas);
+      exportSWOTToPDF(canvas);
     }
   };
 
