@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { AIChat } from '../components/AIChat';
 import { icons } from '../utils/icons';
+import { exportToPDF } from '../utils/pdfExport';
 
 interface SWOTCanvasData {
   id: string;
@@ -91,6 +92,12 @@ export function SWOTCanvas() {
     }
   };
 
+  const handleExportPDF = () => {
+    if (canvas) {
+      exportToPDF(canvas);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -125,6 +132,15 @@ export function SWOTCanvas() {
           <ArrowLeft className="h-5 w-5 mr-2" />
           Back to Dashboard
         </button>
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={handleExportPDF}
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Export PDF
+          </button>
+        </div>
       </div>
 
       <input
@@ -169,39 +185,42 @@ export function SWOTCanvas() {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <CanvasSection
-          title="Strengths"
-          items={canvas.content.strengths || []}
-          onUpdate={(items) => handleSectionUpdate('strengths', items)}
-          description="Internal factors that give an advantage over others"
-          className="bg-green-100"
-          icon={icons.strength}
-        />
-        <CanvasSection
-          title="Weaknesses"
-          items={canvas.content.weaknesses || []}
-          onUpdate={(items) => handleSectionUpdate('weaknesses', items)}
-          description="Internal factors that place the business at a disadvantage"
-          className="bg-red-100"
-          icon={icons.weakness}
-        />
-        <CanvasSection
-          title="Opportunities"
-          items={canvas.content.opportunities || []}
-          onUpdate={(items) => handleSectionUpdate('opportunities', items)}
-          description="External factors that the business could exploit to its advantage"
-          className="bg-blue-100"
-          icon={icons.opportunity}
-        />
-        <CanvasSection
-          title="Threats"
-          items={canvas.content.threats || []}
-          onUpdate={(items) => handleSectionUpdate('threats', items)}
-          description="External factors that could cause trouble for the business"
-          className="bg-yellow-100"
-          icon={icons.threat}
-        />
+      <div className="relative border-2 border-gray-200 rounded-lg p-6 overflow-hidden">
+        <div className="absolute inset-0 bg-blue-200/30"></div>
+        <div className="relative z-10 grid grid-cols-2 gap-4">
+          <CanvasSection
+            title="Strengths"
+            items={canvas.content.strengths || []}
+            onUpdate={(items) => handleSectionUpdate('strengths', items)}
+            description="Internal factors that give an advantage over others"
+            className="h-full bg-white/50"
+            icon={icons.strength}
+          />
+          <CanvasSection
+            title="Weaknesses"
+            items={canvas.content.weaknesses || []}
+            onUpdate={(items) => handleSectionUpdate('weaknesses', items)}
+            description="Internal factors that place the business at a disadvantage"
+            className="h-full bg-white/50"
+            icon={icons.weakness}
+          />
+          <CanvasSection
+            title="Opportunities"
+            items={canvas.content.opportunities || []}
+            onUpdate={(items) => handleSectionUpdate('opportunities', items)}
+            description="External factors that the business could exploit to its advantage"
+            className="h-full bg-white/50"
+            icon={icons.opportunity}
+          />
+          <CanvasSection
+            title="Threats"
+            items={canvas.content.threats || []}
+            onUpdate={(items) => handleSectionUpdate('threats', items)}
+            description="External factors that could cause trouble for the business"
+            className="h-full bg-white/50"
+            icon={icons.threat}
+          />
+        </div>
       </div>
       
       <AIChat canvasContent={canvas.content} />
