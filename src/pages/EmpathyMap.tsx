@@ -227,7 +227,7 @@ export function EmpathyMap() {
             items={canvas.content.pains || []}
             onUpdate={(items) => handleSectionUpdate('pains', items)}
             description="What are your user's fears, frustrations, and anxieties?"
-            className="bg-green-300 border border-green-200" 
+            className="!bg-green-100 border border-gray-200"
             icon={icons.pain}
           />
           <CanvasSection
@@ -235,12 +235,11 @@ export function EmpathyMap() {
             items={canvas.content.gains || []}
             onUpdate={(items) => handleSectionUpdate('gains', items)}
             description="What are your user's wants, needs, and measures of success?"
-            className="bg-green-300 border border-green-200"
+            className="!bg-green-100 border border-gray-200"
             icon={icons.gain}
           />
         </div>
       </div>
-      
       <div className="mt-8">
         <AIChat canvasContent={canvas.content} />
       </div>
