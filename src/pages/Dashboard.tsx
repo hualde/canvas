@@ -27,18 +27,20 @@ export function Dashboard() {
     fetchCanvases();
   }, [isAuthenticated, user]);
 
-  const handleCreateCanvas = async (type: 'business' | 'value-proposition' | 'swot') => {
+  const handleCreateCanvas = async (type: 'business' | 'value-proposition' | 'swot' | 'empathy-map') => {
     if (isAuthenticated && user?.sub) {
       try {
         const newCanvas = await createCanvas(user.sub, `Untitled ${
           type === 'business' ? 'Business Model' : 
           type === 'value-proposition' ? 'Value Proposition' : 
-          'SWOT Analysis'
+          type === 'swot' ? 'SWOT Analysis' :
+          'Empathy Map'
         } Canvas`, {});
         navigate(
           type === 'business' ? `/canvas/${newCanvas.id}` : 
           type === 'value-proposition' ? `/value-proposition/${newCanvas.id}` : 
-          `/swot/${newCanvas.id}`
+          type === 'swot' ? `/swot/${newCanvas.id}` :
+          `/empathy-map/${newCanvas.id}`
         );
       } catch (error) {
         console.error('Error creating canvas:', error);
@@ -87,6 +89,13 @@ export function Dashboard() {
             <Plus className="w-5 h-5 mr-2" />
             New SWOT Analysis
           </button>
+          <button
+            onClick={() => handleCreateCanvas('empathy-map')}
+            className="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors shadow-sm"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            New Empathy Map
+          </button>
         </div>
       </div>
 
@@ -104,6 +113,7 @@ export function Dashboard() {
                 onClick={() => navigate(
                   canvas.title.includes('Value Proposition') ? `/value-proposition/${canvas.id}` : 
                   canvas.title.includes('SWOT Analysis') ? `/swot/${canvas.id}` :
+                  canvas.title.includes('Empathy Map') ? `/empathy-map/${canvas.id}` :
                   `/canvas/${canvas.id}`
                 )}
                 className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
@@ -128,6 +138,7 @@ export function Dashboard() {
           </p>
         </div>
       )}
+    
     </div>
   );
 }
