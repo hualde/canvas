@@ -96,7 +96,7 @@ export function EmpathyMap() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-500"></div>
       </div>
     );
   }
@@ -108,7 +108,7 @@ export function EmpathyMap() {
           <p className="text-gray-600">Canvas not found</p>
           <button
             onClick={() => navigate('/')}
-            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700"
           >
             Return to Dashboard
           </button>
@@ -119,7 +119,6 @@ export function EmpathyMap() {
 
   return (
     <div className="max-w-[1600px] mx-auto p-6 relative">
-      {/* Header section */}
       <div className="mb-6 flex justify-between items-center">
         <button
           onClick={() => navigate('/')}
@@ -130,23 +129,21 @@ export function EmpathyMap() {
         </button>
       </div>
 
-      {/* Title input */}
       <input
         type="text"
-        value={canvas?.title || ''}
+        value={canvas.title}
         onChange={(e) => handleUpdateTitle(e.target.value)}
-        className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
+        className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-gray-500 focus:outline-none w-full"
         placeholder="Untitled Empathy Map"
       />
 
-      {/* Canvas info inputs */}
       <div className="mb-8 grid grid-cols-2 gap-4">
         <input
           type="text"
           value={project_name}
           onChange={(e) => setProject_name(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
-          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
           placeholder="Project Name"
         />
         <input
@@ -154,7 +151,7 @@ export function EmpathyMap() {
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
-          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
           placeholder="Author"
         />
         <input
@@ -162,109 +159,155 @@ export function EmpathyMap() {
           value={date}
           onChange={(e) => setDate(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
-          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
         />
         <textarea
           value={comments}
           onChange={(e) => setComments(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
-          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
           rows={2}
           placeholder="Comments"
         />
       </div>
 
-      {/* Main Empathy Map */}
-      <div className="relative border-2 border-gray-200 rounded-lg aspect-[16/10] mb-8 overflow-hidden">
-        {/* Center circle */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 border-4 border-gray-200 rounded-full bg-white z-20" />
-
-        {/* Diagonal lines */}
+      <div className="relative border-2 border-gray-200 rounded-lg aspect-[16/10] mb-8 overflow-hidden bg-white">
+        {/* Diagonal dotted lines */}
         <div className="absolute inset-0">
-          {/* Top-left to bottom-right */}
-          <div className="absolute top-0 left-0 w-full h-full border-b border-gray-200 transform rotate-45 origin-center" />
-          {/* Top-right to bottom-left */}
-          <div className="absolute top-0 left-0 w-full h-full border-b border-gray-200 transform -rotate-45 origin-center" />
+          <div className="absolute top-0 left-0 w-full h-full border-b border-dotted border-gray-300 transform rotate-45 origin-center" />
+          <div className="absolute top-0 left-0 w-full h-full border-b border-dotted border-gray-300 transform -rotate-45 origin-center" />
+        </div>
+
+        {/* Center circle with smiley */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full border-4 border-gray-900 bg-white z-20 flex items-center justify-center">
+          <div className="w-24 h-24 text-4xl">☺</div>
         </div>
 
         {/* Think & Feel section */}
         <div className="absolute top-0 left-0 right-0 h-1/2 flex items-start justify-center pt-4">
-          <div className="w-2/3">
+          <div className="w-2/3 text-center">
+            <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
+            <h2 className="text-2xl font-bold mb-2">THINK & FEEL?</h2>
+            <div className="text-sm text-gray-600 space-y-1">
+              <div>What really counts</div>
+              <div>Major preoccupations</div>
+              <div>Worries & aspirations</div>
+            </div>
             <CanvasSection
-              title="¿Qué PIENSA y SIENTE?"
-              items={canvas?.content.thinkAndFeel || []}
+              title=""
+              items={canvas.content.thinkAndFeel || []}
               onUpdate={(items) => handleSectionUpdate('thinkAndFeel', items)}
-              description="Principales preocupaciones, inquietudes y aspiraciones"
-              className="bg-purple-50/80"
-              icon={icons.thinkAndFeel}
-            />
-          </div>
-        </div>
-
-        {/* See section */}
-        <div className="absolute top-0 right-0 w-1/2 h-1/2 flex items-center justify-end pr-4">
-          <div className="w-2/3">
-            <CanvasSection
-              title="¿Qué VE?"
-              items={canvas?.content.see || []}
-              onUpdate={(items) => handleSectionUpdate('see', items)}
-              description="Entorno, amigos, la oferta del mercado"
-              className="bg-blue-50/80"
-              icon={icons.see}
+              description=""
+              className="mt-2"
             />
           </div>
         </div>
 
         {/* Hear section */}
-        <div className="absolute top-0 left-0 w-1/2 h-1/2 flex items-center justify-start pl-4">
+        <div className="absolute top-0 left-0 w-1/2 h-1/2 flex items-center justify-start pl-8">
           <div className="w-2/3">
+            <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
+            <h2 className="text-2xl font-bold mb-2">HEAR?</h2>
+            <div className="text-sm text-gray-600 space-y-1">
+              <div>What friends say</div>
+              <div>What the boss says</div>
+              <div>What influencers say</div>
+            </div>
             <CanvasSection
-              title="¿Qué OYE?"
-              items={canvas?.content.hear || []}
+              title=""
+              items={canvas.content.hear || []}
               onUpdate={(items) => handleSectionUpdate('hear', items)}
-              description="Lo que dicen los amigos, lo que dice el jefe, lo que dicen las personas influyentes"
-              className="bg-green-50/80"
-              icon={icons.hear}
+              description=""
+              className="mt-2"
+            />
+          </div>
+        </div>
+
+        {/* See section */}
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 flex items-center justify-end pr-8">
+          <div className="w-2/3 text-right">
+            <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
+            <h2 className="text-2xl font-bold mb-2">SEE?</h2>
+            <div className="text-sm text-gray-600 space-y-1">
+              <div>Environment</div>
+              <div>Friends</div>
+              <div>What the market offers</div>
+            </div>
+            <CanvasSection
+              title=""
+              items={canvas.content.see || []}
+              onUpdate={(items) => handleSectionUpdate('see', items)}
+              description=""
+              className="mt-2"
             />
           </div>
         </div>
 
         {/* Say & Do section */}
         <div className="absolute bottom-0 left-0 right-0 h-1/2 flex items-end justify-center pb-4">
-          <div className="w-2/3">
+          <div className="w-2/3 text-center">
+            <div className="text-xs text-gray-500 mb-1">what does (s)he</div>
+            <h2 className="text-2xl font-bold mb-2">SAY & DO?</h2>
+            <div className="text-sm text-gray-600 space-y-1">
+              <div>Attitude in public</div>
+              <div>Appearance</div>
+              <div>Behaviour towards others</div>
+            </div>
             <CanvasSection
-              title="¿Qué DICE y HACE?"
-              items={canvas?.content.sayAndDo || []}
+              title=""
+              items={canvas.content.sayAndDo || []}
               onUpdate={(items) => handleSectionUpdate('sayAndDo', items)}
-              description="Actitud en público, aspecto, comportamiento hacia los demás"
-              className="bg-yellow-50/80"
-              icon={icons.sayAndDo}
+              description=""
+              className="mt-2"
             />
           </div>
         </div>
       </div>
 
-      {/* Bottom sections - Pains and Gains */}
-      <div className="grid grid-cols-2 gap-4">
-        <CanvasSection
-          title="ESFUERZOS"
-          items={canvas?.content.pains || []}
-          onUpdate={(items) => handleSectionUpdate('pains', items)}
-          description="Miedos, frustraciones, obstáculos"
-          className="bg-red-50"
-          icon={icons.pains}
-        />
-        <CanvasSection
-          title="RESULTADOS"
-          items={canvas?.content.gains || []}
-          onUpdate={(items) => handleSectionUpdate('gains', items)}
-          description="Deseos, necesidades, medidas de éxito"
-          className="bg-emerald-50"
-          icon={icons.gains}
-        />
+      {/* Bottom sections with dotted separator */}
+      <div className="relative">
+        <div className="absolute left-1/2 top-0 bottom-0 w-0 border-l border-dotted border-gray-300"></div>
+        <div className="grid grid-cols-2 gap-8">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <span className="text-2xl">☹</span>
+              <h2 className="text-2xl font-bold">PAINS</h2>
+            </div>
+            <div className="text-sm text-gray-600 space-y-1 mb-4">
+              <div>fears</div>
+              <div>frustrations</div>
+              <div>obstacles</div>
+            </div>
+            <CanvasSection
+              title=""
+              items={canvas.content.pains || []}
+              onUpdate={(items) => handleSectionUpdate('pains', items)}
+              description=""
+            />
+          </div>
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <h2 className="text-2xl font-bold">GAINS</h2>
+              <span className="text-2xl">☺</span>
+            </div>
+            <div className="text-sm text-gray-600 space-y-1 mb-4">
+              <div>"wants"/needs</div>
+              <div>measures of success</div>
+              <div>obstacles</div>
+            </div>
+            <CanvasSection
+              title=""
+              items={canvas.content.gains || []}
+              onUpdate={(items) => handleSectionUpdate('gains', items)}
+              description=""
+            />
+          </div>
+        </div>
       </div>
 
-      <AIChat canvasContent={canvas?.content} />
+      <div className="mt-8">
+        <AIChat canvasContent={canvas.content} />
+      </div>
     </div>
   );
 }
