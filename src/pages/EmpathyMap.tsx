@@ -119,6 +119,7 @@ export function EmpathyMap() {
 
   return (
     <div className="max-w-[1600px] mx-auto p-6 relative">
+      {/* Header section */}
       <div className="mb-6 flex justify-between items-center">
         <button
           onClick={() => navigate('/')}
@@ -129,14 +130,16 @@ export function EmpathyMap() {
         </button>
       </div>
 
+      {/* Title input */}
       <input
         type="text"
-        value={canvas.title}
+        value={canvas?.title || ''}
         onChange={(e) => handleUpdateTitle(e.target.value)}
         className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
         placeholder="Untitled Empathy Map"
       />
 
+      {/* Canvas info inputs */}
       <div className="mb-8 grid grid-cols-2 gap-4">
         <input
           type="text"
@@ -171,60 +174,70 @@ export function EmpathyMap() {
         />
       </div>
 
-      <div className="relative border-2 border-gray-200 rounded-lg aspect-[16/10] mb-8">
-        <div className="absolute inset-0">
-          {/* Central circle */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border-4 border-gray-200 rounded-full bg-white z-20 flex items-center justify-center">
-            <div className="text-center text-gray-600">
-              <div className="font-semibold">User/Customer</div>
-              <div className="text-sm">Profile</div>
-            </div>
-          </div>
+      {/* Main Empathy Map */}
+      <div className="relative border-2 border-gray-200 rounded-lg aspect-[16/10] mb-8 overflow-hidden">
+        {/* Center circle */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 border-4 border-gray-200 rounded-full bg-white z-20" />
 
-          {/* Top section - Think & Feel */}
-          <div className="absolute top-0 left-0 right-0 h-1/2 z-10">
+        {/* Diagonal lines */}
+        <div className="absolute inset-0">
+          {/* Top-left to bottom-right */}
+          <div className="absolute top-0 left-0 w-full h-full border-b border-gray-200 transform rotate-45 origin-center" />
+          {/* Top-right to bottom-left */}
+          <div className="absolute top-0 left-0 w-full h-full border-b border-gray-200 transform -rotate-45 origin-center" />
+        </div>
+
+        {/* Think & Feel section */}
+        <div className="absolute top-0 left-0 right-0 h-1/2 flex items-start justify-center pt-4">
+          <div className="w-2/3">
             <CanvasSection
-              title="Think & Feel?"
-              items={canvas.content.thinkAndFeel || []}
+              title="¿Qué PIENSA y SIENTE?"
+              items={canvas?.content.thinkAndFeel || []}
               onUpdate={(items) => handleSectionUpdate('thinkAndFeel', items)}
-              description="What might your user be thinking and feeling?"
-              className="h-full bg-purple-50"
+              description="Principales preocupaciones, inquietudes y aspiraciones"
+              className="bg-purple-50/80"
               icon={icons.thinkAndFeel}
             />
           </div>
+        </div>
 
-          {/* Right section - See */}
-          <div className="absolute top-0 right-0 w-1/2 h-1/2 z-10">
+        {/* See section */}
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 flex items-center justify-end pr-4">
+          <div className="w-2/3">
             <CanvasSection
-              title="See?"
-              items={canvas.content.see || []}
+              title="¿Qué VE?"
+              items={canvas?.content.see || []}
               onUpdate={(items) => handleSectionUpdate('see', items)}
-              description="What does your user see in their environment?"
-              className="h-full bg-blue-50"
+              description="Entorno, amigos, la oferta del mercado"
+              className="bg-blue-50/80"
               icon={icons.see}
             />
           </div>
+        </div>
 
-          {/* Left section - Hear */}
-          <div className="absolute top-0 left-0 w-1/2 h-1/2 z-10">
+        {/* Hear section */}
+        <div className="absolute top-0 left-0 w-1/2 h-1/2 flex items-center justify-start pl-4">
+          <div className="w-2/3">
             <CanvasSection
-              title="Hear?"
-              items={canvas.content.hear || []}
+              title="¿Qué OYE?"
+              items={canvas?.content.hear || []}
               onUpdate={(items) => handleSectionUpdate('hear', items)}
-              description="What does your user hear from others?"
-              className="h-full bg-green-50"
+              description="Lo que dicen los amigos, lo que dice el jefe, lo que dicen las personas influyentes"
+              className="bg-green-50/80"
               icon={icons.hear}
             />
           </div>
+        </div>
 
-          {/* Bottom section - Say & Do */}
-          <div className="absolute bottom-0 left-0 right-0 h-1/2 z-10">
+        {/* Say & Do section */}
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 flex items-end justify-center pb-4">
+          <div className="w-2/3">
             <CanvasSection
-              title="Say & Do?"
-              items={canvas.content.sayAndDo || []}
+              title="¿Qué DICE y HACE?"
+              items={canvas?.content.sayAndDo || []}
               onUpdate={(items) => handleSectionUpdate('sayAndDo', items)}
-              description="What does your user say and do?"
-              className="h-full bg-yellow-50"
+              description="Actitud en público, aspecto, comportamiento hacia los demás"
+              className="bg-yellow-50/80"
               icon={icons.sayAndDo}
             />
           </div>
@@ -234,24 +247,24 @@ export function EmpathyMap() {
       {/* Bottom sections - Pains and Gains */}
       <div className="grid grid-cols-2 gap-4">
         <CanvasSection
-          title="Pain"
-          items={canvas.content.pains || []}
+          title="ESFUERZOS"
+          items={canvas?.content.pains || []}
           onUpdate={(items) => handleSectionUpdate('pains', items)}
-          description="What are your user's fears, frustrations, and anxieties?"
+          description="Miedos, frustraciones, obstáculos"
           className="bg-red-50"
           icon={icons.pains}
         />
         <CanvasSection
-          title="Gain"
-          items={canvas.content.gains || []}
+          title="RESULTADOS"
+          items={canvas?.content.gains || []}
           onUpdate={(items) => handleSectionUpdate('gains', items)}
-          description="What are your user's wants, needs, and measures of success?"
+          description="Deseos, necesidades, medidas de éxito"
           className="bg-emerald-50"
           icon={icons.gains}
         />
       </div>
 
-      <AIChat canvasContent={canvas.content} />
+      <AIChat canvasContent={canvas?.content} />
     </div>
   );
 }
