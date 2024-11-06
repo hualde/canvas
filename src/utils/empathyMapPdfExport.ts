@@ -86,14 +86,14 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
   const startX = margin;
   const startY = margin + 20;
 
+  // Ajustamos las proporciones para dar más altura a las secciones principales
+  const mainSectionHeight = mapHeight * 0.8; // Aumentado de 0.7 a 0.8
+  const painGainSectionHeight = mapHeight * 0.2; // Reducido de 0.3 a 0.2
+
   // Calculamos el punto central y el radio del círculo
   const centerX = startX + (mapWidth / 2);
-  const centerY = startY + (mapHeight * 0.5);
+  const centerY = startY + (mainSectionHeight / 2);
   const circleRadius = 15;
-
-  // Calculamos las dimensiones de las secciones principales y de Pain/Gain
-  const mainSectionHeight = mapHeight * 0.7;
-  const painGainSectionHeight = mapHeight * 0.3;
 
   try {
     // Dibujamos el marco exterior
@@ -141,12 +141,16 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     doc.setFont('helvetica', 'normal');
 
     // Función helper para añadir contenido
-    const addContent = (items: string[], x: number, y: number, maxWidth: number) => {
+    const addContent = (items: string[], x: number, y: number, maxWidth: number, maxHeight: number) => {
       if (Array.isArray(items)) {
-        items.forEach((item, index) => {
+        let currentY = y;
+        items.forEach((item) => {
           const lines = doc.splitTextToSize(item, maxWidth);
-          lines.forEach((line: string, lineIndex: number) => {
-            doc.text(`• ${line}`, x, y + (index * 5) + (lineIndex * 5));
+          lines.forEach((line: string) => {
+            if (currentY < y + maxHeight - 5) {
+              doc.text(`• ${line}`, x, currentY);
+              currentY += 5;
+            }
           });
         });
       }
@@ -154,13 +158,15 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
 
     // Calculamos los anchos y posiciones para el contenido
     const sectionWidth = mapWidth / 2;
+    const sectionHeight = mainSectionHeight / 2;
     
     // Think & Feel
     addContent(
       canvas.content.thinkAndFeel || [], 
       startX + 30, 
       startY + 50, 
-      sectionWidth - 60
+      sectionWidth - 60,
+      sectionHeight - 50
     );
     
     // See
@@ -168,7 +174,8 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
       canvas.content.see || [], 
       centerX + 30, 
       startY + 50, 
-      sectionWidth - 60
+      sectionWidth - 60,
+      sectionHeight - 50
     );
     
     // Hear
@@ -176,7 +183,8 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
       canvas.content.hear || [], 
       startX + 30, 
       centerY + 20, 
-      sectionWidth - 60
+      sectionWidth - 60,
+      sectionHeight - 50
     );
     
     // Say & Do
@@ -184,7 +192,8 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
       canvas.content.sayAndDo || [], 
       centerX + 30, 
       centerY + 20, 
-      sectionWidth - 60
+      sectionWidth - 60,
+      sectionHeight - 50
     );
     
     // Pains
@@ -192,7 +201,8 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
       canvas.content.pains || [], 
       startX + 40, 
       bottomSectionY + 30, 
-      (mapWidth/2) - 50
+      (mapWidth/2) - 50,
+      painGainSectionHeight - 40
     );
     
     // Gains
@@ -200,7 +210,8 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
       canvas.content.gains || [], 
       centerX + 40, 
       bottomSectionY + 30, 
-      (mapWidth/2) - 50
+      (mapWidth/2) - 50,
+      painGainSectionHeight - 40
     );
 
     // Añadimos la página de información general
