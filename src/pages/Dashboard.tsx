@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Trash2, Edit3 } from 'lucide-react';
+import { Plus, Trash2, Edit3, FileText, PieChart, Users, Globe } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas } from '../lib/db';
+
+interface Canvas {
+  id: string;
+  title: string;
+}
 
 export function Dashboard() {
   const navigate = useNavigate();
   const { user, isAuthenticated, isLoading } = useAuth0();
-  const [canvases, setCanvases] = useState([]);
+  const [canvases, setCanvases] = useState<Canvas[]>([]);
   const [isLoadingCanvases, setIsLoadingCanvases] = useState(true);
 
   useEffect(() => {
@@ -65,6 +70,15 @@ export function Dashboard() {
     </div>;
   }
 
+  const getCanvasIcon = (title: string) => {
+    if (title.includes('Business Model')) return <FileText className="h-6 w-6 text-blue-600" />;
+    if (title.includes('Value Proposition')) return <PieChart className="h-6 w-6 text-green-600" />;
+    if (title.includes('SWOT Analysis')) return <Globe className="h-6 w-6 text-orange-600" />;
+    if (title.includes('Empathy Map')) return <Users className="h-6 w-6 text-purple-600" />;
+    if (title.includes('PESTEL Analysis')) return <Globe className="h-6 w-6 text-red-600" />;
+    return <FileText className="h-6 w-6 text-gray-600" />;
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-start mb-8 flex-col sm:flex-row gap-4">
@@ -86,14 +100,14 @@ export function Dashboard() {
           </button>
           <button
             onClick={() => handleCreateCanvas('swot')}
-            className="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-sm"
+            className="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors shadow-sm"
           >
             <Plus className="w-5 h-5 mr-2" />
             New SWOT Analysis
           </button>
           <button
             onClick={() => handleCreateCanvas('empathy-map')}
-            className="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors shadow-sm"
+            className="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-sm"
           >
             <Plus className="w-5 h-5 mr-2" />
             New Empathy Map
@@ -114,9 +128,12 @@ export function Dashboard() {
             key={canvas.id}
             className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
           >
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              {canvas.title}
-            </h3>
+            <div className="flex items-center mb-4">
+              {getCanvasIcon(canvas.title)}
+              <h3 className="text-xl font-semibold text-gray-900 ml-2">
+                {canvas.title}
+              </h3>
+            </div>
             <div className="flex justify-end space-x-2">
               <button
                 onClick={() => navigate(
