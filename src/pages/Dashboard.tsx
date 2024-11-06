@@ -3,6 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas } from '../lib/db';
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 interface Canvas {
   id: string;
@@ -14,6 +23,7 @@ export function Dashboard() {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [canvases, setCanvases] = useState<Canvas[]>([]);
   const [isLoadingCanvases, setIsLoadingCanvases] = useState(true);
+  const [canvasToDelete, setCanvasToDelete] = useState<Canvas | null>(null);
 
   useEffect(() => {
     async function fetchCanvases() {
@@ -55,12 +65,15 @@ export function Dashboard() {
     }
   };
 
-  const handleDeleteCanvas = async (id: string) => {
-    try {
-      await deleteCanvas(id);
-      setCanvases(canvases.filter(canvas => canvas.id !== id));
-    } catch (error) {
-      console.error('Error deleting canvas:', error);
+  const handleDeleteCanvas = async () => {
+    if (canvasToDelete) {
+      try {
+        await deleteCanvas(canvasToDelete.id);
+        setCanvases(canvases.filter(canvas => canvas.id !== canvasToDelete.id));
+        setCanvasToDelete(null);
+      } catch (error) {
+        console.error('Error deleting canvas:', error);
+      }
     }
   };
 
@@ -148,7 +161,7 @@ export function Dashboard() {
                 <Edit3 className="w-5 h-5" />
               </button>
               <button
-                onClick={() => handleDeleteCanvas(canvas.id)}
+                onClick={() => setCanvasToDelete(canvas)}
                 className="p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
               >
                 <Trash2 className="w-5 h-5" />
@@ -165,6 +178,22 @@ export function Dashboard() {
           </p>
         </div>
       )}
+
+      <Dialog open={!!canvasToDelete} onOpenChange={() => setCanvasToDelete(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you sure you want to delete this canvas?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your
+              canvas and remove its data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setCanvasToDelete(null)}>Cancel</Button>
+            <Button variant="destructive" onClick={handleDeleteCanvas}>Delete</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
