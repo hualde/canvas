@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass } from 'lucide-react';
+import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass, ChevronDown } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas } from '../lib/db';
 
@@ -15,6 +15,7 @@ export function Dashboard() {
   const [canvases, setCanvases] = useState<Canvas[]>([]);
   const [isLoadingCanvases, setIsLoadingCanvases] = useState(true);
   const [canvasToDelete, setCanvasToDelete] = useState<Canvas | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     async function fetchCanvases() {
@@ -54,6 +55,7 @@ export function Dashboard() {
         console.error('Error creating canvas:', error);
       }
     }
+    setIsDropdownOpen(false);
   };
 
   const handleDeleteCanvas = async () => {
@@ -87,42 +89,26 @@ export function Dashboard() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-start mb-8 flex-col sm:flex-row gap-4">
         <h1 className="text-3xl font-bold text-gray-900">My Canvases</h1>
-        <div className="flex flex-col sm:flex-row gap-4 justify-end">
+        <div className="relative">
           <button
-            onClick={() => handleCreateCanvas('business')}
-            className="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
           >
             <Plus className="w-5 h-5 mr-2" />
-            New Business Model Canvas
+            New Canvas
+            <ChevronDown className="w-4 h-4 ml-2" />
           </button>
-          <button
-            onClick={() => handleCreateCanvas('value-proposition')}
-            className="flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-sm"
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            New Value Proposition Canvas
-          </button>
-          <button
-            onClick={() => handleCreateCanvas('swot')}
-            className="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors shadow-sm"
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            New SWOT Analysis
-          </button>
-          <button
-            onClick={() => handleCreateCanvas('empathy-map')}
-            className="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-sm"
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            New Empathy Map
-          </button>
-          <button
-            onClick={() => handleCreateCanvas('pestel')}
-            className="flex items-center justify-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors shadow-sm"
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            New PESTEL Analysis
-          </button>
+          {isDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+              <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <button onClick={() => handleCreateCanvas('business')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left" role="menuitem">Business Model Canvas</button>
+                <button onClick={() => handleCreateCanvas('value-proposition')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left" role="menuitem">Value Proposition Canvas</button>
+                <button onClick={() => handleCreateCanvas('swot')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left" role="menuitem">SWOT Analysis</button>
+                <button onClick={() => handleCreateCanvas('empathy-map')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left" role="menuitem">Empathy Map</button>
+                <button onClick={() => handleCreateCanvas('pestel')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left" role="menuitem">PESTEL Analysis</button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
