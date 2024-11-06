@@ -128,12 +128,16 @@ export function exportToPDF(canvas: ValuePropositionCanvasData) {
       let currentY = y;
       items.forEach((item) => {
         const lines = doc.splitTextToSize(item, width);
-        lines.forEach((line: string) => {
+        doc.text(`• ${lines[0]}`, x, currentY);
+        currentY += 4;
+        
+        // For additional lines, don't add bullet points
+        for (let i = 1; i < lines.length; i++) {
           if (currentY < y + height) {
-            doc.text(`• ${line}`, x, currentY);
+            doc.text(lines[i], x + 3, currentY);
             currentY += 4;
           }
-        });
+        }
       });
     };
 
