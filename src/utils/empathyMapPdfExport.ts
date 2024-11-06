@@ -171,8 +171,8 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // Think & Feel
     addContent(
       canvas.content.thinkAndFeel || [], 
-      startX + 30, 
-      startY + 60, 
+      startX, 
+      startY, 
       sectionWidth - 60,
       sectionHeight - 60
     );
