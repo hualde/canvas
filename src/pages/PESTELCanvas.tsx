@@ -24,38 +24,14 @@ interface PESTELCanvasData {
   comments: string;
 }
 
-const sectionStyles = {
-  political: {
-    bgColor: 'bg-[#4DB6AC]',
-    lightBg: 'bg-[#B2DFDB]',
-    textColor: 'text-white',
-  },
-  economic: {
-    bgColor: 'bg-[#FF7043]',
-    lightBg: 'bg-[#FFCCBC]',
-    textColor: 'text-white',
-  },
-  social: {
-    bgColor: 'bg-[#C0CA33]',
-    lightBg: 'bg-[#F0F4C3]',
-    textColor: 'text-white',
-  },
-  technological: {
-    bgColor: 'bg-[#4DB6AC]',
-    lightBg: 'bg-[#B2DFDB]',
-    textColor: 'text-white',
-  },
-  environmental: {
-    bgColor: 'bg-[#FF7043]',
-    lightBg: 'bg-[#FFCCBC]',
-    textColor: 'text-white',
-  },
-  legal: {
-    bgColor: 'bg-[#C0CA33]',
-    lightBg: 'bg-[#F0F4C3]',
-    textColor: 'text-white',
-  },
-};
+const sections = [
+  { key: 'political', color: '#4DB6AC', lightColor: '#B2DFDB', label: 'Política' },
+  { key: 'economic', color: '#FF7043', lightColor: '#FFCCBC', label: 'Económica' },
+  { key: 'social', color: '#C0CA33', lightColor: '#F0F4C3', label: 'Social' },
+  { key: 'technological', color: '#4DB6AC', lightColor: '#B2DFDB', label: 'Tecnológico' },
+  { key: 'environmental', color: '#FF7043', lightColor: '#FFCCBC', label: 'Ecológico' },
+  { key: 'legal', color: '#C0CA33', lightColor: '#F0F4C3', label: 'Legal' }
+];
 
 export function PESTELCanvas() {
   const { id } = useParams<{ id: string }>();
@@ -204,36 +180,40 @@ export function PESTELCanvas() {
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {Object.entries(canvas.content).map(([key, items]) => {
-          const sectionKey = key as keyof typeof sectionStyles;
-          const style = sectionStyles[sectionKey];
-          
-          return (
-            <div key={key} className="flex flex-col">
-              <div className={`flex flex-col items-center ${style.lightBg} rounded-lg overflow-hidden`}>
-                <div className={`w-20 h-20 ${style.bgColor} rounded-full flex items-center justify-center -mt-10 mb-2 shadow-lg`}>
-                  <span className="text-3xl font-bold text-white">
-                    {key.charAt(0).toUpperCase()}
-                  </span>
-                </div>
-                <h3 className={`text-xl font-semibold mb-4 ${style.bgColor} w-full text-center py-2 text-white`}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
-                </h3>
-                <div className="p-4 min-h-[200px] w-full">
-                  <CanvasSection
-                    title=""
-                    items={items}
-                    onUpdate={(newItems) => handleSectionUpdate(sectionKey, newItems)}
-                    description=""
-                    className="bg-transparent"
-                    icon={icons[sectionKey]}
-                  />
-                </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {sections.map((section) => (
+          <div key={section.key} className="relative">
+            <div 
+              style={{ backgroundColor: section.lightColor }}
+              className="rounded-lg pt-8 pb-4 px-4 h-full"
+            >
+              <div 
+                style={{ backgroundColor: section.color }}
+                className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
+              >
+                <span className="text-2xl font-bold text-white">
+                  {section.key.charAt(0).toUpperCase()}
+                </span>
+              </div>
+              <div 
+                style={{ backgroundColor: section.color }}
+                className="text-white text-center py-2 -mx-4 mb-4"
+              >
+                <h3 className="text-lg font-semibold">{section.label}</h3>
+              </div>
+              <div className="min-h-[200px]">
+                <CanvasSection
+                  title=""
+                  items={canvas.content[section.key as keyof PESTELCanvasData['content']] || []}
+                  onUpdate={(items) => handleSectionUpdate(section.key as keyof PESTELCanvasData['content'], items)}
+                  description=""
+                  className="bg-transparent"
+                  icon={icons[section.key as keyof typeof icons]}
+                />
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
       
       <div className="mt-8">
