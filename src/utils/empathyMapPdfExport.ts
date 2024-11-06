@@ -137,7 +137,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     doc.text('Think & feel', centerX - 100 , startY + 28, { align: 'center' });
     doc.text('See', startX + mapWidth - 15, centerY - 40);
     doc.text('Hear', startX + 2, centerY - 40);
-    doc.text('Say & do', centerX - 100, startY + mainSectionHeight - 5, { align: 'center' });
+    doc.text('Say & do', centerX - 100, startY + mainSectionHeight - 3, { align: 'center' });
     doc.text('Pains', startX + 2, bottomSectionY + 7);
     doc.text('Gains', centerX + 2, bottomSectionY + 7);
 
@@ -168,7 +168,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // Think & Feel
     addContent(
       canvas.content.thinkAndFeel || [], 
-      startX + 30, 
+      startX - 30, 
       startY + 60, 
       sectionWidth - 60,
       sectionHeight - 60
