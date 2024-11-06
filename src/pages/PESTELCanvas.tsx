@@ -24,6 +24,39 @@ interface PESTELCanvasData {
   comments: string;
 }
 
+const sectionStyles = {
+  political: {
+    bgColor: 'bg-[#4DB6AC]',
+    lightBg: 'bg-[#B2DFDB]',
+    textColor: 'text-white',
+  },
+  economic: {
+    bgColor: 'bg-[#FF7043]',
+    lightBg: 'bg-[#FFCCBC]',
+    textColor: 'text-white',
+  },
+  social: {
+    bgColor: 'bg-[#C0CA33]',
+    lightBg: 'bg-[#F0F4C3]',
+    textColor: 'text-white',
+  },
+  technological: {
+    bgColor: 'bg-[#4DB6AC]',
+    lightBg: 'bg-[#B2DFDB]',
+    textColor: 'text-white',
+  },
+  environmental: {
+    bgColor: 'bg-[#FF7043]',
+    lightBg: 'bg-[#FFCCBC]',
+    textColor: 'text-white',
+  },
+  legal: {
+    bgColor: 'bg-[#C0CA33]',
+    lightBg: 'bg-[#F0F4C3]',
+    textColor: 'text-white',
+  },
+};
+
 export function PESTELCanvas() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -171,55 +204,36 @@ export function PESTELCanvas() {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <CanvasSection
-          title="Political"
-          items={canvas.content.political || []}
-          onUpdate={(items) => handleSectionUpdate('political', items)}
-          description="Government policies, political stability, trade regulations"
-          className="bg-red-100"
-          icon={icons.political}
-        />
-        <CanvasSection
-          title="Economic"
-          items={canvas.content.economic || []}
-          onUpdate={(items) => handleSectionUpdate('economic', items)}
-          description="Economic growth, inflation rates, exchange rates"
-          className="bg-yellow-100"
-          icon={icons.economic}
-        />
-        <CanvasSection
-          title="Social"
-          items={canvas.content.social || []}
-          onUpdate={(items) => handleSectionUpdate('social', items)}
-          description="Demographics, cultural trends, lifestyle changes"
-          className="bg-blue-100"
-          icon={icons.social}
-        />
-        <CanvasSection
-          title="Technological"
-          items={canvas.content.technological || []}
-          onUpdate={(items) => handleSectionUpdate('technological', items)}
-          description="Innovations, R&D, automation"
-          className="bg-purple-100"
-          icon={icons.technological}
-        />
-        <CanvasSection
-          title="Environmental"
-          items={canvas.content.environmental || []}
-          onUpdate={(items) => handleSectionUpdate('environmental', items)}
-          description="Climate change, environmental policies, sustainability"
-          className="bg-green-100"
-          icon={icons.environmental}
-        />
-        <CanvasSection
-          title="Legal"
-          items={canvas.content.legal || []}
-          onUpdate={(items) => handleSectionUpdate('legal', items)}
-          description="Employment laws, consumer protection, health and safety regulations"
-          className="bg-indigo-100"
-          icon={icons.legal}
-        />
+      <div className="grid grid-cols-6 gap-4">
+        {Object.entries(canvas.content).map(([key, items], index) => {
+          const sectionKey = key as keyof typeof sectionStyles;
+          const style = sectionStyles[sectionKey];
+          
+          return (
+            <div key={key} className="flex flex-col">
+              <div className={`flex flex-col items-center ${style.lightBg} rounded-lg`}>
+                <div className={`w-20 h-20 ${style.bgColor} rounded-full flex items-center justify-center -mt-6 mb-2 shadow-lg`}>
+                  <span className="text-3xl font-bold text-white">
+                    {key.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <h3 className={`text-xl font-semibold mb-4 ${style.bgColor} w-full text-center py-2 text-white`}>
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                </h3>
+                <div className="p-4 min-h-[200px] w-full">
+                  <CanvasSection
+                    title=""
+                    items={items}
+                    onUpdate={(newItems) => handleSectionUpdate(sectionKey, newItems)}
+                    description=""
+                    className="bg-transparent"
+                    icon={icons[sectionKey]}
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
       
       <div className="mt-8">
