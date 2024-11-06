@@ -70,7 +70,8 @@ export function Canvas() {
 
   const handleSectionUpdate = async (section: keyof CanvasData['content'], items: string[]) => {
     if (!canvas) return;
-    const updatedContent = { ...canvas.content, [section]: items };
+    const updatedItems = items.map(item => item.startsWith('• ') ? item : `• ${item}`);
+    const updatedContent = { ...canvas.content, [section]: updatedItems };
     try {
       const updatedCanvas = await updateCanvas(canvas.id, { ...canvas, content: updatedContent });
       setCanvas(updatedCanvas);
