@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Sparkles, Download, FileText, PieChart, Users, Globe } from 'lucide-react';
+import { ArrowLeft, Sparkles, Download, FileText, PieChart, Users, BarChart2, Compass } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function Tutorial() {
@@ -63,14 +63,14 @@ export function Tutorial() {
               </div>
             </li>
             <li className="flex items-start">
-              <Globe className="h-6 w-6 text-orange-600 mr-2 mt-1" />
+              <BarChart2 className="h-6 w-6 text-orange-600 mr-2 mt-1" />
               <div>
                 <h3 className="font-semibold">SWOT Analysis</h3>
                 <p className="text-gray-600">Evaluate your Strengths, Weaknesses, Opportunities, and Threats.</p>
               </div>
             </li>
             <li className="flex items-start">
-              <Globe className="h-6 w-6 text-red-600 mr-2 mt-1" />
+              <Compass className="h-6 w-6 text-red-600 mr-2 mt-1" />
               <div>
                 <h3 className="font-semibold">PESTEL Analysis</h3>
                 <p className="text-gray-600">Analyze external factors affecting your business: Political, Economic, Social, Technological, Environmental, and Legal.</p>

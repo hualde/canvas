@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Trash2, Edit3, FileText, PieChart, Users, Globe } from 'lucide-react';
+import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas } from '../lib/db';
 
@@ -73,9 +73,9 @@ export function Dashboard() {
   const getCanvasIcon = (title: string) => {
     if (title.includes('Business Model')) return <FileText className="h-6 w-6 text-blue-600" />;
     if (title.includes('Value Proposition')) return <PieChart className="h-6 w-6 text-green-600" />;
-    if (title.includes('SWOT Analysis')) return <Globe className="h-6 w-6 text-orange-600" />;
+    if (title.includes('SWOT Analysis')) return <BarChart2 className="h-6 w-6 text-orange-600" />;
     if (title.includes('Empathy Map')) return <Users className="h-6 w-6 text-purple-600" />;
-    if (title.includes('PESTEL Analysis')) return <Globe className="h-6 w-6 text-red-600" />;
+    if (title.includes('PESTEL Analysis')) return <Compass className="h-6 w-6 text-red-600" />;
     return <FileText className="h-6 w-6 text-gray-600" />;
   };
 
