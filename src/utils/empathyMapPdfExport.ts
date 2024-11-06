@@ -88,8 +88,12 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
 
   // Calculamos el punto central y el radio del círculo
   const centerX = startX + (mapWidth / 2);
-  const centerY = startY + (mapHeight * 0.4); // Ajustado para dar más espacio a las secciones inferiores
+  const centerY = startY + (mapHeight * 0.5);
   const circleRadius = 15;
+
+  // Calculamos las dimensiones de las secciones principales y de Pain/Gain
+  const mainSectionHeight = mapHeight * 0.7;
+  const painGainSectionHeight = mapHeight * 0.3;
 
   try {
     // Dibujamos el marco exterior
@@ -103,11 +107,11 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // Dibujamos las líneas diagonales desde el centro
     doc.line(centerX, centerY, startX, startY); // Izquierda superior
     doc.line(centerX, centerY, startX + mapWidth, startY); // Derecha superior
-    doc.line(centerX, centerY, startX, centerY + (mapHeight * 0.6)); // Izquierda inferior
-    doc.line(centerX, centerY, startX + mapWidth, centerY + (mapHeight * 0.6)); // Derecha inferior
+    doc.line(centerX, centerY, startX, startY + mainSectionHeight); // Izquierda inferior
+    doc.line(centerX, centerY, startX + mapWidth, startY + mainSectionHeight); // Derecha inferior
 
     // Dibujamos los bordes de Pains y Gains
-    const bottomSectionY = centerY + (mapHeight * 0.6);
+    const bottomSectionY = startY + mainSectionHeight;
     doc.line(startX, bottomSectionY, startX + mapWidth, bottomSectionY);
     doc.line(centerX, bottomSectionY, centerX, startY + mapHeight);
 
@@ -116,7 +120,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     addIconToPDF(doc, 'think', centerX - iconSize/2, startY + 20, iconSize, iconSize);
     addIconToPDF(doc, 'see', startX + mapWidth - 40, centerY - 30, iconSize, iconSize);
     addIconToPDF(doc, 'hear', startX + 20, centerY - 30, iconSize, iconSize);
-    addIconToPDF(doc, 'sayDo', centerX - iconSize/2, centerY + (mapHeight * 0.6) - 30, iconSize, iconSize);
+    addIconToPDF(doc, 'sayDo', centerX - iconSize/2, startY + mainSectionHeight - 30, iconSize, iconSize);
     addIconToPDF(doc, 'pain', startX + 20, bottomSectionY + 10, iconSize, iconSize);
     addIconToPDF(doc, 'gain', centerX + 20, bottomSectionY + 10, iconSize, iconSize);
 
@@ -128,7 +132,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     doc.text('Think & feel', centerX, startY + 40, { align: 'center' });
     doc.text('See', startX + mapWidth - 40, centerY - 15);
     doc.text('Hear', startX + 20, centerY - 15);
-    doc.text('Say & do', centerX, centerY + (mapHeight * 0.6) - 10, { align: 'center' });
+    doc.text('Say & do', centerX, startY + mainSectionHeight - 10, { align: 'center' });
     doc.text('Pains', startX + 40, bottomSectionY + 20);
     doc.text('Gains', centerX + 40, bottomSectionY + 20);
 
@@ -150,7 +154,6 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
 
     // Calculamos los anchos y posiciones para el contenido
     const sectionWidth = mapWidth / 2;
-    const topSectionHeight = (mapHeight * 0.6 - startY) / 2;
     
     // Think & Feel
     addContent(
@@ -163,7 +166,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // See
     addContent(
       canvas.content.see || [], 
-      startX + mapWidth/2 + 30, 
+      centerX + 30, 
       startY + 50, 
       sectionWidth - 60
     );
@@ -172,15 +175,15 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     addContent(
       canvas.content.hear || [], 
       startX + 30, 
-      startY + topSectionHeight + 40, 
+      centerY + 20, 
       sectionWidth - 60
     );
     
     // Say & Do
     addContent(
       canvas.content.sayAndDo || [], 
-      startX + mapWidth/2 + 30, 
-      startY + topSectionHeight + 40, 
+      centerX + 30, 
+      centerY + 20, 
       sectionWidth - 60
     );
     
