@@ -125,10 +125,10 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
 
     // Añadimos los iconos
     const iconSize = 10;
-    addIconToPDF(doc, 'think', centerX - 60, startY + 30, iconSize, iconSize);
-    addIconToPDF(doc, 'see', startX + mapWidth - 20, centerY - 20, iconSize, iconSize);
-    addIconToPDF(doc, 'hear', startX + 2, centerY - 20, iconSize, iconSize);
-    addIconToPDF(doc, 'sayDo', centerX - 60, startY + mainSectionHeight - 20, iconSize, iconSize);
+    addIconToPDF(doc, 'think', centerX - 80, startY + 30, iconSize, iconSize);
+    addIconToPDF(doc, 'see', startX + mapWidth - 20, centerY - 40, iconSize, iconSize);
+    addIconToPDF(doc, 'hear', startX + 2, centerY - 40, iconSize, iconSize);
+    addIconToPDF(doc, 'sayDo', centerX - 80, startY + mainSectionHeight - 20, iconSize, iconSize);
     addIconToPDF(doc, 'pain', startX + 2, bottomSectionY + 10, iconSize, iconSize);
     addIconToPDF(doc, 'gain', centerX + 2, bottomSectionY + 10, iconSize, iconSize);
 
