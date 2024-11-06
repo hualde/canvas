@@ -62,8 +62,11 @@ const drawGeneralInfoPage = (doc: jsPDF, canvas: EmpathyMapData) => {
   doc.text(splitComments, margin, startY + boxHeight * 2 + 45);
 };
 
-const drawDiagonalLine = (doc: jsPDF, startX: number, startY: number, endX: number, endY: number) => {
-  doc.line(startX, startY, endX, endY);
+const addIconToPDF = (doc: jsPDF, iconKey: keyof typeof icons, x: number, y: number, width: number, height: number) => {
+  if (icons[iconKey]) {
+    const iconData = icons[iconKey].split(',')[1]; // Remove the data:image/png;base64, part
+    doc.addImage(iconData, 'PNG', x, y, width, height);
+  }
 };
 
 export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
@@ -85,7 +88,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
 
   // Calculamos el punto central y el radio del círculo
   const centerX = startX + (mapWidth / 2);
-  const centerY = startY + (mapHeight * 0.4); // El centro está más arriba que el medio
+  const centerY = startY + (mapHeight * 0.5); // Ajustado para que Think y Say&do sean iguales
   const circleRadius = 15;
 
   try {
@@ -98,28 +101,36 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     doc.circle(centerX, centerY, circleRadius, 'S');
     
     // Dibujamos las líneas diagonales desde el centro
-    drawDiagonalLine(doc, centerX, centerY, startX, startY); // Izquierda superior
-    drawDiagonalLine(doc, centerX, centerY, startX + mapWidth, startY); // Derecha superior
-    drawDiagonalLine(doc, centerX, centerY, startX, centerY + (mapHeight * 0.6)); // Izquierda inferior
-    drawDiagonalLine(doc, centerX, centerY, startX + mapWidth, centerY + (mapHeight * 0.6)); // Derecha inferior
+    doc.line(centerX, centerY, startX, startY); // Izquierda superior
+    doc.line(centerX, centerY, startX + mapWidth, startY); // Derecha superior
+    doc.line(centerX, centerY, startX, startY + mapHeight); // Izquierda inferior
+    doc.line(centerX, centerY, startX + mapWidth, startY + mapHeight); // Derecha inferior
 
-    // Dibujamos la línea horizontal para Pains y Gains
-    doc.line(startX, centerY + (mapHeight * 0.6), startX + mapWidth, centerY + (mapHeight * 0.6));
-    
-    // Dibujamos la línea vertical que separa Pains y Gains
-    doc.line(centerX, centerY + (mapHeight * 0.6), centerX, startY + mapHeight);
+    // Dibujamos los bordes de Pains y Gains
+    const bottomSectionY = startY + mapHeight * 0.7;
+    doc.line(startX, bottomSectionY, startX + mapWidth, bottomSectionY);
+    doc.line(centerX, bottomSectionY, centerX, startY + mapHeight);
+
+    // Añadimos los iconos
+    const iconSize = 10;
+    addIconToPDF(doc, 'think', centerX - iconSize/2, startY + 20, iconSize, iconSize);
+    addIconToPDF(doc, 'see', startX + mapWidth - 40, centerY - 30, iconSize, iconSize);
+    addIconToPDF(doc, 'hear', startX + 20, centerY - 30, iconSize, iconSize);
+    addIconToPDF(doc, 'sayDo', centerX - iconSize/2, startY + mapHeight - 40, iconSize, iconSize);
+    addIconToPDF(doc, 'pain', startX + 20, bottomSectionY + 10, iconSize, iconSize);
+    addIconToPDF(doc, 'gain', centerX + 20, bottomSectionY + 10, iconSize, iconSize);
 
     // Configuración del texto
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
 
     // Añadimos los títulos de las secciones
-    doc.text('Think & feel', centerX, startY + 15, { align: 'center' });
-    doc.text('See', startX + mapWidth - 20, centerY - 20);
-    doc.text('Hear', startX + 20, centerY - 20);
-    doc.text('Say & do', centerX, centerY + (mapHeight * 0.6) - 10, { align: 'center' });
-    doc.text('Pains', startX + (mapWidth / 4), centerY + (mapHeight * 0.8));
-    doc.text('Gains', startX + (mapWidth * 3/4), centerY + (mapHeight * 0.8));
+    doc.text('Think & feel', centerX, startY + 40, { align: 'center' });
+    doc.text('See', startX + mapWidth - 40, centerY - 15);
+    doc.text('Hear', startX + 20, centerY - 15);
+    doc.text('Say & do', centerX, startY + mapHeight - 20, { align: 'center' });
+    doc.text('Pains', startX + 40, bottomSectionY + 20);
+    doc.text('Gains', centerX + 40, bottomSectionY + 20);
 
     // Añadimos el contenido de cada sección
     doc.setFontSize(10);
@@ -137,26 +148,56 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
       }
     };
 
-    // Añadimos el contenido en cada sección
+    // Calculamos los anchos y posiciones para el contenido
     const sectionWidth = mapWidth / 3;
     
     // Think & Feel
-    addContent(canvas.content.thinkAndFeel || [], centerX - sectionWidth/2, startY + 25, sectionWidth);
+    addContent(
+      canvas.content.thinkAndFeel || [], 
+      startX + 30, 
+      startY + 60, 
+      sectionWidth
+    );
     
     // See
-    addContent(canvas.content.see || [], centerX + 20, centerY - 15, sectionWidth);
+    addContent(
+      canvas.content.see || [], 
+      startX + mapWidth - sectionWidth + 10, 
+      centerY, 
+      sectionWidth - 20
+    );
     
     // Hear
-    addContent(canvas.content.hear || [], startX + 10, centerY - 15, sectionWidth);
+    addContent(
+      canvas.content.hear || [], 
+      startX + 30, 
+      centerY, 
+      sectionWidth - 20
+    );
     
     // Say & Do
-    addContent(canvas.content.sayAndDo || [], centerX - sectionWidth/2, centerY + 10, sectionWidth);
+    addContent(
+      canvas.content.sayAndDo || [], 
+      centerX - sectionWidth/2, 
+      startY + mapHeight - 60, 
+      sectionWidth
+    );
     
     // Pains
-    addContent(canvas.content.pains || [], startX + 10, centerY + (mapHeight * 0.6) + 20, mapWidth/2 - 20);
+    addContent(
+      canvas.content.pains || [], 
+      startX + 40, 
+      bottomSectionY + 30, 
+      (mapWidth/2) - 50
+    );
     
     // Gains
-    addContent(canvas.content.gains || [], centerX + 10, centerY + (mapHeight * 0.6) + 20, mapWidth/2 - 20);
+    addContent(
+      canvas.content.gains || [], 
+      centerX + 40, 
+      bottomSectionY + 30, 
+      (mapWidth/2) - 50
+    );
 
     // Añadimos la página de información general
     drawGeneralInfoPage(doc, canvas);
