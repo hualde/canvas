@@ -1,7 +1,7 @@
 import jsPDF from 'jspdf';
 import { icons } from './icons';
 
-interface SWOTCanvasData {
+interface SWOTData {
   id: string;
   title: string;
   content: {
@@ -26,18 +26,16 @@ const formatDate = (date: string | Date): string => {
   return 'N/A';
 };
 
-const drawGeneralInfoPage = (doc: jsPDF, canvas: SWOTCanvasData) => {
+const drawGeneralInfoPage = (doc: jsPDF, canvas: SWOTData) => {
   doc.addPage();
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 10;
+  const margin = 20;
 
-  // Add title
   doc.setFontSize(24);
   doc.setFont('helvetica', 'bold');
   doc.text('SWOT Analysis Information', pageWidth / 2, margin + 10, { align: 'center' });
 
-  // Add info boxes
   doc.setFontSize(12);
   doc.setFont('helvetica', 'normal');
   const boxWidth = (pageWidth - margin * 3) / 2;
@@ -56,8 +54,7 @@ const drawGeneralInfoPage = (doc: jsPDF, canvas: SWOTCanvasData) => {
   drawInfoBox('Project Name', canvas.project_name || 'N/A', margin, startY);
   drawInfoBox('Author', canvas.author || 'N/A', margin * 2 + boxWidth, startY);
   drawInfoBox('Date', formatDate(canvas.date), margin, startY + boxHeight + 10);
-  
-  // Add comments
+
   doc.text('Comments:', margin, startY + boxHeight * 2 + 30);
   const splitComments = doc.splitTextToSize(canvas.comments || 'No comments', pageWidth - margin * 2);
   doc.text(splitComments, margin, startY + boxHeight * 2 + 45);
@@ -70,7 +67,7 @@ const addIconToPDF = (doc: jsPDF, iconKey: keyof typeof icons, x: number, y: num
   }
 };
 
-export function exportSWOTToPDF(canvas: SWOTCanvasData) {
+export function exportSWOTToPDF(canvas: SWOTData) {
   if (!canvas) {
     console.error('No canvas data provided for PDF export');
     return;
@@ -80,76 +77,81 @@ export function exportSWOTToPDF(canvas: SWOTCanvasData) {
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 10;
-  
-  // Calculamos el tamaño del rectángulo para que ocupe casi todo el ancho de la página
-  const rectangleWidth = pageWidth - (margin * 2);
-  const rectangleHeight = pageHeight - (margin * 3) - 30; // 30 para el título y metadata
-  
-  // Calculamos el tamaño de cada sección (ahora son más anchas que altas)
-  const sectionWidth = rectangleWidth / 2;
-  const sectionHeight = rectangleHeight / 2;
+
+  // Calculamos las dimensiones del mapa SWOT
+  const mapWidth = pageWidth - (margin * 2);
+  const mapHeight = pageHeight - (margin * 2) - 20; // Restamos 20 para el título
+  const startX = margin;
+  const startY = margin + 20; // Añadimos 20 para el título
+
+  // Calculamos las dimensiones de cada cuadrante
+  const quadrantWidth = mapWidth / 2;
+  const quadrantHeight = mapHeight / 2;
 
   try {
-    // Set title
+    // Añadimos el título del canvas
     doc.setFontSize(24);
     doc.setFont('helvetica', 'bold');
     doc.text(canvas.title || 'SWOT Analysis', pageWidth / 2, margin + 10, { align: 'center' });
 
-    const drawSection = (title: string, items: string[] | undefined, x: number, y: number, iconKey: keyof typeof icons) => {
-      // Draw box
-      doc.setDrawColor(70, 70, 70);
-      doc.setLineWidth(0.1);
-      doc.rect(x, y, sectionWidth, sectionHeight);
+    // Dibujamos el marco exterior
+    doc.setDrawColor(0);
+    doc.setLineWidth(0.5);
+    doc.rect(startX, startY, mapWidth, mapHeight);
 
-      // Draw icon
-      addIconToPDF(doc, iconKey, x + 5, y + 5, 10, 10);
+    // Dibujamos las líneas internas
+    doc.line(startX + quadrantWidth, startY, startX + quadrantWidth, startY + mapHeight);
+    doc.line(startX, startY + quadrantHeight, startX + mapWidth, startY + quadrantHeight);
 
-      // Draw title
-      doc.setFontSize(16);
-      doc.setFont('helvetica', 'bold');
-      doc.text(title, x + 20, y + 15);
+    // Añadimos los iconos
+    const iconSize = 10;
+    addIconToPDF(doc, 'strength', startX + 5, startY + 5, iconSize, iconSize);
+    addIconToPDF(doc, 'weakness', startX + quadrantWidth + 5, startY + 5, iconSize, iconSize);
+    addIconToPDF(doc, 'opportunity', startX + 5, startY + quadrantHeight + 5, iconSize, iconSize);
+    addIconToPDF(doc, 'threat', startX + quadrantWidth + 5, startY + quadrantHeight + 5, iconSize, iconSize);
 
-      // Draw items
-      doc.setFontSize(11);
-      doc.setFont('helvetica', 'normal');
-      let itemY = y + 25;
-      
-      if (Array.isArray(items) && items.length > 0) {
+    // Configuración del texto
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+
+    // Añadimos los títulos de las secciones
+    doc.text('Strengths', startX + 20, startY + 15);
+    doc.text('Weaknesses', startX + quadrantWidth + 20, startY + 15);
+    doc.text('Opportunities', startX + 20, startY + quadrantHeight + 15);
+    doc.text('Threats', startX + quadrantWidth + 20, startY + quadrantHeight + 15);
+
+    // Función helper para añadir contenido
+    const addContent = (items: string[], x: number, y: number, maxWidth: number, maxHeight: number) => {
+      if (Array.isArray(items)) {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        let currentY = y;
         items.forEach((item) => {
-          if (typeof item === 'string') {
-            const lines = doc.splitTextToSize(item, sectionWidth - 15);
-            lines.forEach((line: string) => {
-              if (itemY < y + sectionHeight - 5) {
-                doc.text(`• ${line}`, x + 5, itemY);
-                itemY += 5;
-              }
-            });
+          const lines = doc.splitTextToSize(item, maxWidth - 10);
+          doc.text(`• ${lines[0]}`, x, currentY);
+          currentY += 5;
+          
+          // For additional lines, don't add bullet points
+          for (let i = 1; i < lines.length; i++) {
+            if (currentY < y + maxHeight - 5) {
+              doc.text(lines[i], x + 3, currentY);
+              currentY += 5;
+            }
           }
         });
-      } else {
-        doc.text('No items', x + 5, itemY);
       }
     };
 
-    // Calculamos la posición inicial para centrar el rectángulo
-    const startX = margin;
-    const startY = margin + 20;
+    // Añadimos el contenido de cada sección
+    addContent(canvas.content.strengths, startX + 10, startY + 25, quadrantWidth - 10, quadrantHeight - 25);
+    addContent(canvas.content.weaknesses, startX + quadrantWidth + 10, startY + 25, quadrantWidth - 10, quadrantHeight - 25);
+    addContent(canvas.content.opportunities, startX + 10, startY + quadrantHeight + 25, quadrantWidth - 10, quadrantHeight - 25);
+    addContent(canvas.content.threats, startX + quadrantWidth + 10, startY + quadrantHeight + 25, quadrantWidth - 10, quadrantHeight - 25);
 
-    // Draw SWOT sections
-    drawSection('Strengths', canvas.content?.strengths, startX, startY, 'strength');
-    drawSection('Weaknesses', canvas.content?.weaknesses, startX + sectionWidth, startY, 'weakness');
-    drawSection('Opportunities', canvas.content?.opportunities, startX, startY + sectionHeight, 'opportunity');
-    drawSection('Threats', canvas.content?.threats, startX + sectionWidth, startY + sectionHeight, 'threat');
-
-    // Add the general information page
+    // Añadimos la página de información general
     drawGeneralInfoPage(doc, canvas);
 
-    // Add metadata
-    doc.setFontSize(8);
-    doc.setTextColor(128, 128, 128);
-    doc.text(`Generated on ${new Date().toLocaleDateString()}`, margin, pageHeight - 5);
-
-    // Save the PDF
+    // Guardamos el PDF
     const filename = `${(canvas.title || 'swot-analysis').toLowerCase().replace(/[^a-z0-9]/g, '-')}.pdf`;
     doc.save(filename);
   } catch (error) {
