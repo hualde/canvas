@@ -137,12 +137,12 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     doc.setFont('helvetica', 'bold');
 
     // Añadimos los títulos de las secciones
-    doc.text('Think & feel', centerX, startY + 50, { align: 'center' });
-    doc.text('See', startX + mapWidth - 40, centerY - 5);
-    doc.text('Hear', startX + 20, centerY - 5);
-    doc.text('Say & do', centerX, startY + mainSectionHeight - 5, { align: 'center' });
-    doc.text('Pains', startX + 40, bottomSectionY + 20);
-    doc.text('Gains', centerX + 40, bottomSectionY + 20);
+    doc.text('Think & feel', centerX - 100, startY + 28, { align: 'center' });
+    doc.text('See', startX + mapWidth - 15, centerY - 40);
+    doc.text('Hear', startX + 2, centerY - 40);
+    doc.text('Say & do', centerX - 100, startY + mainSectionHeight - 3, { align: 'center' });
+    doc.text('Pains', startX + 2, bottomSectionY + 7);
+    doc.text('Gains', centerX + 2, bottomSectionY + 7);
 
     // Añadimos el contenido de cada sección
     doc.setFontSize(10);
