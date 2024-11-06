@@ -87,8 +87,8 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
   const startY = margin + 20;
 
   // Ajustamos las proporciones para dar más altura a las secciones principales
-  const mainSectionHeight = mapHeight * 0.8; // Aumentado de 0.7 a 0.8
-  const painGainSectionHeight = mapHeight * 0.2; // Reducido de 0.3 a 0.2
+  const mainSectionHeight = mapHeight * 0.9; // Aumentado de 0.7 a 0.8
+  const painGainSectionHeight = mapHeight * 0.3; // Reducido de 0.3 a 0.2
 
   // Calculamos el punto central y el radio del círculo
   const centerX = startX + (mapWidth / 2);
