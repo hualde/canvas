@@ -79,10 +79,11 @@ export function exportPESTELToPDF(canvas: PESTELCanvasData) {
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 10;
+  const bottomMargin = 20; // New bottom margin
 
   // Calculate dimensions
   const mapWidth = pageWidth - (margin * 2);
-  const mapHeight = pageHeight - (margin * 2);
+  const mapHeight = pageHeight - (margin * 2) - bottomMargin; // Adjusted for bottom margin
   const startX = margin;
   const startY = margin;
 
