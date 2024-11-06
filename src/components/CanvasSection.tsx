@@ -27,6 +27,13 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
     onUpdate(items.filter((_, i) => i !== index));
   };
 
+  const renderItemWithBullet = (item: string) => {
+    if (item.startsWith('• ')) {
+      return item;
+    }
+    return `• ${item}`;
+  };
+
   return (
     <div className={`bg-white bg-opacity-70 backdrop-blur-sm rounded-lg shadow-sm p-4 flex flex-col ${className}`}>
       <div className="flex justify-between items-start mb-4">
@@ -49,16 +56,18 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
       </div>
 
       <div className="flex-grow overflow-y-auto">
-        <ul className="space-y-2 list-none pl-0">
+        <ul className="space-y-2">
           {items.map((item, index) => (
             <li
               key={index}
               className="flex items-center justify-between group bg-white bg-opacity-10 rounded-md p-2"
             >
-              <span className="text-gray-700">{item}</span>
+              <span className="text-gray-700 whitespace-pre-wrap">
+                {renderItemWithBullet(item)}
+              </span>
               <button
                 onClick={() => handleRemoveItem(index)}
-                className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-opacity"
+                className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-opacity ml-2 flex-shrink-0"
               >
                 <X className="h-4 w-4" />
               </button>
