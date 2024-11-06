@@ -1,7 +1,7 @@
 import jsPDF from 'jspdf';
 import { icons } from './icons';
 
-interface PESTELCanvasData {
+interface PESTELData {
   id: string;
   title: string;
   content: {
@@ -28,7 +28,7 @@ const formatDate = (date: string | Date): string => {
   return 'N/A';
 };
 
-const drawGeneralInfoPage = (doc: jsPDF, canvas: PESTELCanvasData) => {
+const drawGeneralInfoPage = (doc: jsPDF, canvas: PESTELData) => {
   doc.addPage();
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
@@ -69,7 +69,7 @@ const addIconToPDF = (doc: jsPDF, iconKey: keyof typeof icons, x: number, y: num
   }
 };
 
-export function exportPESTELToPDF(canvas: PESTELCanvasData) {
+export function exportPESTELToPDF(canvas: PESTELData) {
   if (!canvas) {
     console.error('No canvas data provided for PDF export');
     return;
@@ -79,69 +79,88 @@ export function exportPESTELToPDF(canvas: PESTELCanvasData) {
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 10;
-  const bottomMargin = 20; // New bottom margin
 
-  // Calculate dimensions
+  // Calculamos las dimensiones del mapa PESTEL
   const mapWidth = pageWidth - (margin * 2);
-  const mapHeight = pageHeight - (margin * 2) - bottomMargin; // Adjusted for bottom margin
+  const mapHeight = pageHeight - (margin * 2) - 20; // Restamos 20 para el título
   const startX = margin;
-  const startY = margin;
+  const startY = margin + 20; // Añadimos 20 para el título
 
+  // Calculamos las dimensiones de cada sección
   const sectionWidth = mapWidth / 3;
   const sectionHeight = mapHeight / 2;
 
-  const sections = [
-    { key: 'political', color: '#4DB6AC', label: 'Political' },
-    { key: 'economic', color: '#FF7043', label: 'Economic' },
-    { key: 'social', color: '#C0CA33', label: 'Social' },
-    { key: 'technological', color: '#4DB6AC', label: 'Technological' },
-    { key: 'environmental', color: '#FF7043', label: 'Environmental' },
-    { key: 'legal', color: '#C0CA33', label: 'Legal' }
-  ];
-
   try {
-    // Add title
+    // Añadimos el título del canvas
     doc.setFontSize(24);
     doc.setFont('helvetica', 'bold');
-    doc.text(canvas.title || 'PESTEL Analysis', pageWidth / 2, startY + 10, { align: 'center' });
+    doc.text(canvas.title || 'PESTEL Analysis', pageWidth / 2, margin + 10, { align: 'center' });
 
-    // Draw sections
-    sections.forEach((section, index) => {
-      const col = index % 3;
-      const row = Math.floor(index / 3);
-      const x = startX + (col * sectionWidth);
-      const y = startY + 20 + (row * sectionHeight);
+    // Dibujamos el marco exterior
+    doc.setDrawColor(0);
+    doc.setLineWidth(0.5);
+    doc.rect(startX, startY, mapWidth, mapHeight);
 
-      // Draw section background
-      doc.setFillColor(section.color);
-      doc.rect(x, y, sectionWidth, sectionHeight, 'F');
+    // Dibujamos las líneas internas
+    doc.line(startX + sectionWidth, startY, startX + sectionWidth, startY + mapHeight);
+    doc.line(startX + sectionWidth * 2, startY, startX + sectionWidth * 2, startY + mapHeight);
+    doc.line(startX, startY + sectionHeight, startX + mapWidth, startY + sectionHeight);
 
-      // Add icon
-      addIconToPDF(doc, section.key as keyof typeof icons, x + 5, y + 5, 10, 10);
+    // Añadimos los iconos
+    const iconSize = 10;
+    addIconToPDF(doc, 'political', startX + 5, startY + 5, iconSize, iconSize);
+    addIconToPDF(doc, 'economic', startX + sectionWidth + 5, startY + 5, iconSize, iconSize);
+    addIconToPDF(doc, 'social', startX + sectionWidth * 2 + 5, startY + 5, iconSize, iconSize);
+    addIconToPDF(doc, 'technological', startX + 5, startY + sectionHeight + 5, iconSize, iconSize);
+    addIconToPDF(doc, 'environmental', startX + sectionWidth + 5, startY + sectionHeight + 5, iconSize, iconSize);
+    addIconToPDF(doc, 'legal', startX + sectionWidth * 2 + 5, startY + sectionHeight + 5, iconSize, iconSize);
 
-      // Add section title
-      doc.setFontSize(16);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(255, 255, 255);
-      doc.text(section.label, x + 20, y + 15);
+    // Configuración del texto
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
 
-      // Add section content
-      doc.setTextColor(0, 0, 0);
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      const content = canvas.content[section.key as keyof PESTELCanvasData['content']] || [];
-      const contentY = y + 25;
-      content.forEach((item, itemIndex) => {
-        if (contentY + (itemIndex * 10) < y + sectionHeight - 10) {
-          doc.text(`• ${item}`, x + 5, contentY + (itemIndex * 10));
-        }
-      });
-    });
+    // Añadimos los títulos de las secciones
+    doc.text('Political', startX + 20, startY + 15);
+    doc.text('Economic', startX + sectionWidth + 20, startY + 15);
+    doc.text('Social', startX + sectionWidth * 2 + 20, startY + 15);
+    doc.text('Technological', startX + 20, startY + sectionHeight + 15);
+    doc.text('Environmental', startX + sectionWidth + 20, startY + sectionHeight + 15);
+    doc.text('Legal', startX + sectionWidth * 2 + 20, startY + sectionHeight + 15);
 
-    // Add general info page
+    // Función helper para añadir contenido
+    const addContent = (items: string[], x: number, y: number, maxWidth: number, maxHeight: number) => {
+      if (Array.isArray(items)) {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        let currentY = y;
+        items.forEach((item) => {
+          const lines = doc.splitTextToSize(item, maxWidth - 10);
+          doc.text(`• ${lines[0]}`, x, currentY);
+          currentY += 5;
+          
+          // For additional lines, don't add bullet points
+          for (let i = 1; i < lines.length; i++) {
+            if (currentY < y + maxHeight - 5) {
+              doc.text(lines[i], x + 3, currentY);
+              currentY += 5;
+            }
+          }
+        });
+      }
+    };
+
+    // Añadimos el contenido de cada sección
+    addContent(canvas.content.political, startX + 10, startY + 25, sectionWidth - 10, sectionHeight - 25);
+    addContent(canvas.content.economic, startX + sectionWidth + 10, startY + 25, sectionWidth - 10, sectionHeight - 25);
+    addContent(canvas.content.social, startX + sectionWidth * 2 + 10, startY + 25, sectionWidth - 10, sectionHeight - 25);
+    addContent(canvas.content.technological, startX + 10, startY + sectionHeight + 25, sectionWidth - 10, sectionHeight - 25);
+    addContent(canvas.content.environmental, startX + sectionWidth + 10, startY + sectionHeight + 25, sectionWidth - 10, sectionHeight - 25);
+    addContent(canvas.content.legal, startX + sectionWidth * 2 + 10, startY + sectionHeight + 25, sectionWidth - 10, sectionHeight - 25);
+
+    // Añadimos la página de información general
     drawGeneralInfoPage(doc, canvas);
 
-    // Save the PDF
+    // Guardamos el PDF
     const filename = `${(canvas.title || 'pestel-analysis').toLowerCase().replace(/[^a-z0-9]/g, '-')}.pdf`;
     doc.save(filename);
   } catch (error) {
