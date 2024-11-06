@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { X } from 'lucide-react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { X, Sparkles } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -16,6 +16,16 @@ export function AIChat({ canvasContent }: AIChatProps) {
   const [inputMessage, setInputMessage] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
+  useEffect(() => {
+    if (isChatOpen) {
+      const initialMessage: Message = {
+        role: 'assistant',
+        content: 'Hello! I'm your AI assistant. I have information about your current canvas. How can I help you today?'
+      };
+      setMessages([initialMessage]);
+    }
+  }, [isChatOpen]);
+
   const handleSendMessage = useCallback(async () => {
     if (!inputMessage.trim()) return;
 
@@ -31,7 +41,7 @@ export function AIChat({ canvasContent }: AIChatProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt: `Basado en el siguiente Business Model Canvas, responde a esta pregunta: ${inputMessage}\n\nCanvas: ${JSON.stringify(canvasContent)}`,
+          prompt: `Based on the following canvas content, please answer this question or provide insights: ${inputMessage}\n\nCanvas Content: ${JSON.stringify(canvasContent)}`,
         }),
       });
 
@@ -43,8 +53,8 @@ export function AIChat({ canvasContent }: AIChatProps) {
       const assistantMessage: Message = { role: 'assistant', content: data.result };
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Error al procesar el mensaje:', error);
-      const errorMessage: Message = { role: 'assistant', content: 'Lo siento, hubo un error al procesar tu mensaje. Por favor, intenta de nuevo.' };
+      console.error('Error processing message:', error);
+      const errorMessage: Message = { role: 'assistant', content: 'I apologize, there was an error processing your message. Please try again.' };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsProcessing(false);
@@ -58,7 +68,7 @@ export function AIChat({ canvasContent }: AIChatProps) {
         className="fixed bottom-6 right-6 p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 hover:scale-110"
         aria-label="AI Assistant"
       >
-        AI
+        <Sparkles className="h-6 w-6" />
       </button>
 
       {isChatOpen && (
@@ -89,7 +99,7 @@ export function AIChat({ canvasContent }: AIChatProps) {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Escribe tu mensaje..."
+                placeholder="Type your message..."
                 className="flex-grow border rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
@@ -97,7 +107,7 @@ export function AIChat({ canvasContent }: AIChatProps) {
                 disabled={isProcessing}
                 className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
               >
-                Enviar
+                Send
               </button>
             </div>
           </div>
