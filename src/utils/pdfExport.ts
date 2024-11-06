@@ -112,12 +112,16 @@ export function exportToPDF(canvas: CanvasData) {
       items.forEach((item) => {
         if (item && typeof item === 'string') {
           const lines = doc.splitTextToSize(item, width - 6);
-          lines.forEach((line: string) => {
+          doc.text(`• ${lines[0]}`, x + 3, itemY);
+          itemY += 4;
+          
+          // For additional lines, don't add bullet points
+          for (let i = 1; i < lines.length; i++) {
             if (itemY < y + height - 2) {
-              doc.text(`• ${line}`, x + 3, itemY);
+              doc.text(lines[i], x + 6, itemY);
               itemY += 4;
             }
-          });
+          }
         }
       });
     } else {
