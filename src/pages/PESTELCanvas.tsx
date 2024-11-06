@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { AIChat } from '../components/AIChat';
 import { icons } from '../utils/icons';
+import { exportPESTELToPDF } from '../utils/pestelPdfExport';
 
 interface PESTELCanvasData {
   id: string;
@@ -25,12 +26,48 @@ interface PESTELCanvasData {
 }
 
 const sections = [
-  { key: 'political', color: '#4DB6AC', lightColor: '#B2DFDB', label: 'Política' },
-  { key: 'economic', color: '#FF7043', lightColor: '#FFCCBC', label: 'Económica' },
-  { key: 'social', color: '#C0CA33', lightColor: '#F0F4C3', label: 'Social' },
-  { key: 'technological', color: '#4DB6AC', lightColor: '#B2DFDB', label: 'Tecnológico' },
-  { key: 'environmental', color: '#FF7043', lightColor: '#FFCCBC', label: 'Ecológico' },
-  { key: 'legal', color: '#C0CA33', lightColor: '#F0F4C3', label: 'Legal' }
+  { 
+    key: 'political', 
+    color: '#4DB6AC', 
+    lightColor: '#B2DFDB', 
+    label: 'Political', 
+    description: 'What political factors can affect your business?'
+  },
+  { 
+    key: 'economic', 
+    color: '#FF7043', 
+    lightColor: '#FFCCBC', 
+    label: 'Economic', 
+    description: 'What are the economic conditions influencing your market?'
+  },
+  { 
+    key: 'social', 
+    color: '#C0CA33', 
+    lightColor: '#F0F4C3', 
+    label: 'Social', 
+    description: 'What social and cultural trends affect your audience?'
+  },
+  { 
+    key: 'technological', 
+    color: '#4DB6AC', 
+    lightColor: '#B2DFDB', 
+    label: 'Technological', 
+    description: 'How does technology impact your industry and products?'
+  },
+  { 
+    key: 'environmental', 
+    color: '#FF7043', 
+    lightColor: '#FFCCBC', 
+    label: 'Environmental', 
+    description: 'What environmental factors are relevant to your business?'
+  },
+  { 
+    key: 'legal', 
+    color: '#C0CA33', 
+    lightColor: '#F0F4C3', 
+    label: 'Legal', 
+    description: 'What laws and regulations affect your operation?'
+  }
 ];
 
 export function PESTELCanvas() {
@@ -102,6 +139,12 @@ export function PESTELCanvas() {
     }
   };
 
+  const handleExportPDF = () => {
+    if (canvas) {
+      exportPESTELToPDF(canvas);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -135,6 +178,13 @@ export function PESTELCanvas() {
         >
           <ArrowLeft className="h-5 w-5 mr-2" />
           Back to Dashboard
+        </button>
+        <button
+          onClick={handleExportPDF}
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          <Download className="h-4 w-4 mr-2" />
+          Export PDF
         </button>
       </div>
 
@@ -201,6 +251,7 @@ export function PESTELCanvas() {
               >
                 <h3 className="text-lg font-semibold">{section.label}</h3>
               </div>
+              <p className="text-sm text-gray-600 mb-4">{section.description}</p>
               <div className="min-h-[200px]">
                 <CanvasSection
                   title=""
