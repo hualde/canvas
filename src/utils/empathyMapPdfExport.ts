@@ -105,18 +105,18 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     doc.setDrawColor(0);
     doc.setLineWidth(0.5);
     doc.rect(startX, startY + 20, mapWidth, mapHeight - 20);
-
-    // Dibujamos el círculo central
-    doc.setFillColor(255, 255, 255); // Set fill color to white
-    doc.circle(centerX, centerY + 10, circleRadius, 'F'); // 'F' fills the circle
-    doc.setDrawColor(0); // Set draw color back to black
-    doc.circle(centerX, centerY + 10, circleRadius, 'S'); // Draw the circle outline
     
     // Dibujamos las líneas diagonales desde el centro
     doc.line(centerX, centerY + 10, startX, startY + 20); // Izquierda superior
     doc.line(centerX, centerY + 10, startX + mapWidth, startY + 20); // Derecha superior
     doc.line(centerX, centerY + 10, startX, startY + mainSectionHeight); // Izquierda inferior
     doc.line(centerX, centerY + 10, startX + mapWidth, startY + mainSectionHeight); // Derecha inferior
+
+    // Dibujamos el círculo central
+    doc.setFillColor(255, 255, 255); // Set fill color to white
+    doc.circle(centerX, centerY + 10, circleRadius, 'F'); // 'F' fills the circle
+    doc.setDrawColor(0); // Set draw color back to black
+    doc.circle(centerX, centerY + 10, circleRadius, 'S'); // Draw the circle outline
 
     // Dibujamos los bordes de Pains y Gains
     const bottomSectionY = startY + mainSectionHeight;
