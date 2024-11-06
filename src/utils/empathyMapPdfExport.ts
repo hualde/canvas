@@ -107,7 +107,10 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     doc.rect(startX, startY + 20, mapWidth, mapHeight - 20);
 
     // Dibujamos el círculo central
-    doc.circle(centerX, centerY + 10, circleRadius, 'S');
+    doc.setFillColor(255, 255, 255); // Set fill color to white
+    doc.circle(centerX, centerY + 10, circleRadius, 'F'); // 'F' fills the circle
+    doc.setDrawColor(0); // Set draw color back to black
+    doc.circle(centerX, centerY + 10, circleRadius, 'S'); // Draw the circle outline
     
     // Dibujamos las líneas diagonales desde el centro
     doc.line(centerX, centerY + 10, startX, startY + 20); // Izquierda superior
@@ -134,12 +137,12 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     doc.setFont('helvetica', 'bold');
 
     // Añadimos los títulos de las secciones
-    doc.text('Think & feel', centerX - 100 , startY + 28, { align: 'center' });
-    doc.text('See', startX + mapWidth - 15, centerY - 40);
-    doc.text('Hear', startX + 2, centerY - 40);
-    doc.text('Say & do', centerX - 100, startY + mainSectionHeight - 3, { align: 'center' });
-    doc.text('Pains', startX + 2, bottomSectionY + 7);
-    doc.text('Gains', centerX + 2, bottomSectionY + 7);
+    doc.text('Think & feel', centerX, startY + 50, { align: 'center' });
+    doc.text('See', startX + mapWidth - 40, centerY - 5);
+    doc.text('Hear', startX + 20, centerY - 5);
+    doc.text('Say & do', centerX, startY + mainSectionHeight - 5, { align: 'center' });
+    doc.text('Pains', startX + 40, bottomSectionY + 20);
+    doc.text('Gains', centerX + 40, bottomSectionY + 20);
 
     // Añadimos el contenido de cada sección
     doc.setFontSize(10);
@@ -168,7 +171,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // Think & Feel
     addContent(
       canvas.content.thinkAndFeel || [], 
-      startX - 30, 
+      startX + 30, 
       startY + 60, 
       sectionWidth - 60,
       sectionHeight - 60
