@@ -89,7 +89,6 @@ export function Canvas() {
   const handleUpdateCanvasInfo = async () => {
     if (!canvas) return;
     try {
-      console.log('Updating canvas info:', { id: canvas.id, project_name, author, date, comments });
       const updatedCanvas = await updateCanvas(canvas.id, {
         ...canvas,
         project_name,
@@ -97,12 +96,7 @@ export function Canvas() {
         date,
         comments
       });
-      console.log('Response from updateCanvas:', updatedCanvas);
       setCanvas(updatedCanvas);
-      setProject_name(updatedCanvas.project_name);
-      setAuthor(updatedCanvas.author);
-      setDate(updatedCanvas.date);
-      setComments(updatedCanvas.comments);
     } catch (error) {
       console.error('Error updating canvas info:', error);
     }
@@ -182,10 +176,7 @@ export function Canvas() {
         <input
           type="date"
           value={date}
-          onChange={(e) => {
-            console.log('Date changed:', e.target.value);
-            setDate(e.target.value);
-          }}
+          onChange={(e) => setDate(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />

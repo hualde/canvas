@@ -16,7 +16,8 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
 
   const handleAddItem = () => {
     if (newItem.trim()) {
-      onUpdate([...items, newItem.trim()]);
+      const itemWithBullet = newItem.trim().startsWith('• ') ? newItem.trim() : `• ${newItem.trim()}`;
+      onUpdate([...items, itemWithBullet]);
       setNewItem('');
       setIsAdding(false);
     }
@@ -48,7 +49,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
       </div>
 
       <div className="flex-grow overflow-y-auto">
-        <ul className="space-y-2">
+        <ul className="space-y-2 list-none pl-0">
           {items.map((item, index) => (
             <li
               key={index}
