@@ -3,15 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas } from '../lib/db';
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
 
 interface Canvas {
   id: string;
@@ -179,21 +170,28 @@ export function Dashboard() {
         </div>
       )}
 
-      <Dialog open={!!canvasToDelete} onOpenChange={() => setCanvasToDelete(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Are you sure you want to delete this canvas?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              canvas and remove its data from our servers.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setCanvasToDelete(null)}>Cancel</Button>
-            <Button variant="destructive" onClick={handleDeleteCanvas}>Delete</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {canvasToDelete && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h2 className="text-xl font-semibold mb-4">Confirm Deletion</h2>
+            <p className="mb-6">Are you sure you want to delete this canvas? This action cannot be undone.</p>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => setCanvasToDelete(null)}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteCanvas}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
