@@ -20,7 +20,7 @@ export function AIChat({ canvasContent }: AIChatProps) {
     if (isChatOpen) {
       const initialMessage: Message = {
         role: 'assistant',
-        content: 'Hello! I'm your AI assistant. I have information about your current canvas. How can I help you today?'
+        content: "Hello! I'm your AI assistant. I have information about your current canvas. How can I help you today?"
       };
       setMessages([initialMessage]);
     }
