@@ -171,7 +171,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // Think & Feel
     addContent(
       canvas.content.thinkAndFeel || [], 
-      startX + 20, 
+      startX + 30, 
       startY + 30, 
       sectionWidth - 60,
       sectionHeight - 60
@@ -180,8 +180,8 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // See
     addContent(
       canvas.content.see || [], 
-      centerX + 60, 
-      startY + 60, 
+      centerX + 65, 
+      startY + 55, 
       sectionWidth - 60,
       sectionHeight - 60
     );
@@ -190,7 +190,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     addContent(
       canvas.content.hear || [], 
       startX + 15, 
-      centerY - 30, 
+      centerY - 20, 
       sectionWidth - 60,
       sectionHeight - 60
     );
@@ -198,7 +198,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // Say & Do
     addContent(
       canvas.content.sayAndDo || [], 
-      centerX - 10, 
+      centerX - 20, 
       centerY + 30, 
       sectionWidth - 60,
       sectionHeight - 60
@@ -207,8 +207,8 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // Pains
     addContent(
       canvas.content.pains || [], 
-      startX + 40, 
-      bottomSectionY + 30, 
+      startX + 20, 
+      bottomSectionY + 50, 
       (mapWidth/2) - 50,
       painGainSectionHeight - 40
     );
@@ -216,8 +216,8 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // Gains
     addContent(
       canvas.content.gains || [], 
-      centerX + 40, 
-      bottomSectionY + 30, 
+      centerX + 10, 
+      bottomSectionY + 50, 
       (mapWidth/2) - 50,
       painGainSectionHeight - 40
     );
