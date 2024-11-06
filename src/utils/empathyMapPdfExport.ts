@@ -126,7 +126,7 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     // Añadimos los iconos
     const iconSize = 10;
     addIconToPDF(doc, 'think', centerX - 95, startY + 30, iconSize, iconSize);
-    addIconToPDF(doc, 'see', startX + mapWidth - 18, centerY - 36, iconSize, iconSize);
+    addIconToPDF(doc, 'see', startX + mapWidth - 16, centerY - 36, iconSize, iconSize);
     addIconToPDF(doc, 'hear', startX + 2, centerY - 36, iconSize, iconSize);
     addIconToPDF(doc, 'sayDo', centerX - 95, startY + mainSectionHeight - 20, iconSize, iconSize);
     addIconToPDF(doc, 'pain', startX + 2, bottomSectionY + 10, iconSize, iconSize);
@@ -137,10 +137,10 @@ export function exportEmpathyMapToPDF(canvas: EmpathyMapData) {
     doc.setFont('helvetica', 'bold');
 
     // Añadimos los títulos de las secciones
-    doc.text('Think & feel', centerX - 100, startY + 28, { align: 'center' });
+    doc.text('Think & feel', centerX - 95, startY + 28, { align: 'center' });
     doc.text('See', startX + mapWidth - 15, centerY - 40);
     doc.text('Hear', startX + 2, centerY - 40);
-    doc.text('Say & do', centerX - 100, startY + mainSectionHeight - 3, { align: 'center' });
+    doc.text('Say & do', centerX - 95, startY + mainSectionHeight - 3, { align: 'center' });
     doc.text('Pains', startX + 2, bottomSectionY + 7);
     doc.text('Gains', centerX + 2, bottomSectionY + 7);
 
