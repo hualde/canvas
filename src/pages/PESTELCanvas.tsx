@@ -204,15 +204,15 @@ export function PESTELCanvas() {
         />
       </div>
 
-      <div className="grid grid-cols-6 gap-4">
-        {Object.entries(canvas.content).map(([key, items], index) => {
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {Object.entries(canvas.content).map(([key, items]) => {
           const sectionKey = key as keyof typeof sectionStyles;
           const style = sectionStyles[sectionKey];
           
           return (
             <div key={key} className="flex flex-col">
-              <div className={`flex flex-col items-center ${style.lightBg} rounded-lg`}>
-                <div className={`w-20 h-20 ${style.bgColor} rounded-full flex items-center justify-center -mt-6 mb-2 shadow-lg`}>
+              <div className={`flex flex-col items-center ${style.lightBg} rounded-lg overflow-hidden`}>
+                <div className={`w-20 h-20 ${style.bgColor} rounded-full flex items-center justify-center -mt-10 mb-2 shadow-lg`}>
                   <span className="text-3xl font-bold text-white">
                     {key.charAt(0).toUpperCase()}
                   </span>
