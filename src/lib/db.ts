@@ -38,27 +38,6 @@ export async function getCanvases(userId: string): Promise<CanvasData[]> {
   }
 }
 
-export async function getCanvases(userId: string): Promise<CanvasData[]> {
-  try {
-    const { rows } = await sql`
-      SELECT 
-        id, 
-        title,
-        type, 
-        project_name, 
-        author, 
-        to_char(date AT TIME ZONE 'UTC', 'YYYY-MM-DD') as date, 
-        to_char(updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"') as updated_at
-      FROM canvas
-      WHERE user_id = ${userId}
-      ORDER BY updated_at DESC
-    `;
-    return rows;
-  } catch (error) {
-    console.error('Error fetching canvases:', error);
-    throw error;
-  }
-}
 
 export async function createCanvas(userId: string, title: string, type: string): Promise<CanvasData> {
   try {
