@@ -38,25 +38,24 @@ export async function getCanvases(userId: string): Promise<CanvasData[]> {
   }
 }
 
-export async function getCanvas(id: string): Promise<CanvasData | null> {
+export async function getCanvases(userId: string): Promise<CanvasData[]> {
   try {
     const { rows } = await sql`
       SELECT 
         id, 
         title,
         type, 
-        content, 
         project_name, 
         author, 
         to_char(date AT TIME ZONE 'UTC', 'YYYY-MM-DD') as date, 
-        comments,
         to_char(updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"') as updated_at
       FROM canvas
-      WHERE id = ${id}
+      WHERE user_id = ${userId}
+      ORDER BY updated_at DESC
     `;
-    return rows[0] || null;
+    return rows;
   } catch (error) {
-    console.error('Error fetching canvas:', error);
+    console.error('Error fetching canvases:', error);
     throw error;
   }
 }

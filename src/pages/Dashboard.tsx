@@ -7,6 +7,8 @@ import { getCanvases, createCanvas, deleteCanvas } from '../lib/db';
 interface Canvas {
   id: string;
   title: string;
+  type: string;
+  updated_at: string;
 }
 
 export function Dashboard() {
@@ -46,13 +48,7 @@ export function Dashboard() {
         
         const newCanvas = await createCanvas(user.sub, `Untitled ${canvasType} Canvas`, canvasType);
         
-        navigate(
-          type === 'business' ? `/canvas/${newCanvas.id}` : 
-          type === 'value-proposition' ? `/value-proposition/${newCanvas.id}` : 
-          type === 'swot' ? `/swot/${newCanvas.id}` :
-          type === 'empathy-map' ? `/empathy-map/${newCanvas.id}` :
-          `/pestel/${newCanvas.id}`
-        );
+        navigate(getCanvasRoute(newCanvas));
       } catch (error) {
         console.error('Error creating canvas:', error);
       }
@@ -72,20 +68,46 @@ export function Dashboard() {
     }
   };
 
+  const getCanvasRoute = (canvas: Canvas) => {
+    switch (canvas.type) {
+      case 'Business Model':
+        return `/canvas/${canvas.id}`;
+      case 'Value Proposition':
+        return `/value-proposition/${canvas.id}`;
+      case 'SWOT Analysis':
+        return `/swot/${canvas.id}`;
+      case 'Empathy Map':
+        return `/empathy-map/${canvas.id}`;
+      case 'PESTEL Analysis':
+        return `/pestel/${canvas.id}`;
+      default:
+        console.error(`Unknown canvas type: ${canvas.type}`);
+        return `/canvas/${canvas.id}`;
+    }
+  };
+
+  const getCanvasIcon = (type: string) => {
+    switch (type) {
+      case 'Business Model':
+        return <FileText className="h-6 w-6 text-blue-600" />;
+      case 'Value Proposition':
+        return <PieChart className="h-6 w-6 text-green-600" />;
+      case 'SWOT Analysis':
+        return <BarChart2 className="h-6 w-6 text-orange-600" />;
+      case 'Empathy Map':
+        return <Users className="h-6 w-6 text-purple-600" />;
+      case 'PESTEL Analysis':
+        return <Compass className="h-6 w-6 text-red-600" />;
+      default:
+        return <FileText className="h-6 w-6 text-gray-600" />;
+    }
+  };
+
   if (isLoading || isLoadingCanvases) {
     return <div className="flex justify-center items-center h-screen">
       <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
     </div>;
   }
-
-  const getCanvasIcon = (title: string) => {
-    if (title.includes('Business Model')) return <FileText className="h-6 w-6 text-blue-600" />;
-    if (title.includes('Value Proposition')) return <PieChart className="h-6 w-6 text-green-600" />;
-    if (title.includes('SWOT Analysis')) return <BarChart2 className="h-6 w-6 text-orange-600" />;
-    if (title.includes('Empathy Map')) return <Users className="h-6 w-6 text-purple-600" />;
-    if (title.includes('PESTEL Analysis')) return <Compass className="h-6 w-6 text-red-600" />;
-    return <FileText className="h-6 w-6 text-gray-600" />;
-  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -121,30 +143,29 @@ export function Dashboard() {
             className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
           >
             <div className="flex items-center mb-4">
-              {getCanvasIcon(canvas.title)}
+              {getCanvasIcon(canvas.type)}
               <h3 className="text-xl font-semibold text-gray-900 ml-2">
                 {canvas.title}
               </h3>
             </div>
-            <div className="flex justify-end space-x-2">
-              <button
-                onClick={() => navigate(
-                  canvas.title.includes('Value Proposition') ? `/value-proposition/${canvas.id}` : 
-                  canvas.title.includes('SWOT Analysis') ? `/swot/${canvas.id}` :
-                  canvas.title.includes('Empathy Map') ? `/empathy-map/${canvas.id}` :
-                  canvas.title.includes('PESTEL Analysis') ? `/pestel/${canvas.id}` :
-                  `/canvas/${canvas.id}`
-                )}
-                className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-              >
-                <Edit3 className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setCanvasToDelete(canvas)}
-                className="p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
-              >
-                <Trash2 className="w-5 h-5" />
-              </button>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-gray-500">
+                Updated: {new Date(canvas.updated_at).toLocaleDateString()}
+              </span>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => navigate(getCanvasRoute(canvas))}
+                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                >
+                  <Edit3 className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => setCanvasToDelete(canvas)}
+                  className="p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                >
+                  <Trash2 className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
         ))}
