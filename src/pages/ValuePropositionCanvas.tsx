@@ -25,7 +25,8 @@ interface CanvasData {
   comments: string;
 }
 
-export default function ValuePropositionCanvas() {
+// Changed from 'export default' to 'export const' to match the import in App.tsx
+export const ValuePropositionCanvas: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth0();
