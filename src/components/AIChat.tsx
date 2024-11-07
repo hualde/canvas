@@ -73,7 +73,7 @@ export function AIChat({ canvasContent }: AIChatProps) {
 
       {isChatOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md relative">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-md h-[80vh] flex flex-col relative">
             <div className="p-4 border-b flex justify-between items-center">
               <h2 className="text-xl font-bold">AI Assistant</h2>
               <button
@@ -84,7 +84,7 @@ export function AIChat({ canvasContent }: AIChatProps) {
                 <X className="h-6 w-6" />
               </button>
             </div>
-            <div className="h-64 overflow-y-auto p-4">
+            <div className="flex-grow overflow-y-auto p-4">
               {messages.map((message, index) => (
                 <div key={index} className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
                   <div className={`inline-block p-2 rounded-lg ${message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
