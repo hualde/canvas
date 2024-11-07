@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download } from 'lucide-react';
 import { getCanvas, updateCanvas } from '../lib/db';
@@ -36,6 +36,7 @@ export function Canvas() {
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
+  const titleInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -67,6 +68,15 @@ export function Canvas() {
       console.error('Error updating canvas title:', error);
     }
   };
+
+  useEffect(() => {
+    if (titleInputRef.current) {
+      titleInputRef.current.setSelectionRange(
+        titleInputRef.current.value.length,
+        titleInputRef.current.value.length
+      );
+    }
+  }, [canvas?.title]);
 
   const handleSectionUpdate = async (section: keyof CanvasData['content'], items: string[]) => {
     if (!canvas) return;
@@ -149,9 +159,13 @@ export function Canvas() {
       </div>
 
       <input
+        ref={titleInputRef}
         type="text"
         value={canvas.title}
-        onChange={(e) => handleUpdateTitle(e.target.value)}
+        onChange={(e) => {
+          setCanvas({ ...canvas, title: e.target.value });
+        }}
+        onBlur={(e) => handleUpdateTitle(e.target.value)}
         className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
         placeholder="Untitled Business Model Canvas"
       />
