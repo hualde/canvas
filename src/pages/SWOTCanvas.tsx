@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -23,7 +23,7 @@ interface SWOTCanvasData {
   comments: string;
 }
 
-export function SWOTCanvas() {
+export const SWOTCanvas: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth0();
@@ -33,6 +33,7 @@ export function SWOTCanvas() {
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
+  const titleInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -64,6 +65,12 @@ export function SWOTCanvas() {
       console.error('Error updating canvas title:', error);
     }
   };
+
+  useEffect(() => {
+    if (titleInputRef.current) {
+      titleInputRef.current.focus();
+    }
+  }, [canvas?.title]);
 
   const handleSectionUpdate = async (section: keyof SWOTCanvasData['content'], items: string[]) => {
     if (!canvas) return;
@@ -144,9 +151,13 @@ export function SWOTCanvas() {
       </div>
 
       <input
+        ref={titleInputRef}
         type="text"
         value={canvas.title}
-        onChange={(e) => handleUpdateTitle(e.target.value)}
+        onChange={(e) => {
+          setCanvas({ ...canvas, title: e.target.value });
+        }}
+        onBlur={(e) => handleUpdateTitle(e.target.value)}
         className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
         placeholder="Untitled SWOT Analysis"
       />
