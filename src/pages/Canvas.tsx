@@ -69,19 +69,10 @@ export function Canvas() {
     }
   };
 
-  const adjustTextareaHeight = (element: HTMLTextAreaElement) => {
-    element.style.height = 'auto';
-    element.style.height = element.scrollHeight + 'px';
-  };
 
   useEffect(() => {
     if (titleInputRef.current) {
       titleInputRef.current.focus();
-      titleInputRef.current.setSelectionRange(
-        titleInputRef.current.value.length,
-        titleInputRef.current.value.length
-      );
-      adjustTextareaHeight(titleInputRef.current);
     }
   }, [canvas?.title]);
 
@@ -165,17 +156,16 @@ export function Canvas() {
         </div>
       </div>
 
-      <textarea
+      <input
         ref={titleInputRef}
+        type="text"
         value={canvas.title}
         onChange={(e) => {
           setCanvas({ ...canvas, title: e.target.value });
         }}
         onBlur={(e) => handleUpdateTitle(e.target.value)}
-        onInput={(e) => adjustTextareaHeight(e.target as HTMLTextAreaElement)}
-        className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full resize-none overflow-hidden"
+        className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
         placeholder="Untitled Business Model Canvas"
-        rows={1}
       />
 
       <div className="mb-8 grid grid-cols-2 gap-4">
