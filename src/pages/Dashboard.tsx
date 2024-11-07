@@ -37,13 +37,15 @@ export function Dashboard() {
   const handleCreateCanvas = async (type: 'business' | 'value-proposition' | 'swot' | 'empathy-map' | 'pestel') => {
     if (isAuthenticated && user?.sub) {
       try {
-        const newCanvas = await createCanvas(user.sub, `Untitled ${
+        const canvasType = 
           type === 'business' ? 'Business Model' : 
           type === 'value-proposition' ? 'Value Proposition' : 
           type === 'swot' ? 'SWOT Analysis' :
           type === 'empathy-map' ? 'Empathy Map' :
-          'PESTEL Analysis'
-        } Canvas`, {});
+          'PESTEL Analysis';
+        
+        const newCanvas = await createCanvas(user.sub, `Untitled ${canvasType} Canvas`, canvasType);
+        
         navigate(
           type === 'business' ? `/canvas/${newCanvas.id}` : 
           type === 'value-proposition' ? `/value-proposition/${newCanvas.id}` : 

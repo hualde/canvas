@@ -1,6 +1,5 @@
 import { sql } from "@vercel/postgres";
 
-// Verifica que la conexión esté configurada correctamente
 if (!process.env.POSTGRES_URL) {
   throw new Error('POSTGRES_URL is not set in the environment variables');
 }
@@ -8,6 +7,7 @@ if (!process.env.POSTGRES_URL) {
 interface CanvasData {
   id: string;
   title: string;
+  type: string;
   content: any;
   project_name: string;
   author: string;
@@ -21,7 +21,8 @@ export async function getCanvases(userId: string): Promise<CanvasData[]> {
     const { rows } = await sql`
       SELECT 
         id, 
-        title, 
+        title,
+        type, 
         project_name, 
         author, 
         to_char(date AT TIME ZONE 'UTC', 'YYYY-MM-DD') as date, 
@@ -42,7 +43,8 @@ export async function getCanvas(id: string): Promise<CanvasData | null> {
     const { rows } = await sql`
       SELECT 
         id, 
-        title, 
+        title,
+        type, 
         content, 
         project_name, 
         author, 
@@ -59,14 +61,41 @@ export async function getCanvas(id: string): Promise<CanvasData | null> {
   }
 }
 
-export async function createCanvas(userId: string, title: string, content: any): Promise<CanvasData> {
+export async function createCanvas(userId: string, title: string, type: string): Promise<CanvasData> {
   try {
+    let defaultContent: { [key: string]: string[] } = {};
+    
+    if (type === 'Business Model') {
+      defaultContent = {
+        keyPartners: [],
+        keyActivities: [],
+        keyResources: [],
+        valuePropositions: [],
+        customerRelationships: [],
+        channels: [],
+        customerSegments: [],
+        costStructure: [],
+        revenueStreams: []
+      };
+    } else if (type === 'Value Proposition') {
+      defaultContent = {
+        productsAndServices: [],
+        gainCreators: [],
+        painRelievers: [],
+        customerJobs: [],
+        gains: [],
+        pains: []
+      };
+    }
+    // Add default content for other canvas types as needed
+
     const { rows } = await sql`
-      INSERT INTO canvas (user_id, title, content, project_name, author, date, comments, updated_at)
+      INSERT INTO canvas (user_id, title, type, content, project_name, author, date, comments, updated_at)
       VALUES (
         ${userId}, 
-        ${title}, 
-        ${JSON.stringify(content)}, 
+        ${title},
+        ${type}, 
+        ${JSON.stringify(defaultContent)}, 
         '', 
         '', 
         CURRENT_DATE AT TIME ZONE 'UTC', 
@@ -75,7 +104,8 @@ export async function createCanvas(userId: string, title: string, content: any):
       )
       RETURNING 
         id, 
-        title, 
+        title,
+        type, 
         content, 
         project_name, 
         author, 
@@ -96,17 +126,19 @@ export async function updateCanvas(id: string, canvasData: Partial<CanvasData>):
     const { rows } = await sql`
       UPDATE canvas
       SET 
-        title = ${canvasData.title},
-        content = ${JSON.stringify(canvasData.content)},
-        project_name = ${canvasData.project_name},
-        author = ${canvasData.author},
-        date = ${canvasData.date}::date AT TIME ZONE 'UTC',
-        comments = ${canvasData.comments},
+        title = COALESCE(${canvasData.title}, title),
+        type = COALESCE(${canvasData.type}, type),
+        content = COALESCE(${JSON.stringify(canvasData.content)}, content),
+        project_name = COALESCE(${canvasData.project_name}, project_name),
+        author = COALESCE(${canvasData.author}, author),
+        date = COALESCE(${canvasData.date}::date AT TIME ZONE 'UTC', date),
+        comments = COALESCE(${canvasData.comments}, comments),
         updated_at = CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
       WHERE id = ${id}
       RETURNING 
         id, 
-        title, 
+        title,
+        type, 
         content, 
         project_name, 
         author, 
