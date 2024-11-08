@@ -261,12 +261,16 @@ export async function canUserCreateCanvas(userId: string): Promise<boolean> {
 // Initialize or get user subscription
 export async function initializeUserSubscription(userId: string): Promise<string> {
   try {
+    console.log('Checking existing subscription for user:', userId);
     const existingSubscription = await getUserSubscription(userId);
     if (existingSubscription) {
+      console.log('Existing subscription found:', existingSubscription);
       return existingSubscription;
     }
 
+    console.log('No existing subscription found, creating new free subscription');
     await setUserSubscription(userId, 'free');
+    console.log('New free subscription created for user:', userId);
     return 'free';
   } catch (error) {
     console.error('Error initializing user subscription:', error);
