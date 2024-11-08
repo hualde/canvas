@@ -27,9 +27,9 @@ interface CanvasData {
 
 const FREE_USER_CANVAS_LIMIT = 3;
 
-async function ensureUserSubscriptionsTable() {
+export async function ensureUserSubscriptionsTable() {
   try {
-    await sql`
+    const result = await sql`
       CREATE TABLE IF NOT EXISTS user_subscriptions (
         user_id TEXT PRIMARY KEY,
         subscription_tier TEXT NOT NULL,
@@ -37,7 +37,7 @@ async function ensureUserSubscriptionsTable() {
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       )
     `;
-    console.log('user_subscriptions table ensured');
+    console.log('user_subscriptions table ensured, result:', result);
   } catch (error) {
     console.error('Error ensuring user_subscriptions table:', error);
   }
@@ -230,7 +230,7 @@ export async function deleteCanvas(id: string): Promise<void> {
 }
 
 // Get user's subscription tier
-export async function getUserSubscription(userId: string): Promise<string> {
+export async function getUserSubscription(userId: string): Promise<string | null> {
   try {
     console.log('Fetching subscription for user:', userId);
     const { rows } = await sql`
@@ -239,10 +239,10 @@ export async function getUserSubscription(userId: string): Promise<string> {
       WHERE user_id = ${userId}
     `;
     console.log('Fetch result:', rows);
-    return rows[0]?.subscription_tier || 'free';
+    return rows[0]?.subscription_tier || null;
   } catch (error) {
     console.error('Error fetching user subscription:', error);
-    return 'free';
+    throw error;
   }
 }
 
@@ -254,7 +254,8 @@ export async function setUserSubscription(userId: string, tier: string): Promise
       INSERT INTO user_subscriptions (user_id, subscription_tier)
       VALUES (${userId}, ${tier})
       ON CONFLICT (user_id)
-      DO UPDATE SET subscription_tier = ${tier}, updated_at = CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
+      DO UPDATE SET subscription_tier = ${tier}, updated_at = CURRENT_TIMESTAMP
+      RETURNING *
     `;
     console.log('Set subscription result:', result);
   } catch (error) {
@@ -293,17 +294,18 @@ export async function canUserCreateCanvas(userId: string): Promise<boolean> {
 // Initialize or get user subscription
 export async function initializeUserSubscription(userId: string): Promise<string> {
   try {
-    console.log('Checking existing subscription for user:', userId);
-    const existingSubscription = await getUserSubscription(userId);
-    if (existingSubscription) {
-      console.log('Existing subscription found:', existingSubscription);
-      return existingSubscription;
+    console.log('Initializing subscription for user:', userId);
+    let subscription = await getUserSubscription(userId);
+    console.log('Existing subscription:', subscription);
+    
+    if (!subscription) {
+      console.log('No existing subscription found, creating new free subscription');
+      await setUserSubscription(userId, 'free');
+      subscription = 'free';
     }
-
-    console.log('No existing subscription found, creating new free subscription');
-    await setUserSubscription(userId, 'free');
-    console.log('New free subscription created for user:', userId);
-    return 'free';
+    
+    console.log('Final user subscription:', subscription);
+    return subscription;
   } catch (error) {
     console.error('Error initializing user subscription:', error);
     console.error('Error details:', JSON.stringify(error, null, 2));
