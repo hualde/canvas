@@ -9,9 +9,10 @@ interface Message {
 
 interface AIChatProps {
   canvasContent: Record<string, string[]>;
+  onAIButtonClick: () => void;
 }
 
-export function AIChat({ canvasContent }: AIChatProps) {
+export function AIChat({ canvasContent, onAIButtonClick }: AIChatProps) {
   const { subscriptionTier } = useAuthWithSubscription();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -63,24 +64,9 @@ export function AIChat({ canvasContent }: AIChatProps) {
     }
   }, [inputMessage, canvasContent, subscriptionTier]);
 
-  const renderChatButton = () => {
-    return (
-      <button
-        onClick={() => subscriptionTier === 'premium' ? setIsChatOpen(true) : alert('This feature is only available for premium users. Please upgrade to access the AI assistant.')}
-        className={`fixed bottom-6 right-6 p-3 bg-purple-600 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 ${
-        subscriptionTier === 'premium' ? 'hover:bg-purple-700 hover:scale-110' : 'opacity-50 cursor-not-allowed'
-      }`}
-        aria-label={subscriptionTier === 'premium' ? 'AI Assistant' : 'AI Assistant (Premium Feature)'}
-      >
-        <Sparkles className="h-6 w-6" />
-      </button>
-    );
-  };
 
   return (
     <>
-      {renderChatButton()}
-
       {isChatOpen && subscriptionTier === 'premium' && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-md h-[80vh] flex flex-col relative">

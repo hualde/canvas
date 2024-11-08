@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft, Download, Sparkles } from 'lucide-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/pdfExport';
@@ -29,7 +29,7 @@ interface CanvasData {
   comments: string;
 }
 
-export function Canvas() {
+export default function Canvas() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user, subscriptionTier } = useAuthWithSubscription();
@@ -39,6 +39,7 @@ export function Canvas() {
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
+  const [isAIChatOpen, setIsAIChatOpen] = useState(false);
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -166,6 +167,15 @@ export function Canvas() {
           >
             <Download className="h-4 w-4 mr-2" />
             Export PDF
+          </button>
+          <button
+            onClick={() => subscriptionTier === 'premium' ? setIsAIChatOpen(true) : alert('This feature is only available for premium users. Please upgrade to access the AI assistant.')}
+            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
+              subscriptionTier === 'premium' ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-400 cursor-not-allowed'
+            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500`}
+          >
+            <Sparkles className="h-4 w-4 mr-2" />
+            AI Assistant
           </button>
         </div>
       </div>
@@ -303,7 +313,13 @@ export function Canvas() {
         </div>
       </div>
 
-      {subscriptionTier === 'premium' && <AIChat canvasContent={canvas.content} />}
+      {subscriptionTier === 'premium' && (
+        <AIChat 
+          canvasContent={canvas.content} 
+          isOpen={isAIChatOpen}
+          onClose={() => setIsAIChatOpen(false)}
+        />
+      )}
     </div>
   );
 }
