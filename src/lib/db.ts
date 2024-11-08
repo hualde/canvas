@@ -1,8 +1,17 @@
 import { sql } from "@vercel/postgres";
 
+console.log('Attempting to connect to the database...');
+sql`SELECT 1`.then(() => {
+  console.log('Database connection successful');
+}).catch(error => {
+  console.error('Database connection failed:', error);
+});
+
 if (!process.env.POSTGRES_URL) {
   throw new Error('POSTGRES_URL is not set in the environment variables');
 }
+
+console.log('POSTGRES_URL is set:', !!process.env.POSTGRES_URL);
 
 interface CanvasData {
   id: string;
@@ -17,6 +26,25 @@ interface CanvasData {
 }
 
 const FREE_USER_CANVAS_LIMIT = 3;
+
+async function ensureUserSubscriptionsTable() {
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_subscriptions (
+        user_id TEXT PRIMARY KEY,
+        subscription_tier TEXT NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+    console.log('user_subscriptions table ensured');
+  } catch (error) {
+    console.error('Error ensuring user_subscriptions table:', error);
+  }
+}
+
+// Call this function at the start of your application
+ensureUserSubscriptionsTable();
 
 // Fetch all canvases for a user
 export async function getCanvases(userId: string): Promise<CanvasData[]> {
@@ -204,11 +232,13 @@ export async function deleteCanvas(id: string): Promise<void> {
 // Get user's subscription tier
 export async function getUserSubscription(userId: string): Promise<string> {
   try {
+    console.log('Fetching subscription for user:', userId);
     const { rows } = await sql`
       SELECT subscription_tier
       FROM user_subscriptions
       WHERE user_id = ${userId}
     `;
+    console.log('Fetch result:', rows);
     return rows[0]?.subscription_tier || 'free';
   } catch (error) {
     console.error('Error fetching user subscription:', error);
@@ -219,12 +249,14 @@ export async function getUserSubscription(userId: string): Promise<string> {
 // Set or update user's subscription tier
 export async function setUserSubscription(userId: string, tier: string): Promise<void> {
   try {
-    await sql`
+    console.log('Setting subscription for user:', userId, 'to tier:', tier);
+    const result = await sql`
       INSERT INTO user_subscriptions (user_id, subscription_tier)
       VALUES (${userId}, ${tier})
       ON CONFLICT (user_id)
       DO UPDATE SET subscription_tier = ${tier}, updated_at = CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
     `;
+    console.log('Set subscription result:', result);
   } catch (error) {
     console.error('Error setting user subscription:', error);
     throw error;
@@ -274,6 +306,7 @@ export async function initializeUserSubscription(userId: string): Promise<string
     return 'free';
   } catch (error) {
     console.error('Error initializing user subscription:', error);
+    console.error('Error details:', JSON.stringify(error, null, 2));
     throw error;
   }
 }
