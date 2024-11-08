@@ -257,3 +257,19 @@ export async function canUserCreateCanvas(userId: string): Promise<boolean> {
   const canvasCount = await getCanvasCount(userId);
   return canvasCount < FREE_USER_CANVAS_LIMIT;
 }
+
+// Initialize or get user subscription
+export async function initializeUserSubscription(userId: string): Promise<string> {
+  try {
+    const existingSubscription = await getUserSubscription(userId);
+    if (existingSubscription) {
+      return existingSubscription;
+    }
+
+    await setUserSubscription(userId, 'free');
+    return 'free';
+  } catch (error) {
+    console.error('Error initializing user subscription:', error);
+    throw error;
+  }
+}

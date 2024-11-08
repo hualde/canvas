@@ -10,6 +10,7 @@ import { PESTELCanvas } from './pages/PESTELCanvas';
 import { Login } from './pages/Login';
 import { Tutorial } from './components/Tutorial';
 import { Auth0ProviderWithNavigate } from './auth/auth0-provider';
+import { useInitializeUserSubscription } from './hooks/useInitializeUserSubscription';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -23,13 +24,15 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
   }
   
   if (!isAuthenticated) {
-    return  <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return <>{children}</>;
 }
 
 function AppContent() {
+  useInitializeUserSubscription();
+
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
