@@ -94,15 +94,13 @@ export default function Canvas() {
   const handleExportPDF = () => {
     console.log('Exporting PDF, user:', user);
     console.log('Subscription tier:', subscriptionTier);
-    if (canvas && subscriptionTier === 'premium') {
-      if (user?.sub) {
-        exportToPDF(canvas, user.sub);
-      } else {
-        console.error('User ID not available for PDF export');
-        alert('Unable to export PDF. Please try logging out and logging in again.');
-      }
+    if (subscriptionTier !== 'premium') {
+      alert('This feature is only available for premium users. Please upgrade to access the PDF export.');
+    } else if (canvas && user?.sub) {
+      exportToPDF(canvas, user.sub);
     } else {
-      alert('PDF export is only available for premium users. Please upgrade your account to use this feature.');
+      console.error('User ID not available for PDF export');
+      alert('Unable to export PDF. Please try logging out and logging in again.');
     }
   };
 
@@ -161,9 +159,8 @@ export default function Canvas() {
           <button
             onClick={handleExportPDF}
             className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
-              subscriptionTier === 'premium' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
+              subscriptionTier === 'premium' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 hover:bg-gray-500'
             } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
-            disabled={subscriptionTier !== 'premium'}
           >
             <Download className="h-4 w-4 mr-2" />
             Export PDF
@@ -178,7 +175,7 @@ export default function Canvas() {
               }
             }}
             className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
-              subscriptionTier === 'premium' ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-400 cursor-not-allowed'
+              subscriptionTier === 'premium' ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-400 hover:bg-gray-500'
             } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500`}
           >
             <Sparkles className="h-4 w-4 mr-2" />
