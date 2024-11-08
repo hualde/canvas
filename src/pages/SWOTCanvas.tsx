@@ -158,11 +158,11 @@ export const SWOTCanvas: React.FC = () => {
           setCanvas({ ...canvas, title: e.target.value });
         }}
         onBlur={(e) => handleUpdateTitle(e.target.value)}
-        className="text-3xl font-bold text-gray-900 mb-8 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
+        className="text-3xl font-bold text-gray-900 mb-4 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
         placeholder="Untitled SWOT Analysis"
       />
 
-      <div className="mb-8 grid grid-cols-2 gap-4">
+      <div className="mb-4 grid grid-cols-3 gap-4">
         <input
           type="text"
           value={project_name}
@@ -186,12 +186,14 @@ export const SWOTCanvas: React.FC = () => {
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+      </div>
+      <div className="mb-4">
         <textarea
           value={comments}
           onChange={(e) => setComments(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
-          className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          rows={2}
+          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          rows={4}
           placeholder="Comments"
         />
       </div>
