@@ -25,7 +25,7 @@ interface EmpathyMapData {
   comments: string;
 }
 
-export default function Component() {
+export default function EmpathyMap() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user, subscriptionTier } = useAuthWithSubscription();
