@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { X, Sparkles, Lock } from 'lucide-react';
+import { X, Sparkles } from 'lucide-react';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 
 interface Message {
@@ -64,87 +64,24 @@ export function AIChat({ canvasContent }: AIChatProps) {
   }, [inputMessage, canvasContent, subscriptionTier]);
 
   const renderChatButton = () => {
-    if (subscriptionTier === 'premium') {
-      return (
-        <button
-          onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-6 right-6 p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 hover:scale-110"
-          aria-label="AI Assistant"
-        >
-          <Sparkles className="h-6 w-6" />
-        </button>
-      );
-    } else {
-      return (
-        <button
-          onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-6 right-6 p-3 bg-gray-400 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50"
-          aria-label="AI Assistant (Premium Feature)"
-        >
-          <Lock className="h-6 w-6" />
-        </button>
-      );
-    }
-  };
-
-  const renderChatContent = () => {
-    if (subscriptionTier === 'premium') {
-      return (
-        <>
-          <div className="flex-grow overflow-y-auto p-4">
-            {messages.map((message, index) => (
-              <div key={index} className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-                <div className={`inline-block p-2 rounded-lg ${message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
-                  {message.content}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="p-4 border-t flex">
-            <input
-              type="text"
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              placeholder="Type your message..."
-              className="flex-grow border rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button
-              onClick={handleSendMessage}
-              disabled={isProcessing}
-              className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-            >
-              Send
-            </button>
-          </div>
-        </>
-      );
-    } else {
-      return (
-        <div className="flex-grow flex items-center justify-center">
-          <div className="text-center p-6">
-            <Lock className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-            <h3 className="text-xl font-bold mb-2">Premium Feature</h3>
-            <p className="text-gray-600 mb-4">
-              AI Chat is only available for premium users. Upgrade your account to access this feature.
-            </p>
-            <a
-              href="/upgrade"
-              className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-200"
-            >
-              Upgrade Now
-            </a>
-          </div>
-        </div>
-      );
-    }
+    return (
+      <button
+        onClick={() => subscriptionTier === 'premium' ? setIsChatOpen(true) : alert('This feature is only available for premium users. Please upgrade to access the AI assistant.')}
+        className={`fixed bottom-6 right-6 p-3 bg-purple-600 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 ${
+          subscriptionTier === 'premium' ? 'hover:bg-purple-700 hover:scale-110' : 'opacity-50 cursor-not-allowed'
+        }`}
+        aria-label={subscriptionTier === 'premium' ? 'AI Assistant' : 'AI Assistant (Premium Feature)'}
+      >
+        <Sparkles className="h-6 w-6" />
+      </button>
+    );
   };
 
   return (
     <>
       {renderChatButton()}
 
-      {isChatOpen && (
+      {isChatOpen && subscriptionTier === 'premium' && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-md h-[80vh] flex flex-col relative">
             <div className="p-4 border-b flex justify-between items-center">
@@ -157,7 +94,32 @@ export function AIChat({ canvasContent }: AIChatProps) {
                 <X className="h-6 w-6" />
               </button>
             </div>
-            {renderChatContent()}
+            <div className="flex-grow overflow-y-auto p-4">
+              {messages.map((message, index) => (
+                <div key={index} className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
+                  <div className={`inline-block p-2 rounded-lg ${message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
+                    {message.content}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="p-4 border-t flex">
+              <input
+                type="text"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                placeholder="Type your message..."
+                className="flex-grow border rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                onClick={handleSendMessage}
+                disabled={isProcessing}
+                className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              >
+                Send
+              </button>
+            </div>
           </div>
         </div>
       )}
