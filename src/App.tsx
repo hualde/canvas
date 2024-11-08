@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
-import { Canvas } from './pages/Canvas';
+import  Canvas  from './pages/Canvas';
 import { ValuePropositionCanvas } from './pages/ValuePropositionCanvas';
 import { SWOTCanvas } from './pages/SWOTCanvas';
 import { EmpathyMap } from './pages/EmpathyMap';
