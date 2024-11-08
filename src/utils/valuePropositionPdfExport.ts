@@ -72,28 +72,30 @@ export async function exportToPDF(canvas: ValuePropositionCanvasData, userId: st
     return;
   }
 
-  const subscriptionTier = await getUserSubscription(userId);
-  if (subscriptionTier !== 'premium') {
-    console.error('PDF export is only available for premium users');
-    throw new Error('PDF export is only available for premium users');
-  }
-
-  const doc = new jsPDF('l', 'mm', 'a4');
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 20;
-
-  // Calculate dimensions
-  const squareSize = 120;
-  const circleRadius = 60;
-  const startX = margin;
-  const startY = margin + 20;
-  const centerX = startX + squareSize / 2;
-  const centerY = startY + squareSize / 2;
-  const circleX = startX + squareSize + margin + circleRadius;
-  const circleY = centerY;
-
   try {
+    const subscriptionTier = await getUserSubscription(userId);
+    console.log('User subscription tier:', subscriptionTier);
+
+    if (subscriptionTier !== 'premium') {
+      console.error('PDF export is only available for premium users');
+      throw new Error('PDF export is only available for premium users');
+    }
+
+    const doc = new jsPDF('l', 'mm', 'a4');
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 20;
+
+    // Calculate dimensions
+    const squareSize = 120;
+    const circleRadius = 60;
+    const startX = margin;
+    const startY = margin + 20;
+    const centerX = startX + squareSize / 2;
+    const centerY = startY + squareSize / 2;
+    const circleX = startX + squareSize + margin + circleRadius;
+    const circleY = centerY;
+
     // Set title
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
@@ -248,11 +250,13 @@ export async function exportToPDF(canvas: ValuePropositionCanvasData, userId: st
     doc.setTextColor(128, 128, 128);
     doc.text(`Generated on ${new Date().toLocaleDateString()}`, margin, pageHeight - 5);
 
-    // Save the PDF.
+    // Save the PDF
     const filename = `${(canvas.title || 'value-proposition-canvas').toLowerCase().replace(/[^a-z0-9]/g, '-')}.pdf`;
     doc.save(filename);
+
+    console.log('PDF exported successfully');
   } catch (error) {
-    console.error('Error generating PDF:', error);
+    console.error('Error in exportToPDF:', error);
     throw error;
   }
 }

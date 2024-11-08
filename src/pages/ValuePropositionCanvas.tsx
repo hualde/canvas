@@ -25,7 +25,7 @@ interface CanvasData {
   comments: string;
 }
 
-export const ValuePropositionCanvas: React.FC = () => {
+export function ValuePropositionCanvas() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user, subscriptionTier } = useAuthWithSubscription();
@@ -86,8 +86,15 @@ export const ValuePropositionCanvas: React.FC = () => {
   };
 
   const handleExportPDF = () => {
+    console.log('Exporting PDF, user:', user);
+    console.log('Subscription tier:', subscriptionTier);
     if (canvas && subscriptionTier === 'premium') {
-      exportToPDF(canvas);
+      if (user?.sub) {
+        exportToPDF(canvas, user.sub);
+      } else {
+        console.error('User ID not available for PDF export');
+        alert('Unable to export PDF. Please try logging out and logging in again.');
+      }
     } else {
       alert('PDF export is only available for premium users. Please upgrade your account to use this feature.');
     }
