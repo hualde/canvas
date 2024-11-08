@@ -75,70 +75,72 @@ export async function exportToPDF(canvas: CanvasData, userId: string) {
     return;
   }
 
-  const subscriptionTier = await getUserSubscription(userId);
-  if (subscriptionTier !== 'premium') {
-    console.error('PDF export is only available for premium users');
-    throw new Error('PDF export is only available for premium users');
-  }
+  try {
+    const subscriptionTier = await getUserSubscription(userId);
+    console.log('User subscription tier:', subscriptionTier);  // Added for debugging
 
-  const doc = new jsPDF('l', 'mm', 'a4');
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 10;
-  const bottomMargin = 10; 
-  
-  const colWidth = (pageWidth - (margin * 2)) / 5;
-  const topRowHeight = (pageHeight - (margin * 2) - bottomMargin) * 0.6;
-  const bottomRowHeight = (pageHeight - (margin * 2) - bottomMargin) * 0.4;
-
-  const drawSection = (x: number, y: number, width: number, height: number, title: string, items: string[], iconKey: keyof typeof icons) => {
-    // Draw box
-    doc.setDrawColor(70, 70, 70);
-    doc.setLineWidth(0.1);
-    doc.rect(x, y, width, height);
-
-    // Draw icon
-    try {
-      if (icons[iconKey]) {
-        doc.addImage(icons[iconKey], 'PNG', x + 3, y + 3, 5, 5);
-      }
-    } catch (error) {
-      console.warn(`Failed to add icon for ${iconKey}:`, error);
+    if (subscriptionTier !== 'premium') {
+      console.error('PDF export is only available for premium users');
+      throw new Error('PDF export is only available for premium users');
     }
 
-    // Draw title with reduced font size
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'bold');
-    doc.text(title, x + 10, y + 6);
+    const doc = new jsPDF('l', 'mm', 'a4');
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 10;
+    const bottomMargin = 10; 
+    
+    const colWidth = (pageWidth - (margin * 2)) / 5;
+    const topRowHeight = (pageHeight - (margin * 2) - bottomMargin) * 0.6;
+    const bottomRowHeight = (pageHeight - (margin * 2) - bottomMargin) * 0.4;
 
-    // Draw items
-    if (Array.isArray(items) && items.length > 0) {
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      let itemY = y + 12;
-      items.forEach((item) => {
-        if (item && typeof item === 'string') {
-          const lines = doc.splitTextToSize(item, width - 6);
-          doc.text(`• ${lines[0]}`, x + 3, itemY);
-          itemY += 4;
-          
-          // For additional lines, don't add bullet points
-          for (let i = 1; i < lines.length; i++) {
-            if (itemY < y + height - 2) {
-              doc.text(lines[i], x + 6, itemY);
-              itemY += 4;
+    const drawSection = (x: number, y: number, width: number, height: number, title: string, items: string[], iconKey: keyof typeof icons) => {
+      // Draw box
+      doc.setDrawColor(70, 70, 70);
+      doc.setLineWidth(0.1);
+      doc.rect(x, y, width, height);
+
+      // Draw icon
+      try {
+        if (icons[iconKey]) {
+          doc.addImage(icons[iconKey], 'PNG', x + 3, y + 3, 5, 5);
+        }
+      } catch (error) {
+        console.warn(`Failed to add icon for ${iconKey}:`, error);
+      }
+
+      // Draw title with reduced font size
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.text(title, x + 10, y + 6);
+
+      // Draw items
+      if (Array.isArray(items) && items.length > 0) {
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        let itemY = y + 12;
+        items.forEach((item) => {
+          if (item && typeof item === 'string') {
+            const lines = doc.splitTextToSize(item, width - 6);
+            doc.text(`• ${lines[0]}`, x + 3, itemY);
+            itemY += 4;
+            
+            // For additional lines, don't add bullet points
+            for (let i = 1; i < lines.length; i++) {
+              if (itemY < y + height - 2) {
+                doc.text(lines[i], x + 6, itemY);
+                itemY += 4;
+              }
             }
           }
-        }
-      });
-    } else {
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'italic');
-      doc.text('No items', x + 3, y + 12);
-    }
-  };
+        });
+      } else {
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'italic');
+        doc.text('No items', x + 3, y + 12);
+      }
+    };
 
-  try {
     // Set title
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
@@ -160,7 +162,7 @@ export async function exportToPDF(canvas: CanvasData, userId: string) {
     // Add the general information page
     drawGeneralInfoPage(doc, canvas);
 
-    // Add metadata.
+    // Add metadata
     doc.setFontSize(6);
     doc.setTextColor(128, 128, 128);
     doc.text(`Generated on ${new Date().toLocaleDateString()}`, margin, pageHeight - 5);
@@ -168,8 +170,10 @@ export async function exportToPDF(canvas: CanvasData, userId: string) {
     // Save the PDF with a sanitized filename
     const filename = `${(canvas.title || 'business-model-canvas').toLowerCase().replace(/[^a-z0-9]/g, '-')}.pdf`;
     doc.save(filename);
+
+    console.log('PDF exported successfully');
   } catch (error) {
-    console.error('Error generating PDF:', error);
+    console.error('Error in exportToPDF:', error);
     throw error;
   }
 }
