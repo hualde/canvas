@@ -23,7 +23,7 @@ interface SWOTCanvasData {
   comments: string;
 }
 
-export const SWOTCanvas: React.FC = () => {
+export function SWOTCanvas() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user, subscriptionTier } = useAuthWithSubscription();
@@ -100,8 +100,8 @@ export const SWOTCanvas: React.FC = () => {
   };
 
   const handleExportPDF = () => {
-    if (canvas && subscriptionTier === 'premium') {
-      exportSWOTToPDF(canvas);
+    if (canvas && subscriptionTier === 'premium' && user?.sub) {
+      exportSWOTToPDF(canvas, user.sub);
     } else {
       alert('PDF export is only available for premium users. Please upgrade your account to use this feature.');
     }
