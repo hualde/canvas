@@ -70,7 +70,7 @@ const sections = [
   }
 ];
 
-export const PESTELCanvas: React.FC = () => {
+export function PESTELCanvas() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user, subscriptionTier } = useAuthWithSubscription();
@@ -147,8 +147,8 @@ export const PESTELCanvas: React.FC = () => {
   };
 
   const handleExportPDF = () => {
-    if (canvas && subscriptionTier === 'premium') {
-      exportPESTELToPDF(canvas);
+    if (canvas && subscriptionTier === 'premium' && user?.sub) {
+      exportPESTELToPDF(canvas, user.sub);
     } else {
       alert('PDF export is only available for premium users. Please upgrade your account to use this feature.');
     }
