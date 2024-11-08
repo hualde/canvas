@@ -68,8 +68,8 @@ export function AIChat({ canvasContent }: AIChatProps) {
       <button
         onClick={() => subscriptionTier === 'premium' ? setIsChatOpen(true) : alert('This feature is only available for premium users. Please upgrade to access the AI assistant.')}
         className={`fixed bottom-6 right-6 p-3 bg-purple-600 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 ${
-          subscriptionTier === 'premium' ? 'hover:bg-purple-700 hover:scale-110' : 'opacity-50 cursor-not-allowed'
-        }`}
+        subscriptionTier === 'premium' ? 'hover:bg-purple-700 hover:scale-110' : 'opacity-50 cursor-not-allowed'
+      }`}
         aria-label={subscriptionTier === 'premium' ? 'AI Assistant' : 'AI Assistant (Premium Feature)'}
       >
         <Sparkles className="h-6 w-6" />
