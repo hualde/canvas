@@ -39,7 +39,7 @@ export default function Canvas() {
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
-  const [isAIChatOpen, setIsAIChatOpen] = useState(false);
+  const [isAIChatOpen, setIsAIChatOpen] = useState(false); // Update 1: isAIChatOpen state is correctly defined
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -169,7 +169,14 @@ export default function Canvas() {
             Export PDF
           </button>
           <button
-            onClick={() => subscriptionTier === 'premium' ? setIsAIChatOpen(true) : alert('This feature is only available for premium users. Please upgrade to access the AI assistant.')}
+            onClick={() => {
+              if (subscriptionTier === 'premium') {
+                setIsAIChatOpen(true);
+                console.log('Opening AI Chat'); // Update 2: AI button uses setIsAIChatOpen directly
+              } else {
+                alert('This feature is only available for premium users. Please upgrade to access the AI assistant.');
+              }
+            }}
             className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
               subscriptionTier === 'premium' ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-400 cursor-not-allowed'
             } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500`}
@@ -313,7 +320,7 @@ export default function Canvas() {
         </div>
       </div>
 
-      {subscriptionTier === 'premium' && (
+      {isAIChatOpen && subscriptionTier === 'premium' && ( // Update 3: AIChat component is rendered correctly
         <AIChat 
           canvasContent={canvas.content} 
           isOpen={isAIChatOpen}
