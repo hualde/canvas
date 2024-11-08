@@ -39,7 +39,7 @@ export default function Canvas() {
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
-  const [isAIChatOpen, setIsAIChatOpen] = useState(false); // Update 1: isAIChatOpen state is correctly defined
+  const [isAIChatOpen, setIsAIChatOpen] = useState(false);
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -172,7 +172,7 @@ export default function Canvas() {
             onClick={() => {
               if (subscriptionTier === 'premium') {
                 setIsAIChatOpen(true);
-                console.log('Opening AI Chat'); // Update 2: AI button uses setIsAIChatOpen directly
+                console.log('Opening AI Chat, setting isAIChatOpen to true');
               } else {
                 alert('This feature is only available for premium users. Please upgrade to access the AI assistant.');
               }
@@ -190,13 +190,13 @@ export default function Canvas() {
       <input
         ref={titleInputRef}
         type="text"
-        value={canvas.title}
+        value={canvas?.title || ''}
         onChange={(e) => {
           setCanvas({ ...canvas, title: e.target.value });
         }}
         onBlur={(e) => handleUpdateTitle(e.target.value)}
         className="text-3xl font-bold text-gray-900 mb-4 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
-        placeholder={`Untitled ${canvas.type} Canvas`}
+        placeholder={`Untitled ${canvas?.type || ''} Canvas`}
       />
 
       <div className="mb-4 grid grid-cols-3 gap-4">
@@ -320,11 +320,14 @@ export default function Canvas() {
         </div>
       </div>
 
-      {isAIChatOpen && subscriptionTier === 'premium' && ( // Update 3: AIChat component is rendered correctly
+      {isAIChatOpen && subscriptionTier === 'premium' && (
         <AIChat 
           canvasContent={canvas.content} 
           isOpen={isAIChatOpen}
-          onClose={() => setIsAIChatOpen(false)}
+          onClose={() => {
+            setIsAIChatOpen(false);
+            console.log('Closing AI Chat, setting isAIChatOpen to false');
+          }}
         />
       )}
     </div>
