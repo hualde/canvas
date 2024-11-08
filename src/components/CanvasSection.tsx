@@ -1,5 +1,7 @@
-import { useState } from 'react';
-import { Plus, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Plus, X, AlertCircle } from 'lucide-react';
+import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
+import { SUBSCRIPTION_TIERS, TIER_LIMITS } from '../constants/subscriptionTiers';
 
 interface CanvasSectionProps {
   title: string;
@@ -13,9 +15,16 @@ interface CanvasSectionProps {
 export function CanvasSection({ title, items = [], onUpdate, description, className, icon }: CanvasSectionProps) {
   const [newItem, setNewItem] = useState('');
   const [isAdding, setIsAdding] = useState(false);
+  const { subscriptionTier } = useAuthWithSubscription();
+  const [canAddMoreItems, setCanAddMoreItems] = useState(true);
+
+  useEffect(() => {
+    const itemLimit = TIER_LIMITS[subscriptionTier].maxItemsPerSection;
+    setCanAddMoreItems(items.length < itemLimit);
+  }, [items, subscriptionTier]);
 
   const handleAddItem = () => {
-    if (newItem.trim()) {
+    if (newItem.trim() && canAddMoreItems) {
       const itemWithBullet = newItem.trim().startsWith('• ') ? newItem.trim() : `• ${newItem.trim()}`;
       onUpdate([...items, itemWithBullet]);
       setNewItem('');
@@ -44,7 +53,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
             <p className="text-sm text-gray-500 mt-1">{description}</p>
           </div>
         </div>
-        {!isAdding && (
+        {!isAdding && canAddMoreItems && (
           <button
             onClick={() => setIsAdding(true)}
             className="inline-flex items-center px-2 py-1 text-sm font-medium rounded text-blue-700 bg-blue-50 hover:bg-blue-100"
@@ -82,6 +91,16 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
         )}
       </div>
 
+      {!canAddMoreItems && subscriptionTier === SUBSCRIPTION_TIERS.FREE && (
+        <div className="mt-4 p-2 bg-yellow-100 border border-yellow-400 rounded-md flex items-center">
+          <AlertCircle className="h-5 w-5 text-yellow-700 mr-2" />
+          <p className="text-sm text-yellow-700">
+            You've reached the maximum number of items for this section. 
+            <a href="/upgrade" className="font-medium underline ml-1">Upgrade to Premium</a> for unlimited items.
+          </p>
+        </div>
+      )}
+
       {isAdding && (
         <div className="mt-4">
           <textarea
@@ -110,7 +129,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
             </button>
             <button
               onClick={handleAddItem}
-              disabled={!newItem.trim()}
+              disabled={!newItem.trim() || !canAddMoreItems}
               className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
             >
               Add

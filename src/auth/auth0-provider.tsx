@@ -1,5 +1,6 @@
 import { Auth0Provider } from '@auth0/auth0-react';
 import { useNavigate } from 'react-router-dom';
+import { SUBSCRIPTION_TIERS } from '../constants/subscriptionTiers';
 
 export function Auth0ProviderWithNavigate({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
@@ -18,6 +19,9 @@ export function Auth0ProviderWithNavigate({ children }: { children: React.ReactN
         redirect_uri: window.location.origin,
       }}
       onRedirectCallback={onRedirectCallback}
+      // Añadir esta línea para incluir los metadatos del usuario en el token
+      useRefreshTokens={true}
+      cacheLocation="localstorage"
     >
       {children}
     </Auth0Provider>

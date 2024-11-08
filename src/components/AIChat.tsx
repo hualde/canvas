@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { X, Sparkles } from 'lucide-react';
+import { X, Sparkles, Lock } from 'lucide-react';
+import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -11,23 +12,24 @@ interface AIChatProps {
 }
 
 export function AIChat({ canvasContent }: AIChatProps) {
+  const { subscriptionTier } = useAuthWithSubscription();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
-    if (isChatOpen) {
+    if (isChatOpen && subscriptionTier === 'premium') {
       const initialMessage: Message = {
         role: 'assistant',
         content: "Hello! I'm your AI assistant. I have information about your current canvas. How can I help you today?"
       };
       setMessages([initialMessage]);
     }
-  }, [isChatOpen]);
+  }, [isChatOpen, subscriptionTier]);
 
   const handleSendMessage = useCallback(async () => {
-    if (!inputMessage.trim()) return;
+    if (!inputMessage.trim() || subscriptionTier !== 'premium') return;
 
     const userMessage: Message = { role: 'user', content: inputMessage };
     setMessages(prev => [...prev, userMessage]);
@@ -59,17 +61,88 @@ export function AIChat({ canvasContent }: AIChatProps) {
     } finally {
       setIsProcessing(false);
     }
-  }, [inputMessage, canvasContent]);
+  }, [inputMessage, canvasContent, subscriptionTier]);
+
+  const renderChatButton = () => {
+    if (subscriptionTier === 'premium') {
+      return (
+        <button
+          onClick={() => setIsChatOpen(true)}
+          className="fixed bottom-6 right-6 p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 hover:scale-110"
+          aria-label="AI Assistant"
+        >
+          <Sparkles className="h-6 w-6" />
+        </button>
+      );
+    } else {
+      return (
+        <button
+          onClick={() => setIsChatOpen(true)}
+          className="fixed bottom-6 right-6 p-3 bg-gray-400 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50"
+          aria-label="AI Assistant (Premium Feature)"
+        >
+          <Lock className="h-6 w-6" />
+        </button>
+      );
+    }
+  };
+
+  const renderChatContent = () => {
+    if (subscriptionTier === 'premium') {
+      return (
+        <>
+          <div className="flex-grow overflow-y-auto p-4">
+            {messages.map((message, index) => (
+              <div key={index} className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
+                <div className={`inline-block p-2 rounded-lg ${message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
+                  {message.content}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="p-4 border-t flex">
+            <input
+              type="text"
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+              placeholder="Type your message..."
+              className="flex-grow border rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              onClick={handleSendMessage}
+              disabled={isProcessing}
+              className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            >
+              Send
+            </button>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <div className="flex-grow flex items-center justify-center">
+          <div className="text-center p-6">
+            <Lock className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+            <h3 className="text-xl font-bold mb-2">Premium Feature</h3>
+            <p className="text-gray-600 mb-4">
+              AI Chat is only available for premium users. Upgrade your account to access this feature.
+            </p>
+            <a
+              href="/upgrade"
+              className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-200"
+            >
+              Upgrade Now
+            </a>
+          </div>
+        </div>
+      );
+    }
+  };
 
   return (
     <>
-      <button
-        onClick={() => setIsChatOpen(true)}
-        className="fixed bottom-6 right-6 p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg transition-all duration-200 flex items-center justify-center z-50 hover:scale-110"
-        aria-label="AI Assistant"
-      >
-        <Sparkles className="h-6 w-6" />
-      </button>
+      {renderChatButton()}
 
       {isChatOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -84,32 +157,7 @@ export function AIChat({ canvasContent }: AIChatProps) {
                 <X className="h-6 w-6" />
               </button>
             </div>
-            <div className="flex-grow overflow-y-auto p-4">
-              {messages.map((message, index) => (
-                <div key={index} className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-                  <div className={`inline-block p-2 rounded-lg ${message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
-                    {message.content}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="p-4 border-t flex">
-              <input
-                type="text"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Type your message..."
-                className="flex-grow border rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                onClick={handleSendMessage}
-                disabled={isProcessing}
-                className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-              >
-                Send
-              </button>
-            </div>
+            {renderChatContent()}
           </div>
         </div>
       )}

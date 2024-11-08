@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download } from 'lucide-react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/valuePropositionPdfExport';
 import { icons } from '../utils/icons';
 import { AIChat } from '../components/AIChat';
+import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 
 interface CanvasData {
   id: string;
@@ -28,7 +28,7 @@ interface CanvasData {
 export const ValuePropositionCanvas: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { user } = useAuth0();
+  const { user, subscriptionTier } = useAuthWithSubscription();
   const [canvas, setCanvas] = useState<CanvasData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [project_name, setProject_name] = useState('');
@@ -86,10 +86,10 @@ export const ValuePropositionCanvas: React.FC = () => {
   };
 
   const handleExportPDF = () => {
-    if (canvas) {
+    if (canvas && subscriptionTier === 'premium') {
       exportToPDF(canvas);
     } else {
-      console.error('Cannot export PDF: Canvas data is not available');
+      alert('PDF export is only available for premium users. Please upgrade your account to use this feature.');
     }
   };
 
@@ -147,7 +147,10 @@ export const ValuePropositionCanvas: React.FC = () => {
         <div className="flex items-center space-x-4">
           <button
             onClick={handleExportPDF}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
+              subscriptionTier === 'premium' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
+            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+            disabled={subscriptionTier !== 'premium'}
           >
             <Download className="h-4 w-4 mr-2" />
             Export PDF
@@ -279,7 +282,7 @@ export const ValuePropositionCanvas: React.FC = () => {
         </div>
       </div>
       
-      <AIChat canvasContent={canvas.content} />
+      {subscriptionTier === 'premium' && <AIChat canvasContent={canvas.content} />}
     </div>
   );
 }

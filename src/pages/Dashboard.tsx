@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass, ChevronDown } from 'lucide-react';
+import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass, ChevronDown, AlertCircle } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { getCanvases, createCanvas, deleteCanvas } from '../lib/db';
+import { getCanvases, createCanvas, deleteCanvas, canUserCreateCanvas, getCanvasCount } from '../lib/db';
+import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
+import { SUBSCRIPTION_TIERS, TIER_LIMITS } from '../constants/subscriptionTiers';
 
 interface Canvas {
   id: string;
@@ -11,13 +13,16 @@ interface Canvas {
   updated_at: string;
 }
 
-export function Dashboard() {
+export default function Dashboard() {
   const navigate = useNavigate();
   const { user, isAuthenticated, isLoading } = useAuth0();
+  const { subscriptionTier } = useAuthWithSubscription();
   const [canvases, setCanvases] = useState<Canvas[]>([]);
   const [isLoadingCanvases, setIsLoadingCanvases] = useState(true);
   const [canvasToDelete, setCanvasToDelete] = useState<Canvas | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [canCreateCanvas, setCanCreateCanvas] = useState(false);
+  const [canvasCount, setCanvasCount] = useState(0);
 
   useEffect(() => {
     async function fetchCanvases() {
@@ -26,6 +31,10 @@ export function Dashboard() {
         try {
           const fetchedCanvases = await getCanvases(user.sub);
           setCanvases(fetchedCanvases);
+          const count = await getCanvasCount(user.sub);
+          setCanvasCount(count);
+          const canCreate = await canUserCreateCanvas(user.sub);
+          setCanCreateCanvas(canCreate);
         } catch (error) {
           console.error('Error fetching canvases:', error);
         } finally {
@@ -38,6 +47,11 @@ export function Dashboard() {
 
   const handleCreateCanvas = async (type: 'business' | 'value-proposition' | 'swot' | 'empathy-map' | 'pestel') => {
     if (isAuthenticated && user?.sub) {
+      if (!canCreateCanvas && subscriptionTier !== SUBSCRIPTION_TIERS.PREMIUM) {
+        alert('You have reached the maximum number of canvases for free users. Please upgrade to create more.');
+        return;
+      }
+
       try {
         const canvasType = 
           type === 'business' ? 'Business Model' : 
@@ -48,20 +62,32 @@ export function Dashboard() {
         
         const newCanvas = await createCanvas(user.sub, `Untitled ${canvasType} Canvas`, canvasType);
         
+        setCanvases([...canvases, newCanvas]);
+        setCanvasCount(canvasCount + 1);
+        const canCreate = await canUserCreateCanvas(user.sub);
+        setCanCreateCanvas(canCreate);
+        
         navigate(getCanvasRoute(newCanvas));
       } catch (error) {
         console.error('Error creating canvas:', error);
+        if (error instanceof Error) {
+          alert(error.message);
+        }
       }
     }
     setIsDropdownOpen(false);
   };
 
   const handleDeleteCanvas = async () => {
-    if (canvasToDelete) {
+    if (canvasToDelete && user?.sub) {
       try {
         await deleteCanvas(canvasToDelete.id);
         setCanvases(canvases.filter(canvas => canvas.id !== canvasToDelete.id));
+        setCanvasCount(canvasCount - 1);
         setCanvasToDelete(null);
+        
+        const canCreate = await canUserCreateCanvas(user.sub);
+        setCanCreateCanvas(canCreate);
       } catch (error) {
         console.error('Error deleting canvas:', error);
       }
@@ -116,13 +142,18 @@ export function Dashboard() {
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+            className={`flex items-center justify-center px-4 py-2 rounded-lg transition-colors shadow-sm ${
+              canCreateCanvas || subscriptionTier === SUBSCRIPTION_TIERS.PREMIUM
+                ? 'bg-blue-600 text-white hover:bg-blue-700'
+                : 'bg-gray-400 text-white cursor-not-allowed'
+            }`}
+            disabled={!canCreateCanvas && subscriptionTier !== SUBSCRIPTION_TIERS.PREMIUM}
           >
             <Plus className="w-5 h-5 mr-2" />
             New Canvas
             <ChevronDown className="w-4 h-4 ml-2" />
           </button>
-          {isDropdownOpen && (
+          {isDropdownOpen && (canCreateCanvas || subscriptionTier === SUBSCRIPTION_TIERS.PREMIUM) && (
             <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
               <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 <button onClick={() => handleCreateCanvas('business')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left" role="menuitem">Business Model Canvas</button>
@@ -134,6 +165,33 @@ export function Dashboard() {
             </div>
           )}
         </div>
+      </div>
+
+      {subscriptionTier === SUBSCRIPTION_TIERS.FREE && (
+        <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
+          <div className="flex items-center">
+            <AlertCircle className="h-5 w-5 mr-2" />
+            <p>
+              You are using the free tier. You can create up to {TIER_LIMITS[SUBSCRIPTION_TIERS.FREE].maxCanvases} canvases.
+              {' '}
+              <a href="/upgrade" className="font-bold underline">Upgrade to Premium</a> for unlimited canvases and more features!
+            </p>
+          </div>
+        </div>
+      )}
+
+      <div className="mb-6">
+        <p className="text-gray-600">
+          Canvases created: {canvasCount} / {subscriptionTier === SUBSCRIPTION_TIERS.PREMIUM ? '∞' : TIER_LIMITS[SUBSCRIPTION_TIERS.FREE].maxCanvases}
+        </p>
+        {subscriptionTier === SUBSCRIPTION_TIERS.FREE && (
+          <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+            <div 
+              className="bg-blue-600 h-2.5 rounded-full" 
+              style={{ width: `${(canvasCount / TIER_LIMITS[SUBSCRIPTION_TIERS.FREE].maxCanvases) * 100}%` }}
+            ></div>
+          </div>
+        )}
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

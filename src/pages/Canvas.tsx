@@ -6,10 +6,12 @@ import { CanvasSection } from '../components/CanvasSection';
 import { exportToPDF } from '../utils/pdfExport';
 import { icons } from '../utils/icons';
 import { AIChat } from '../components/AIChat';
+import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 
 interface CanvasData {
   id: string;
   title: string;
+  type: string;
   content: {
     keyPartners: string[];
     keyActivities: string[];
@@ -30,6 +32,7 @@ interface CanvasData {
 export function Canvas() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user, subscriptionTier } = useAuthWithSubscription();
   const [canvas, setCanvas] = useState<CanvasData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [project_name, setProject_name] = useState('');
@@ -88,8 +91,10 @@ export function Canvas() {
   };
 
   const handleExportPDF = () => {
-    if (canvas) {
+    if (canvas && subscriptionTier === 'premium') {
       exportToPDF(canvas);
+    } else {
+      alert('PDF export is only available for premium users. Please upgrade your account to use this feature.');
     }
   };
 
@@ -147,7 +152,10 @@ export function Canvas() {
         <div className="flex items-center space-x-4">
           <button
             onClick={handleExportPDF}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
+              subscriptionTier === 'premium' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
+            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+            disabled={subscriptionTier !== 'premium'}
           >
             <Download className="h-4 w-4 mr-2" />
             Export PDF
@@ -164,7 +172,7 @@ export function Canvas() {
         }}
         onBlur={(e) => handleUpdateTitle(e.target.value)}
         className="text-3xl font-bold text-gray-900 mb-4 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
-        placeholder="Untitled Business Model Canvas"
+        placeholder={`Untitled ${canvas.type} Canvas`}
       />
 
       <div className="mb-4 grid grid-cols-3 gap-4">
@@ -288,7 +296,7 @@ export function Canvas() {
         </div>
       </div>
 
-      <AIChat canvasContent={canvas.content} />
+      {subscriptionTier === 'premium' && <AIChat canvasContent={canvas.content} />}
     </div>
   );
 }

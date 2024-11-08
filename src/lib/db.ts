@@ -16,6 +16,9 @@ interface CanvasData {
   updated_at: string;
 }
 
+const FREE_USER_CANVAS_LIMIT = 3;
+
+// Fetch all canvases for a user
 export async function getCanvases(userId: string): Promise<CanvasData[]> {
   try {
     const { rows } = await sql`
@@ -38,6 +41,7 @@ export async function getCanvases(userId: string): Promise<CanvasData[]> {
   }
 }
 
+// Fetch a single canvas by ID
 export async function getCanvas(id: string): Promise<CanvasData | null> {
   try {
     const { rows } = await sql`
@@ -61,10 +65,20 @@ export async function getCanvas(id: string): Promise<CanvasData | null> {
   }
 }
 
+// Create a new canvas
 export async function createCanvas(userId: string, title: string, type: string): Promise<CanvasData> {
   try {
+    const subscriptionTier = await getUserSubscription(userId);
+    if (subscriptionTier !== 'premium') {
+      const canvasCount = await getCanvasCount(userId);
+      if (canvasCount >= FREE_USER_CANVAS_LIMIT) {
+        throw new Error('Free users can only create up to 3 canvases. Please upgrade to create more.');
+      }
+    }
+
     let defaultContent: { [key: string]: string[] } = {};
     
+    // Set default content based on canvas type
     if (type === 'Business Model') {
       defaultContent = {
         keyPartners: [],
@@ -142,6 +156,7 @@ export async function createCanvas(userId: string, title: string, type: string):
   }
 }
 
+// Update an existing canvas
 export async function updateCanvas(id: string, canvasData: Partial<CanvasData>): Promise<CanvasData> {
   console.log('Updating canvas in database:', { id, ...canvasData });
   try {
@@ -176,6 +191,7 @@ export async function updateCanvas(id: string, canvasData: Partial<CanvasData>):
   }
 }
 
+// Delete a canvas
 export async function deleteCanvas(id: string): Promise<void> {
   try {
     await sql`DELETE FROM canvas WHERE id = ${id}`;
@@ -183,4 +199,61 @@ export async function deleteCanvas(id: string): Promise<void> {
     console.error('Error deleting canvas:', error);
     throw error;
   }
+}
+
+// Get user's subscription tier
+export async function getUserSubscription(userId: string): Promise<string> {
+  try {
+    const { rows } = await sql`
+      SELECT subscription_tier
+      FROM user_subscriptions
+      WHERE user_id = ${userId}
+    `;
+    return rows[0]?.subscription_tier || 'free';
+  } catch (error) {
+    console.error('Error fetching user subscription:', error);
+    return 'free';
+  }
+}
+
+// Set or update user's subscription tier
+export async function setUserSubscription(userId: string, tier: string): Promise<void> {
+  try {
+    await sql`
+      INSERT INTO user_subscriptions (user_id, subscription_tier)
+      VALUES (${userId}, ${tier})
+      ON CONFLICT (user_id)
+      DO UPDATE SET subscription_tier = ${tier}, updated_at = CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
+    `;
+  } catch (error) {
+    console.error('Error setting user subscription:', error);
+    throw error;
+  }
+}
+
+// Get the count of canvases for a user
+export async function getCanvasCount(userId: string): Promise<number> {
+  try {
+    const { rows } = await sql`
+      SELECT COUNT(*) as count
+      FROM canvas
+      WHERE user_id = ${userId}
+    `;
+    return parseInt(rows[0].count, 10);
+  } catch (error) {
+    console.error('Error counting canvases:', error);
+    throw error;
+  }
+}
+
+// Check if a user can create a new canvas
+export async function canUserCreateCanvas(userId: string): Promise<boolean> {
+  const subscriptionTier = await getUserSubscription(userId);
+  
+  if (subscriptionTier === 'premium') {
+    return true;
+  }
+
+  const canvasCount = await getCanvasCount(userId);
+  return canvasCount < FREE_USER_CANVAS_LIMIT;
 }
