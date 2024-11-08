@@ -25,7 +25,7 @@ interface EmpathyMapData {
   comments: string;
 }
 
-export const EmpathyMap: React.FC = () => {
+export default function Component() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user, subscriptionTier } = useAuthWithSubscription();
@@ -102,8 +102,8 @@ export const EmpathyMap: React.FC = () => {
   };
 
   const handleExportPDF = () => {
-    if (canvas && subscriptionTier === 'premium') {
-      exportEmpathyMapToPDF(canvas);
+    if (canvas && subscriptionTier === 'premium' && user?.sub) {
+      exportEmpathyMapToPDF(canvas, user.sub);
     } else {
       alert('PDF export is only available for premium users. Please upgrade your account to use this feature.');
     }

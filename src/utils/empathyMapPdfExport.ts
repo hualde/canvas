@@ -87,50 +87,50 @@ export async function exportEmpathyMapToPDF(canvas: EmpathyMapData, userId: stri
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 10;
 
-  // Calculamos las dimensiones del mapa
+  // Calculate map dimensions
   const mapWidth = pageWidth - (margin * 2);
   const mapHeight = pageHeight - (margin * 2);
   const startX = margin;
   const startY = margin;
 
-  // Ajustamos las proporciones para dar más altura a todas las secciones
+  // Adjust proportions to give more height to all sections
   const mainSectionHeight = mapHeight * 0.75;
   const painGainSectionHeight = mapHeight * 0.25;
 
-  // Calculamos el punto central y el radio del círculo
+  // Calculate center point and circle radius
   const centerX = startX + (mapWidth / 2);
   const centerY = startY + (mainSectionHeight / 2);
   const circleRadius = 15;
 
   try {
-    // Añadimos el título del canvas
+    // Add canvas title
     doc.setFontSize(24);
     doc.setFont('helvetica', 'bold');
     doc.text(canvas.title || 'Empathy Map', pageWidth / 2, startY + 10, { align: 'center' });
 
-    // Dibujamos el marco exterior
+    // Draw outer frame
     doc.setDrawColor(0);
     doc.setLineWidth(0.5);
     doc.rect(startX, startY + 20, mapWidth, mapHeight - 20);
     
-    // Dibujamos las líneas diagonales desde el centro
-    doc.line(centerX, centerY + 10, startX, startY + 20); // Izquierda superior
-    doc.line(centerX, centerY + 10, startX + mapWidth, startY + 20); // Derecha superior
-    doc.line(centerX, centerY + 10, startX, startY + mainSectionHeight); // Izquierda inferior
-    doc.line(centerX, centerY + 10, startX + mapWidth, startY + mainSectionHeight); // Derecha inferior
+    // Draw diagonal lines from center
+    doc.line(centerX, centerY + 10, startX, startY + 20); // Upper left
+    doc.line(centerX, centerY + 10, startX + mapWidth, startY + 20); // Upper right
+    doc.line(centerX, centerY + 10, startX, startY + mainSectionHeight); // Lower left
+    doc.line(centerX, centerY + 10, startX + mapWidth, startY + mainSectionHeight); // Lower right
 
-    // Dibujamos el círculo central
+    // Draw central circle
     doc.setFillColor(255, 255, 255); // Set fill color to white
     doc.circle(centerX, centerY + 10, circleRadius, 'F'); // 'F' fills the circle
     doc.setDrawColor(0); // Set draw color back to black
     doc.circle(centerX, centerY + 10, circleRadius, 'S'); // Draw the circle outline
 
-    // Dibujamos los bordes de Pains y Gains
+    // Draw Pains and Gains borders
     const bottomSectionY = startY + mainSectionHeight;
     doc.line(startX, bottomSectionY, startX + mapWidth, bottomSectionY);
     doc.line(centerX, bottomSectionY, centerX, startY + mapHeight);
 
-    // Añadimos los iconos
+    // Add icons
     const iconSize = 10;
     addIconToPDF(doc, 'face', centerX - 5, startY + 77, iconSize, iconSize);
     addIconToPDF(doc, 'think', centerX - 95, startY + 30, iconSize, iconSize);
@@ -140,11 +140,11 @@ export async function exportEmpathyMapToPDF(canvas: EmpathyMapData, userId: stri
     addIconToPDF(doc, 'pain', startX + 2, bottomSectionY + 10, iconSize, iconSize);
     addIconToPDF(doc, 'gain', centerX + 2, bottomSectionY + 10, iconSize, iconSize);
 
-    // Configuración del texto
+    // Text configuration
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
 
-    // Añadimos los títulos de las secciones
+    // Add section titles
     doc.text('Think & feel', centerX - 95, startY + 28, { align: 'center' });
     doc.text('See', startX + mapWidth - 15, centerY - 40);
     doc.text('Hear', startX + 2, centerY - 40);
@@ -152,11 +152,11 @@ export async function exportEmpathyMapToPDF(canvas: EmpathyMapData, userId: stri
     doc.text('Pains', startX + 2, bottomSectionY + 7);
     doc.text('Gains', centerX + 2, bottomSectionY + 7);
 
-    // Añadimos el contenido de cada sección
+    // Add content for each section
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
 
-    // Función helper para añadir contenido
+    // Helper function to add content
     const addContent = (items: string[], x: number, y: number, maxWidth: number, maxHeight: number) => {
       if (Array.isArray(items)) {
         let currentY = y;
@@ -176,7 +176,7 @@ export async function exportEmpathyMapToPDF(canvas: EmpathyMapData, userId: stri
       }
     };
 
-    // Calculamos los anchos y posiciones para el contenido
+    // Calculate widths and positions for content
     const sectionWidth = mapWidth / 2;
     const sectionHeight = mainSectionHeight / 2;
     
@@ -234,10 +234,10 @@ export async function exportEmpathyMapToPDF(canvas: EmpathyMapData, userId: stri
       painGainSectionHeight - 40
     );
 
-    // Añadimos la página de información general
+    // Add general information page
     drawGeneralInfoPage(doc, canvas);
 
-    // Guardamos el PDF
+    // Save the PDF
     const filename = `${(canvas.title || 'empathy-map').toLowerCase().replace(/[^a-z0-9]/g, '-')}.pdf`;
     doc.save(filename);
   } catch (error) {
