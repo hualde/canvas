@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass, ChevronDown, AlertCircle } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas, canUserCreateCanvas, getCanvasCount } from '../lib/db';
@@ -174,7 +174,7 @@ export function Dashboard() {
             <p>
               You are using the free tier. You can create up to {TIER_LIMITS[SUBSCRIPTION_TIERS.FREE].maxCanvases} canvases.
               {' '}
-              <a href="/upgrade" className="font-bold underline">Upgrade to Premium</a> for unlimited canvases and more features!
+              <Link to="/upgrade" className="font-bold underline">Upgrade to Premium</Link> for unlimited canvases and more features!
             </p>
           </div>
         </div>
