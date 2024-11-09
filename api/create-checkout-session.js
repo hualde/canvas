@@ -1,11 +1,10 @@
 import Stripe from 'stripe';
-import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2023-10-16',
 });
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
@@ -30,7 +29,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     return res.status(200).json({ sessionId: session.id });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Stripe API Error:', error);
     return res.status(500).json({ 
       message: error.message || 'An unexpected error occurred',
