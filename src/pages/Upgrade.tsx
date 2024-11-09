@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Check, X, AlertCircle } from 'lucide-react';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import stripePromise from '../lib/stripe';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function Upgrade() {
   const navigate = useNavigate();
@@ -49,91 +46,83 @@ export default function Upgrade() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-100 py-12 px-4">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-extrabold text-center text-gray-900 mb-8">
+        <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
           Upgrade to Premium
         </h1>
         
         {error && (
-          <Alert variant="destructive" className="mb-6">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+            <strong className="font-bold">Error!</strong>
+            <span className="block sm:inline"> {error}</span>
+          </div>
         )}
 
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-          <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
+        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <div className="px-4 py-5">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">
               Compare Plans
             </h3>
-            <div className="mt-5 border-t border-gray-200">
-              <dl className="divide-y divide-gray-200">
-                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                  <dt className="text-sm font-medium text-gray-500">Feature</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1">Free</dd>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1">Premium</dd>
-                </div>
-                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                  <dt className="text-sm font-medium text-gray-500">Number of Canvases</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1">Up to 3</dd>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1">Unlimited</dd>
-                </div>
-                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                  <dt className="text-sm font-medium text-gray-500">Export to PDF</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1">
-                    <X className="h-5 w-5 text-red-500" />
-                  </dd>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1">
-                    <Check className="h-5 w-5 text-green-500" />
-                  </dd>
-                </div>
-                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                  <dt className="text-sm font-medium text-gray-500">AI Assistant</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1">
-                    <X className="h-5 w-5 text-red-500" />
-                  </dd>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1">
-                    <Check className="h-5 w-5 text-green-500" />
-                  </dd>
-                </div>
-                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                  <dt className="text-sm font-medium text-gray-500">Items per Section</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1">Up to 5</dd>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-1">Unlimited</dd>
-                </div>
-              </dl>
-            </div>
+            <table className="w-full">
+              <thead>
+                <tr>
+                  <th className="text-left py-2">Feature</th>
+                  <th className="text-center py-2">Free</th>
+                  <th className="text-center py-2">Premium</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-2">Number of Canvases</td>
+                  <td className="text-center">Up to 3</td>
+                  <td className="text-center">Unlimited</td>
+                </tr>
+                <tr>
+                  <td className="py-2">Export to PDF</td>
+                  <td className="text-center">❌</td>
+                  <td className="text-center">✅</td>
+                </tr>
+                <tr>
+                  <td className="py-2">AI Assistant</td>
+                  <td className="text-center">❌</td>
+                  <td className="text-center">✅</td>
+                </tr>
+                <tr>
+                  <td className="py-2">Items per Section</td>
+                  <td className="text-center">Up to 5</td>
+                  <td className="text-center">Unlimited</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div className="px-4 py-5 bg-gray-50 sm:p-6">
-            <div className="mt-5 grid grid-cols-2 gap-4">
-              <Button
+          <div className="px-4 py-5 bg-gray-50">
+            <div className="grid grid-cols-2 gap-4">
+              <button
                 onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_MONTHLY!)}
                 disabled={isLoading}
-                className="w-full"
+                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
               >
                 {isLoading ? 'Processing...' : 'Upgrade Monthly'}
-              </Button>
-              <Button
+              </button>
+              <button
                 onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_ANNUAL!)}
                 disabled={isLoading}
-                className="w-full"
+                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
               >
                 {isLoading ? 'Processing...' : 'Upgrade Annually'}
-              </Button>
+              </button>
             </div>
           </div>
         </div>
         
         <div className="mt-4 text-center">
-          <Button
+          <button
             onClick={() => navigate('/')}
-            variant="link"
             className="text-sm text-blue-600 hover:text-blue-800"
           >
             Return to Dashboard
-          </Button>
+          </button>
         </div>
       </div>
     </div>
