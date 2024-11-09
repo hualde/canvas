@@ -1,24 +1,22 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import Stripe from 'stripe';
+const Stripe = require('stripe');
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
-});
-
-export default async function handler(
-  request: VercelRequest,
-  response: VercelResponse
-) {
+module.exports = async function handler(req, res) {
   try {
-    if (request.method !== 'POST') {
-      return response.status(405).json({ message: 'Method not allowed' });
+    console.log('Received request:', JSON.stringify(req.body));
+
+    if (req.method !== 'POST') {
+      return res.status(405).json({ message: 'Method not allowed' });
     }
 
-    const { priceId } = request.body;
+    const { priceId } = req.body;
 
     if (!priceId) {
-      return response.status(400).json({ message: 'Price ID is required' });
+      return res.status(400).json({ message: 'Price ID is required' });
     }
+
+    console.log('Creating Stripe checkout session with priceId:', priceId);
+    console.log('STRIPE_SECRET_KEY:', process.env.STRIPE_SECRET_KEY ? 'Set' : 'Not set');
 
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -28,23 +26,26 @@ export default async function handler(
         },
       ],
       mode: 'subscription',
-      success_url: `${request.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${request.headers.origin}/upgrade`,
+      success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin}/upgrade`,
     });
 
-    return response.status(200).json({ sessionId: session.id });
+    console.log('Stripe session created:', session.id);
+
+    return res.status(200).json({ sessionId: session.id });
   } catch (error) {
     console.error('Stripe API Error:', error);
-    if (error instanceof Stripe.errors.StripeError) {
-      return response.status(error.statusCode || 500).json({ 
+    if (error.type === 'StripeError') {
+      return res.status(error.statusCode || 500).json({ 
         message: error.message,
         type: 'StripeError',
         code: error.code
       });
     }
-    return response.status(500).json({ 
+    return res.status(500).json({ 
       message: 'An unexpected error occurred',
-      type: 'UnknownError'
+      type: 'UnknownError',
+      error: error.message || String(error)
     });
   }
 }
