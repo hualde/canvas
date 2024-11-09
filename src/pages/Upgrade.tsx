@@ -15,6 +15,8 @@ export default function Upgrade() {
     const stripe = await stripePromise;
     
     try {
+      console.log('Initiating checkout with priceId:', priceId);
+
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: {
@@ -28,14 +30,15 @@ export default function Upgrade() {
 
       if (response.headers.get('content-type')?.includes('application/json')) {
         const data = await response.json();
+        console.log('Server response:', data);
         if (!response.ok) {
           errorMessage = data.message || errorMessage;
         } else {
           sessionId = data.sessionId;
         }
       } else {
-        // Handle non-JSON responses
         const text = await response.text();
+        console.log('Non-JSON server response:', text);
         errorMessage = text || errorMessage;
       }
 
@@ -47,6 +50,7 @@ export default function Upgrade() {
         throw new Error('No session ID returned from server');
       }
 
+      console.log('Redirecting to Stripe checkout...');
       const result = await stripe!.redirectToCheckout({
         sessionId: sessionId,
       });

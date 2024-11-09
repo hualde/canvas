@@ -40,7 +40,6 @@ export default async function handler(
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
-        // Handle the checkout session completion
         await handleCheckoutSession(session);
         break;
       }
