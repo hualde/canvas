@@ -9,12 +9,16 @@ export default async function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-  if (request.method !== 'POST') {
-    return response.status(405).json({ message: 'Method not allowed' });
-  }
-
   try {
+    if (request.method !== 'POST') {
+      return response.status(405).json({ message: 'Method not allowed' });
+    }
+
     const { priceId } = request.body;
+
+    if (!priceId) {
+      return response.status(400).json({ message: 'Price ID is required' });
+    }
 
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -30,10 +34,17 @@ export default async function handler(
 
     return response.status(200).json({ sessionId: session.id });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Stripe API Error:', error);
+    if (error instanceof Stripe.errors.StripeError) {
+      return response.status(error.statusCode || 500).json({ 
+        message: error.message,
+        type: 'StripeError',
+        code: error.code
+      });
+    }
     return response.status(500).json({ 
-      message: 'Internal server error',
-      error: error instanceof Error ? error.message : 'Unknown error'
+      message: 'An unexpected error occurred',
+      type: 'UnknownError'
     });
   }
 }

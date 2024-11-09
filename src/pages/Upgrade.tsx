@@ -23,15 +23,32 @@ export default function Upgrade() {
         body: JSON.stringify({ priceId }),
       });
       
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to create checkout session');
+      let errorMessage = 'Failed to create checkout session';
+      let sessionId = null;
+
+      if (response.headers.get('content-type')?.includes('application/json')) {
+        const data = await response.json();
+        if (!response.ok) {
+          errorMessage = data.message || errorMessage;
+        } else {
+          sessionId = data.sessionId;
+        }
+      } else {
+        // Handle non-JSON responses
+        const text = await response.text();
+        errorMessage = text || errorMessage;
       }
 
-      const session = await response.json();
+      if (!response.ok) {
+        throw new Error(errorMessage);
+      }
+
+      if (!sessionId) {
+        throw new Error('No session ID returned from server');
+      }
 
       const result = await stripe!.redirectToCheckout({
-        sessionId: session.sessionId,
+        sessionId: sessionId,
       });
 
       if (result.error) {
