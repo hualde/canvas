@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
@@ -32,6 +32,28 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function HandleRedirect() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth0();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const searchParams = new URLSearchParams(location.search);
+      const sessionId = searchParams.get('session_id');
+      if (sessionId) {
+        // Handle successful checkout
+        console.log('Successful checkout. Session ID:', sessionId);
+        // You can add more logic here, like updating the user's subscription status
+        // Then navigate to the dashboard without the session_id in the URL
+        navigate('/', { replace: true });
+      }
+    }
+  }, [location, isAuthenticated, navigate]);
+
+  return null;
+}
+
 function AppContent() {
   const { isAuthenticated, isLoading } = useAuth0();
   useInitializeUserSubscription();
@@ -52,6 +74,7 @@ function AppContent() {
         path="/"
         element={
           <PrivateRoute>
+            <HandleRedirect />
             <Layout />
           </PrivateRoute>
         }
