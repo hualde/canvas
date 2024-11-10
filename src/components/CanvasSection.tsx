@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, X, AlertCircle } from 'lucide-react';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
-import { SUBSCRIPTION_TIERS, TIER_LIMITS } from '../constants/subscriptionTiers';
+import { SUBSCRIPTION_STATUS, TIER_LIMITS } from '../constants/subscriptionTiers';
 
 interface CanvasSectionProps {
   title: string;
@@ -15,13 +15,13 @@ interface CanvasSectionProps {
 export function CanvasSection({ title, items = [], onUpdate, description, className, icon }: CanvasSectionProps) {
   const [newItem, setNewItem] = useState('');
   const [isAdding, setIsAdding] = useState(false);
-  const { subscriptionTier } = useAuthWithSubscription();
+  const { subscriptionStatus } = useAuthWithSubscription();
   const [canAddMoreItems, setCanAddMoreItems] = useState(true);
 
   useEffect(() => {
-    const itemLimit = TIER_LIMITS[subscriptionTier].maxItemsPerSection;
+    const itemLimit = TIER_LIMITS[subscriptionStatus]?.maxItemsPerSection || TIER_LIMITS[SUBSCRIPTION_STATUS.FREE].maxItemsPerSection;
     setCanAddMoreItems(items.length < itemLimit);
-  }, [items, subscriptionTier]);
+  }, [items, subscriptionStatus]);
 
   const handleAddItem = () => {
     if (newItem.trim() && canAddMoreItems) {
@@ -91,7 +91,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
         )}
       </div>
 
-      {!canAddMoreItems && subscriptionTier === SUBSCRIPTION_TIERS.FREE && (
+      {!canAddMoreItems && subscriptionStatus === SUBSCRIPTION_STATUS.FREE && (
         <div className="mt-4 p-2 bg-yellow-100 border border-yellow-400 rounded-md flex items-center">
           <AlertCircle className="h-5 w-5 text-yellow-700 mr-2" />
           <p className="text-sm text-yellow-700">
@@ -139,4 +139,8 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
       )}
     </div>
   );
+}
+
+export default function Component() {
+  return null;
 }
