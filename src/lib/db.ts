@@ -1,4 +1,5 @@
 import { sql } from "@vercel/postgres";
+import { SUBSCRIPTION_STATUS } from '../constants/subscriptionTiers';
 
 console.log('Attempting to connect to the database...');
 sql`SELECT 1`.then(() => {
@@ -240,14 +241,16 @@ export async function getUserSubscription(userId: string): Promise<string> {
     `;
     console.log('Fetch result:', rows);
     if (rows.length > 0 && rows[0].subscription_status) {
-      return rows[0].subscription_status;
+      const status = rows[0].subscription_status;
+      console.log('Retrieved subscription status:', status);
+      return status;
     } else {
       console.warn('No subscription status found for user:', userId);
-      return 'free';
+      return SUBSCRIPTION_STATUS.FREE;
     }
   } catch (error) {
     console.error('Error fetching user subscription:', error);
-    return 'free';
+    return SUBSCRIPTION_STATUS.FREE;
   }
 }
 
