@@ -5,8 +5,6 @@ export const SUBSCRIPTION_STATUS = {
   PAST_DUE: 'past_due'
 };
 
-export { SUBSCRIPTION_STATUS as SUBSCRIPTION_TIERS };
-
 export const STATUS_LIMITS = {
   [SUBSCRIPTION_STATUS.FREE]: {
     maxCanvases: 3,
@@ -34,6 +32,9 @@ export const STATUS_LIMITS = {
   }
 };
 
+export const TIER_LIMITS = STATUS_LIMITS;
+
+export { SUBSCRIPTION_STATUS as SUBSCRIPTION_TIERS };
 export { STATUS_LIMITS as TIER_LIMITS };
 
 export const SUBSCRIPTION_STATUS_DISPLAY = {
@@ -43,14 +44,16 @@ export const SUBSCRIPTION_STATUS_DISPLAY = {
   [SUBSCRIPTION_STATUS.PAST_DUE]: 'Payment Due'
 };
 
-// Función auxiliar para determinar si un estado de suscripción es "premium"
 export function isPremiumStatus(status: string): boolean {
   return status === SUBSCRIPTION_STATUS.ACTIVE;
 }
 
-// Función auxiliar para obtener los límites basados en el estado de suscripción
 export function getLimitsForStatus(status: string) {
   return STATUS_LIMITS[status] || STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE];
+}
+
+export function getMaxItemsPerSection(status: string): number {
+  return STATUS_LIMITS[status]?.maxItemsPerSection || STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE].maxItemsPerSection;
 }
 
 export default function Component() {
