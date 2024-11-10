@@ -13,7 +13,7 @@ interface Canvas {
   updated_at: string;
 }
 
-export function Dashboard() {
+export default function Component() {
   const navigate = useNavigate();
   const { user, isAuthenticated, isLoading } = useAuth0();
   const { subscriptionTier } = useAuthWithSubscription();
@@ -23,6 +23,12 @@ export function Dashboard() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [canCreateCanvas, setCanCreateCanvas] = useState(false);
   const [canvasCount, setCanvasCount] = useState(0);
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      console.log('Usuario autenticado. ID de sesión (user.sub):', user.sub);
+    }
+  }, [isAuthenticated, user]);
 
   useEffect(() => {
     async function fetchCanvases() {
