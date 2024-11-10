@@ -230,7 +230,7 @@ export async function deleteCanvas(id: string): Promise<void> {
 }
 
 // Get user's subscription status
-export async function getUserSubscription(userId: string): Promise<string | null> {
+export async function getUserSubscription(userId: string): Promise<string> {
   try {
     console.log('Fetching subscription for user:', userId);
     const { rows } = await sql`
@@ -239,10 +239,15 @@ export async function getUserSubscription(userId: string): Promise<string | null
       WHERE user_id = ${userId}
     `;
     console.log('Fetch result:', rows);
-    return rows[0]?.subscription_status || null;
+    if (rows.length > 0 && rows[0].subscription_status) {
+      return rows[0].subscription_status;
+    } else {
+      console.warn('No subscription status found for user:', userId);
+      return 'free';
+    }
   } catch (error) {
     console.error('Error fetching user subscription:', error);
-    throw error;
+    return 'free';
   }
 }
 

@@ -179,7 +179,6 @@ export function Dashboard() {
         </div>
       )}
 
-      {/* Mostrar el estado actual de la suscripción */}
       <div className="mb-4">
         <p className="text-lg font-semibold">
           Estado de suscripción: {subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE ? 'Premium' : 'Gratuito'}

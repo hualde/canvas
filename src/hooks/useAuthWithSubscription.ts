@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useEffect, useCallback } from 'react';
 import { SUBSCRIPTION_STATUS } from '../constants/subscriptionTiers';
+import { getUserSubscription } from '../lib/db';
 
 export function useAuthWithSubscription() {
   const auth0 = useAuth0();
@@ -9,19 +10,8 @@ export function useAuthWithSubscription() {
   const checkSubscriptionStatus = useCallback(async () => {
     if (auth0.user?.sub) {
       try {
-        const response = await fetch('/api/check-subscription-status', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ userId: auth0.user.sub }),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to check subscription status');
-        }
-
-        const { status } = await response.json();
+        const status = await getUserSubscription(auth0.user.sub);
+        console.log('Fetched subscription status:', status);
         if (Object.values(SUBSCRIPTION_STATUS).includes(status)) {
           setSubscriptionStatus(status);
         } else {
