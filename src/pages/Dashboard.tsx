@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass, ChevronDown, AlertCircle } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas, canUserCreateCanvas, getCanvasCount } from '../lib/db';
@@ -13,16 +13,29 @@ interface Canvas {
   updated_at: string;
 }
 
-export function Dashboard() {
+export default function Component() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, isAuthenticated, isLoading } = useAuth0();
-  const { subscriptionTier } = useAuthWithSubscription();
+  const { subscriptionTier, refreshSubscription } = useAuthWithSubscription();
   const [canvases, setCanvases] = useState<Canvas[]>([]);
   const [isLoadingCanvases, setIsLoadingCanvases] = useState(true);
   const [canvasToDelete, setCanvasToDelete] = useState<Canvas | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [canCreateCanvas, setCanCreateCanvas] = useState(false);
   const [canvasCount, setCanvasCount] = useState(0);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const sessionId = searchParams.get('session_id');
+    if (sessionId) {
+      setShowSuccessMessage(true);
+      refreshSubscription();
+      // Remove the session_id from the URL
+      navigate('/', { replace: true });
+    }
+  }, [location, navigate, refreshSubscription]);
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -143,6 +156,12 @@ export function Dashboard() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {showSuccessMessage && (
+        <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
+          <p className="font-bold">Suscripción exitosa</p>
+          <p>Tu cuenta ha sido actualizada. ¡Gracias por tu suscripción!</p>
+        </div>
+      )}
       <div className="flex justify-between items-start mb-8 flex-col sm:flex-row gap-4">
         <h1 className="text-3xl font-bold text-gray-900">My Canvases</h1>
         <div className="relative">
