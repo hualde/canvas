@@ -13,7 +13,7 @@ interface Canvas {
   updated_at: string;
 }
 
-export default function Component() {
+export function Dashboard() {
   const navigate = useNavigate();
   const { user, isAuthenticated, isLoading } = useAuth0();
   const { subscriptionTier } = useAuthWithSubscription();
