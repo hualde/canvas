@@ -4,7 +4,7 @@ import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass, Che
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas, canUserCreateCanvas, getCanvasCount } from '../lib/db';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
-import { SUBSCRIPTION_STATUS, STATUS_LIMITS } from '../constants/subscriptionTiers';
+import { SUBSCRIPTION_STATUS, TIER_LIMITS } from '../constants/subscriptionTiers';
 import { useSubscriptionStatus } from '../hooks/useSubscriptionStatus';
 
 interface Canvas {
@@ -221,7 +221,7 @@ export function Dashboard() {
           <div className="flex items-center">
             <AlertCircle className="h-5 w-5 mr-2" />
             <p>
-              You are using the free tier. You can create up to {STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases} canvases.
+              You are using the free tier. You can create up to {TIER_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases} canvases.
               {' '}
               <Link to="/upgrade" className="font-bold underline">Upgrade to Premium</Link> for unlimited canvases and more features!
             </p>
@@ -231,13 +231,13 @@ export function Dashboard() {
 
       <div className="mb-6">
         <p className="text-gray-600">
-          Canvases created: {canvasCount} / {subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE ? '∞' : STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases}
+          Canvases created: {canvasCount} / {subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE ? '∞' : TIER_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases}
         </p>
         {subscriptionStatus === SUBSCRIPTION_STATUS.FREE && (
           <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
             <div 
               className="bg-blue-600 h-2.5 rounded-full" 
-              style={{ width: `${(canvasCount / STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases) * 100}%` }}
+              style={{ width: `${(canvasCount / TIER_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases) * 100}%` }}
             ></div>
           </div>
         )}
