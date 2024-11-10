@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
+import { sql } from '@vercel/postgres';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2023-10-16',
 });
 
@@ -10,13 +11,39 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { priceId } = req.body;
+    const { priceId, userId } = req.body;
 
-    if (!priceId) {
-      return res.status(400).json({ message: 'Price ID is required' });
+    if (!priceId || !userId) {
+      return res.status(400).json({ message: 'Price ID and User ID are required' });
     }
 
+    // Check if the user already has a Stripe customer ID
+    const { rows } = await sql`
+      SELECT stripe_customer_id FROM user_subscriptions WHERE user_id = ${userId}
+    `;
+
+    let stripeCustomerId;
+
+    if (rows.length > 0 && rows[0].stripe_customer_id) {
+      stripeCustomerId = rows[0].stripe_customer_id;
+    } else {
+      // Create a new Stripe customer
+      const customer = await stripe.customers.create({
+        metadata: { auth0_user_id: userId }
+      });
+      stripeCustomerId = customer.id;
+
+      // Store the Stripe customer ID in the database
+      await sql`
+        INSERT INTO user_subscriptions (user_id, stripe_customer_id)
+        VALUES (${userId}, ${stripeCustomerId})
+        ON CONFLICT (user_id) DO UPDATE SET stripe_customer_id = ${stripeCustomerId}
+      `;
+    }
+
+    // Create Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
+      customer: stripeCustomerId,
       line_items: [
         {
           price: priceId,
@@ -24,7 +51,7 @@ export default async function handler(req, res) {
         },
       ],
       mode: 'subscription',
-      success_url: `${req.headers.origin}/?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.origin}/upgrade`,
     });
 

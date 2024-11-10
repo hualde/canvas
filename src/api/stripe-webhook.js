@@ -1,7 +1,8 @@
 import Stripe from 'stripe';
 import { buffer } from 'micro';
+import { sql } from '@vercel/postgres';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2023-10-16',
 });
 
@@ -12,36 +13,94 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
-    const buf = await buffer(req);
-    const sig = req.headers['stripe-signature'];
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
 
-    let event;
+  try {
+    const buf = await buffer(req);
+    const sig = req.headers['stripe-signature'] as string;
+
+    let event: Stripe.Event;
 
     try {
-      event = stripe.webhooks.constructEvent(buf, sig, process.env.STRIPE_WEBHOOK_SECRET);
+      event = stripe.webhooks.constructEvent(
+        buf,
+        sig,
+        process.env.STRIPE_WEBHOOK_SECRET as string
+      );
     } catch (err) {
-      res.status(400).send(`Webhook Error: ${err.message}`);
-      return;
+      console.error('Webhook signature verification failed:', err);
+      return res.status(400).send(`Webhook Error: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
 
     switch (event.type) {
-      case 'checkout.session.completed':
-        const session = event.data.object;
-        await fulfillSubscription(session);
+      case 'customer.subscription.created':
+      case 'customer.subscription.updated':
+        const subscription = event.data.object as Stripe.Subscription;
+        await handleSubscriptionChange(subscription);
         break;
-      default:
-        console.log(`Unhandled event type ${event.type}`);
+      case 'customer.subscription.deleted':
+        const deletedSubscription = event.data.object as Stripe.Subscription;
+        await handleSubscriptionDeletion(deletedSubscription);
+        break;
+      // Add other event types as needed
     }
 
-    res.json({ received: true });
-  } else {
-    res.setHeader('Allow', 'POST');
-    res.status(405).end('Method Not Allowed');
+    return res.json({ received: true });
+  } catch (error) {
+    console.error('Error processing webhook:', error);
+    return res.status(500).json({ 
+      message: 'Internal server error',
+      error: error instanceof Error ? error.message : String(error)
+    });
   }
 }
 
-async function fulfillSubscription(session) {
-  console.log('Fulfilling subscription for session', session.id);
-  // TODO: Implement the logic to update the user's subscription status
+async function handleSubscriptionChange(subscription: Stripe.Subscription) {
+  const customerId = subscription.customer as string;
+  const status = subscription.status;
+  const planId = subscription.items.data[0].price.id;
+
+  try {
+    const { rows } = await sql`
+      SELECT user_id FROM user_subscriptions WHERE stripe_customer_id = ${customerId}
+    `;
+
+    if (rows.length > 0) {
+      const userId = rows[0].user_id;
+      await sql`
+        UPDATE user_subscriptions
+        SET subscription_tier = 'premium', subscription_status = ${status}, plan_id = ${planId}
+        WHERE user_id = ${userId}
+      `;
+    } else {
+      console.error('No user found for Stripe customer:', customerId);
+    }
+  } catch (error) {
+    console.error('Error updating subscription in database:', error);
+  }
+}
+
+async function handleSubscriptionDeletion(subscription: Stripe.Subscription) {
+  const customerId = subscription.customer as string;
+
+  try {
+    const { rows } = await sql`
+      SELECT user_id FROM user_subscriptions WHERE stripe_customer_id = ${customerId}
+    `;
+
+    if (rows.length > 0) {
+      const userId = rows[0].user_id;
+      await sql`
+        UPDATE user_subscriptions
+        SET subscription_tier = 'free', subscription_status = 'canceled', plan_id = NULL
+        WHERE user_id = ${userId}
+      `;
+    } else {
+      console.error('No user found for Stripe customer:', customerId);
+    }
+  } catch (error) {
+    console.error('Error updating subscription in database:', error);
+  }
 }

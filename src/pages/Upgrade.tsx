@@ -15,6 +15,10 @@ export default function Upgrade() {
     const stripe = await stripePromise;
     
     try {
+      if (!user?.sub) {
+        throw new Error('User ID not available');
+      }
+
       console.log('Initiating checkout with priceId:', priceId);
 
       const response = await fetch('/api/create-checkout-session', {
@@ -22,7 +26,7 @@ export default function Upgrade() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ priceId }),
+        body: JSON.stringify({ priceId, userId: user.sub }),
       });
       
       let errorMessage = 'Failed to create checkout session';
