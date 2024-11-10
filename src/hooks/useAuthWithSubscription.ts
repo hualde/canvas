@@ -1,19 +1,19 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useEffect, useCallback } from 'react';
-import { SUBSCRIPTION_STATUS } from '../constants/subscriptionTiers';
+import { SUBSCRIPTION_STATUS, SubscriptionStatus } from '../constants/subscriptionTiers';
 import { getUserSubscription } from '../lib/db';
 
 export function useAuthWithSubscription() {
   const auth0 = useAuth0();
-  const [subscriptionStatus, setSubscriptionStatus] = useState(SUBSCRIPTION_STATUS.FREE);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus>(SUBSCRIPTION_STATUS.FREE);
 
   const checkSubscriptionStatus = useCallback(async () => {
     if (auth0.user?.sub) {
       try {
         const status = await getUserSubscription(auth0.user.sub);
         console.log('Fetched subscription status:', status);
-        if (Object.values(SUBSCRIPTION_STATUS).includes(status)) {
-          setSubscriptionStatus(status);
+        if (Object.values(SUBSCRIPTION_STATUS).includes(status as SubscriptionStatus)) {
+          setSubscriptionStatus(status as SubscriptionStatus);
         } else {
           console.error('Invalid subscription status received:', status);
           setSubscriptionStatus(SUBSCRIPTION_STATUS.FREE);
