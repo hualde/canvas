@@ -5,6 +5,8 @@ export const SUBSCRIPTION_STATUS = {
   PAST_DUE: 'past_due'
 };
 
+export { SUBSCRIPTION_STATUS as SUBSCRIPTION_TIERS };
+
 export const STATUS_LIMITS = {
   [SUBSCRIPTION_STATUS.FREE]: {
     maxCanvases: 3,
