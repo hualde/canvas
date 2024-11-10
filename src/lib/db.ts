@@ -235,17 +235,19 @@ export async function getUserSubscription(userId: string): Promise<string> {
   try {
     console.log('Fetching subscription for user:', userId);
     const { rows } = await sql`
-      SELECT subscription_status
+      SELECT stripe_customer_id
       FROM user_subscriptions
       WHERE user_id = ${userId}
     `;
-    console.log('Fetch result:', rows);
-    if (rows.length > 0 && rows[0].subscription_status) {
-      const status = rows[0].subscription_status;
-      console.log('Retrieved subscription status:', status);
-      return status;
+    console.log('DBStripe Fetch result:', rows);
+    if (rows.length > 0 && rows[0].stripe_customer_id) {
+      const customerId = rows[0].stripe_customer_id;
+      console.log('Retrieved Stripe customer ID:', customerId);
+      // Here we're assuming that the presence of a Stripe customer ID means the user has an active subscription
+      // You might want to add additional checks with the Stripe API if needed
+      return customerId ? SUBSCRIPTION_STATUS.ACTIVE : SUBSCRIPTION_STATUS.FREE;
     } else {
-      console.warn('No subscription status found for user:', userId);
+      console.warn('No Stripe customer ID found for user:', userId);
       return SUBSCRIPTION_STATUS.FREE;
     }
   } catch (error) {

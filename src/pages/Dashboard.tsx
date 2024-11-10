@@ -47,12 +47,6 @@ export function Dashboard() {
   }, [isAuthenticated, user, subscriptionStatus]);
 
   useEffect(() => {
-    if (subscriptionStatus) {
-      console.log('Current subscription status:', subscriptionStatus);
-    }
-  }, [subscriptionStatus]);
-
-  useEffect(() => {
     async function fetchCanvases() {
       if (isAuthenticated && user?.sub) {
         setIsLoadingCanvases(true);
@@ -185,6 +179,9 @@ export function Dashboard() {
         <p className="text-lg font-semibold">
           Estado de suscripción: {SUBSCRIPTION_STATUS_DISPLAY[subscriptionStatus] || 'Desconocido'}
         </p>
+        <p className="text-sm text-gray-600">
+          (Debug) Raw subscription status: {subscriptionStatus}
+        </p>
       </div>
 
       <div className="flex justify-between items-start mb-8 flex-col sm:flex-row gap-4">
@@ -314,5 +311,5 @@ export function Dashboard() {
 }
 
 export default function Component() {
-  return null;
+  return <Dashboard />;
 }

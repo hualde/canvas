@@ -12,12 +12,7 @@ export function useAuthWithSubscription() {
       try {
         const status = await getUserSubscription(auth0.user.sub);
         console.log('Fetched subscription status:', status);
-        if (Object.values(SUBSCRIPTION_STATUS).includes(status as SubscriptionStatus)) {
-          setSubscriptionStatus(status as SubscriptionStatus);
-        } else {
-          console.error('Invalid subscription status received:', status);
-          setSubscriptionStatus(SUBSCRIPTION_STATUS.FREE);
-        }
+        setSubscriptionStatus(status as SubscriptionStatus);
       } catch (error) {
         console.error('Error checking subscription status:', error);
         setSubscriptionStatus(SUBSCRIPTION_STATUS.FREE);
