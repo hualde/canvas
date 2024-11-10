@@ -40,8 +40,9 @@ export function Dashboard() {
   useEffect(() => {
     if (isAuthenticated && user) {
       console.log('Usuario autenticado. ID de sesión (user.sub):', user.sub);
+      console.log('Estado de suscripción:', subscriptionTier);
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, subscriptionTier]);
 
   useEffect(() => {
     async function fetchCanvases() {
@@ -162,6 +163,14 @@ export function Dashboard() {
           <p>Tu cuenta ha sido actualizada. ¡Gracias por tu suscripción!</p>
         </div>
       )}
+      
+      {/* Mostrar el estado actual de la suscripción */}
+      <div className="mb-4">
+        <p className="text-lg font-semibold">
+          Estado de suscripción: {subscriptionTier === 'premium' ? 'Premium' : 'Gratuito'}
+        </p>
+      </div>
+
       <div className="flex justify-between items-start mb-8 flex-col sm:flex-row gap-4">
         <h1 className="text-3xl font-bold text-gray-900">My Canvases</h1>
         <div className="relative">

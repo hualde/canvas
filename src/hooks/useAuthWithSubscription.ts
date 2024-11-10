@@ -1,27 +1,44 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useEffect, useCallback } from 'react';
-import { getUserSubscription } from '../lib/db';
 
 export function useAuthWithSubscription() {
   const auth0 = useAuth0();
   const [subscriptionTier, setSubscriptionTier] = useState('free');
 
-  const fetchSubscription = useCallback(async () => {
+  const checkSubscriptionStatus = useCallback(async () => {
     if (auth0.user?.sub) {
-      const tier = await getUserSubscription(auth0.user.sub);
-      setSubscriptionTier(tier);
+      try {
+        const response = await fetch('/api/check-subscription-status', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: auth0.user.sub }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to check subscription status');
+        }
+
+        const { status } = await response.json();
+        setSubscriptionTier(status);
+      } catch (error) {
+        console.error('Error checking subscription status:', error);
+        // Si hay un error, asumimos que el usuario está en el nivel gratuito
+        setSubscriptionTier('free');
+      }
     }
   }, [auth0.user]);
 
   useEffect(() => {
     if (auth0.isAuthenticated) {
-      fetchSubscription();
+      checkSubscriptionStatus();
     }
-  }, [auth0.isAuthenticated, fetchSubscription]);
+  }, [auth0.isAuthenticated, checkSubscriptionStatus]);
 
   const refreshSubscription = useCallback(() => {
-    fetchSubscription();
-  }, [fetchSubscription]);
+    checkSubscriptionStatus();
+  }, [checkSubscriptionStatus]);
 
   return {
     ...auth0,
