@@ -32,7 +32,7 @@ export async function ensureUserSubscriptionsTable() {
     const result = await sql`
       CREATE TABLE IF NOT EXISTS user_subscriptions (
         user_id TEXT PRIMARY KEY,
-        subscription_tier TEXT NOT NULL,
+        subscription_status TEXT NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       )
@@ -96,8 +96,8 @@ export async function getCanvas(id: string): Promise<CanvasData | null> {
 // Create a new canvas
 export async function createCanvas(userId: string, title: string, type: string): Promise<CanvasData> {
   try {
-    const subscriptionTier = await getUserSubscription(userId);
-    if (subscriptionTier !== 'premium') {
+    const subscriptionStatus = await getUserSubscription(userId);
+    if (subscriptionStatus !== 'active') {
       const canvasCount = await getCanvasCount(userId);
       if (canvasCount >= FREE_USER_CANVAS_LIMIT) {
         throw new Error('Free users can only create up to 3 canvases. Please upgrade to create more.');
@@ -229,32 +229,32 @@ export async function deleteCanvas(id: string): Promise<void> {
   }
 }
 
-// Get user's subscription tier
+// Get user's subscription status
 export async function getUserSubscription(userId: string): Promise<string | null> {
   try {
     console.log('Fetching subscription for user:', userId);
     const { rows } = await sql`
-      SELECT subscription_tier
+      SELECT subscription_status
       FROM user_subscriptions
       WHERE user_id = ${userId}
     `;
     console.log('Fetch result:', rows);
-    return rows[0]?.subscription_tier || null;
+    return rows[0]?.subscription_status || null;
   } catch (error) {
     console.error('Error fetching user subscription:', error);
     throw error;
   }
 }
 
-// Set or update user's subscription tier
-export async function setUserSubscription(userId: string, tier: string): Promise<void> {
+// Set or update user's subscription status
+export async function setUserSubscription(userId: string, status: string): Promise<void> {
   try {
-    console.log('Setting subscription for user:', userId, 'to tier:', tier);
+    console.log('Setting subscription for user:', userId, 'to status:', status);
     const result = await sql`
-      INSERT INTO user_subscriptions (user_id, subscription_tier)
-      VALUES (${userId}, ${tier})
+      INSERT INTO user_subscriptions (user_id, subscription_status)
+      VALUES (${userId}, ${status})
       ON CONFLICT (user_id)
-      DO UPDATE SET subscription_tier = ${tier}, updated_at = CURRENT_TIMESTAMP
+      DO UPDATE SET subscription_status = ${status}, updated_at = CURRENT_TIMESTAMP
       RETURNING *
     `;
     console.log('Set subscription result:', result);
@@ -281,9 +281,9 @@ export async function getCanvasCount(userId: string): Promise<number> {
 
 // Check if a user can create a new canvas
 export async function canUserCreateCanvas(userId: string): Promise<boolean> {
-  const subscriptionTier = await getUserSubscription(userId);
+  const subscriptionStatus = await getUserSubscription(userId);
   
-  if (subscriptionTier === 'premium') {
+  if (subscriptionStatus === 'active') {
     return true;
   }
 
@@ -311,4 +311,8 @@ export async function initializeUserSubscription(userId: string): Promise<string
     console.error('Error details:', JSON.stringify(error, null, 2));
     throw error;
   }
+}
+
+export default function Component() {
+  return null;
 }

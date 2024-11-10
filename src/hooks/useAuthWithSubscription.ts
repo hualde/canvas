@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 export function useAuthWithSubscription() {
   const auth0 = useAuth0();
-  const [subscriptionTier, setSubscriptionTier] = useState('free');
+  const [subscriptionStatus, setSubscriptionStatus] = useState('free');
 
   const checkSubscriptionStatus = useCallback(async () => {
     if (auth0.user?.sub) {
@@ -21,11 +21,11 @@ export function useAuthWithSubscription() {
         }
 
         const { status } = await response.json();
-        setSubscriptionTier(status);
+        setSubscriptionStatus(status);
       } catch (error) {
         console.error('Error checking subscription status:', error);
-        // Si hay un error, asumimos que el usuario está en el nivel gratuito
-        setSubscriptionTier('free');
+        // If there's an error, we assume the user is on the free tier
+        setSubscriptionStatus('free');
       }
     }
   }, [auth0.user]);
@@ -42,8 +42,12 @@ export function useAuthWithSubscription() {
 
   return {
     ...auth0,
-    user: auth0.user ? { ...auth0.user, subscriptionTier } : null,
-    subscriptionTier,
+    user: auth0.user ? { ...auth0.user, subscriptionStatus } : null,
+    subscriptionStatus,
     refreshSubscription,
   };
+}
+
+export default function Component() {
+  return null;
 }

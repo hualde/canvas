@@ -71,7 +71,7 @@ async function handleSubscriptionChange(subscription: Stripe.Subscription) {
       const userId = rows[0].user_id;
       await sql`
         UPDATE user_subscriptions
-        SET subscription_tier = 'premium', subscription_status = ${status}, plan_id = ${planId}
+        SET subscription_status = ${status === 'active' ? 'active' : 'inactive'}, plan_id = ${planId}
         WHERE user_id = ${userId}
       `;
     } else {
@@ -94,7 +94,7 @@ async function handleSubscriptionDeletion(subscription: Stripe.Subscription) {
       const userId = rows[0].user_id;
       await sql`
         UPDATE user_subscriptions
-        SET subscription_tier = 'free', subscription_status = 'canceled', plan_id = NULL
+        SET subscription_status = 'canceled', plan_id = NULL
         WHERE user_id = ${userId}
       `;
     } else {
@@ -103,4 +103,8 @@ async function handleSubscriptionDeletion(subscription: Stripe.Subscription) {
   } catch (error) {
     console.error('Error updating subscription in database:', error);
   }
+}
+
+export default function Component() {
+  return null;
 }

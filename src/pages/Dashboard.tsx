@@ -4,7 +4,7 @@ import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass, Che
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas, canUserCreateCanvas, getCanvasCount } from '../lib/db';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
-import { SUBSCRIPTION_TIERS, TIER_LIMITS } from '../constants/subscriptionTiers';
+import { SUBSCRIPTION_STATUS, STATUS_LIMITS } from '../constants/subscriptionTiers';
 import { useSubscriptionStatus } from '../hooks/useSubscriptionStatus';
 
 interface Canvas {
@@ -18,8 +18,8 @@ export function Dashboard() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, isAuthenticated, isLoading } = useAuth0();
-  const { subscriptionTier, refreshSubscription } = useAuthWithSubscription();
-  const { subscriptionStatus, isLoading: isLoadingSubscription, error: subscriptionError } = useSubscriptionStatus();
+  const { subscriptionStatus, refreshSubscription } = useAuthWithSubscription();
+  const { isLoading: isLoadingSubscription, error: subscriptionError } = useSubscriptionStatus();
   const [canvases, setCanvases] = useState<Canvas[]>([]);
   const [isLoadingCanvases, setIsLoadingCanvases] = useState(true);
   const [canvasToDelete, setCanvasToDelete] = useState<Canvas | null>(null);
@@ -42,9 +42,9 @@ export function Dashboard() {
   useEffect(() => {
     if (isAuthenticated && user) {
       console.log('Usuario autenticado. ID de sesión (user.sub):', user.sub);
-      console.log('Estado de suscripción:', subscriptionTier);
+      console.log('Estado de suscripción:', subscriptionStatus);
     }
-  }, [isAuthenticated, user, subscriptionTier]);
+  }, [isAuthenticated, user, subscriptionStatus]);
 
   useEffect(() => {
     if (subscriptionStatus) {
@@ -75,7 +75,7 @@ export function Dashboard() {
 
   const handleCreateCanvas = async (type: 'business' | 'value-proposition' | 'swot' | 'empathy-map' | 'pestel') => {
     if (isAuthenticated && user?.sub) {
-      if (!canCreateCanvas && subscriptionTier !== SUBSCRIPTION_TIERS.PREMIUM) {
+      if (!canCreateCanvas && subscriptionStatus !== SUBSCRIPTION_STATUS.ACTIVE) {
         alert('You have reached the maximum number of canvases for free users. Please upgrade to create more.');
         return;
       }
@@ -182,7 +182,7 @@ export function Dashboard() {
       {/* Mostrar el estado actual de la suscripción */}
       <div className="mb-4">
         <p className="text-lg font-semibold">
-          Estado de suscripción: {subscriptionStatus === 'premium' ? 'Premium' : 'Gratuito'}
+          Estado de suscripción: {subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE ? 'Premium' : 'Gratuito'}
         </p>
       </div>
 
@@ -192,17 +192,17 @@ export function Dashboard() {
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className={`flex items-center justify-center px-4 py-2 rounded-lg transition-colors shadow-sm ${
-              canCreateCanvas || subscriptionStatus === 'premium'
+              canCreateCanvas || subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE
                 ? 'bg-blue-600 text-white hover:bg-blue-700'
                 : 'bg-gray-400 text-white cursor-not-allowed'
             }`}
-            disabled={!canCreateCanvas && subscriptionStatus !== 'premium'}
+            disabled={!canCreateCanvas && subscriptionStatus !== SUBSCRIPTION_STATUS.ACTIVE}
           >
             <Plus className="w-5 h-5 mr-2" />
             New Canvas
             <ChevronDown className="w-4 h-4 ml-2" />
           </button>
-          {isDropdownOpen && (canCreateCanvas || subscriptionStatus === 'premium') && (
+          {isDropdownOpen && (canCreateCanvas || subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE) && (
             <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
               <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 <button onClick={() => handleCreateCanvas('business')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left" role="menuitem">Business Model Canvas</button>
@@ -216,12 +216,12 @@ export function Dashboard() {
         </div>
       </div>
 
-      {subscriptionStatus === 'free' && (
+      {subscriptionStatus === SUBSCRIPTION_STATUS.FREE && (
         <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
           <div className="flex items-center">
             <AlertCircle className="h-5 w-5 mr-2" />
             <p>
-              You are using the free tier. You can create up to {TIER_LIMITS[SUBSCRIPTION_TIERS.FREE].maxCanvases} canvases.
+              You are using the free tier. You can create up to {STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases} canvases.
               {' '}
               <Link to="/upgrade" className="font-bold underline">Upgrade to Premium</Link> for unlimited canvases and more features!
             </p>
@@ -231,13 +231,13 @@ export function Dashboard() {
 
       <div className="mb-6">
         <p className="text-gray-600">
-          Canvases created: {canvasCount} / {subscriptionStatus === 'premium' ? '∞' : TIER_LIMITS[SUBSCRIPTION_TIERS.FREE].maxCanvases}
+          Canvases created: {canvasCount} / {subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE ? '∞' : STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases}
         </p>
-        {subscriptionStatus === 'free' && (
+        {subscriptionStatus === SUBSCRIPTION_STATUS.FREE && (
           <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
             <div 
               className="bg-blue-600 h-2.5 rounded-full" 
-              style={{ width: `${(canvasCount / TIER_LIMITS[SUBSCRIPTION_TIERS.FREE].maxCanvases) * 100}%` }}
+              style={{ width: `${(canvasCount / STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases) * 100}%` }}
             ></div>
           </div>
         )}
@@ -310,4 +310,8 @@ export function Dashboard() {
       )}
     </div>
   );
+}
+
+export default function Component() {
+  return null;
 }
