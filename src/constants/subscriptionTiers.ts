@@ -32,8 +32,6 @@ export const STATUS_LIMITS = {
   }
 };
 
-export const TIER_LIMITS = STATUS_LIMITS;
-
 export { SUBSCRIPTION_STATUS as SUBSCRIPTION_TIERS };
 export { STATUS_LIMITS as TIER_LIMITS };
 
@@ -50,10 +48,6 @@ export function isPremiumStatus(status: string): boolean {
 
 export function getLimitsForStatus(status: string) {
   return STATUS_LIMITS[status] || STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE];
-}
-
-export function getMaxItemsPerSection(status: string): number {
-  return STATUS_LIMITS[status]?.maxItemsPerSection || STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE].maxItemsPerSection;
 }
 
 export default function Component() {
