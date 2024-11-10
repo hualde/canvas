@@ -1,9 +1,10 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState, useEffect, useCallback } from 'react';
+import { SUBSCRIPTION_TIERS, SUBSCRIPTION_STATUS } from '../constants/subscriptionTiers';
 
 export function useAuthWithSubscription() {
   const auth0 = useAuth0();
-  const [subscriptionStatus, setSubscriptionStatus] = useState('free');
+  const [subscriptionStatus, setSubscriptionStatus] = useState(SUBSCRIPTION_STATUS.FREE);
 
   const checkSubscriptionStatus = useCallback(async () => {
     if (auth0.user?.sub) {
@@ -21,11 +22,16 @@ export function useAuthWithSubscription() {
         }
 
         const { status } = await response.json();
-        setSubscriptionStatus(status);
+        if (Object.values(SUBSCRIPTION_STATUS).includes(status)) {
+          setSubscriptionStatus(status);
+        } else {
+          console.error('Invalid subscription status received:', status);
+          setSubscriptionStatus(SUBSCRIPTION_STATUS.FREE);
+        }
       } catch (error) {
         console.error('Error checking subscription status:', error);
         // If there's an error, we assume the user is on the free tier
-        setSubscriptionStatus('free');
+        setSubscriptionStatus(SUBSCRIPTION_STATUS.FREE);
       }
     }
   }, [auth0.user]);
