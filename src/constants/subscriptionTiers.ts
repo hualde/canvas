@@ -32,6 +32,8 @@ export const STATUS_LIMITS = {
   }
 };
 
+export { STATUS_LIMITS as TIER_LIMITS };
+
 export const SUBSCRIPTION_STATUS_DISPLAY = {
   [SUBSCRIPTION_STATUS.FREE]: 'Free',
   [SUBSCRIPTION_STATUS.ACTIVE]: 'Premium',
