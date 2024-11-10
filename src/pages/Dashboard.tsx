@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass, ChevronDown, AlertCircle } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas, canUserCreateCanvas, getCanvasCount } from '../lib/db';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import { SUBSCRIPTION_TIERS, TIER_LIMITS } from '../constants/subscriptionTiers';
+import { useSubscriptionStatus } from '../hooks/useSubscriptionStatus';
 
 interface Canvas {
   id: string;
@@ -18,6 +19,7 @@ export function Dashboard() {
   const location = useLocation();
   const { user, isAuthenticated, isLoading } = useAuth0();
   const { subscriptionTier, refreshSubscription } = useAuthWithSubscription();
+  const { subscriptionStatus, isLoading: isLoadingSubscription, error: subscriptionError } = useSubscriptionStatus();
   const [canvases, setCanvases] = useState<Canvas[]>([]);
   const [isLoadingCanvases, setIsLoadingCanvases] = useState(true);
   const [canvasToDelete, setCanvasToDelete] = useState<Canvas | null>(null);
@@ -43,6 +45,12 @@ export function Dashboard() {
       console.log('Estado de suscripción:', subscriptionTier);
     }
   }, [isAuthenticated, user, subscriptionTier]);
+
+  useEffect(() => {
+    if (subscriptionStatus) {
+      console.log('Current subscription status:', subscriptionStatus);
+    }
+  }, [subscriptionStatus]);
 
   useEffect(() => {
     async function fetchCanvases() {
@@ -149,7 +157,7 @@ export function Dashboard() {
     }
   };
 
-  if (isLoading || isLoadingCanvases) {
+  if (isLoading || isLoadingCanvases || isLoadingSubscription) {
     return <div className="flex justify-center items-center h-screen">
       <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
     </div>;
@@ -164,10 +172,17 @@ export function Dashboard() {
         </div>
       )}
       
+      {subscriptionError && (
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+          <p className="font-bold">Error checking subscription status</p>
+          <p>{subscriptionError}</p>
+        </div>
+      )}
+
       {/* Mostrar el estado actual de la suscripción */}
       <div className="mb-4">
         <p className="text-lg font-semibold">
-          Estado de suscripción: {subscriptionTier === 'premium' ? 'Premium' : 'Gratuito'}
+          Estado de suscripción: {subscriptionStatus === 'premium' ? 'Premium' : 'Gratuito'}
         </p>
       </div>
 
@@ -177,17 +192,17 @@ export function Dashboard() {
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className={`flex items-center justify-center px-4 py-2 rounded-lg transition-colors shadow-sm ${
-              canCreateCanvas || subscriptionTier === SUBSCRIPTION_TIERS.PREMIUM
+              canCreateCanvas || subscriptionStatus === 'premium'
                 ? 'bg-blue-600 text-white hover:bg-blue-700'
                 : 'bg-gray-400 text-white cursor-not-allowed'
             }`}
-            disabled={!canCreateCanvas && subscriptionTier !== SUBSCRIPTION_TIERS.PREMIUM}
+            disabled={!canCreateCanvas && subscriptionStatus !== 'premium'}
           >
             <Plus className="w-5 h-5 mr-2" />
             New Canvas
             <ChevronDown className="w-4 h-4 ml-2" />
           </button>
-          {isDropdownOpen && (canCreateCanvas || subscriptionTier === SUBSCRIPTION_TIERS.PREMIUM) && (
+          {isDropdownOpen && (canCreateCanvas || subscriptionStatus === 'premium') && (
             <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
               <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 <button onClick={() => handleCreateCanvas('business')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left" role="menuitem">Business Model Canvas</button>
@@ -201,7 +216,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      {subscriptionTier === SUBSCRIPTION_TIERS.FREE && (
+      {subscriptionStatus === 'free' && (
         <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
           <div className="flex items-center">
             <AlertCircle className="h-5 w-5 mr-2" />
@@ -216,9 +231,9 @@ export function Dashboard() {
 
       <div className="mb-6">
         <p className="text-gray-600">
-          Canvases created: {canvasCount} / {subscriptionTier === SUBSCRIPTION_TIERS.PREMIUM ? '∞' : TIER_LIMITS[SUBSCRIPTION_TIERS.FREE].maxCanvases}
+          Canvases created: {canvasCount} / {subscriptionStatus === 'premium' ? '∞' : TIER_LIMITS[SUBSCRIPTION_TIERS.FREE].maxCanvases}
         </p>
-        {subscriptionTier === SUBSCRIPTION_TIERS.FREE && (
+        {subscriptionStatus === 'free' && (
           <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
             <div 
               className="bg-blue-600 h-2.5 rounded-full" 
