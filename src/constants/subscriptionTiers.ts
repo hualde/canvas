@@ -1,3 +1,8 @@
+export const SUBSCRIPTION_TIERS = {
+  FREE: 'free',
+  PREMIUM: 'premium'
+};
+
 export const SUBSCRIPTION_STATUS = {
   FREE: 'free',
   ACTIVE: 'active',
@@ -5,35 +10,27 @@ export const SUBSCRIPTION_STATUS = {
   PAST_DUE: 'past_due'
 };
 
-export const STATUS_LIMITS = {
-  [SUBSCRIPTION_STATUS.FREE]: {
+export const TIER_LIMITS = {
+  [SUBSCRIPTION_TIERS.FREE]: {
     maxCanvases: 3,
     canExportPDF: false,
     hasAIAccess: false,
     maxItemsPerSection: 5,
   },
-  [SUBSCRIPTION_STATUS.ACTIVE]: {
+  [SUBSCRIPTION_TIERS.PREMIUM]: {
     maxCanvases: Infinity,
     canExportPDF: true,
     hasAIAccess: true,
     maxItemsPerSection: Infinity,
-  },
-  [SUBSCRIPTION_STATUS.CANCELED]: {
-    maxCanvases: 3,
-    canExportPDF: false,
-    hasAIAccess: false,
-    maxItemsPerSection: 5,
-  },
-  [SUBSCRIPTION_STATUS.PAST_DUE]: {
-    maxCanvases: 3,
-    canExportPDF: false,
-    hasAIAccess: false,
-    maxItemsPerSection: 5,
   }
 };
 
-export { SUBSCRIPTION_STATUS as SUBSCRIPTION_TIERS };
-export { STATUS_LIMITS as TIER_LIMITS };
+export const STATUS_LIMITS = {
+  [SUBSCRIPTION_STATUS.FREE]: TIER_LIMITS[SUBSCRIPTION_TIERS.FREE],
+  [SUBSCRIPTION_STATUS.ACTIVE]: TIER_LIMITS[SUBSCRIPTION_TIERS.PREMIUM],
+  [SUBSCRIPTION_STATUS.CANCELED]: TIER_LIMITS[SUBSCRIPTION_TIERS.FREE],
+  [SUBSCRIPTION_STATUS.PAST_DUE]: TIER_LIMITS[SUBSCRIPTION_TIERS.FREE]
+};
 
 export const SUBSCRIPTION_STATUS_DISPLAY = {
   [SUBSCRIPTION_STATUS.FREE]: 'Free',
@@ -47,9 +44,5 @@ export function isPremiumStatus(status: string): boolean {
 }
 
 export function getLimitsForStatus(status: string) {
-  return STATUS_LIMITS[status] || STATUS_LIMITS[SUBSCRIPTION_STATUS.FREE];
-}
-
-export default function Component() {
-  return null;
+  return STATUS_LIMITS[status] || TIER_LIMITS[SUBSCRIPTION_TIERS.FREE];
 }
