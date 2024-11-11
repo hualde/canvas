@@ -10,7 +10,7 @@ export const TIER_LIMITS = {
     maxCanvases: 3,
     canExportPDF: false,
     hasAIAccess: false,
-    maxItemsPerSection: 5,
+    maxItemsPerSection: 3,
   },
   [SUBSCRIPTION_STATUS.ACTIVE]: {
     maxCanvases: Infinity,
@@ -22,13 +22,13 @@ export const TIER_LIMITS = {
     maxCanvases: 3,
     canExportPDF: false,
     hasAIAccess: false,
-    maxItemsPerSection: 5,
+    maxItemsPerSection: 3,
   },
   [SUBSCRIPTION_STATUS.PAST_DUE]: {
     maxCanvases: 3,
     canExportPDF: false,
     hasAIAccess: false,
-    maxItemsPerSection: 5,
+    maxItemsPerSection: 3,
   }
 };
 
