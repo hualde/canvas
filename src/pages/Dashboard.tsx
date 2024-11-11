@@ -4,7 +4,7 @@ import { Plus, Trash2, Edit3, FileText, PieChart, Users, BarChart2, Compass, Che
 import { useAuth0 } from '@auth0/auth0-react';
 import { getCanvases, createCanvas, deleteCanvas, canUserCreateCanvas, getCanvasCount } from '../lib/db';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
-import { SUBSCRIPTION_STATUS, TIER_LIMITS, SUBSCRIPTION_STATUS_DISPLAY } from '../constants/subscriptionTiers';
+import { SUBSCRIPTION_STATUS, TIER_LIMITS } from '../constants/subscriptionTiers';
 import { useSubscriptionStatus } from '../hooks/useSubscriptionStatus';
 
 interface Canvas {
@@ -34,17 +34,9 @@ export function Dashboard() {
     if (sessionId) {
       setShowSuccessMessage(true);
       refreshSubscription();
-      // Remove the session_id from the URL
       navigate('/', { replace: true });
     }
   }, [location, navigate, refreshSubscription]);
-
-  useEffect(() => {
-    if (isAuthenticated && user) {
-      console.log('Usuario autenticado. ID de sesión (user.sub):', user.sub);
-      console.log('Estado de suscripción:', subscriptionStatus);
-    }
-  }, [isAuthenticated, user, subscriptionStatus]);
 
   useEffect(() => {
     async function fetchCanvases() {
@@ -163,8 +155,8 @@ export function Dashboard() {
     <div className="container mx-auto px-4 py-8">
       {showSuccessMessage && (
         <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
-          <p className="font-bold">Suscripción exitosa</p>
-          <p>Tu cuenta ha sido actualizada. ¡Gracias por tu suscripción!</p>
+          <p className="font-bold">Subscription successful</p>
+          <p>Your account has been updated. Thank you for your subscription!</p>
         </div>
       )}
       
@@ -174,15 +166,6 @@ export function Dashboard() {
           <p>{subscriptionError}</p>
         </div>
       )}
-
-      <div className="mb-4">
-        <p className="text-lg font-semibold">
-          Estado de suscripción: {SUBSCRIPTION_STATUS_DISPLAY[subscriptionStatus] || 'Desconocido'}
-        </p>
-        <p className="text-sm text-gray-600">
-          (Debug) Raw subscription status: {subscriptionStatus}
-        </p>
-      </div>
 
       <div className="flex justify-between items-start mb-8 flex-col sm:flex-row gap-4">
         <h1 className="text-3xl font-bold text-gray-900">My Canvases</h1>
