@@ -115,7 +115,7 @@ export default function Upgrade() {
                 </tr>
                 <tr>
                   <td className="py-2">Items per Section</td>
-                  <td className="text-center">Up to 5</td>
+                  <td className="text-center">Up to 3</td>
                   <td className="text-center">Unlimited</td>
                 </tr>
               </tbody>
