@@ -156,7 +156,7 @@ export function Tutorial() {
         <section>
           <h2 className="text-2xl font-semibold mb-4">Need Help?</h2>
           <p className="text-gray-600">
-            If you have any questions or need further assistance with any of the canvas types or features, don't hesitate to contact our support team or use the AI assistant for guidance. We're here to help you make the most of your business analysis tools!! 
+            If you have any questions or need further assistance with any of the canvas types or features, don't hesitate to contact our support team or use the AI assistant for guidance. We're here to help you make the most of your business analysis tools! 
           </p>
         </section>
       </div>
