@@ -33,6 +33,7 @@ export function ValuePropositionCanvas() {
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
   const titleInputRef = useRef<HTMLInputElement>(null);
+  const { user } = useAuth0();
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -92,9 +93,7 @@ export function ValuePropositionCanvas() {
     }
   };
 
-  const handleExportPDF = () => {
-    console.log('Exporting PDF...');
-    // Implementar la lógica de exportación a PDF aquí
+  const handleExportPDF = async () => {  // Added async keyword here
     if (canvas && user) {
       try {
         await exportToPDF(canvas, user.sub);
@@ -102,6 +101,9 @@ export function ValuePropositionCanvas() {
       } catch (error) {
         console.error('Error exporting PDF:', error);
         // You might want to show an error message to the user here
+        if (error instanceof Error) {
+          alert(error.message);
+        }
       }
     }
   };
