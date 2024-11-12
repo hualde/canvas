@@ -93,13 +93,13 @@ export function ValuePropositionCanvas() {
   };
 
   const handleExportPDF = () => {
-    // Implementar la funcionalidad de exportar a PDF
     console.log('Exporting PDF...');
+    // Implementar la lógica de exportación a PDF aquí
   };
 
   const handleAIAssist = () => {
-    // Implementar la funcionalidad de asistente AI
     console.log('Opening AI Assistant...');
+    // Implementar la lógica del asistente AI aquí
   };
 
   const handleSave = async () => {
@@ -131,12 +131,10 @@ export function ValuePropositionCanvas() {
     );
   }
 
-  const isActive = subscriptionTier === 'active';
-
   return (
     <CanvasWrapper 
       title={canvas.title} 
-      isActive={isActive}
+      userStatus={user?.status || 'inactive'}
       onExportPDF={handleExportPDF}
       onAIAssist={handleAIAssist}
       onSave={handleSave}

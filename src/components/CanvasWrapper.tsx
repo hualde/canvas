@@ -5,7 +5,7 @@ import { ArrowLeft, Download, Sparkles, Save } from 'lucide-react';
 interface CanvasWrapperProps {
   children: ReactNode;
   title: string;
-  isActive: boolean;
+  userStatus: string;
   onExportPDF: () => void;
   onAIAssist: () => void;
   onSave: () => void;
@@ -14,12 +14,13 @@ interface CanvasWrapperProps {
 export function CanvasWrapper({ 
   children, 
   title, 
-  isActive, 
+  userStatus,
   onExportPDF, 
   onAIAssist, 
   onSave 
 }: CanvasWrapperProps) {
   const navigate = useNavigate();
+  const isActive = userStatus === 'active';
 
   return (
     <div className="max-w-[1600px] mx-auto p-6 relative">
