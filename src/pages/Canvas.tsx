@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { icons } from '../utils/icons';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
+import { CanvasWrapper } from '../components/CanvasWrapper';
+import { exportToPDF } from '../utils/pdfExport';
 
 interface CanvasData {
   id: string;
@@ -104,6 +105,34 @@ export default function Canvas() {
     }
   };
 
+  const handleExportPDF = async () => {
+    if (canvas) {
+      try {
+        await exportToPDF(canvas);
+        console.log('PDF exported successfully');
+      } catch (error) {
+        console.error('Error exporting PDF:', error);
+        alert('Failed to export PDF. Please try again.');
+      }
+    }
+  };
+
+  const handleAIAssist = () => {
+    console.log('AI Assist functionality not implemented yet');
+  };
+
+  const handleSave = async () => {
+    if (canvas) {
+      try {
+        await updateCanvas(canvas.id, canvas);
+        console.log('Canvas saved successfully');
+      } catch (error) {
+        console.error('Error saving canvas:', error);
+        alert('Failed to save canvas. Please try again.');
+      }
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -129,17 +158,12 @@ export default function Canvas() {
   }
 
   return (
-    <div className="max-w-[1600px] mx-auto p-6 relative">
-      <div className="mb-6 flex justify-between items-center">
-        <button
-          onClick={() => navigate('/')}
-          className="inline-flex items-center text-gray-600 hover:text-gray-900"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Dashboard
-        </button>
-      </div>
-
+    <CanvasWrapper
+      title={canvas.title}
+      onExportPDF={handleExportPDF}
+      onAIAssist={handleAIAssist}
+      onSave={handleSave}
+    >
       <input
         ref={titleInputRef}
         type="text"
@@ -272,6 +296,6 @@ export default function Canvas() {
           />
         </div>
       </div>
-    </div>
+    </CanvasWrapper>
   );
 }

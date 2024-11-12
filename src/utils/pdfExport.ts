@@ -1,6 +1,5 @@
 import jsPDF from 'jspdf';
 import { icons } from './icons';
-import { getUserSubscription } from '../lib/db';
 
 interface CanvasData {
   id: string;
@@ -76,14 +75,6 @@ export async function exportToPDF(canvas: CanvasData, userId: string) {
   }
 
   try {
-    const subscriptionTier = await getUserSubscription(userId);
-    console.log('User subscription tier:', subscriptionTier);  // Added for debugging
-
-    if (subscriptionTier !== 'premium') {
-      console.error('PDF export is only available for premium users');
-      throw new Error('PDF export is only available for premium users');
-    }
-
     const doc = new jsPDF('l', 'mm', 'a4');
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
