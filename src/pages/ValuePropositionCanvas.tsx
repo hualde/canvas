@@ -131,10 +131,13 @@ export function ValuePropositionCanvas() {
     );
   }
 
+  const isActive = subscriptionTier === 'active';
+  console.log('Subscription status:', subscriptionTier);
+
   return (
     <CanvasWrapper 
       title={canvas.title} 
-      userStatus={user?.status || 'inactive'}
+      isActive={isActive}
       onExportPDF={handleExportPDF}
       onAIAssist={handleAIAssist}
       onSave={handleSave}
