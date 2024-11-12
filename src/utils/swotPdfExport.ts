@@ -1,6 +1,5 @@
 import jsPDF from 'jspdf';
 import { icons } from './icons';
-import { getUserSubscription } from '../lib/db';
 
 interface SWOTData {
   id: string;
@@ -68,16 +67,10 @@ const addIconToPDF = (doc: jsPDF, iconKey: keyof typeof icons, x: number, y: num
   }
 };
 
-export async function exportSWOTToPDF(canvas: SWOTData, userId: string) {
+export async function exportSWOTToPDF(canvas: SWOTData) {
   if (!canvas) {
     console.error('No canvas data provided for PDF export');
     return;
-  }
-
-  const subscriptionTier = await getUserSubscription(userId);
-  if (subscriptionTier !== 'premium') {
-    console.error('PDF export is only available for premium users');
-    throw new Error('PDF export is only available for premium users');
   }
 
   const doc = new jsPDF('l', 'mm', 'a4');
