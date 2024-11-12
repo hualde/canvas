@@ -19,7 +19,7 @@ export function Tutorial() {
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">Getting Started</h2>
           <p className="text-gray-600 mb-4">
-            Value Canvas is a comprehensive tool designed to help you create and manage various business analysis canvases. It allows you to visualize, analyze, and improve your business strategies in a structured way.
+            Value Canvas is a comprehensive tool designed to help you create and manage various business analysis canvases. It allows you to visualize, analyze, and improve your business strategies in a structured way
           </p>
         </section>
 
