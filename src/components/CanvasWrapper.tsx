@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download, Sparkles, Save } from 'lucide-react';
+import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 
 interface CanvasWrapperProps {
   children: ReactNode;
   title: string;
-  isActive: boolean;
   onExportPDF: () => void;
   onAIAssist: () => void;
   onSave: () => void;
@@ -14,14 +14,15 @@ interface CanvasWrapperProps {
 export function CanvasWrapper({ 
   children, 
   title, 
-  isActive,
   onExportPDF, 
   onAIAssist, 
   onSave 
 }: CanvasWrapperProps) {
   const navigate = useNavigate();
+  const { subscriptionTier } = useAuthWithSubscription();
+  const isActive = subscriptionTier === 'active';
 
-  console.log('Subscription status in CanvasWrapper:', isActive ? 'active' : 'inactive');
+  console.log('Subscription status in CanvasWrapper:', subscriptionTier, 'isActive:', isActive);
 
   return (
     <div className="max-w-[1600px] mx-auto p-6 relative">

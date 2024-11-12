@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { icons } from '../utils/icons';
-import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import { CanvasWrapper } from '../components/CanvasWrapper';
 
 interface CanvasData {
@@ -25,7 +24,6 @@ interface CanvasData {
 
 export function ValuePropositionCanvas() {
   const { id } = useParams<{ id: string }>();
-  const { user, subscriptionTier } = useAuthWithSubscription();
   const [canvas, setCanvas] = useState<CanvasData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [project_name, setProject_name] = useState('');
@@ -131,13 +129,9 @@ export function ValuePropositionCanvas() {
     );
   }
 
-  const isActive = subscriptionTier === 'active';
-  console.log('Subscription status:', subscriptionTier);
-
   return (
     <CanvasWrapper 
       title={canvas.title} 
-      isActive={isActive}
       onExportPDF={handleExportPDF}
       onAIAssist={handleAIAssist}
       onSave={handleSave}
