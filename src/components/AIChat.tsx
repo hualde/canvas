@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { X, Sparkles } from 'lucide-react';
-import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
+import { X } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -14,26 +13,22 @@ interface AIChatProps {
 }
 
 export function AIChat({ canvasContent, isOpen, onClose }: AIChatProps) {
-  console.log('AIChat component rendered. isOpen:', isOpen);
-  const { subscriptionTier } = useAuthWithSubscription();
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
-    console.log('AIChat useEffect triggered. isOpen:', isOpen, 'subscriptionTier:', subscriptionTier);
-    if (isOpen && subscriptionTier === 'premium') {
+    if (isOpen) {
       const initialMessage: Message = {
         role: 'assistant',
         content: "Hello! I'm your AI assistant. I have information about your current canvas. How can I help you today?"
       };
       setMessages([initialMessage]);
     }
-  }, [isOpen, subscriptionTier]);
+  }, [isOpen]);
 
   const handleSendMessage = useCallback(async () => {
-    if (!inputMessage.trim() || subscriptionTier !== 'premium') return;
+    if (!inputMessage.trim()) return;
 
     const userMessage: Message = { role: 'user', content: inputMessage };
     setMessages(prev => [...prev, userMessage]);
@@ -65,15 +60,11 @@ export function AIChat({ canvasContent, isOpen, onClose }: AIChatProps) {
     } finally {
       setIsProcessing(false);
     }
-  }, [inputMessage, canvasContent, subscriptionTier]);
-
+  }, [inputMessage, canvasContent]);
 
   if (!isOpen) {
-    console.log('AIChat not rendering because isOpen is false');
     return null;
   }
-
-  console.log('AIChat rendering content');
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
