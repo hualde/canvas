@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { buffer } from 'micro';
+import { sql } from '@vercel/postgres';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2023-10-16',
@@ -40,7 +41,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         await handleCheckoutSession(session);
         break;
       }
-      // Add other event types as needed
+      case 'customer.subscription.created':
+      case 'customer.subscription.updated':
+      case 'customer.subscription.deleted': {
+        const subscription = event.data.object as Stripe.Subscription;
+        await handleSubscriptionChange(subscription);
+        break;
+      }
     }
 
     return res.json({ received: true });
@@ -54,6 +61,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 }
 
 async function handleCheckoutSession(session: Stripe.Checkout.Session) {
-  // TODO: Implement your subscription logic here
   console.log('Processing completed checkout session:', session.id);
+  if (session.customer && session.subscription) {
+    const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
+    await handleSubscriptionChange(subscription);
+  }
+}
+
+async function handleSubscriptionChange(subscription: Stripe.Subscription) {
+  const customerId = subscription.customer as string;
+  let status = 'free';
+
+  if (subscription.status === 'active') {
+    status = 'premium';
+  } else if (subscription.status === 'past_due') {
+    status = 'past_due';
+  }
+
+  try {
+    const { rows } = await sql`
+      SELECT user_id FROM user_subscriptions WHERE stripe_customer_id = ${customerId}
+    `;
+
+    if (rows.length > 0) {
+      const userId = rows[0].user_id;
+      await sql`
+        UPDATE user_subscriptions
+        SET subscription_status = ${status}
+        WHERE user_id = ${userId}
+      `;
+      console.log(`Updated subscription status for user ${userId} to ${status}`);
+    } else {
+      console.error('No user found for Stripe customer:', customerId);
+    }
+  } catch (error) {
+    console.error('Error updating subscription in database:', error);
+  }
 }
