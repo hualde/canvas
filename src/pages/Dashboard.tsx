@@ -167,13 +167,15 @@ export function Dashboard() {
         </div>
       )}
 
-      {/* Always show upgrade message for free users */}
-      {subscriptionStatus === SUBSCRIPTION_STATUS.FREE && (
+      {/* Show upgrade message for free users and users with cancelled subscriptions */}
+      {(subscriptionStatus === SUBSCRIPTION_STATUS.FREE || subscriptionStatus === SUBSCRIPTION_STATUS.CANCELLED) && (
         <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
           <div className="flex items-center">
             <AlertCircle className="h-5 w-5 mr-2" />
             <div>
-              <p className="font-bold">You're using the free tier</p>
+              <p className="font-bold">
+                {subscriptionStatus === SUBSCRIPTION_STATUS.FREE ? "You're using the free tier" : "Your subscription has been cancelled"}
+              </p>
               <p>
                 Upgrade to Premium for unlimited canvases, PDF export, AI assistant, and more features!
                 {' '}
