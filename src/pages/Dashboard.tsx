@@ -151,6 +151,8 @@ export function Dashboard() {
     );
   }
 
+  const showUpgradeBanner = subscriptionStatus !== SUBSCRIPTION_STATUS.ACTIVE;
+
   return (
     <div className="container mx-auto px-4 py-8">
       {showSuccessMessage && (
@@ -167,14 +169,17 @@ export function Dashboard() {
         </div>
       )}
 
-      {/* Show upgrade message for free users and users with cancelled subscriptions */}
-      {(subscriptionStatus === SUBSCRIPTION_STATUS.FREE || subscriptionStatus === SUBSCRIPTION_STATUS.CANCELLED) && (
+      {showUpgradeBanner && (
         <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
           <div className="flex items-center">
             <AlertCircle className="h-5 w-5 mr-2" />
             <div>
               <p className="font-bold">
-                {subscriptionStatus === SUBSCRIPTION_STATUS.FREE ? "You're using the free tier" : "Your subscription has been cancelled"}
+                {subscriptionStatus === SUBSCRIPTION_STATUS.FREE 
+                  ? "You're using the free tier" 
+                  : subscriptionStatus === SUBSCRIPTION_STATUS.CANCELLED
+                    ? "Your subscription has been cancelled"
+                    : "Your subscription is not active"}
               </p>
               <p>
                 Upgrade to Premium for unlimited canvases, PDF export, AI assistant, and more features!
