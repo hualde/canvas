@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Download, Sparkles, Save } from 'lucide-react';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
+import { SUBSCRIPTION_STATUS } from '../constants/subscriptionTiers';
 import { AIChat } from './AIChat';
 
 interface CanvasWrapperProps {
@@ -20,19 +21,45 @@ export function CanvasWrapper({
   canvasContent
 }: CanvasWrapperProps) {
   const navigate = useNavigate();
-  const { isAuthenticated, isLoading } = useAuthWithSubscription();
+  const { isAuthenticated, isLoading, subscriptionStatus } = useAuthWithSubscription();
   const [isAIChatOpen, setIsAIChatOpen] = useState(false);
 
+  const isActive = subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE;
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+    </div>;
   }
 
   if (!isAuthenticated) {
-    return <div>Please log in to access this page.</div>;
+    return <div className="flex justify-center items-center h-screen text-xl font-semibold text-gray-700">
+      Please log in to access this page.
+    </div>;
   }
 
   const handleAIAssistClick = () => {
-    setIsAIChatOpen(true);
+    if (isActive) {
+      setIsAIChatOpen(true);
+    } else {
+      alert("Please upgrade to a premium subscription to use the AI Assistant feature.");
+    }
+  };
+
+  const handleExportPDF = () => {
+    if (isActive) {
+      onExportPDF();
+    } else {
+      alert("Please upgrade to a premium subscription to use the Export PDF feature.");
+    }
+  };
+
+  const handleSave = () => {
+    if (isActive) {
+      onSave();
+    } else {
+      alert("Please upgrade to a premium subscription to use the Save feature.");
+    }
   };
 
   return (
@@ -47,25 +74,34 @@ export function CanvasWrapper({
         </button>
         <div className="flex items-center space-x-4">
           <button
-            onClick={onExportPDF}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            onClick={handleExportPDF}
+            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
+              isActive ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
+            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
             aria-label="Export PDF"
+            disabled={!isActive}
           >
             <Download className="h-4 w-4 mr-2" />
             Export PDF
           </button>
           <button
             onClick={handleAIAssistClick}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
+              isActive ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-400 cursor-not-allowed'
+            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500`}
             aria-label="AI Assistant"
+            disabled={!isActive}
           >
             <Sparkles className="h-4 w-4 mr-2" />
             AI Assistant
           </button>
           <button
-            onClick={onSave}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            onClick={handleSave}
+            className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
+              isActive ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-400 cursor-not-allowed'
+            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}
             aria-label="Save"
+            disabled={!isActive}
           >
             <Save className="h-4 w-4 mr-2" />
             Save
