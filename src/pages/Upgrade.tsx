@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
+import { useSubscriptionStatus } from '../hooks/useSubscriptionStatus';
 import stripePromise from '../lib/stripe';
 
 export default function Upgrade() {
   const navigate = useNavigate();
-  const { user, subscriptionTier } = useAuthWithSubscription();
+  const { user } = useAuthWithSubscription();
+  const { subscriptionStatus, forceCheckSubscriptionStatus } = useSubscriptionStatus();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isUpgradeComplete, setIsUpgradeComplete] = useState(false);
+
+  useEffect(() => {
+    if (isUpgradeComplete) {
+      const checkStatus = async () => {
+        await forceCheckSubscriptionStatus();
+        if (subscriptionStatus === 'active') {
+          navigate('/dashboard');
+        }
+      };
+      checkStatus();
+    }
+  }, [isUpgradeComplete, forceCheckSubscriptionStatus, subscriptionStatus, navigate]);
 
   const handleUpgrade = async (priceId: string) => {
     setIsLoading(true);
@@ -62,6 +77,8 @@ export default function Upgrade() {
       if (result.error) {
         throw new Error(result.error.message || 'Failed to redirect to checkout');
       }
+
+      setIsUpgradeComplete(true);
     } catch (error) {
       console.error('Error during checkout:', error);
       setError(error instanceof Error ? error.message : 'An unexpected error occurred');
@@ -81,6 +98,13 @@ export default function Upgrade() {
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
             <strong className="font-bold">Error!</strong>
             <span className="block sm:inline"> {error}</span>
+          </div>
+        )}
+
+        {isUpgradeComplete && (
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6" role="alert">
+            <strong className="font-bold">Success!</strong>
+            <span className="block sm:inline"> Your upgrade is being processed. You'll be redirected to the dashboard shortly.</span>
           </div>
         )}
 
@@ -125,7 +149,7 @@ export default function Upgrade() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button
                 onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_MONTHLY!)}
-                disabled={isLoading}
+                disabled={isLoading || isUpgradeComplete}
                 className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
                 aria-live="polite"
               >
@@ -133,7 +157,7 @@ export default function Upgrade() {
               </button>
               <button
                 onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_ANNUAL!)}
-                disabled={isLoading}
+                disabled={isLoading || isUpgradeComplete}
                 className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
                 aria-live="polite"
               >
