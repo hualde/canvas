@@ -1,6 +1,5 @@
 import jsPDF from 'jspdf';
 import { icons } from './icons';
-import { getUserSubscription } from '../lib/db';
 
 interface ValuePropositionCanvasData {
   id: string;
@@ -66,21 +65,13 @@ const drawGeneralInfoPage = (doc: jsPDF, canvas: ValuePropositionCanvasData) => 
   doc.text(splitComments, margin, startY + boxHeight * 2 + 45);
 };
 
-export async function exportToPDF(canvas: ValuePropositionCanvasData, userId: string) {
+export async function exportToPDF(canvas: ValuePropositionCanvasData) {
   if (!canvas) {
     console.error('No canvas data provided for PDF export');
     return;
   }
 
   try {
-    const subscriptionTier = await getUserSubscription(userId);
-    console.log('User subscription tier:', subscriptionTier);
-
-    if (subscriptionTier !== 'premium') {
-      console.error('PDF export is only available for premium users');
-      throw new Error('PDF export is only available for premium users');
-    }
-
     const doc = new jsPDF('l', 'mm', 'a4');
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
