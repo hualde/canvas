@@ -1,5 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { SUBSCRIPTION_STATUS } from '../constants/subscriptionTiers';
+import { getStripeSubscriptionStatus } from '../services/stripeService';
 
 console.log('Attempting to connect to the database...');
 sql`SELECT 1`.then(() => {
@@ -235,23 +236,35 @@ export async function getUserSubscription(userId: string): Promise<string> {
   try {
     console.log('Fetching subscription for user:', userId);
     const { rows } = await sql`
-      SELECT stripe_customer_id
+      SELECT stripe_customer_id, subscription_status
       FROM user_subscriptions
       WHERE user_id = ${userId}
     `;
     console.log('DBStripe Fetch result:', rows);
-    if (rows.length > 0 && rows[0].stripe_customer_id) {
-      const customerId = rows[0].stripe_customer_id;
-      //console.log('Retrieved Stripe customer ID:', customerId);
-      // Here we're assuming that the presence of a Stripe customer ID means the user has an active subscription
-      // You might want to add additional checks with the Stripe API if needed
-      return customerId ? SUBSCRIPTION_STATUS.ACTIVE : SUBSCRIPTION_STATUS.FREE;
-    } else {
-      //console.warn('No Stripe customer ID found for user:', userId);
-      return SUBSCRIPTION_STATUS.FREE;
+
+    if (rows.length > 0) {
+      const { stripe_customer_id, subscription_status } = rows[0];
+
+      if (stripe_customer_id) {
+        // If there's a Stripe customer ID, check the actual status in Stripe
+        const stripeStatus = await getStripeSubscriptionStatus(stripe_customer_id);
+        
+        // Update the database if the status has changed
+        if (stripeStatus !== subscription_status) {
+          await setUserSubscription(userId, stripeStatus);
+        }
+
+        return stripeStatus;
+      } else if (subscription_status) {
+        // If there's no Stripe customer ID but we have a status, return it
+        return subscription_status;
+      }
     }
+
+    // If no row found or no status, return FREE
+    return SUBSCRIPTION_STATUS.FREE;
   } catch (error) {
-    //console.error('Error fetching user subscription:', error);
+    console.error('Error fetching user subscription:', error);
     return SUBSCRIPTION_STATUS.FREE;
   }
 }
