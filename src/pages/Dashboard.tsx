@@ -167,6 +167,23 @@ export function Dashboard() {
         </div>
       )}
 
+      {/* Always show upgrade message for free users */}
+      {subscriptionStatus === SUBSCRIPTION_STATUS.FREE && (
+        <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
+          <div className="flex items-center">
+            <AlertCircle className="h-5 w-5 mr-2" />
+            <div>
+              <p className="font-bold">You're using the free tier</p>
+              <p>
+                Upgrade to Premium for unlimited canvases, PDF export, AI assistant, and more features!
+                {' '}
+                <Link to="/upgrade" className="font-bold underline">Upgrade now</Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex justify-between items-start mb-8 flex-col sm:flex-row gap-4">
         <h1 className="text-3xl font-bold text-gray-900">My Canvases</h1>
         <div className="relative">
@@ -196,19 +213,6 @@ export function Dashboard() {
           )}
         </div>
       </div>
-
-      {subscriptionStatus === SUBSCRIPTION_STATUS.FREE && (
-        <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
-          <div className="flex items-center">
-            <AlertCircle className="h-5 w-5 mr-2" />
-            <p>
-              You are using the free tier. You can create up to {TIER_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases} canvases.
-              {' '}
-              <Link to="/upgrade" className="font-bold underline">Upgrade to Premium</Link> for unlimited canvases and more features!
-            </p>
-          </div>
-        </div>
-      )}
 
       <div className="mb-6">
         <p className="text-gray-600">
