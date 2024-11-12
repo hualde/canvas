@@ -242,16 +242,16 @@ export async function getUserSubscription(userId: string): Promise<string> {
     console.log('DBStripe Fetch result:', rows);
     if (rows.length > 0 && rows[0].stripe_customer_id) {
       const customerId = rows[0].stripe_customer_id;
-      console.log('Retrieved Stripe customer ID:', customerId);
+      //console.log('Retrieved Stripe customer ID:', customerId);
       // Here we're assuming that the presence of a Stripe customer ID means the user has an active subscription
       // You might want to add additional checks with the Stripe API if needed
       return customerId ? SUBSCRIPTION_STATUS.ACTIVE : SUBSCRIPTION_STATUS.FREE;
     } else {
-      console.warn('No Stripe customer ID found for user:', userId);
+      //console.warn('No Stripe customer ID found for user:', userId);
       return SUBSCRIPTION_STATUS.FREE;
     }
   } catch (error) {
-    console.error('Error fetching user subscription:', error);
+    //console.error('Error fetching user subscription:', error);
     return SUBSCRIPTION_STATUS.FREE;
   }
 }
@@ -284,7 +284,7 @@ export async function getCanvasCount(userId: string): Promise<number> {
     `;
     return parseInt(rows[0].count, 10);
   } catch (error) {
-    console.error('Error counting canvases:', error);
+    //console.error('Error counting canvases:', error);
     throw error;
   }
 }
@@ -304,21 +304,21 @@ export async function canUserCreateCanvas(userId: string): Promise<boolean> {
 // Initialize or get user subscription
 export async function initializeUserSubscription(userId: string): Promise<string> {
   try {
-    console.log('Initializing subscription for user:', userId);
+    //console.log('Initializing subscription for user:', userId);
     let subscription = await getUserSubscription(userId);
-    console.log('Existing subscription:', subscription);
+    //console.log('Existing subscription:', subscription);
     
     if (!subscription) {
-      console.log('No existing subscription found, creating new free subscription');
+      //console.log('No existing subscription found, creating new free subscription');
       await setUserSubscription(userId, 'free');
       subscription = 'free';
     }
     
-    console.log('Final user subscription:', subscription);
+    //console.log('Final user subscription:', subscription);
     return subscription;
   } catch (error) {
-    console.error('Error initializing user subscription:', error);
-    console.error('Error details:', JSON.stringify(error, null, 2));
+    //console.error('Error initializing user subscription:', error);
+    //console.error('Error details:', JSON.stringify(error, null, 2));
     throw error;
   }
 }

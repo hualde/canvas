@@ -21,6 +21,8 @@ export function CanvasWrapper({
 }: CanvasWrapperProps) {
   const navigate = useNavigate();
 
+  console.log('Subscription status in CanvasWrapper:', isActive ? 'active' : 'inactive');
+
   return (
     <div className="max-w-[1600px] mx-auto p-6 relative">
       <div className="mb-6 flex justify-between items-center">
