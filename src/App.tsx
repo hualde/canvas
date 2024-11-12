@@ -13,6 +13,38 @@ import { Tutorial } from './components/Tutorial';
 import Upgrade from './pages/Upgrade';
 import { Auth0ProviderWithNavigate } from './auth/auth0-provider';
 import { useInitializeUserSubscription } from './hooks/useInitializeUserSubscription';
+import { Examples } from './pages/Examples';
+
+// Import example canvas components
+import GoogleBusinessModelCanvas from './pages/examples/google/business-model-canvas';
+import GoogleValuePropositionCanvas from './pages/examples/google/value-proposition-canvas';
+import GoogleSWOTCanvas from './pages/examples/google/swot-canvas';
+import GoogleEmpathyMapCanvas from './pages/examples/google/empathy-map-canvas';
+import GooglePESTELCanvas from './pages/examples/google/pestel-canvas';
+
+import MicrosoftBusinessModelCanvas from './pages/examples/microsoft/business-model-canvas';
+import MicrosoftValuePropositionCanvas from './pages/examples/microsoft/value-proposition-canvas';
+import MicrosoftSWOTCanvas from './pages/examples/microsoft/swot-canvas';
+import MicrosoftEmpathyMapCanvas from './pages/examples/microsoft/empathy-map-canvas';
+import MicrosoftPESTELCanvas from './pages/examples/microsoft/pestel-canvas';
+
+import AppleBusinessModelCanvas from './pages/examples/apple/business-model-canvas';
+import AppleValuePropositionCanvas from './pages/examples/apple/value-proposition-canvas';
+import AppleSWOTCanvas from './pages/examples/apple/swot-canvas';
+import AppleEmpathyMapCanvas from './pages/examples/apple/empathy-map-canvas';
+import ApplePESTELCanvas from './pages/examples/apple/pestel-canvas';
+
+import AmazonBusinessModelCanvas from './pages/examples/amazon/business-model-canvas';
+import AmazonValuePropositionCanvas from './pages/examples/amazon/value-proposition-canvas';
+import AmazonSWOTCanvas from './pages/examples/amazon/swot-canvas';
+import AmazonEmpathyMapCanvas from './pages/examples/amazon/empathy-map-canvas';
+import AmazonPESTELCanvas from './pages/examples/amazon/pestel-canvas';
+
+import TeslaBusinessModelCanvas from './pages/examples/tesla/business-model-canvas';
+import TeslaValuePropositionCanvas from './pages/examples/tesla/value-proposition-canvas';
+import TeslaSWOTCanvas from './pages/examples/tesla/swot-canvas';
+import TeslaEmpathyMapCanvas from './pages/examples/tesla/empathy-map-canvas';
+import TeslaPESTELCanvas from './pages/examples/tesla/pestel-canvas';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -42,10 +74,7 @@ function HandleRedirect() {
       const searchParams = new URLSearchParams(location.search);
       const sessionId = searchParams.get('session_id');
       if (sessionId) {
-        // Handle successful checkout
         console.log('Successful checkout. Session ID:', sessionId);
-        // You can add more logic here, like updating the user's subscription status
-        // Then navigate to the dashboard without the session_id in the URL
         navigate('/', { replace: true });
       }
     }
@@ -87,6 +116,38 @@ function AppContent() {
         <Route path="pestel/:id" element={<PESTELCanvas />} />
         <Route path="tutorial" element={<Tutorial />} />
         <Route path="upgrade" element={<Upgrade />} />
+        <Route path="examples" element={<Examples />} />
+        
+        {/* Example canvas routes */}
+        <Route path="examples/google/business-model-canvas" element={<GoogleBusinessModelCanvas />} />
+        <Route path="examples/google/value-proposition-canvas" element={<GoogleValuePropositionCanvas />} />
+        <Route path="examples/google/swot-canvas" element={<GoogleSWOTCanvas />} />
+        <Route path="examples/google/empathy-map-canvas" element={<GoogleEmpathyMapCanvas />} />
+        <Route path="examples/google/pestel-canvas" element={<GooglePESTELCanvas />} />
+
+        <Route path="examples/microsoft/business-model-canvas" element={<MicrosoftBusinessModelCanvas />} />
+        <Route path="examples/microsoft/value-proposition-canvas" element={<MicrosoftValuePropositionCanvas />} />
+        <Route path="examples/microsoft/swot-canvas" element={<MicrosoftSWOTCanvas />} />
+        <Route path="examples/microsoft/empathy-map-canvas" element={<MicrosoftEmpathyMapCanvas />} />
+        <Route path="examples/microsoft/pestel-canvas" element={<MicrosoftPESTELCanvas />} />
+
+        <Route path="examples/apple/business-model-canvas" element={<AppleBusinessModelCanvas />} />
+        <Route path="examples/apple/value-proposition-canvas" element={<AppleValuePropositionCanvas />} />
+        <Route path="examples/apple/swot-canvas" element={<AppleSWOTCanvas />} />
+        <Route path="examples/apple/empathy-map-canvas" element={<AppleEmpathyMapCanvas />} />
+        <Route path="examples/apple/pestel-canvas" element={<ApplePESTELCanvas />} />
+
+        <Route path="examples/amazon/business-model-canvas" element={<AmazonBusinessModelCanvas />} />
+        <Route path="examples/amazon/value-proposition-canvas" element={<AmazonValuePropositionCanvas />} />
+        <Route path="examples/amazon/swot-canvas" element={<AmazonSWOTCanvas />} />
+        <Route path="examples/amazon/empathy-map-canvas" element={<AmazonEmpathyMapCanvas />} />
+        <Route path="examples/amazon/pestel-canvas" element={<AmazonPESTELCanvas />} />
+
+        <Route path="examples/tesla/business-model-canvas" element={<TeslaBusinessModelCanvas />} />
+        <Route path="examples/tesla/value-proposition-canvas" element={<TeslaValuePropositionCanvas />} />
+        <Route path="examples/tesla/swot-canvas" element={<TeslaSWOTCanvas />} />
+        <Route path="examples/tesla/empathy-map-canvas" element={<TeslaEmpathyMapCanvas />} />
+        <Route path="examples/tesla/pestel-canvas" element={<TeslaPESTELCanvas />} />
       </Route>
     </Routes>
   );

@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Download, Sparkles, Save } from 'lucide-react';
+import { ArrowLeft, Download, Sparkles, BookOpen } from 'lucide-react';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import { SUBSCRIPTION_STATUS } from '../constants/subscriptionTiers';
 import { AIChat } from './AIChat';
@@ -9,15 +9,13 @@ interface CanvasWrapperProps {
   children: ReactNode;
   title: string;
   onExportPDF: () => void;
-  onSave: () => void;
   canvasContent: Record<string, string[]>;
 }
 
 export function CanvasWrapper({ 
   children, 
   title, 
-  onExportPDF, 
-  onSave,
+  onExportPDF,
   canvasContent
 }: CanvasWrapperProps) {
   const navigate = useNavigate();
@@ -54,11 +52,11 @@ export function CanvasWrapper({
     }
   };
 
-  const handleSave = () => {
+  const handleShowExamples = () => {
     if (isActive) {
-      onSave();
+      navigate('/examples');
     } else {
-      alert("Please upgrade to a premium subscription to use the Save feature.");
+      alert("Please upgrade to a premium subscription to view example canvases.");
     }
   };
 
@@ -96,15 +94,15 @@ export function CanvasWrapper({
             AI Assistant
           </button>
           <button
-            onClick={handleSave}
+            onClick={handleShowExamples}
             className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
-              isActive ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-400 cursor-not-allowed'
-            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}
-            aria-label="Save"
+              isActive ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-gray-400 cursor-not-allowed'
+            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500`}
+            aria-label="Show Examples"
             disabled={!isActive}
           >
-            <Save className="h-4 w-4 mr-2" />
-            Save
+            <BookOpen className="h-4 w-4 mr-2" />
+            Show Examples
           </button>
         </div>
       </div>
