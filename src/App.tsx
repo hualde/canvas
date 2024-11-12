@@ -16,35 +16,31 @@ import { useInitializeUserSubscription } from './hooks/useInitializeUserSubscrip
 import { Examples } from './pages/Examples';
 
 // Import example canvas components
-import GoogleBusinessModelCanvas from './pages/examples/google/business-model-canvas';
-import GoogleValuePropositionCanvas from './pages/examples/google/value-proposition-canvas';
-import GoogleSWOTCanvas from './pages/examples/google/swot-canvas';
-import GoogleEmpathyMapCanvas from './pages/examples/google/empathy-map-canvas';
-import GooglePESTELCanvas from './pages/examples/google/pestel-canvas';
-
-import MicrosoftBusinessModelCanvas from './pages/examples/microsoft/business-model-canvas';
-import MicrosoftValuePropositionCanvas from './pages/examples/microsoft/value-proposition-canvas';
-import MicrosoftSWOTCanvas from './pages/examples/microsoft/swot-canvas';
-import MicrosoftEmpathyMapCanvas from './pages/examples/microsoft/empathy-map-canvas';
-import MicrosoftPESTELCanvas from './pages/examples/microsoft/pestel-canvas';
-
 import AppleBusinessModelCanvas from './pages/examples/apple/business-model-canvas';
 import AppleValuePropositionCanvas from './pages/examples/apple/value-proposition-canvas';
-import AppleSWOTCanvas from './pages/examples/apple/swot-canvas';
 import AppleEmpathyMapCanvas from './pages/examples/apple/empathy-map-canvas';
 import ApplePESTELCanvas from './pages/examples/apple/pestel-canvas';
-
+import AppleSWOTCanvas from './pages/examples/apple/swot-canvas';
+import GoogleBusinessModelCanvas from './pages/examples/google/business-model-canvas';
+import GoogleEmpathyMapCanvas from './pages/examples/google/empathy-map-canvas';
+import GooglePESTELCanvas from './pages/examples/google/pestel-canvas';
+import GoogleSWOTCanvas from './pages/examples/google/swot-canvas';
+import GoogleValuePropositionCanvas from './pages/examples/google/value-proposition-canvas';
 import AmazonBusinessModelCanvas from './pages/examples/amazon/business-model-canvas';
-import AmazonValuePropositionCanvas from './pages/examples/amazon/value-proposition-canvas';
-import AmazonSWOTCanvas from './pages/examples/amazon/swot-canvas';
 import AmazonEmpathyMapCanvas from './pages/examples/amazon/empathy-map-canvas';
 import AmazonPESTELCanvas from './pages/examples/amazon/pestel-canvas';
-
+import AmazonSWOTCanvas from './pages/examples/amazon/swot-canvas';
+import AmazonValuePropositionCanvas from './pages/examples/amazon/value-proposition-canvas';
+import MicrosoftBusinessModelCanvas from './pages/examples/microsoft/business-model-canvas';
+import MicrosoftEmpathyMapCanvas from './pages/examples/microsoft/empathy-map-canvas';
+import MicrosoftPESTELCanvas from './pages/examples/microsoft/pestel-canvas';
+import MicrosoftSWOTCanvas from './pages/examples/microsoft/swot-canvas';
+import MicrosoftValuePropositionCanvas from './pages/examples/microsoft/value-proposition-canvas';
 import TeslaBusinessModelCanvas from './pages/examples/tesla/business-model-canvas';
-import TeslaValuePropositionCanvas from './pages/examples/tesla/value-proposition-canvas';
-import TeslaSWOTCanvas from './pages/examples/tesla/swot-canvas';
 import TeslaEmpathyMapCanvas from './pages/examples/tesla/empathy-map-canvas';
 import TeslaPESTELCanvas from './pages/examples/tesla/pestel-canvas';
+import TeslaSWOTCanvas from './pages/examples/tesla/swot-canvas';
+import TeslaValuePropositionCanvas from './pages/examples/tesla/value-proposition-canvas';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth0();
