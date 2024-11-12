@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { icons } from '../utils/icons';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
+import { CanvasWrapper } from '../components/CanvasWrapper';
+import { exportPESTELToPDF } from '../utils/pestelPdfExport';
 
 interface PESTELCanvasData {
   id: string;
@@ -71,14 +72,13 @@ const sections = [
 export function PESTELCanvas() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { user, subscriptionTier } = useAuthWithSubscription();
+  const { user } = useAuthWithSubscription();
   const [canvas, setCanvas] = useState<PESTELCanvasData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [project_name, setProject_name] = useState('');
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
-  const titleInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -111,12 +111,6 @@ export function PESTELCanvas() {
     }
   };
 
-  useEffect(() => {
-    if (titleInputRef.current) {
-      titleInputRef.current.focus();
-    }
-  }, [canvas?.title]);
-
   const handleSectionUpdate = async (section: keyof PESTELCanvasData['content'], items: string[]) => {
     if (!canvas) return;
     const updatedContent = { ...canvas.content, [section]: items };
@@ -141,6 +135,34 @@ export function PESTELCanvas() {
       setCanvas(updatedCanvas);
     } catch (error) {
       console.error('Error updating canvas info:', error);
+    }
+  };
+
+  const handleExportPDF = async () => {
+    if (canvas) {
+      try {
+        await exportPESTELToPDF(canvas);
+        console.log('PDF exported successfully');
+      } catch (error) {
+        console.error('Error exporting PDF:', error);
+        alert('Failed to export PDF. Please try again.');
+      }
+    }
+  };
+
+  const handleAIAssist = () => {
+    console.log('AI Assist functionality not implemented yet');
+  };
+
+  const handleSave = async () => {
+    if (canvas) {
+      try {
+        await updateCanvas(canvas.id, canvas);
+        console.log('Canvas saved successfully');
+      } catch (error) {
+        console.error('Error saving canvas:', error);
+        alert('Failed to save canvas. Please try again.');
+      }
     }
   };
 
@@ -169,29 +191,12 @@ export function PESTELCanvas() {
   }
 
   return (
-    <div className="max-w-[1600px] mx-auto p-6 relative">
-      <div className="mb-6 flex justify-between items-center">
-        <button
-          onClick={() => navigate('/')}
-          className="inline-flex items-center text-gray-600 hover:text-gray-900"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Dashboard
-        </button>
-      </div>
-
-      <input
-        ref={titleInputRef}
-        type="text"
-        value={canvas.title}
-        onChange={(e) => {
-          setCanvas({ ...canvas, title: e.target.value });
-        }}
-        onBlur={(e) => handleUpdateTitle(e.target.value)}
-        className="text-3xl font-bold text-gray-900 mb-4 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
-        placeholder="Untitled PESTEL Analysis"
-      />
-
+    <CanvasWrapper
+      title={canvas.title}
+      onExportPDF={handleExportPDF}
+      onAIAssist={handleAIAssist}
+      onSave={handleSave}
+    >
       <div className="mb-4 grid grid-cols-3 gap-4">
         <input
           type="text"
@@ -264,6 +269,6 @@ export function PESTELCanvas() {
           </div>
         ))}
       </div>
-    </div>
+    </CanvasWrapper>
   );
 }
