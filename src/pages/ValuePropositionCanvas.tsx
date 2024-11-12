@@ -4,6 +4,8 @@ import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { icons } from '../utils/icons';
 import { CanvasWrapper } from '../components/CanvasWrapper';
+import { exportToPDF } from '../utils/valuePropositionPdfExport';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface CanvasData {
   id: string;
@@ -93,7 +95,17 @@ export function ValuePropositionCanvas() {
   const handleExportPDF = () => {
     console.log('Exporting PDF...');
     // Implementar la lógica de exportación a PDF aquí
+    if (canvas && user) {
+      try {
+        await exportToPDF(canvas, user.sub);
+        console.log('PDF exported successfully');
+      } catch (error) {
+        console.error('Error exporting PDF:', error);
+        // You might want to show an error message to the user here
+      }
+    }
   };
+  
 
   const handleAIAssist = () => {
     console.log('Opening AI Assistant...');
