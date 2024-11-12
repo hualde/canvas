@@ -164,18 +164,6 @@ export default function Canvas() {
       onAIAssist={handleAIAssist}
       onSave={handleSave}
     >
-      <input
-        ref={titleInputRef}
-        type="text"
-        value={canvas?.title || ''}
-        onChange={(e) => {
-          setCanvas({ ...canvas, title: e.target.value });
-        }}
-        onBlur={(e) => handleUpdateTitle(e.target.value)}
-        className="text-3xl font-bold text-gray-900 mb-4 px-2 py-1 border-2 border-transparent rounded focus:border-blue-500 focus:outline-none w-full"
-        placeholder={`Untitled ${canvas?.type || ''} Canvas`}
-      />
-
       <div className="mb-4 grid grid-cols-3 gap-4">
         <input
           type="text"
