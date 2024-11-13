@@ -1,20 +1,4 @@
 import React, { useState } from 'react'
-import { Menu, X, ChevronDown, Globe, Download, Check, ArrowRight } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 
 const languages = [
   { code: 'en', name: 'English' },
@@ -102,237 +86,139 @@ export default function LandingPage() {
   const [currentLanguage, setCurrentLanguage] = useState(languages[0])
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans">
+    <div style={{ minHeight: '100vh', backgroundColor: 'white', color: '#1a202c', fontFamily: 'sans-serif' }}>
       {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
-            <div className="flex justify-start lg:w-0 lg:flex-1">
-              <a href="#" className="flex items-center">
-                <img className="h-8 w-auto sm:h-10" src="/placeholder.svg?height=40&width=40" alt="Logo" />
-                <span className="ml-2 text-xl font-bold text-blue-600">ValueProp</span>
-              </a>
-            </div>
-            <div className="-mr-2 -my-2 md:hidden">
-              <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(true)}>
-                <span className="sr-only">Open menu</span>
-                <Menu className="h-6 w-6" aria-hidden="true" />
-              </Button>
-            </div>
-            <nav className="hidden md:flex space-x-10">
-              <a href="#features" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                Features
-              </a>
-              <a href="#demo" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                Demo
-              </a>
-              <a href="#pricing" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                Pricing
-              </a>
-              <a href="#faq" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                FAQ
-              </a>
-            </nav>
-            <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="ml-8">
-                    <Globe className="mr-2 h-4 w-4" />
-                    {currentLanguage.name}
-                    <ChevronDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  {languages.map((lang) => (
-                    <DropdownMenuItem key={lang.code} onSelect={() => setCurrentLanguage(lang)}>
-                      {lang.name}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <Button className="ml-8">
-                Get Started
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -100 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -100 }}
-              className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+      <header style={{ backgroundColor: 'white', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <a href="#" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <img src="/placeholder.svg?height=40&width=40" alt="Logo" style={{ height: '40px', width: 'auto' }} />
+            <span style={{ marginLeft: '0.5rem', fontSize: '1.25rem', fontWeight: 'bold', color: '#3182ce' }}>ValueProp</span>
+          </a>
+          <nav style={{ display: 'none', '@media (min-width: 768px)': { display: 'flex' } }}>
+            <a href="#features" style={{ marginLeft: '1.5rem', color: '#4a5568', textDecoration: 'none' }}>Features</a>
+            <a href="#demo" style={{ marginLeft: '1.5rem', color: '#4a5568', textDecoration: 'none' }}>Demo</a>
+            <a href="#pricing" style={{ marginLeft: '1.5rem', color: '#4a5568', textDecoration: 'none' }}>Pricing</a>
+            <a href="#faq" style={{ marginLeft: '1.5rem', color: '#4a5568', textDecoration: 'none' }}>FAQ</a>
+          </nav>
+          <div style={{ display: 'none', '@media (min-width: 768px)': { display: 'flex', alignItems: 'center' } }}>
+            <select 
+              value={currentLanguage.code}
+              onChange={(e) => setCurrentLanguage(languages.find(lang => lang.code === e.target.value) || languages[0])}
+              style={{ marginLeft: '1rem', padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '0.25rem' }}
             >
-              <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
-                <div className="pt-5 pb-6 px-5">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <img className="h-8 w-auto" src="/placeholder.svg?height=32&width=32" alt="Logo" />
-                    </div>
-                    <div className="-mr-2">
-                      <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(false)}>
-                        <span className="sr-only">Close menu</span>
-                        <X className="h-6 w-6" aria-hidden="true" />
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="mt-6">
-                    <nav className="grid gap-y-8">
-                      <a href="#features" className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                        <span className="ml-3 text-base font-medium text-gray-900">
-                          Features
-                        </span>
-                      </a>
-                      <a href="#demo" className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                        <span className="ml-3 text-base font-medium text-gray-900">
-                          Demo
-                        </span>
-                      </a>
-                      <a href="#pricing" className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                        <span className="ml-3 text-base font-medium text-gray-900">
-                          Pricing
-                        </span>
-                      </a>
-                      <a href="#faq" className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                        <span className="ml-3 text-base font-medium text-gray-900">
-                          FAQ
-                        </span>
-                      </a>
-                    </nav>
-                  </div>
-                </div>
-                <div className="py-6 px-5 space-y-6">
-                  <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="w-full">
-                          <Globe className="mr-2 h-4 w-4" />
-                          {currentLanguage.name}
-                          <ChevronDown className="ml-2 h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        {languages.map((lang) => (
-                          <DropdownMenuItem key={lang.code} onSelect={() => setCurrentLanguage(lang)}>
-                            {lang.name}
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                    <Button className="w-full">
-                      Get Started
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              {languages.map((lang) => (
+                <option key={lang.code} value={lang.code}>{lang.name}</option>
+              ))}
+            </select>
+            <button style={{ marginLeft: '1rem', padding: '0.5rem 1rem', backgroundColor: '#3182ce', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>
+              Get Started
+            </button>
+          </div>
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            style={{ '@media (min-width: 768px)': { display: 'none' }, background: 'none', border: 'none', cursor: 'pointer' }}
+          >
+            <span style={{ fontSize: '1.5rem' }}>☰</span>
+          </button>
+        </div>
+        {isMenuOpen && (
+          <div style={{ padding: '1rem', backgroundColor: 'white', '@media (min-width: 768px)': { display: 'none' } }}>
+            <a href="#features" style={{ display: 'block', marginBottom: '0.5rem', color: '#4a5568', textDecoration: 'none' }}>Features</a>
+            <a href="#demo" style={{ display: 'block', marginBottom: '0.5rem', color: '#4a5568', textDecoration: 'none' }}>Demo</a>
+            <a href="#pricing" style={{ display: 'block', marginBottom: '0.5rem', color: '#4a5568', textDecoration: 'none' }}>Pricing</a>
+            <a href="#faq" style={{ display: 'block', marginBottom: '0.5rem', color: '#4a5568', textDecoration: 'none' }}>FAQ</a>
+            <select 
+              value={currentLanguage.code}
+              onChange={(e) => setCurrentLanguage(languages.find(lang => lang.code === e.target.value) || languages[0])}
+              style={{ display: 'block', width: '100%', marginBottom: '0.5rem', padding: '0.5rem', border: '1px solid #e2e8f0', borderRadius: '0.25rem' }}
+            >
+              {languages.map((lang) => (
+                <option key={lang.code} value={lang.code}>{lang.name}</option>
+              ))}
+            </select>
+            <button style={{ display: 'block', width: '100%', padding: '0.5rem 1rem', backgroundColor: '#3182ce', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>
+              Get Started
+            </button>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
-      <section className="bg-blue-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-            <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block xl:inline">Design Your</span>{' '}
-                <span className="block text-blue-600 xl:inline">Value Proposition</span>
+      <section style={{ backgroundColor: '#ebf8ff', padding: '4rem 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', '@media (min-width: 1024px)': { flexDirection: 'row', alignItems: 'center' } }}>
+            <div style={{ flex: 1, marginBottom: '2rem', '@media (min-width: 1024px)': { marginBottom: 0, marginRight: '2rem' } }}>
+              <h1 style={{ fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem' }}>
+                Design Your <span style={{ color: '#3182ce' }}>Value Proposition</span>
               </h1>
-              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+              <p style={{ fontSize: '1.25rem', color: '#4a5568', marginBottom: '2rem' }}>
                 Create, test, and refine your value proposition with our intuitive canvas tool. Inspired by Alexander Osterwalder's methodology.
               </p>
-              <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
-                <Button size="lg" className="w-full sm:w-auto">
-                  <Download className="mr-2 h-5 w-5" /> Download App
-                </Button>
-              </div>
+              <button style={{ padding: '0.75rem 1.5rem', backgroundColor: '#3182ce', color: 'white', border: 'none', borderRadius: '0.25rem', fontSize: '1.125rem', cursor: 'pointer' }}>
+                Download App
+              </button>
             </div>
-            <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
-              <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
-                <img
-                  className="w-full"
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="App screenshot"
-                />
-              </div>
+            <div style={{ flex: 1 }}>
+              <img src="/placeholder.svg?height=400&width=600" alt="App screenshot" style={{ width: '100%', borderRadius: '0.5rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)' }} />
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:text-center">
-            <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Features</h2>
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              Everything you need to design your value proposition
-            </p>
-            <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-              Our app provides all the tools you need to create, test, and refine your value proposition.
-            </p>
-          </div>
-
-          <div className="mt-10">
-            <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
-              {features.map((feature) => (
-                <div key={feature.title} className="relative">
-                  <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
-                      <span className="text-2xl">{feature.icon}</span>
-                    </div>
-                    <p className="ml-16 text-lg leading-6 font-medium text-gray-900">{feature.title}</p>
-                  </dt>
-                  <dd className="mt-2 ml-16 text-base text-gray-500">{feature.description}</dd>
+      <section id="features" style={{ padding: '4rem 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '2rem' }}>
+            Everything you need to design your value proposition
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', '@media (min-width: 768px)': { gridTemplateColumns: '1fr 1fr' } }}>
+            {features.map((feature, index) => (
+              <div key={index} style={{ display: 'flex' }}>
+                <div style={{ fontSize: '2rem', marginRight: '1rem' }}>{feature.icon}</div>
+                <div>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{feature.title}</h3>
+                  <p style={{ color: '#4a5568' }}>{feature.description}</p>
                 </div>
-              ))}
-            </dl>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Visual Demo Section */}
-      <section id="demo" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+      <section id="demo" style={{ backgroundColor: '#f7fafc', padding: '4rem 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '1rem' }}>
             See ValueProp in Action
           </h2>
-          <p className="mt-4 text-lg text-gray-500">
+          <p style={{ fontSize: '1.125rem', color: '#4a5568', marginBottom: '2rem' }}>
             Watch how easy it is to create and refine your value proposition using our intuitive interface.
           </p>
-          <div className="mt-8 aspect-w-16 aspect-h-9">
+          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
             <img
               src="/placeholder.svg?height=720&width=1280"
               alt="App demo"
-              className="rounded-lg shadow-lg"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: '0.5rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)' }}
             />
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+      <section style={{ padding: '4rem 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '2rem' }}>
             What our users are saying
           </h2>
-          <div className="mt-10 space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', '@media (min-width: 768px)': { gridTemplateColumns: '1fr 1fr' } }}>
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-white shadow overflow-hidden sm:rounded-lg">
-                <div className="px-4 py-5 sm:p-6">
-                  <p className="text-lg text-gray-500 italic">"{testimonial.quote}"</p>
-                  <div className="mt-4 flex items-center">
-                    <div className="flex-shrink-0">
-                      <img className="h-10 w-10 rounded-full" src={testimonial.image} alt="" />
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-sm font-medium text-gray-900">{testimonial.name}</p>
-                      <p className="text-sm text-gray-500">{testimonial.role}</p>
-                    </div>
+              <div key={index} style={{ backgroundColor: 'white', borderRadius: '0.5rem', padding: '1.5rem', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
+                <p style={{ fontSize: '1.125rem', color: '#4a5568', fontStyle: 'italic', marginBottom: '1rem' }}>"{testimonial.quote}"</p>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img src={testimonial.image} alt={testimonial.name} style={{ width: '3rem', height: '3rem', borderRadius: '9999px', marginRight: '1rem' }} />
+                  <div>
+                    <p style={{ fontWeight: 'bold' }}>{testimonial.name}</p>
+                    <p style={{ color: '#718096' }}>{testimonial.role}</p>
                   </div>
                 </div>
               </div>
@@ -342,36 +228,29 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+      <section id="pricing" style={{ backgroundColor: '#f7fafc', padding: '4rem 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '1rem' }}>
             Pricing Plans
           </h2>
-          <p className="mt-4 text-lg text-gray-500">
+          <p style={{ fontSize: '1.125rem', color: '#4a5568', marginBottom: '2rem' }}>
             Choose the plan that's right for you and start designing your value proposition today.
           </p>
-          <div className="mt-10 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
-            {pricingPlans.map((plan) => (
-              <div key={plan.name} className="bg-white shadow rounded-lg divide-y divide-gray-200">
-                <div className="p-6">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">{plan.name}</h3>
-                  <p className="mt-4 text-3xl font-extrabold text-gray-900">{plan.price}</p>
-                  <ul className="mt-6 space-y-4">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <div className="flex-shrink-0">
-                          <Check className="h-6 w-6 text-green-500" aria-hidden="true" />
-                        </div>
-                        <p className="ml-3 text-base text-gray-500">{feature}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="px-6 pt-6 pb-8">
-                  <Button className="w-full">
-                    Get started
-                  </Button>
-                </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', '@media (min-width: 768px)': { gridTemplateColumns: '1fr 1fr 1fr' } }}>
+            {pricingPlans.map((plan, index) => (
+              <div key={index} style={{ backgroundColor: 'white', borderRadius: '0.5rem', padding: '1.5rem', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{plan.name}</h3>
+                <p style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem' }}>{plan.price}</p>
+                <ul style={{ marginBottom: '1.5rem' }}>
+                  {plan.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center' }}>
+                      <span style={{ color: '#48bb78', marginRight: '0.5rem' }}>✓</span> {feature}
+                    </li>
+                  ))}
+                </ul>
+                <button style={{ width: '100%', padding: '0.75rem', backgroundColor: '#3182ce', color: 'white', border: 'none', borderRadius: '0.25rem', fontSize: '1rem', cursor: 'pointer' }}>
+                  Get started
+                </button>
               </div>
             ))}
           </div>
@@ -379,180 +258,82 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+      <section id="faq" style={{ padding: '4rem 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '2rem' }}>
             Frequently Asked Questions
           </h2>
-          <div className="mt-8">
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger>{faq.question}</AccordionTrigger>
-                  <AccordionContent>{faq.answer}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+          <div>
+            {faqs.map((faq, index) => (
+              <div key={index} style={{ marginBottom: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>{faq.question}</h3>
+                <p style={{ color: '#4a5568' }}>{faq.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Final CTA Section */}
-      <section className="bg-blue-600">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
-          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-            <span className="block">Ready to dive in?</span>
-            <span className="block text-blue-200">Start your free trial today.</span>
-          </h2>
-          <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
-            <div className="inline-flex rounded-md shadow">
-              <Button size="lg" variant="secondary">
-                Get started
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
+      <section style={{ backgroundColor: '#3182ce', color: 'white', padding: '4rem 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', '@media (min-width: 1024px)': { flexDirection: 'row', justifyContent: 'space-between' } }}>
+          <div style={{ marginBottom: '2rem', '@media (min-width: 1024px)': { marginBottom: 0 } }}>
+            <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Ready to dive in?</h2>
+            <p style={{ fontSize: '1.25rem' }}>Start your free trial today.</p>
           </div>
+          <button style={{ padding: '0.75rem 1.5rem', backgroundColor: 'white', color: '#3182ce', border: 'none', borderRadius: '0.25rem', fontSize: '1.125rem', fontWeight: 'bold', cursor: 'pointer' }}>
+            Get started
+          </button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-800">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-          <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-            <div className="space-y-8 xl:col-span-1">
-              <img className="h-10" src="/placeholder.svg?height=40&width=40" alt="Company logo" />
-              <p className="text-gray-400 text-base">
-                Making the world a better place through constructing elegant hierarchies.
-              </p>
-              <div className="flex space-x-6">
-                <a href="#" className="text-gray-400 hover:text-gray-300">
-                  <span className="sr-only">Facebook</span>
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-                  </svg>
+      <footer style={{ backgroundColor: '#2d3748', color: '#a0aec0', padding: '4rem 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', '@media (min-width: 768px)': { gridTemplateColumns: '1fr 1fr 1fr 1fr' } }}>
+            <div>
+              <img src="/placeholder.svg?height=40&width=40" alt="Company logo" style={{ height: '2.5rem', marginBottom: '1rem' }} />
+              <p style={{ marginBottom: '1rem' }}>Making the world a better place through constructing elegant hierarchies.</p>
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <a href="#" style={{ color: '#a0aec0' }}>
+                  <span style={{ fontSize: '1.5rem' }}>f</span>
                 </a>
-                <a href="#" className="text-gray-400 hover:text-gray-300">
-                  <span className="sr-only">Twitter</span>
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
+                <a href="#" style={{ color: '#a0aec0' }}>
+                  <span style={{ fontSize: '1.5rem' }}>t</span>
                 </a>
               </div>
             </div>
-            <div className="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
-              <div className="md:grid md:grid-cols-2 md:gap-8">
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                    Solutions
-                  </h3>
-                  <ul className="mt-4 space-y-4">
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Marketing
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Analytics
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Commerce
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Insights
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="mt-12 md:mt-0">
-                  <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                    Support
-                  </h3>
-                  <ul className="mt-4 space-y-4">
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Pricing
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Documentation
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Guides
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        API Status
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="md:grid md:grid-cols-2 md:gap-8">
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                    Company
-                  </h3>
-                  <ul className="mt-4 space-y-4">
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        About
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Blog
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Jobs
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Press
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Partners
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="mt-12 md:mt-0">
-                  <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                    Legal
-                  </h3>
-                  <ul className="mt-4 space-y-4">
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Privacy
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-base text-gray-300 hover:text-white">
-                        Terms
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            <div>
+              <h3 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Solutions</h3>
+              <ul>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Marketing</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Analytics</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Commerce</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Insights</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Support</h3>
+              <ul>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Pricing</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Documentation</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Guides</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>API Status</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Company</h3>
+              <ul>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>About</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Blog</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Jobs</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Press</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Partners</a></li>
+              </ul>
             </div>
           </div>
-          <div className="mt-12 border-t border-gray-700 pt-8">
-            <p className="text-base text-gray-400 xl:text-center">
-              &copy; 2023 ValueProp, Inc. All rights reserved.
-            </p>
+          <div style={{ borderTop: '1px solid #4a5568', marginTop: '2rem', paddingTop: '2rem', textAlign: 'center' }}>
+            <p>&copy; 2023 ValueProp, Inc. All rights reserved.</p>
           </div>
         </div>
       </footer>
