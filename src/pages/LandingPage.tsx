@@ -177,9 +177,7 @@ export default function LandingPage() {
                 >
                   {isLoading ? 'Loading...' : (isAuthenticated ? 'Go to App' : 'Get Started')}
                 </button>
-                <button style={{ padding: '0.75rem 1.5rem', backgroundColor: 'white', color: '#E74C3C', border: '2px solid #E74C3C', borderRadius: '0.25rem', fontSize: '1.125rem', cursor: 'pointer' }}>
-                  Learn More
-                </button>
+                {/* El botón "Learn More" ha sido eliminado */}
               </div>
             </div>
             <div style={{ flex: 1 }}>
