@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useAuth0 } from '@auth0/auth0-react';
 
 const languages = [
   { code: 'en', name: 'English' },
@@ -112,6 +113,7 @@ const faqs = [
 
 export default function LandingPage() {
   const [currentLanguage, setCurrentLanguage] = useState(languages[0])
+  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
 
   return (
     <div style={{ 
@@ -147,8 +149,11 @@ export default function LandingPage() {
           <nav style={{ display: 'flex', alignItems: 'center' }}>
             <a href="#pricing" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>Pricing</a>
             <a href="#faq" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>FAQ</a>
-            <button style={{ marginLeft: '1.5rem', padding: '0.5rem 1rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>
-              Login
+            <button 
+              onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
+              style={{ marginLeft: '1.5rem', padding: '0.5rem 1rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}
+            >
+              {isLoading ? 'Loading...' : (isAuthenticated ? 'Go to App' : 'Login')}
             </button>
           </nav>
         </div>
@@ -166,8 +171,11 @@ export default function LandingPage() {
                 Create, test, and refine your value proposition with our intuitive canvas tool. Inspired by Alexander Osterwalder's methodology.
               </p>
               <div style={{ display: 'flex', gap: '1rem' }}>
-                <button style={{ padding: '0.75rem 1.5rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', fontSize: '1.125rem', cursor: 'pointer' }}>
-                  Get Started
+                <button 
+                  onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
+                  style={{ padding: '0.75rem 1.5rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', fontSize: '1.125rem', cursor: 'pointer' }}
+                >
+                  {isLoading ? 'Loading...' : (isAuthenticated ? 'Go to App' : 'Get Started')}
                 </button>
                 <button style={{ padding: '0.75rem 1.5rem', backgroundColor: 'white', color: '#E74C3C', border: '2px solid #E74C3C', borderRadius: '0.25rem', fontSize: '1.125rem', cursor: 'pointer' }}>
                   Learn More
@@ -301,7 +309,10 @@ export default function LandingPage() {
             <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '0.5rem', fontFamily: 'Comic Sans MS, cursive' }}>Ready to dive in?</h2>
             <p style={{ fontSize: '1.25rem' }}>Start your free trial today.</p>
           </div>
-          <button style={{ padding: '0.75rem 1.5rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', fontSize: '1.125rem', fontWeight: 'bold', cursor: 'pointer' }}>
+          <button 
+            onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
+            style={{ padding: '0.75rem 1.5rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', fontSize: '1.125rem', fontWeight: 'bold', cursor: 'pointer' }}
+          >
             Get started
           </button>
         </div>
@@ -325,7 +336,7 @@ export default function LandingPage() {
               <span style={{ fontSize: '1.5rem' }}>t</span>
             </a>
           </div>
-          <p>&copy; 2024 ValueProp, Inc. All rights reserved.</p>
+          <p>&copy; 2023 ValueProp, Inc. All rights reserved.</p>
         </div>
       </footer>
     </div>
