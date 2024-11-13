@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, LogOut, HelpCircle, User } from 'lucide-react';
+import { LogOut, HelpCircle, User } from 'lucide-react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import { SUBSCRIPTION_STATUS_DISPLAY } from '../constants/subscriptionTiers';
@@ -29,7 +29,7 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16 flex-wrap w-full">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <Menu className="h-6 w-6" />
+              <User className="h-6 w-6" />
               <span className="font-bold text-xl">Value Canvas</span>
             </Link>
           </div>
@@ -39,8 +39,16 @@ export function Navigation() {
               onClick={toggleUserMenu}
               className="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
             >
-              <span className="sr-only">Open main menu</span>
-              <Menu className="h-6 w-6" aria-hidden="true" />
+              <span className="sr-only">Open user menu</span>
+              {user?.picture ? (
+                <img
+                  src={user.picture}
+                  alt={user.name || 'User avatar'}
+                  className="h-6 w-6 rounded-full"
+                />
+              ) : (
+                <User className="h-6 w-6" aria-hidden="true" />
+              )}
             </button>
           </div>
 
