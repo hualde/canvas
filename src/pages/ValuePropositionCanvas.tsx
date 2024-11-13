@@ -93,21 +93,19 @@ export function ValuePropositionCanvas() {
     }
   };
 
-  const handleExportPDF = async () => {  // Added async keyword here
+  const handleExportPDF = async () => {
     if (canvas && user) {
       try {
         await exportToPDF(canvas, user.sub);
         console.log('PDF exported successfully');
       } catch (error) {
         console.error('Error exporting PDF:', error);
-        // You might want to show an error message to the user here
         if (error instanceof Error) {
           alert(error.message);
         }
       }
     }
   };
-  
 
   const handleAIAssist = () => {
     console.log('Opening AI Assistant...');
@@ -150,7 +148,7 @@ export function ValuePropositionCanvas() {
       onAIAssist={handleAIAssist}
       onSave={handleSave}
     >
-      <div className="mb-4 grid grid-cols-3 gap-4">
+      <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <input
           type="text"
           value={project_name}
@@ -186,11 +184,11 @@ export function ValuePropositionCanvas() {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left side - Square section */}
-        <div className="relative border-2 border-gray-200 rounded-lg p-6 aspect-square overflow-hidden">
+        <div className="relative border-2 border-gray-200 rounded-lg p-4 md:p-6 overflow-hidden">
           <div className="absolute inset-0 bg-blue-200/30"></div>
-          <div className="relative grid grid-cols-2 gap-4 h-full z-10">
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-4 h-full z-10">
             <div className="relative">
               <CanvasSection
                 title="Products and Services"
@@ -211,7 +209,7 @@ export function ValuePropositionCanvas() {
                 className="h-full bg-white/50"
               />
             </div>
-            <div className="relative col-span-2">
+            <div className="relative col-span-1 sm:col-span-2">
               <CanvasSection
                 title="Pain Relievers"
                 items={canvas.content.painRelievers || []}
@@ -225,9 +223,9 @@ export function ValuePropositionCanvas() {
         </div>
 
         {/* Right side - Circle section */}
-        <div className="relative border-2 border-gray-200 rounded-full aspect-square">
-          <div className="absolute inset-0 bg-blue-200/30 rounded-full"></div>
-          <div className="absolute inset-0 grid grid-cols-2 gap-2 p-4">
+        <div className="relative border-2 border-gray-200 rounded-lg lg:rounded-full aspect-auto lg:aspect-square">
+          <div className="absolute inset-0 bg-blue-200/30 rounded-lg lg:rounded-full"></div>
+          <div className="absolute inset-0 grid grid-cols-1 sm:grid-cols-2 gap-2 p-4">
             <div className="relative z-20">
               <CanvasSection
                 title="Customer Jobs"
@@ -248,7 +246,7 @@ export function ValuePropositionCanvas() {
                 className="h-full bg-white/50"
               />
             </div>
-            <div className="relative col-span-2 z-20">
+            <div className="relative col-span-1 sm:col-span-2 z-20">
               <CanvasSection
                 title="Pains"
                 items={canvas.content.pains || []}
