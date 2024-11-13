@@ -111,7 +111,6 @@ const faqs = [
 ]
 
 export default function LandingPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [currentLanguage, setCurrentLanguage] = useState(languages[0])
 
   return (
@@ -123,6 +122,21 @@ export default function LandingPage() {
       backgroundImage: 'url("data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%23C5D9F1" fill-opacity="0.1" fill-rule="evenodd"/%3E%3C/svg%3E")',
       backgroundAttachment: 'fixed',
     }}>
+      {/* Language Selector Bar */}
+      <div style={{ backgroundColor: '#2C3E50', color: 'white', padding: '0.5rem 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', display: 'flex', justifyContent: 'flex-end' }}>
+          <select 
+            value={currentLanguage.code}
+            onChange={(e) => setCurrentLanguage(languages.find(lang => lang.code === e.target.value) || languages[0])}
+            style={{ padding: '0.25rem', border: '1px solid #C5D9F1', borderRadius: '0.25rem', backgroundColor: 'white', color: '#2C3E50' }}
+          >
+            {languages.map((lang) => (
+              <option key={lang.code} value={lang.code}>{lang.name}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       {/* Header */}
       <header style={{ backgroundColor: 'white', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -130,51 +144,15 @@ export default function LandingPage() {
             <img src="/placeholder.svg?height=40&width=40" alt="Logo" style={{ height: '40px', width: 'auto' }} />
             <span style={{ marginLeft: '0.5rem', fontSize: '1.25rem', fontWeight: 'bold', color: '#2C3E50', fontFamily: 'Comic Sans MS, cursive' }}>ValueProp</span>
           </a>
-          <nav style={{ display: 'none', '@media (min-width: 768px)': { display: 'flex' } }}>
+          <nav style={{ display: 'flex', alignItems: 'center' }}>
             <a href="#features" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>Features</a>
             <a href="#pricing" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>Pricing</a>
             <a href="#faq" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>FAQ</a>
+            <button style={{ marginLeft: '1.5rem', padding: '0.5rem 1rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>
+              Login
+            </button>
           </nav>
-          <div style={{ display: 'none', '@media (min-width: 768px)': { display: 'flex', alignItems: 'center' } }}>
-            <select 
-              value={currentLanguage.code}
-              onChange={(e) => setCurrentLanguage(languages.find(lang => lang.code === e.target.value) || languages[0])}
-              style={{ marginLeft: '1rem', padding: '0.5rem', border: '1px solid #C5D9F1', borderRadius: '0.25rem', backgroundColor: 'white', color: '#2C3E50' }}
-            >
-              {languages.map((lang) => (
-                <option key={lang.code} value={lang.code}>{lang.name}</option>
-              ))}
-            </select>
-            <button style={{ marginLeft: '1rem', padding: '0.5rem 1rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>
-              Login
-            </button>
-          </div>
-          <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            style={{ '@media (min-width: 768px)': { display: 'none' }, background: 'none', border: 'none', cursor: 'pointer', color: '#2C3E50' }}
-          >
-            <span style={{ fontSize: '1.5rem' }}>☰</span>
-          </button>
         </div>
-        {isMenuOpen && (
-          <div style={{ padding: '1rem', backgroundColor: 'white', '@media (min-width: 768px)': { display: 'none' } }}>
-            <a href="#features" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>Features</a>
-            <a href="#pricing" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>Pricing</a>
-            <a href="#faq" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>FAQ</a>
-            <select 
-              value={currentLanguage.code}
-              onChange={(e) => setCurrentLanguage(languages.find(lang => lang.code === e.target.value) || languages[0])}
-              style={{ display: 'block', width: '100%', marginBottom: '0.5rem', padding: '0.5rem', border: '1px solid #C5D9F1', borderRadius: '0.25rem', backgroundColor: 'white', color: '#2C3E50' }}
-            >
-              {languages.map((lang) => (
-                <option key={lang.code} value={lang.code}>{lang.name}</option>
-              ))}
-            </select>
-            <button style={{ display: 'block', width: '100%', padding: '0.5rem 1rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>
-              Login
-            </button>
-          </div>
-        )}
       </header>
 
       {/* Hero Section */}
@@ -256,11 +234,11 @@ export default function LandingPage() {
           <p style={{ fontSize: '1.125rem', color: '#2C3E50', marginBottom: '2rem', textAlign: 'center' }}>
             Choose the plan that's right for you and start designing your value proposition today.
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', '@media (min-width: 768px)': { gridTemplateColumns: '1fr 1fr 1fr' } }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', maxWidth: '900px', margin: '0 auto', '@media (min-width: 768px)': { gridTemplateColumns: 'repeat(3, 1fr)' } }}>
             {pricingPlans.map((plan, index) => (
-              <div key={index} style={{ backgroundColor: 'white', borderRadius: '0.5rem', padding: '1.5rem', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
+              <div key={index} style={{ backgroundColor: 'white', borderRadius: '0.5rem', padding: '1.25rem', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
                 <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2C3E50' }}>{plan.name}</h3>
-                <p style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#E74C3C' }}>{plan.price}</p>
+                <p style={{ fontSize: '1.75rem', fontWeight: 'bold', marginBottom: '1rem', color: '#E74C3C' }}>{plan.price}</p>
                 <ul style={{ marginBottom: '1.5rem' }}>
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', color: '#2C3E50' }}>
