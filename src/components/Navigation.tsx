@@ -24,9 +24,9 @@ export function Navigation() {
   };
 
   return (
-    <nav className="bg-blue-900 text-white">
+    <nav className="bg-blue-900 text-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 flex-wrap">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <Menu className="h-6 w-6" />
@@ -34,11 +34,21 @@ export function Navigation() {
             </Link>
           </div>
 
+          <div className="flex md:hidden ml-auto">
+            <button
+              onClick={toggleUserMenu}
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            >
+              <span className="sr-only">Open main menu</span>
+              <Menu className="h-6 w-6" aria-hidden="true" />
+            </button>
+          </div>
+
           {isAuthenticated && (
-            <div className="flex items-center space-x-4">
+            <div className={`${isUserMenuOpen ? 'block' : 'hidden'} md:flex items-center space-x-4 w-full md:w-auto mt-4 md:mt-0`}>
               <Link
                 to="/tutorial"
-                className="p-2 rounded-full hover:bg-blue-800 transition-colors"
+                className="p-2 rounded-full hover:bg-blue-800 transition-colors block md:inline-block"
               >
                 <HelpCircle className="h-5 w-5" />
               </Link>
@@ -58,7 +68,7 @@ export function Navigation() {
                   )}
                 </button>
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 md:right-0 md:left-auto">
                     <div className="px-4 py-2 text-sm text-gray-700">
                       <p className="font-semibold">{user?.name}</p>
                       <p className="text-xs text-gray-500">{user?.email}</p>

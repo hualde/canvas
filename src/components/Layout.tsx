@@ -10,9 +10,13 @@ export function Layout() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      <div className="flex">
-        {isAuthenticated && <Sidebar />}
-        <main className="flex-1 p-6">
+      <div className="flex flex-col md:flex-row">
+        {isAuthenticated && (
+          <div className="md:block">
+            <Sidebar />
+          </div>
+        )}
+        <main className="flex-1 p-4 md:p-6 w-full">
           <Outlet />
         </main>
       </div>
