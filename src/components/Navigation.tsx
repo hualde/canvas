@@ -24,9 +24,9 @@ export function Navigation() {
   };
 
   return (
-    <nav className="bg-blue-900 text-white relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 flex-wrap">
+    <nav className="bg-blue-900 text-white relative w-full">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 flex-wrap w-full">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <Menu className="h-6 w-6" />
@@ -45,7 +45,7 @@ export function Navigation() {
           </div>
 
           {isAuthenticated && (
-            <div className={`${isUserMenuOpen ? 'block' : 'hidden'} md:flex items-center space-x-4 w-full md:w-auto mt-4 md:mt-0`}>
+            <div className={`${isUserMenuOpen ? 'block' : 'hidden'} md:flex items-center justify-end space-x-4 w-full md:w-auto mt-4 md:mt-0`}>
               <Link
                 to="/tutorial"
                 className="p-2 rounded-full hover:bg-blue-800 transition-colors block md:inline-block"
