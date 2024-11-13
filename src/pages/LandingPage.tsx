@@ -1,179 +1,6 @@
 import React, { useState } from 'react'
 
 const languages = [
-  { code: 'es', name: 'Español' },
-  { code: 'en', name: 'English' },
-  { code: 'fr', name: 'Français' },
-]
-
-const features = [
-  { 
-    icon: '📊',
-    title: 'Mapeo de Valor',
-    description: 'Mapea y visualiza fácilmente tus propuestas de valor.'
-  },
-  {
-    icon: '🎯',
-    title: 'Perfilado de Clientes',
-    description: 'Crea perfiles detallados de clientes para entender mejor a tu audiencia.'
-  },
-  {
-    icon: '🧪',
-    title: 'Prueba de Hipótesis',
-    description: 'Prueba tus suposiciones de negocio con herramientas de experimentación integradas.'
-  },
-  {
-    icon: '📈',
-    title: 'Seguimiento de Progreso',
-    description: 'Monitorea la evolución de tu modelo de negocio a lo largo del tiempo.'
-  },
-]
-
-const testimonials = [
-  {
-    quote: "Esta app ha revolucionado cómo abordamos nuestra propuesta de valor. ¡Es intuitiva y poderosa!",
-    name: "Sara Jiménez",
-    role: "CEO, TechStart",
-    image: "/placeholder.svg?height=100&width=100"
-  },
-  {
-    quote: "El enfoque visual de esta herramienta nos ayudó a identificar brechas en nuestra oferta que nunca supimos que existían.",
-    name: "Miguel Chen",
-    role: "Gerente de Producto, InnovateCorp",
-    image: "/placeholder.svg?height=100&width=100"
-  },
-]
-
-const pricingPlans = [
-  {
-    name: "Gratuito",
-    price: "€0/mes",
-    features: ["1 Usuario", "2 Proyectos", "Análisis Básico", "Soporte por Email"]
-  },
-  {
-    name: "Premium",
-    price: "€29.99/mes",
-    features: ["Usuarios Ilimitados", "Proyectos Ilimitados", "Análisis Avanzado", "Soporte Prioritario", "Acceso API", "Integraciones Personalizadas"]
-  },
-]
-
-const featureComparison = [
-  { feature: "Número de usuarios", free: "1", premium: "Ilimitados" },
-  { feature: "Número de proyectos", free: "2", premium: "Ilimitados" },
-  { feature: "Análisis", free: "Básico", premium: "Avanzado" },
-  { feature: "Soporte", free: "Email", premium: "Prioritario" },
-  { feature: "Acceso API", free: "No", premium: "Sí" },
-  { feature: "Integraciones personalizadas", free: "No", premium: "Sí" },
-  { feature: "Colaboración en tiempo real", free: "No", premium: "Sí" },
-  { feature: "Exportación de datos", free: "Limitada", premium: "Completa" },
-]
-
-const faqs = [
-  {
-    question: "¿Qué es un Canvas de Propuesta de Valor?",
-    answer: "Un Canvas de Propuesta de Valor es una herramienta para asegurar que un producto o servicio esté posicionado en torno a lo que el cliente valora y necesita. Ayuda a las empresas a diseñar productos y servicios que los clientes realmente quieren."
-  },
-  {
-    question: "¿En qué se diferencia esta app de las herramientas tradicionales de planificación empresarial?",
-    answer: "Nuestra app da vida al Canvas de Propuesta de Valor con características interactivas, colaboración en tiempo real y perspectivas impulsadas por IA. Está diseñada para ser más dinámica y fácil de usar que las herramientas tradicionales de planificación empresarial."
-  },
-  {
-    question: "¿Puedo usar esta app para múltiples proyectos?",
-    answer: "¡Sí! Dependiendo de tu plan, puedes gestionar múltiples proyectos dentro de la app. Esto te permite crear y comparar propuestas de valor para diferentes productos o segmentos de clientes."
-  },
-  {
-    question: "¿Mis datos están seguros?",
-    answer: "Absolutamente. Utilizamos prácticas de encriptación y seguridad estándar de la industria para garantizar que tus datos estén seguros. Nunca compartimos tu información con terceros."
-  },
-]
-
-export default function LandingPage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [currentLanguage, setCurrentLanguage] = useState(languages[0])
-
-  return (
-    <div style={{ 
-      minHeight: '100vh', 
-      backgroundColor: 'white', 
-      color: '#2C3E50', 
-      fontFamily: 'Arial, sans-serif',
-      backgroundImage: 'url("data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%23C5D9F1" fill-opacity="0.1" fill-rule="evenodd"/%3E%3C/svg%3E")',
-      backgroundAttachment: 'fixed',
-    }}>
-      {/* Header */}
-      <header style={{ backgroundColor: 'white', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <a href="#" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-            <img src="/placeholder.svg?height=40&width=40" alt="Logo" style={{ height: '40px', width: 'auto' }} />
-            <span style={{ marginLeft: '0.5rem', fontSize: '1.25rem', fontWeight: 'bold', color: '#2C3E50', fontFamily: 'Comic Sans MS, cursive' }}>ValueProp</span>
-          </a>
-          <nav style={{ display: 'none', '@media (min-width: 768px)': { display: 'flex' } }}>
-            <a href="#features" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>Características</a>
-            <a href="#demo" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>Demo</a>
-            <a href="#pricing" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>Precios</a>
-            <a href="#faq" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>FAQ</a>
-          </nav>
-          <div style={{ display: 'none', '@media (min-width: 768px)': { display: 'flex', alignItems: 'center' } }}>
-            <select 
-              value={currentLanguage.code}
-              onChange={(e) => setCurrentLanguage(languages.find(lang => lang.code === e.target.value) || languages[0])}
-              style={{ marginLeft: '1rem', padding: '0.5rem', border: '1px solid #C5D9F1', borderRadius: '0.25rem', backgroundColor: 'white', color: '#2C3E50' }}
-            >
-              {languages.map((lang) => (
-                <option key={lang.code} value={lang.code}>{lang.name}</option>
-              ))}
-            </select>
-            <a href="#" style={{ marginLeft: '1rem', padding: '0.5rem 1rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', textDecoration: 'none' }}>
-              Iniciar sesión
-            </a>
-            <a href="#" style={{ marginLeft: '1rem', padding: '0.5rem 1rem', backgroundColor: '#2C3E50', color: 'white', border: 'none', borderRadius: '0.25rem', textDecoration: 'none' }}>
-              Registrarse
-            </a>
-          </div>
-          <button 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            style={{ '@media (min-width: 768px)': { display: 'none' }, background: 'none', border: 'none', cursor: 'pointer', color: '#2C3E50' }}
-          >
-            <span style={{ fontSize: '1.5rem' }}>☰</span>
-          </button>
-        </div>
-        {isMenuOpen && (
-          <div style={{ padding: '1rem', backgroundColor: 'white', '@media (min-width: 768px)': { display: 'none' } }}>
-            <a href="#features" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>Características</a>
-            <a href="#demo" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>Demo</a>
-            <a href="#pricing" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>Precios</a>
-            <a href="#faq" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>FAQ</a>
-            <select 
-              value={currentLanguage.code}
-              onChange={(e) => setCurrentLanguage(languages.find(lang => lang.code === e.target.value) || languages[0])}
-              style={{ display: 'block', width: '100%', marginBottom: '0.5rem', padding: '0.5rem', border: '1px solid #C5D9F1', borderRadius: '0.25rem', backgroundColor: 'white', color: '#2C3E50' }}
-            >
-              {languages.map((lang) => (
-                <option key={lang.code} value={lang.code}>{lang.name}</option>
-              ))}
-            </select>
-            <a href="#" style={{ display: 'block', width: '100%', padding: '0.5rem 1rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', textDecoration: 'none', textAlign: 'center', marginBottom: '0.5rem' }}>
-              Iniciar sesión
-            </a>
-            <a href="#" style={{ display: 'block', width: '100%', padding: '0.5rem 1rem', backgroundColor: '#2C3E50', color: 'white', border: 'none', borderRadius: '0.25rem', textDecoration: 'none', textAlign: 'center' }}>
-              Registrarse
-            </a>
-          </div>
-        )}
-      </header>
-
-      {/* Hero Section */}
-      <section style={{ backgroundColor: '#C5D9F1', padding: '4rem 0' }}>
-        <div style={{ maxWidth: Entendido. Voy a modificar el componente para reflejar que es una PWA en lugar de una aplicación descargable, añadir acceso a login/signup, eliminar el plan Pro y crear una comparativa de características entre el plan gratuito y el premium. Usaré el componente QuickEdit para hacer estos cambios.
-
-
-
-Voy a realizar los cambios solicitados utilizando el componente QuickEdit:
-
-```typescriptreact type="react" project="Value Canvas Landing Page" file="LandingPage.tsx"
-[v0-no-op-code-block-prefix]import React, { useState } from 'react'
-
-const languages = [
   { code: 'en', name: 'English' },
   { code: 'es', name: 'Español' },
   { code: 'fr', name: 'Français' },
@@ -225,22 +52,32 @@ const pricingPlans = [
       "1 User",
       "3 Projects",
       "Basic Analytics",
-      "Email Support",
       "Limited Canvas Tools"
     ]
   },
   {
-    name: "Premium",
-    price: "$19.99/month",
+    name: "Premium Monthly",
+    price: "$9.99/month",
     features: [
       "Unlimited Users",
       "Unlimited Projects",
       "Advanced Analytics",
-      "Priority Support",
       "Full Canvas Toolkit",
       "AI-Powered Insights",
-      "Collaboration Features",
       "Custom Integrations"
+    ]
+  },
+  {
+    name: "Premium Annual",
+    price: "$99.99/year",
+    features: [
+      "Unlimited Users",
+      "Unlimited Projects",
+      "Advanced Analytics",
+      "Full Canvas Toolkit",
+      "AI-Powered Insights",
+      "Custom Integrations",
+      "Save 16% compared to monthly"
     ]
   }
 ]
@@ -249,10 +86,8 @@ const featureComparison = [
   { feature: "Number of Users", free: "1", premium: "Unlimited" },
   { feature: "Number of Projects", free: "3", premium: "Unlimited" },
   { feature: "Analytics", free: "Basic", premium: "Advanced" },
-  { feature: "Support", free: "Email", premium: "Priority" },
   { feature: "Canvas Tools", free: "Limited", premium: "Full Toolkit" },
   { feature: "AI-Powered Insights", free: "❌", premium: "✅" },
-  { feature: "Collaboration Features", free: "❌", premium: "✅" },
   { feature: "Custom Integrations", free: "❌", premium: "✅" }
 ]
 
@@ -263,7 +98,7 @@ const faqs = [
   },
   {
     question: "How does this app differ from traditional business planning tools?",
-    answer: "Our app brings the Value Proposition Canvas to life with interactive features, real-time collaboration, and AI-powered insights. It's designed to be more dynamic and user-friendly than traditional business planning tools."
+    answer: "Our app brings the Value Proposition Canvas to life with interactive features and AI-powered insights. It's designed to be more dynamic and user-friendly than traditional business planning tools."
   },
   {
     question: "Can I use this app for multiple projects?",
@@ -297,7 +132,6 @@ export default function LandingPage() {
           </a>
           <nav style={{ display: 'none', '@media (min-width: 768px)': { display: 'flex' } }}>
             <a href="#features" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>Features</a>
-            <a href="#demo" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>Demo</a>
             <a href="#pricing" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>Pricing</a>
             <a href="#faq" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>FAQ</a>
           </nav>
@@ -312,7 +146,7 @@ export default function LandingPage() {
               ))}
             </select>
             <button style={{ marginLeft: '1rem', padding: '0.5rem 1rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>
-              Get Started
+              Login
             </button>
           </div>
           <button 
@@ -325,7 +159,6 @@ export default function LandingPage() {
         {isMenuOpen && (
           <div style={{ padding: '1rem', backgroundColor: 'white', '@media (min-width: 768px)': { display: 'none' } }}>
             <a href="#features" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>Features</a>
-            <a href="#demo" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>Demo</a>
             <a href="#pricing" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>Pricing</a>
             <a href="#faq" style={{ display: 'block', marginBottom: '0.5rem', color: '#2C3E50', textDecoration: 'none' }}>FAQ</a>
             <select 
@@ -338,7 +171,7 @@ export default function LandingPage() {
               ))}
             </select>
             <button style={{ display: 'block', width: '100%', padding: '0.5rem 1rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}>
-              Get Started
+              Login
             </button>
           </div>
         )}
@@ -357,10 +190,10 @@ export default function LandingPage() {
               </p>
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <button style={{ padding: '0.75rem 1.5rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', fontSize: '1.125rem', cursor: 'pointer' }}>
-                  Login
+                  Get Started
                 </button>
                 <button style={{ padding: '0.75rem 1.5rem', backgroundColor: 'white', color: '#E74C3C', border: '2px solid #E74C3C', borderRadius: '0.25rem', fontSize: '1.125rem', cursor: 'pointer' }}>
-                  Sign Up
+                  Learn More
                 </button>
               </div>
             </div>
@@ -387,25 +220,6 @@ export default function LandingPage() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Visual Demo Section */}
-      <section id="demo" style={{ backgroundColor: '#C5D9F1', padding: '4rem 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '1rem', fontFamily: 'Comic Sans MS, cursive', color: '#2C3E50' }}>
-            See ValueProp in Action
-          </h2>
-          <p style={{ fontSize: '1.125rem', color: '#2C3E50', marginBottom: '2rem' }}>
-            Watch how easy it is to create and refine your value proposition using our intuitive interface.
-          </p>
-          <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
-            <img
-              src="/placeholder.svg?height=720&width=1280"
-              alt="App demo"
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', borderRadius: '0.5rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)' }}
-            />
           </div>
         </div>
       </section>
@@ -442,7 +256,7 @@ export default function LandingPage() {
           <p style={{ fontSize: '1.125rem', color: '#2C3E50', marginBottom: '2rem', textAlign: 'center' }}>
             Choose the plan that's right for you and start designing your value proposition today.
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', '@media (min-width: 768px)': { gridTemplateColumns: '1fr 1fr' } }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', '@media (min-width: 768px)': { gridTemplateColumns: '1fr 1fr 1fr' } }}>
             {pricingPlans.map((plan, index) => (
               <div key={index} style={{ backgroundColor: 'white', borderRadius: '0.5rem', padding: '1.5rem', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
                 <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2C3E50' }}>{plan.name}</h3>
@@ -467,7 +281,8 @@ export default function LandingPage() {
                 <tr style={{ borderBottom: '2px solid #C5D9F1' }}>
                   <th style={{ padding: '0.5rem', textAlign: 'left', color: '#2C3E50' }}>Feature</th>
                   <th style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>Free</th>
-                  <th style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>Premium</th>
+                  <th style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>Premium Monthly</th>
+                  <th style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>Premium Annual</th>
                 </tr>
               </thead>
               <tbody>
@@ -475,6 +290,7 @@ export default function LandingPage() {
                   <tr key={index} style={{ borderBottom: '1px solid #C5D9F1' }}>
                     <td style={{ padding: '0.5rem', color: '#2C3E50' }}>{item.feature}</td>
                     <td style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>{item.free}</td>
+                    <td style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>{item.premium}</td>
                     <td style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>{item.premium}</td>
                   </tr>
                 ))}
@@ -540,22 +356,19 @@ export default function LandingPage() {
               </ul>
             </div>
             <div>
-              <h3 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Support</h3>
-              <ul>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Pricing</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Documentation</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Guides</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>API Status</a></li>
-              </ul>
-            </div>
-            <div>
               <h3 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Company</h3>
               <ul>
                 <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>About</a></li>
                 <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Blog</a></li>
                 <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Jobs</a></li>
                 <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Press</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Partners</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Legal</h3>
+              <ul>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Privacy</a></li>
+                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Terms</a></li>
               </ul>
             </div>
           </div>
