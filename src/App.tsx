@@ -92,56 +92,58 @@ function AppContent() {
   }
 
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      
-      <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <HandleRedirect />
-            <Layout />
-          </PrivateRoute>
-        }
-      >
-        <Route index element={<Dashboard />} />
-        <Route path="canvas/:id" element={<Canvas />} />
-        <Route path="value-proposition/:id" element={<ValuePropositionCanvas />} />
-        <Route path="swot/:id" element={<SWOTCanvas />} />
-        <Route path="empathy-map/:id" element={<EmpathyMap />} />
-        <Route path="pestel/:id" element={<PESTELCanvas />} />
-        <Route path="tutorial" element={<Tutorial />} />
-        <Route path="upgrade" element={<Upgrade />} />
-        <Route path="examples" element={<Examples />} />
+    <div className="flex flex-col min-h-screen">
+      <Routes>
+        <Route path="/login" element={<Login />} />
         
-        {/* Example canvas routes */}
-        <Route path="examples/apple/business" element={<AppleBusinessModelCanvas />} />
-        <Route path="examples/apple/value-proposition" element={<AppleValuePropositionCanvas />} />
-        <Route path="examples/apple/empathy-map" element={<AppleEmpathyMapCanvas />} />
-        <Route path="examples/apple/pestel" element={<ApplePESTELCanvas />} />
-        <Route path="examples/apple/swot" element={<AppleSWOTCanvas />} />
-        <Route path="examples/google/business" element={<GoogleBusinessModelCanvas />} />
-        <Route path="examples/google/empathy-map" element={<GoogleEmpathyMapCanvas />} />
-        <Route path="examples/google/pestel" element={<GooglePESTELCanvas />} />
-        <Route path="examples/google/swot" element={<GoogleSWOTCanvas />} />
-        <Route path="examples/google/value-proposition" element={<GoogleValuePropositionCanvas />} />
-        <Route path="examples/amazon/business" element={<AmazonBusinessModelCanvas />} />
-        <Route path="examples/amazon/empathy-map" element={<AmazonEmpathyMapCanvas />} />
-        <Route path="examples/amazon/pestel" element={<AmazonPESTELCanvas />} />
-        <Route path="examples/amazon/swot" element={<AmazonSWOTCanvas />} />
-        <Route path="examples/amazon/value-proposition" element={<AmazonValuePropositionCanvas />} />
-        <Route path="examples/microsoft/business" element={<MicrosoftBusinessModelCanvas />} />
-        <Route path="examples/microsoft/empathy-map" element={<MicrosoftEmpathyMapCanvas />} />
-        <Route path="examples/microsoft/pestel" element={<MicrosoftPESTELCanvas />} />
-        <Route path="examples/microsoft/swot" element={<MicrosoftSWOTCanvas />} />
-        <Route path="examples/microsoft/value-proposition" element={<MicrosoftValuePropositionCanvas />} />
-        <Route path="examples/tesla/business" element={<TeslaBusinessModelCanvas />} />
-        <Route path="examples/tesla/empathy-map" element={<TeslaEmpathyMapCanvas />} />
-        <Route path="examples/tesla/pestel" element={<TeslaPESTELCanvas />} />
-        <Route path="examples/tesla/swot" element={<TeslaSWOTCanvas />} />
-        <Route path="examples/tesla/value-proposition" element={<TeslaValuePropositionCanvas />} />
-      </Route>
-    </Routes>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <HandleRedirect />
+              <Layout />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<Dashboard />} />
+          <Route path="canvas/:id" element={<Canvas />} />
+          <Route path="value-proposition/:id" element={<ValuePropositionCanvas />} />
+          <Route path="swot/:id" element={<SWOTCanvas />} />
+          <Route path="empathy-map/:id" element={<EmpathyMap />} />
+          <Route path="pestel/:id" element={<PESTELCanvas />} />
+          <Route path="tutorial" element={<Tutorial />} />
+          <Route path="upgrade" element={<Upgrade />} />
+          <Route path="examples" element={<Examples />} />
+          
+          {/* Example canvas routes */}
+          <Route path="examples/apple/business" element={<AppleBusinessModelCanvas />} />
+          <Route path="examples/apple/value-proposition" element={<AppleValuePropositionCanvas />} />
+          <Route path="examples/apple/empathy-map" element={<AppleEmpathyMapCanvas />} />
+          <Route path="examples/apple/pestel" element={<ApplePESTELCanvas />} />
+          <Route path="examples/apple/swot" element={<AppleSWOTCanvas />} />
+          <Route path="examples/google/business" element={<GoogleBusinessModelCanvas />} />
+          <Route path="examples/google/empathy-map" element={<GoogleEmpathyMapCanvas />} />
+          <Route path="examples/google/pestel" element={<GooglePESTELCanvas />} />
+          <Route path="examples/google/swot" element={<GoogleSWOTCanvas />} />
+          <Route path="examples/google/value-proposition" element={<GoogleValuePropositionCanvas />} />
+          <Route path="examples/amazon/business" element={<AmazonBusinessModelCanvas />} />
+          <Route path="examples/amazon/empathy-map" element={<AmazonEmpathyMapCanvas />} />
+          <Route path="examples/amazon/pestel" element={<AmazonPESTELCanvas />} />
+          <Route path="examples/amazon/swot" element={<AmazonSWOTCanvas />} />
+          <Route path="examples/amazon/value-proposition" element={<AmazonValuePropositionCanvas />} />
+          <Route path="examples/microsoft/business" element={<MicrosoftBusinessModelCanvas />} />
+          <Route path="examples/microsoft/empathy-map" element={<MicrosoftEmpathyMapCanvas />} />
+          <Route path="examples/microsoft/pestel" element={<MicrosoftPESTELCanvas />} />
+          <Route path="examples/microsoft/swot" element={<MicrosoftSWOTCanvas />} />
+          <Route path="examples/microsoft/value-proposition" element={<MicrosoftValuePropositionCanvas />} />
+          <Route path="examples/tesla/business" element={<TeslaBusinessModelCanvas />} />
+          <Route path="examples/tesla/empathy-map" element={<TeslaEmpathyMapCanvas />} />
+          <Route path="examples/tesla/pestel" element={<TeslaPESTELCanvas />} />
+          <Route path="examples/tesla/swot" element={<TeslaSWOTCanvas />} />
+          <Route path="examples/tesla/value-proposition" element={<TeslaValuePropositionCanvas />} />
+        </Route>
+      </Routes>
+    </div>
   );
 }
 
@@ -149,7 +151,9 @@ function App() {
   return (
     <BrowserRouter>
       <Auth0ProviderWithNavigate>
-        <AppContent />
+        <div className="flex flex-col min-h-screen w-full">
+          <AppContent />
+        </div>
       </Auth0ProviderWithNavigate>
     </BrowserRouter>
   );
