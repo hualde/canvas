@@ -325,7 +325,7 @@ export default function LandingPage() {
               <span style={{ fontSize: '1.5rem' }}>t</span>
             </a>
           </div>
-          <p>&copy; 2023 ValueProp, Inc. All rights reserved.</p>
+          <p>&copy; 2024 ValueProp, Inc. All rights reserved.</p>
         </div>
       </footer>
     </div>
