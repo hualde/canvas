@@ -12,15 +12,15 @@ interface CanvasSectionProps {
 }
 
 const CanvasSection: React.FC<CanvasSectionProps> = ({ title, items, description, className, icon }) => (
-  <div className={`bg-white/50 rounded-lg p-4 ${className}`}>
-    <h3 className="text-lg font-semibold mb-2 flex items-center">
-      <img src={icon} alt={title} className="w-6 h-6 mr-2" />
+  <div className={`bg-white/50 rounded-lg p-2 sm:p-4 ${className}`}>
+    <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2 flex items-center">
+      <img src={icon} alt={title} className="w-4 h-4 sm:w-6 sm:h-6 mr-1 sm:mr-2" />
       <span>{title}</span>
     </h3>
-    <p className="text-sm text-gray-500 mb-2">{description}</p>
+    <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">{description}</p>
     <ul className="list-disc list-inside">
       {items.map((item, index) => (
-        <li key={index} className="text-sm">{item.replace(/^[•\s]+/, '')}</li>
+        <li key={index} className="text-xs sm:text-sm">{item.replace(/^[•\s]+/, '')}</li>
       ))}
     </ul>
   </div>
@@ -87,33 +87,33 @@ export default function TeslaValuePropositionCanvas() {
   };
 
   return (
-    <div className="max-w-[1600px] mx-auto p-6 relative">
-      <div className="mb-6 flex justify-between items-center">
+    <div className="max-w-[1600px] mx-auto p-4 sm:p-6 relative">
+      <div className="mb-4 sm:mb-6 flex justify-between items-center">
         <button
           onClick={() => navigate('/examples')}
           className="inline-flex items-center text-gray-600 hover:text-gray-900"
         >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Examples
+          <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" />
+          <span className="text-sm sm:text-base">Back to Examples</span>
         </button>
       </div>
 
-      <h1 className="text-3xl font-bold text-gray-900 mb-4">{canvasData.title}</h1>
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 sm:mb-4">{canvasData.title}</h1>
 
-      <div className="mb-4 grid grid-cols-3 gap-4">
-        <div className="text-sm"><strong>Project:</strong> {canvasData.project_name}</div>
-        <div className="text-sm"><strong>Author:</strong> {canvasData.author}</div>
-        <div className="text-sm"><strong>Date:</strong> {canvasData.date}</div>
+      <div className="mb-2 sm:mb-4 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+        <div className="text-xs sm:text-sm"><strong>Project:</strong> {canvasData.project_name}</div>
+        <div className="text-xs sm:text-sm"><strong>Author:</strong> {canvasData.author}</div>
+        <div className="text-xs sm:text-sm"><strong>Date:</strong> {canvasData.date}</div>
       </div>
-      <div className="mb-4">
-        <p className="text-sm"><strong>Comments:</strong> {canvasData.comments}</p>
+      <div className="mb-2 sm:mb-4">
+        <p className="text-xs sm:text-sm"><strong>Comments:</strong> {canvasData.comments}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
         {/* Left side - Square section */}
-        <div className="relative border-2 border-gray-200 rounded-lg p-6 aspect-square overflow-hidden">
+        <div className="relative border-2 border-gray-200 rounded-lg p-2 sm:p-4 md:p-6 overflow-hidden">
           <div className="absolute inset-0 bg-blue-200/30"></div>
-          <div className="relative grid grid-cols-2 gap-4 h-full z-10">
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 h-full z-10">
             <div className="relative">
               <CanvasSection
                 title="Products and Services"
@@ -132,7 +132,7 @@ export default function TeslaValuePropositionCanvas() {
                 className="h-full"
               />
             </div>
-            <div className="relative col-span-2">
+            <div className="relative col-span-1 sm:col-span-2">
               <CanvasSection
                 title="Pain Relievers"
                 items={canvasData.content.painRelievers}
@@ -145,9 +145,9 @@ export default function TeslaValuePropositionCanvas() {
         </div>
 
         {/* Right side - Circle section */}
-        <div className="relative border-2 border-gray-200 rounded-full aspect-square">
-          <div className="absolute inset-0 bg-blue-200/30 rounded-full"></div>
-          <div className="absolute inset-0 grid grid-cols-2 gap-2 p-4">
+        <div className="relative border-2 border-gray-200 rounded-lg lg:rounded-full aspect-auto lg:aspect-square">
+          <div className="absolute inset-0 bg-blue-200/30 rounded-lg lg:rounded-full"></div>
+          <div className="absolute inset-0 grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 sm:p-4">
             <div className="relative z-20">
               <CanvasSection
                 title="Customer Jobs"
@@ -166,7 +166,7 @@ export default function TeslaValuePropositionCanvas() {
                 className="h-full"
               />
             </div>
-            <div className="relative col-span-2 z-20">
+            <div className="relative col-span-1 sm:col-span-2 z-20">
               <CanvasSection
                 title="Pains"
                 items={canvasData.content.pains}
