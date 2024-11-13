@@ -197,7 +197,7 @@ export function PESTELCanvas() {
       onAIAssist={handleAIAssist}
       onSave={handleSave}
     >
-      <div className="mb-4 grid grid-cols-3 gap-4">
+      <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <input
           type="text"
           value={project_name}
@@ -233,7 +233,7 @@ export function PESTELCanvas() {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         {sections.map((section) => (
           <div key={section.key} className="relative">
             <div 
