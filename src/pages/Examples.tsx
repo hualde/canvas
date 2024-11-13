@@ -30,25 +30,26 @@ export function Examples() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-6 flex items-center">
+    <div className="container mx-auto px-4 py-6 sm:py-8">
+      <div className="mb-4 sm:mb-6 flex items-center">
         <Link to="/" className="inline-flex items-center text-gray-600 hover:text-gray-900">
           <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Dashboard
+          <span className="hidden sm:inline">Back to Dashboard</span>
+          <span className="sm:hidden">Back</span>
         </Link>
       </div>
 
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">View Example Canvases</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">View Example Canvases</h1>
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
         <div>
-          <h2 className="text-xl font-semibold mb-4">Select a Company</h2>
-          <div className="grid gap-4">
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Select a Company</h2>
+          <div className="grid gap-3 sm:gap-4">
             {companies.map((company) => (
               <button
                 key={company.id}
                 onClick={() => setSelectedCompany(company.id)}
-                className={`p-4 rounded-lg text-left transition-colors ${
+                className={`p-3 sm:p-4 rounded-lg text-left transition-colors ${
                   selectedCompany === company.id
                     ? 'bg-blue-100 border-2 border-blue-500'
                     : 'bg-white border-2 border-gray-200 hover:border-blue-300'
@@ -61,22 +62,22 @@ export function Examples() {
         </div>
 
         <div>
-          <h2 className="text-xl font-semibold mb-4">Select a Canvas Type</h2>
-          <div className="grid gap-4">
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Select a Canvas Type</h2>
+          <div className="grid gap-3 sm:gap-4">
             {canvasTypes.map((canvas) => {
               const Icon = canvas.icon;
               return (
                 <button
                   key={canvas.id}
                   onClick={() => setSelectedCanvas(canvas.id)}
-                  className={`p-4 rounded-lg text-left transition-colors flex items-center ${
+                  className={`p-3 sm:p-4 rounded-lg text-left transition-colors flex items-center ${
                     selectedCanvas === canvas.id
                       ? 'bg-green-100 border-2 border-green-500'
                       : 'bg-white border-2 border-gray-200 hover:border-green-300'
                   }`}
                 >
-                  <Icon className="w-6 h-6 mr-3" />
-                  {canvas.name}
+                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 flex-shrink-0" />
+                  <span className="text-sm sm:text-base">{canvas.name}</span>
                 </button>
               );
             })}
@@ -84,11 +85,11 @@ export function Examples() {
         </div>
       </div>
 
-      <div className="mt-8 flex justify-center">
+      <div className="mt-6 sm:mt-8 flex justify-center">
         <button
           onClick={handleViewExample}
           disabled={!selectedCompany || !selectedCanvas}
-          className={`px-6 py-3 rounded-lg transition-colors ${
+          className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors text-sm sm:text-base ${
             selectedCompany && selectedCanvas
               ? 'bg-blue-600 text-white hover:bg-blue-700'
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
