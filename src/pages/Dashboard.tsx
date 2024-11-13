@@ -172,7 +172,7 @@ export function Dashboard() {
       {showUpgradeBanner && (
         <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
           <div className="flex items-center">
-            <AlertCircle className="h-5 w-5 mr-2" />
+            <AlertCircle className="h-5 w-5 mr-2 flex-shrink-0" />
             <div>
               <p className="font-bold">
                 {subscriptionStatus === SUBSCRIPTION_STATUS.FREE 
@@ -181,7 +181,7 @@ export function Dashboard() {
                     ? "Your subscription has been cancelled"
                     : "Your subscription is not active"}
               </p>
-              <p>
+              <p className="mt-1">
                 Upgrade to Premium for unlimited canvases, PDF export, AI assistant, and more features!
                 {' '}
                 <Link to="/upgrade" className="font-bold underline">Upgrade now</Link>
@@ -193,10 +193,10 @@ export function Dashboard() {
 
       <div className="flex justify-between items-start mb-8 flex-col sm:flex-row gap-4">
         <h1 className="text-3xl font-bold text-gray-900">My Canvases</h1>
-        <div className="relative">
+        <div className="relative w-full sm:w-auto">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className={`flex items-center justify-center px-4 py-2 rounded-lg transition-colors shadow-sm ${
+            className={`flex items-center justify-center px-4 py-2 rounded-lg transition-colors shadow-sm w-full sm:w-auto ${
               canCreateCanvas || subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE
                 ? 'bg-blue-600 text-white hover:bg-blue-700'
                 : 'bg-gray-400 text-white cursor-not-allowed'
@@ -208,7 +208,7 @@ export function Dashboard() {
             <ChevronDown className="w-4 h-4 ml-2" />
           </button>
           {isDropdownOpen && (canCreateCanvas || subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE) && (
-            <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
               <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 <button onClick={() => handleCreateCanvas('business')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left" role="menuitem">Business Model Canvas</button>
                 <button onClick={() => handleCreateCanvas('value-proposition')} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left" role="menuitem">Value Proposition Canvas</button>
@@ -235,7 +235,7 @@ export function Dashboard() {
         )}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {canvases.map((canvas) => (
           <div
             key={canvas.id}
@@ -243,11 +243,11 @@ export function Dashboard() {
           >
             <div className="flex items-center mb-4">
               {getCanvasIcon(canvas.type)}
-              <h3 className="text-xl font-semibold text-gray-900 ml-2">
+              <h3 className="text-xl font-semibold text-gray-900 ml-2 truncate">
                 {canvas.title}
               </h3>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
               <span className="text-sm text-gray-500">
                 Updated: {new Date(canvas.updated_at).toLocaleDateString()}
               </span>
@@ -255,12 +255,14 @@ export function Dashboard() {
                 <button
                   onClick={() => navigate(getCanvasRoute(canvas))}
                   className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                  aria-label={`Edit ${canvas.title}`}
                 >
                   <Edit3 className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => setCanvasToDelete(canvas)}
                   className="p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                  aria-label={`Delete ${canvas.title}`}
                 >
                   <Trash2 className="w-5 h-5" />
                 </button>
@@ -279,7 +281,7 @@ export function Dashboard() {
       )}
 
       {canvasToDelete && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
             <h2 className="text-xl font-semibold mb-4">Confirm Deletion</h2>
             <p className="mb-6">Are you sure you want to delete this canvas? This action cannot be undone.</p>
