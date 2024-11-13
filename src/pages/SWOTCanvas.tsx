@@ -150,7 +150,7 @@ export function SWOTCanvas() {
       onAIAssist={handleAIAssist}
       onSave={handleSave}
     >
-      <div className="mb-4 grid grid-cols-3 gap-4">
+      <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <input
           type="text"
           value={project_name}
@@ -186,9 +186,9 @@ export function SWOTCanvas() {
         />
       </div>
 
-      <div className="relative border-2 border-gray-200 rounded-lg p-6 overflow-hidden">
+      <div className="relative border-2 border-gray-200 rounded-lg p-4 sm:p-6 overflow-hidden">
         <div className="absolute inset-0 bg-blue-200/30"></div>
-        <div className="relative z-10 grid grid-cols-2 gap-4">
+        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <CanvasSection
             title="Strengths"
             items={canvas.content.strengths || []}
