@@ -8,15 +8,15 @@ export function Layout() {
   const { isAuthenticated } = useAuthStore();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col w-full">
       <Navigation />
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row flex-grow w-full">
         {isAuthenticated && (
-          <div className="md:block">
+          <div className="md:w-64 flex-shrink-0">
             <Sidebar />
           </div>
         )}
-        <main className="flex-1 p-4 md:p-6 w-full">
+        <main className="flex-grow p-4 md:p-6 w-full">
           <Outlet />
         </main>
       </div>
