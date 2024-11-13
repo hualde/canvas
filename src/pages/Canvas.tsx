@@ -164,7 +164,7 @@ export default function Canvas() {
       onAIAssist={handleAIAssist}
       onSave={handleSave}
     >
-      <div className="mb-4 grid grid-cols-3 gap-4">
+      <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <input
           type="text"
           value={project_name}
@@ -200,9 +200,9 @@ export default function Canvas() {
         />
       </div>
 
-      <div className="relative border-2 border-gray-200 rounded-lg p-6 overflow-hidden">
+      <div className="relative border-2 border-gray-200 rounded-lg p-4 md:p-6 overflow-hidden">
         <div className="absolute inset-0 bg-blue-200/30"></div>
-        <div className="relative z-10 grid grid-cols-5 gap-4">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <CanvasSection
             title="Key Partners"
             items={canvas.content.keyPartners}
@@ -211,7 +211,7 @@ export default function Canvas() {
             className="h-full bg-white/50"
             icon={icons.keyPartnerships}
           />
-          <div className="grid grid-rows-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
             <CanvasSection
               title="Key Activities"
               items={canvas.content.keyActivities}
@@ -237,7 +237,7 @@ export default function Canvas() {
             className="h-full bg-white/50"
             icon={icons.valuePropositions}
           />
-          <div className="grid grid-rows-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
             <CanvasSection
               title="Customer Relationships"
               items={canvas.content.customerRelationships}
@@ -265,7 +265,7 @@ export default function Canvas() {
           />
         </div>
 
-        <div className="relative z-10 grid grid-cols-2 gap-4 mt-4">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <CanvasSection
             title="Cost Structure"
             items={canvas.content.costStructure}
