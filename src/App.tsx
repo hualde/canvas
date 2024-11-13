@@ -14,6 +14,7 @@ import Upgrade from './pages/Upgrade';
 import { Auth0ProviderWithNavigate } from './auth/auth0-provider';
 import { useInitializeUserSubscription } from './hooks/useInitializeUserSubscription';
 import { Examples } from './pages/Examples';
+import LandingPage from './pages/LandingPage';
 
 // Import example canvas components
 import AppleBusinessModelCanvas from './pages/examples/apple/business-model-canvas';
@@ -71,7 +72,7 @@ function HandleRedirect() {
       const sessionId = searchParams.get('session_id');
       if (sessionId) {
         console.log('Successful checkout. Session ID:', sessionId);
-        navigate('/', { replace: true });
+        navigate('/dashboard', { replace: true });
       }
     }
   }, [location, isAuthenticated, navigate]);
@@ -94,10 +95,11 @@ function AppContent() {
   return (
     <div className="flex flex-col min-h-screen">
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         
         <Route
-          path="/"
+          path="/app"
           element={
             <PrivateRoute>
               <HandleRedirect />
