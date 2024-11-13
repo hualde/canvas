@@ -318,7 +318,7 @@ export default function LandingPage() {
       </section>
 
       {/* Final CTA Section */}
-      <section style={{ backgroundColor: '#2C3E50', color: 'white', padding: '4rem 0' }}>
+      <section style={{ backgroundColor: '#2C3E5C', color: 'white', padding: '4rem 0' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', '@media (min-width: 1024px)': { flexDirection: 'row', justifyContent: 'space-between' } }}>
           <div style={{ marginBottom: '2rem', '@media (min-width: 1024px)': { marginBottom: 0 } }}>
             <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '0.5rem', fontFamily: 'Comic Sans MS, cursive' }}>Ready to dive in?</h2>
@@ -331,52 +331,26 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer style={{ backgroundColor: '#2C3E50', color: '#C5D9F1', padding: '4rem 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', '@media (min-width: 768px)': { gridTemplateColumns: '1fr 1fr 1fr 1fr' } }}>
-            <div>
-              <img src="/placeholder.svg?height=40&width=40" alt="Company logo" style={{ height: '2.5rem', marginBottom: '1rem' }} />
-              <p style={{ marginBottom: '1rem' }}>Making the world a better place through constructing elegant hierarchies.</p>
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <a href="#" style={{ color: '#C5D9F1' }}>
-                  <span style={{ fontSize: '1.5rem' }}>f</span>
-                </a>
-                <a href="#" style={{ color: '#C5D9F1' }}>
-                  <span style={{ fontSize: '1.5rem' }}>t</span>
-                </a>
-              </div>
-            </div>
-            <div>
-              <h3 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Solutions</h3>
-              <ul>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Marketing</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Analytics</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Commerce</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Insights</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Company</h3>
-              <ul>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>About</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Blog</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Jobs</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Press</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '1rem' }}>Legal</h3>
-              <ul>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Privacy</a></li>
-                <li style={{ marginBottom: '0.5rem' }}><a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Terms</a></li>
-              </ul>
-            </div>
-          </div>
-          <div style={{ borderTop: '1px solid #C5D9F1', marginTop: '2rem', paddingTop: '2rem', textAlign: 'center' }}>
-            <p>&copy; 2023 ValueProp, Inc. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+<footer style={{ backgroundColor: '#2C3E50', color: '#C5D9F1', padding: '2rem 0' }}>
+  <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', textAlign: 'center' }}>
+    <img src="/placeholder.svg?height=40&width=40" alt="Company logo" style={{ height: '2.5rem', marginBottom: '1rem' }} />
+    <p style={{ marginBottom: '1rem' }}>Making value proposition design simple and effective.</p>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' }}>
+      <a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>About</a>
+      <a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Privacy</a>
+      <a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Terms</a>
+    </div>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' }}>
+      <a href="#" style={{ color: '#C5D9F1' }}>
+        <span style={{ fontSize: '1.5rem' }}>f</span>
+      </a>
+      <a href="#" style={{ color: '#C5D9F1' }}>
+        <span style={{ fontSize: '1.5rem' }}>t</span>
+      </a>
+    </div>
+    <p>&copy; 2023 ValueProp, Inc. All rights reserved.</p>
+  </div>
+</footer>
     </div>
   )
 }
