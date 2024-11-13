@@ -67,40 +67,40 @@ export function AIChat({ canvasContent, isOpen, onClose }: AIChatProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md h-[80vh] flex flex-col relative">
-        <div className="p-4 border-b flex justify-between items-center">
-          <h2 className="text-xl font-bold">AI Assistant</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 sm:p-0">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-md h-[90vh] sm:h-[80vh] flex flex-col relative">
+        <div className="p-3 sm:p-4 border-b flex justify-between items-center">
+          <h2 className="text-lg sm:text-xl font-bold">AI Assistant</h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 focus:outline-none"
             aria-label="Close AI Assistant"
           >
-            <X className="h-6 w-6" />
+            <X className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
         </div>
-        <div className="flex-grow overflow-y-auto p-4">
+        <div className="flex-grow overflow-y-auto p-3 sm:p-4">
           {messages.map((message, index) => (
-            <div key={index} className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-              <div className={`inline-block p-2 rounded-lg ${message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
+            <div key={index} className={`mb-3 sm:mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
+              <div className={`inline-block p-2 rounded-lg text-sm sm:text-base ${message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
                 {message.content}
               </div>
             </div>
           ))}
         </div>
-        <div className="p-4 border-t flex">
+        <div className="p-3 sm:p-4 border-t flex">
           <input
             type="text"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
             placeholder="Type your message..."
-            className="flex-grow border rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-grow border rounded-l-lg px-3 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
             onClick={handleSendMessage}
             disabled={isProcessing}
-            className="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            className="bg-blue-500 text-white px-3 sm:px-4 py-2 rounded-r-lg text-sm sm:text-base hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
           >
             Send
           </button>
