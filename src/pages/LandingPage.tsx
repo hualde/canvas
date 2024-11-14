@@ -55,8 +55,8 @@ const pricingPlans = [
     features: [
       "1 usuario",
       "3 proyectos",
-      "Análisis básico",
-      "Acceso limitado a herramientas de Canvas"
+      "Asistencia AI básica",
+      "Herramientas de Canvas limitadas"
     ]
   },
   {
@@ -65,8 +65,10 @@ const pricingPlans = [
     features: [
       "Usuarios ilimitados",
       "Proyectos ilimitados",
-      "Análisis avanzado",
+      "Asistencia AI avanzada",
       "Herramientas de Canvas completas",
+      "Exportación a PDF",
+      "Acceso a biblioteca de ejemplos",
       "Integración personalizada"
     ]
   },
@@ -83,8 +85,10 @@ const pricingPlans = [
 const featureComparison = [
   { feature: "Número de Usuarios", free: "1", premium: "Ilimitados" },
   { feature: "Número de Proyectos", free: "3", premium: "Ilimitados" },
-  { feature: "Análisis", free: "Básico", premium: "Avanzado" },
+  { feature: "Asistencia AI", free: "Básica", premium: "Avanzada" },
   { feature: "Herramientas de Canvas", free: "Limitadas", premium: "Completas" },
+  { feature: "Exportación a PDF", free: "❌", premium: "✅" },
+  { feature: "Biblioteca de Ejemplos", free: "❌", premium: "✅" },
   { feature: "Integración Personalizada", free: "❌", premium: "✅" }
 ]
 
@@ -257,17 +261,17 @@ export default function LandingPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Característica</TableHead>
-                <TableHead>Plan Gratuito</TableHead>
-                <TableHead>Plan Premium</TableHead>
+                <TableHead className="w-1/3 text-left">Característica</TableHead>
+                <TableHead className="w-1/3 text-center">Plan Gratuito</TableHead>
+                <TableHead className="w-1/3 text-center">Plan Premium</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {featureComparison.map((item, index) => (
                 <TableRow key={index}>
-                  <TableCell>{item.feature}</TableCell>
-                  <TableCell>{item.free}</TableCell>
-                  <TableCell>{item.premium}</TableCell>
+                  <TableCell className="text-left">{item.feature}</TableCell>
+                  <TableCell className="text-center">{item.free}</TableCell>
+                  <TableCell className="text-center">{item.premium}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
