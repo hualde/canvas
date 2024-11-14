@@ -55,7 +55,6 @@ const pricingPlans = [
     features: [
       "1 usuario",
       "3 proyectos",
-      "Asistencia AI básica",
       "Herramientas de Canvas limitadas"
     ]
   },
@@ -65,11 +64,11 @@ const pricingPlans = [
     features: [
       "Usuarios ilimitados",
       "Proyectos ilimitados",
-      "Asistencia AI avanzada",
+      "Asistencia AI",
       "Herramientas de Canvas completas",
       "Exportación a PDF",
-      "Acceso a biblioteca de ejemplos",
-      "Integración personalizada"
+      "Acceso a biblioteca de ejemplos"
+      
     ]
   },
   {
@@ -85,11 +84,11 @@ const pricingPlans = [
 const featureComparison = [
   { feature: "Número de Usuarios", free: "1", premium: "Ilimitados" },
   { feature: "Número de Proyectos", free: "3", premium: "Ilimitados" },
-  { feature: "Asistencia AI", free: "Básica", premium: "Avanzada" },
-  { feature: "Herramientas de Canvas", free: "Limitadas", premium: "Completas" },
+  { feature: "Asistencia AI", free: "No", premium: "Sí" },
+  { feature: "Herramientas de Canvas", free: "Limitadas", premium: "Ilimitadas" },
   { feature: "Exportación a PDF", free: "❌", premium: "✅" },
-  { feature: "Biblioteca de Ejemplos", free: "❌", premium: "✅" },
-  { feature: "Integración Personalizada", free: "❌", premium: "✅" }
+  { feature: "Biblioteca de Ejemplos", free: "❌", premium: "✅" }
+  
 ]
 
 const faqs = [
@@ -261,9 +260,9 @@ export default function LandingPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-1/3 text-left">Característica</TableHead>
-                <TableHead className="w-1/3 text-center">Plan Gratuito</TableHead>
-                <TableHead className="w-1/3 text-center">Plan Premium</TableHead>
+                <TableHead className="w-1/3 text-left font-bold">Característica</TableHead>
+                <TableHead className="w-1/3 text-center font-bold">Plan Gratuito</TableHead>
+                <TableHead className="w-1/3 text-center font-bold">Plan Premium</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
