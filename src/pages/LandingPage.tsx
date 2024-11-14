@@ -116,21 +116,26 @@ export default function LandingPage() {
   const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
 
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      backgroundColor: 'white', 
-      color: '#2C3E50', 
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#F5F7FA',
+      color: '#1E1F26',
       fontFamily: 'Arial, sans-serif',
-      backgroundImage: 'url("data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%23C5D9F1" fill-opacity="0.1" fill-rule="evenodd"/%3E%3C/svg%3E")',
-      backgroundAttachment: 'fixed',
+      backgroundImage: 'linear-gradient(to right, #F5F7FA, #E6ECF2)',
     }}>
       {/* Language Selector Bar */}
-      <div style={{ backgroundColor: '#2C3E50', color: 'white', padding: '0.5rem 0' }}>
+      <div style={{ backgroundColor: '#1E1F26', color: 'white', padding: '0.5rem 0' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', display: 'flex', justifyContent: 'flex-end' }}>
-          <select 
+          <select
             value={currentLanguage.code}
             onChange={(e) => setCurrentLanguage(languages.find(lang => lang.code === e.target.value) || languages[0])}
-            style={{ padding: '0.25rem', border: '1px solid #C5D9F1', borderRadius: '0.25rem', backgroundColor: 'white', color: '#2C3E50' }}
+            style={{
+              padding: '0.25rem',
+              border: '1px solid #E6ECF2',
+              borderRadius: '0.25rem',
+              backgroundColor: 'white',
+              color: '#1E1F26'
+            }}
           >
             {languages.map((lang) => (
               <option key={lang.code} value={lang.code}>{lang.name}</option>
@@ -140,18 +145,34 @@ export default function LandingPage() {
       </div>
 
       {/* Header */}
-      <header style={{ backgroundColor: 'white', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <header style={{
+        backgroundColor: '#FFFFFF',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+      }}>
+        <div style={{
+          maxWidth: '1280px', margin: '0 auto', padding: '1rem',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+        }}>
           <a href="#" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
             <img src="/placeholder.svg?height=40&width=40" alt="Logo" style={{ height: '40px', width: 'auto' }} />
-            <span style={{ marginLeft: '0.5rem', fontSize: '1.25rem', fontWeight: 'bold', color: '#2C3E50', fontFamily: 'Comic Sans MS, cursive' }}>ValueProp</span>
+            <span style={{
+              marginLeft: '0.5rem', fontSize: '1.5rem', fontWeight: 'bold',
+              color: '#1E1F26', fontFamily: 'Helvetica Neue, sans-serif'
+            }}>ValueProp</span>
           </a>
           <nav style={{ display: 'flex', alignItems: 'center' }}>
-            <a href="#pricing" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>Pricing</a>
-            <a href="#faq" style={{ marginLeft: '1.5rem', color: '#2C3E50', textDecoration: 'none' }}>FAQ</a>
-            <button 
+            <a href="#pricing" style={{
+              marginLeft: '1.5rem', color: '#1E1F26', textDecoration: 'none', fontWeight: '500'
+            }}>Pricing</a>
+            <a href="#faq" style={{
+              marginLeft: '1.5rem', color: '#1E1F26', textDecoration: 'none', fontWeight: '500'
+            }}>FAQ</a>
+            <button
               onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
-              style={{ marginLeft: '1.5rem', padding: '0.5rem 1rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}
+              style={{
+                marginLeft: '1.5rem', padding: '0.5rem 1rem', backgroundColor: '#FF6600', color: 'white',
+                border: 'none', borderRadius: '0.25rem', cursor: 'pointer', fontWeight: '600'
+              }}
             >
               {isLoading ? 'Loading...' : (isAuthenticated ? 'Go to App' : 'Login')}
             </button>
@@ -160,183 +181,176 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section style={{ backgroundColor: '#C5D9F1', padding: '4rem 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', '@media (min-width: 1024px)': { flexDirection: 'row', alignItems: 'center' } }}>
-            <div style={{ flex: 1, marginBottom: '2rem', '@media (min-width: 1024px)': { marginBottom: 0, marginRight: '2rem' } }}>
-              <h1 style={{ fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem', fontFamily: 'Comic Sans MS, cursive', color: '#2C3E50' }}>
-                Design Your <span style={{ color: '#E74C3C' }}>Value Proposition</span>
-              </h1>
-              <p style={{ fontSize: '1.25rem', color: '#2C3E50', marginBottom: '2rem' }}>
-                Create, test, and refine your value proposition with our intuitive canvas tool. Inspired by Alexander Osterwalder's methodology.
-              </p>
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <button 
-                  onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
-                  style={{ padding: '0.75rem 1.5rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', fontSize: '1.125rem', cursor: 'pointer' }}
-                >
-                  {isLoading ? 'Loading...' : (isAuthenticated ? 'Go to App' : 'Get Started')}
-                </button>
-                {/* El botón "Learn More" ha sido eliminado */}
-              </div>
-            </div>
-            <div style={{ flex: 1 }}>
-              <img src="/placeholder.svg?height=400&width=600" alt="App screenshot" style={{ width: '100%', borderRadius: '0.5rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)' }} />
-            </div>
+      <section style={{
+        backgroundColor: '#F5F7FA',
+        padding: '4rem 0',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+      }}>
+        <div style={{
+          maxWidth: '1280px', margin: '0 auto', padding: '0 1rem',
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center'
+        }}>
+          <h1 style={{
+            fontSize: '3rem', fontWeight: '700',
+            marginBottom: '1rem', fontFamily: 'Helvetica Neue, sans-serif',
+            color: '#1E1F26'
+          }}>
+            Design Your <span style={{ color: '#FF6600' }}>Value Proposition</span>
+          </h1>
+          <p style={{
+            fontSize: '1.25rem', color: '#6B7280', marginBottom: '2rem', maxWidth: '600px'
+          }}>
+            Create, test, and refine your value proposition with our intuitive canvas tool, inspired by Alexander Osterwalder's methodology.
+          </p>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <button
+              onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
+              style={{
+                padding: '0.75rem 1.5rem', backgroundColor: '#FF6600', color: 'white',
+                border: 'none', borderRadius: '0.25rem', fontWeight: '600',
+                fontSize: '1rem', cursor: 'pointer'
+              }}
+            >
+              Get Started
+            </button>
+            <button
+              onClick={() => window.scrollTo(0, document.body.scrollHeight)}
+              style={{
+                padding: '0.75rem 1.5rem', backgroundColor: '#1E1F26', color: 'white',
+                border: 'none', borderRadius: '0.25rem', fontWeight: '600',
+                fontSize: '1rem', cursor: 'pointer'
+              }}
+            >
+              Learn More
+            </button>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" style={{ padding: '4rem 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', textAlign: 'center', marginBottom: '2rem', fontFamily: 'Comic Sans MS, cursive', color: '#2C3E50' }}>
-            Powerful features to enhance your workflow
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', '@media (min-width: 768px)': { gridTemplateColumns: '1fr 1fr' } }}>
-            {features.map((feature, index) => (
-              <div key={index} style={{ display: 'flex', backgroundColor: 'white', padding: '1.5rem', borderRadius: '0.5rem', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
-                <div style={{ fontSize: '2rem', marginRight: '1rem' }}>{feature.icon}</div>
-                <div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2C3E50' }}>{feature.title}</h3>
-                  <p style={{ color: '#2C3E50' }}>{feature.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+<section style={{
+  backgroundColor: '#FFFFFF',
+  padding: '4rem 0',
+  borderTop: '1px solid #E6ECF2',
+  borderBottom: '1px solid #E6ECF2',
+}}>
+  <div style={{
+    maxWidth: '1280px', margin: '0 auto', padding: '0 1rem',
+    display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'
+  }}>
+    <h2 style={{
+      fontSize: '2.5rem', fontWeight: '700',
+      marginBottom: '2rem', color: '#1E1F26', fontFamily: 'Helvetica Neue, sans-serif'
+    }}>Features</h2>
+    <div style={{
+      display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+      gap: '1.5rem', width: '100%'
+    }}>
+      {features.map((feature, index) => (
+        <div key={index} style={{
+          padding: '2rem', borderRadius: '0.5rem', backgroundColor: '#F5F7FA',
+          boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', textAlign: 'center'
+        }}>
+          <div style={{ fontSize: '3rem' }}>{feature.icon}</div>
+          <h3 style={{
+            fontSize: '1.5rem', fontWeight: '600', color: '#FF6600', marginTop: '0.5rem'
+          }}>{feature.title}</h3>
+          <p style={{ color: '#6B7280', marginTop: '0.5rem' }}>{feature.description}</p>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
-      {/* Testimonials Section */}
-      <section style={{ padding: '4rem 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '2rem', fontFamily: 'Comic Sans MS, cursive', color: '#2C3E50', textAlign: 'center' }}>
-            What our users are saying
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', '@media (min-width: 768px)': { gridTemplateColumns: '1fr 1fr' } }}>
-            {testimonials.map((testimonial, index) => (
-              <div key={index} style={{ backgroundColor: 'white', borderRadius: '0.5rem', padding: '1.5rem', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
-                <p style={{ fontSize: '1.125rem', color: '#2C3E50', fontStyle: 'italic', marginBottom: '1rem' }}>"{testimonial.quote}"</p>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <img src={testimonial.image} alt={testimonial.name} style={{ width: '3rem', height: '3rem', borderRadius: '9999px', marginRight: '1rem' }} />
-                  <div>
-                    <p style={{ fontWeight: 'bold', color: '#2C3E50' }}>{testimonial.name}</p>
-                    <p style={{ color: '#2C3E50' }}>{testimonial.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" style={{ backgroundColor: '#C5D9F1', padding: '4rem 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '1rem', fontFamily: 'Comic Sans MS, cursive', color: '#2C3E50', textAlign: 'center' }}>
-            Pricing Plans
-          </h2>
-          <p style={{ fontSize: '1.125rem', color: '#2C3E50', marginBottom: '2rem', textAlign: 'center' }}>
-            Choose the plan that's right for you and start designing your value proposition today.
+{/* Pricing Section */}
+<section id="pricing" style={{
+  backgroundColor: '#F5F7FA', padding: '4rem 0',
+}}>
+  <div style={{
+    maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', textAlign: 'center'
+  }}>
+    <h2 style={{
+      fontSize: '2.5rem', fontWeight: '700', color: '#1E1F26',
+      fontFamily: 'Helvetica Neue, sans-serif', marginBottom: '2rem'
+    }}>Pricing</h2>
+    <div style={{
+      display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+      gap: '1.5rem', width: '100%'
+    }}>
+      {pricingPlans.map((plan, index) => (
+        <div key={index} style={{
+          padding: '2rem', borderRadius: '0.5rem', backgroundColor: '#FFFFFF',
+          boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', textAlign: 'center'
+        }}>
+          <h3 style={{
+            fontSize: '1.75rem', fontWeight: '700', color: '#FF6600'
+          }}>{plan.name}</h3>
+          <p style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1E1F26', margin: '1rem 0' }}>
+            {plan.price}
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', maxWidth: '900px', margin: '0 auto', '@media (min-width: 768px)': { gridTemplateColumns: 'repeat(3, 1fr)' } }}>
-            {pricingPlans.map((plan, index) => (
-              <div key={index} style={{ backgroundColor: 'white', borderRadius: '0.5rem', padding: '1.25rem', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)', textAlign: 'center' }}>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2C3E50' }}>{plan.name}</h3>
-                <p style={{ fontSize: '1.75rem', fontWeight: 'bold', marginBottom: '1rem', color: '#E74C3C' }}>{plan.price}</p>
-                <ul style={{ marginBottom: '1.5rem', listStyle: 'none', padding: 0 }}>
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} style={{ marginBottom: '0.5rem', color: '#2C3E50', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <span style={{ color: '#E74C3C', marginRight: '0.5rem' }}>✓</span> {feature}
-                    </li>
-                  ))}
-                </ul>
-                <button style={{ width: '100%', padding: '0.75rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', fontSize: '1rem', cursor: 'pointer' }}>
-                  {plan.name === 'Free' ? 'Get Started' : 'Upgrade Now'}
-                </button>
-              </div>
+          <ul style={{ color: '#6B7280', listStyle: 'none', padding: 0, textAlign: 'left' }}>
+            {plan.features.map((feature, featureIndex) => (
+              <li key={featureIndex} style={{ marginBottom: '0.5rem' }}>
+                ✔ {feature}
+              </li>
             ))}
-          </div>
-          <div style={{ marginTop: '4rem', backgroundColor: 'white', borderRadius: '0.5rem', padding: '1.5rem', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: '#2C3E50', textAlign: 'center' }}>Feature Comparison</h3>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ borderBottom: '2px solid #C5D9F1' }}>
-                  <th style={{ padding: '0.5rem', textAlign: 'left', color: '#2C3E50' }}>Feature</th>
-                  <th style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>Free</th>
-                  <th style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>Premium Monthly</th>
-                  <th style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>Premium Annual</th>
-                </tr>
-              </thead>
-              <tbody>
-                {featureComparison.map((item, index) => (
-                  <tr key={index} style={{ borderBottom: '1px solid #C5D9F1' }}>
-                    <td style={{ padding: '0.5rem', color: '#2C3E50' }}>{item.feature}</td>
-                    <td style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>{item.free}</td>
-                    <td style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>{item.premium}</td>
-                    <td style={{ padding: '0.5rem', textAlign: 'center', color: '#2C3E50' }}>{item.premium}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" style={{ padding: '4rem 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-          <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '2rem', fontFamily: 'Comic Sans MS, cursive', color: '#2C3E50', textAlign: 'center' }}>
-            Frequently Asked Questions
-          </h2>
-          <div>
-            {faqs.map((faq, index) => (
-              <div key={index} style={{ marginBottom: '1.5rem', backgroundColor: 'white', padding: '1.5rem', borderRadius: '0.5rem', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)' }}>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#2C3E50' }}>{faq.question}</h3>
-                <p style={{ color: '#2C3E50' }}>{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA Section */}
-      <section style={{ backgroundColor: '#2C3E5C', color: 'white', padding: '4rem 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', '@media (min-width: 1024px)': { flexDirection: 'row', justifyContent: 'space-between' } }}>
-          <div style={{ marginBottom: '2rem', '@media (min-width: 1024px)': { marginBottom: 0 } }}>
-            <h2 style={{ fontSize: '2.25rem', fontWeight: 'bold', marginBottom: '0.5rem', fontFamily: 'Comic Sans MS, cursive' }}>Ready to dive in?</h2>
-            <p style={{ fontSize: '1.25rem' }}>Start your free trial today.</p>
-          </div>
-          <button 
-            onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
-            style={{ padding: '0.75rem 1.5rem', backgroundColor: '#E74C3C', color: 'white', border: 'none', borderRadius: '0.25rem', fontSize: '1.125rem', fontWeight: 'bold', cursor: 'pointer' }}
-          >
-            Get started
+          </ul>
+          <button style={{
+            marginTop: '1.5rem', padding: '0.5rem 1rem', backgroundColor: '#FF6600',
+            color: 'white', border: 'none', borderRadius: '0.25rem', fontWeight: '600',
+            fontSize: '1rem', cursor: 'pointer'
+          }}>
+            Choose Plan
           </button>
         </div>
-      </section>
-
-      {/* Footer */}
-      <footer style={{ backgroundColor: '#2C3E50', color: '#C5D9F1', padding: '2rem 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', textAlign: 'center' }}>
-          <img src="/placeholder.svg?height=40&width=40" alt="Company logo" style={{ height: '2.5rem', marginBottom: '1rem' }} />
-          <p style={{ marginBottom: '1rem' }}>Making value proposition design simple and effective.</p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' }}>
-            <a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>About</a>
-            <a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Privacy</a>
-            <a href="#" style={{ color: '#C5D9F1', textDecoration: 'none' }}>Terms</a>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' }}>
-            <a href="#" style={{ color: '#C5D9F1' }}>
-              <span style={{ fontSize: '1.5rem' }}>f</span>
-            </a>
-            <a href="#" style={{ color: '#C5D9F1' }}>
-              <span style={{ fontSize: '1.5rem' }}>t</span>
-            </a>
-          </div>
-          <p>&copy; 2023 ValueProp, Inc. All rights reserved.</p>
-        </div>
-      </footer>
+      ))}
     </div>
-  )
+  </div>
+</section>
+
+{/* FAQ Section */}
+<section id="faq" style={{
+  backgroundColor: '#FFFFFF', padding: '4rem 0',
+}}>
+  <div style={{
+    maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', textAlign: 'center'
+  }}>
+    <h2 style={{
+      fontSize: '2.5rem', fontWeight: '700', color: '#1E1F26', fontFamily: 'Helvetica Neue, sans-serif',
+      marginBottom: '2rem'
+    }}>Frequently Asked Questions</h2>
+    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+      {faqs.map((faq, index) => (
+        <div key={index} style={{
+          marginBottom: '1.5rem', padding: '1rem', backgroundColor: '#F5F7FA',
+          borderRadius: '0.5rem', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+          textAlign: 'left'
+        }}>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#FF6600' }}>{faq.question}</h3>
+          <p style={{ color: '#6B7280', marginTop: '0.5rem' }}>{faq.answer}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+{/* Footer */}
+<footer style={{
+  backgroundColor: '#1E1F26', color: 'white', padding: '2rem 0', textAlign: 'center'
+}}>
+  <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
+    <p>&copy; {new Date().getFullYear()} ValueProp. All rights reserved.</p>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1rem' }}>
+      <a href="#" style={{ color: '#FF6600', textDecoration: 'none' }}>Privacy Policy</a>
+      <a href="#" style={{ color: '#FF6600', textDecoration: 'none' }}>Terms of Service</a>
+      <a href="#" style={{ color: '#FF6600', textDecoration: 'none' }}>Contact Us</a>
+    </div>
+  </div>
+</footer>
+</div>
+);
 }
