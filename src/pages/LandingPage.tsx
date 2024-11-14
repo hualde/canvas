@@ -1,44 +1,47 @@
 import React, { useState } from 'react'
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react'
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 const languages = [
-  { code: 'en', name: 'English' },
   { code: 'es', name: 'Español' },
+  { code: 'en', name: 'English' },
   { code: 'fr', name: 'Français' },
 ]
 
 const features = [
   { 
     icon: '🤖',
-    title: 'AI Assistant',
-    description: 'Get intelligent suggestions and insights to improve your value propositions with our AI-powered assistant.'
+    title: 'Asistente de IA',
+    description: 'Recibe recomendaciones y análisis en tiempo real que te ayudarán a fortalecer tu propuesta de valor con el apoyo de nuestro asistente de IA.'
   },
   {
     icon: '📄',
-    title: 'PDF Export',
-    description: 'Export your canvas to PDF format for easy sharing and presentation with stakeholders.'
+    title: 'Exportación a PDF',
+    description: 'Descarga tus modelos de estrategia en formato PDF para compartirlos fácilmente con tu equipo y partes interesadas.'
   },
   {
     icon: '💡',
-    title: 'Example Library',
-    description: 'Access a comprehensive library of canvas examples from successful companies.'
+    title: 'Biblioteca de Ejemplos',
+    description: 'Accede a ejemplos de Canvases estratégicos basados en empresas exitosas para inspirarte y guiar tus propias estrategias.'
   },
   {
     icon: '🎯',
-    title: 'Multiple Canvas Types',
-    description: 'Create Business Model, Value Proposition, Empathy Map, and other strategic canvases.'
+    title: 'Múltiples Canvases',
+    description: 'Crea y personaliza Business Model Canvas, Value Proposition, DAFO, PESTEL, y Empathy Map, con facilidad.'
   },
 ]
 
 const testimonials = [
   {
-    quote: "This app has revolutionized how we approach our value proposition. It's intuitive and powerful!",
+    quote: "Esta app ha revolucionado cómo abordamos nuestra propuesta de valor. Es intuitiva y poderosa, una herramienta imprescindible para cualquier estratega.",
     name: "Sarah Johnson",
     role: "CEO, TechStart",
     image: "/placeholder.svg?height=100&width=100"
   },
   {
-    quote: "The visual approach of this tool helped us identify gaps in our offering we never knew existed.",
+    quote: "La perspectiva visual de esta herramienta nos ayudó a identificar puntos críticos en nuestra oferta que ni siquiera sabíamos que existían.",
     name: "Michael Chen",
     role: "Product Manager, InnovateCorp",
     image: "/placeholder.svg?height=100&width=100"
@@ -47,95 +50,72 @@ const testimonials = [
 
 const pricingPlans = [
   {
-    name: "Free",
-    price: "$0/month",
+    name: "Plan Gratuito",
+    price: "€0/mes",
     features: [
-      "1 User",
-      "3 Projects",
-      "Basic Analytics",
-      "Limited Canvas Tools"
+      "1 usuario",
+      "3 proyectos",
+      "Análisis básico",
+      "Acceso limitado a herramientas de Canvas"
     ]
   },
   {
-    name: "Premium Monthly",
-    price: "$9.99/month",
+    name: "Plan Premium Mensual",
+    price: "€9.99/mes",
     features: [
-      "Unlimited Users",
-      "Unlimited Projects",
-      "Advanced Analytics",
-      "Full Canvas Toolkit",
-      "AI-Powered Insights",
-      "Custom Integrations"
+      "Usuarios ilimitados",
+      "Proyectos ilimitados",
+      "Análisis avanzado",
+      "Herramientas de Canvas completas",
+      "Integración personalizada"
     ]
   },
   {
-    name: "Premium Annual",
-    price: "$99.99/year",
+    name: "Plan Premium Anual",
+    price: "€99.99/año",
     features: [
-      "Unlimited Users",
-      "Unlimited Projects",
-      "Advanced Analytics",
-      "Full Canvas Toolkit",
-      "AI-Powered Insights",
-      "Custom Integrations",
-      "Save 16% compared to monthly"
+      "Todo lo incluido en el plan mensual",
+      "Ahorro del 16% comparado con el plan mensual"
     ]
   }
 ]
 
 const featureComparison = [
-  { feature: "Number of Users", free: "1", premium: "Unlimited" },
-  { feature: "Number of Projects", free: "3", premium: "Unlimited" },
-  { feature: "Analytics", free: "Basic", premium: "Advanced" },
-  { feature: "Canvas Tools", free: "Limited", premium: "Full Toolkit" },
-  { feature: "AI-Powered Insights", free: "❌", premium: "✅" },
-  { feature: "Custom Integrations", free: "❌", premium: "✅" }
+  { feature: "Número de Usuarios", free: "1", premium: "Ilimitados" },
+  { feature: "Número de Proyectos", free: "3", premium: "Ilimitados" },
+  { feature: "Análisis", free: "Básico", premium: "Avanzado" },
+  { feature: "Herramientas de Canvas", free: "Limitadas", premium: "Completas" },
+  { feature: "Integración Personalizada", free: "❌", premium: "✅" }
 ]
 
 const faqs = [
   {
-    question: "What is a Value Proposition Canvas?",
-    answer: "A Value Proposition Canvas is a tool to ensure that a product or service is positioned around what the customer values and needs. It helps businesses to design products and services that customers want."
+    question: "¿Qué es un Value Proposition Canvas?",
+    answer: "Es una herramienta que ayuda a posicionar tu producto o servicio en torno a las necesidades y valores del cliente. Facilita el diseño de productos y servicios que tus clientes realmente quieren."
   },
   {
-    question: "How does this app differ from traditional business planning tools?",
-    answer: "Our app brings the Value Proposition Canvas to life with interactive features and AI-powered insights. It's designed to be more dynamic and user-friendly than traditional business planning tools."
+    question: "¿En qué se diferencia DAI Vinci de otras herramientas de planificación empresarial?",
+    answer: "DAI Vinci da vida al Value Proposition Canvas y otros modelos estratégicos con características interactivas y análisis impulsado por IA, ofreciendo una experiencia más dinámica y fácil de usar."
   },
   {
-    question: "Can I use this app for multiple projects?",
-    answer: "Yes! Depending on your plan, you can manage multiple projects within the app. This allows you to create and compare value propositions for different products or customer segments."
-  },
-  {
-    question: "Is my data secure?",
-    answer: "Absolutely. We use industry-standard encryption and security practices to ensure your data is safe. We never share your information with third parties."
+    question: "¿Puedo usar DAI Vinci para múltiples proyectos?",
+    answer: "Sí, dependiendo del plan que elijas, puedes gestionar varios proyectos dentro de la app, lo que te permite diseñar y comparar propuestas de valor para diferentes segmentos de clientes."
   },
 ]
 
 export default function LandingPage() {
   const [currentLanguage, setCurrentLanguage] = useState(languages[0])
-  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0()
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#F5F7FA',
-      color: '#1E1F26',
-      fontFamily: 'Arial, sans-serif',
-      backgroundImage: 'linear-gradient(to right, #F5F7FA, #E6ECF2)',
-    }}>
+    <div className="min-h-screen bg-gradient-to-r from-[#F5F7FA] to-[#E6ECF2] text-[#1E1F26] font-sans">
       {/* Language Selector Bar */}
-      <div style={{ backgroundColor: '#1E1F26', color: 'white', padding: '0.5rem 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', display: 'flex', justifyContent: 'flex-end' }}>
+      <div className="bg-[#1E1F26] text-white py-2">
+        <div className="max-w-7xl mx-auto px-4 flex justify-end">
           <select
             value={currentLanguage.code}
             onChange={(e) => setCurrentLanguage(languages.find(lang => lang.code === e.target.value) || languages[0])}
-            style={{
-              padding: '0.25rem',
-              border: '1px solid #E6ECF2',
-              borderRadius: '0.25rem',
-              backgroundColor: 'white',
-              color: '#1E1F26'
-            }}
+            className="py-1 px-2 border border-[#E6ECF2] rounded bg-white text-[#1E1F26]"
           >
             {languages.map((lang) => (
               <option key={lang.code} value={lang.code}>{lang.name}</option>
@@ -145,212 +125,197 @@ export default function LandingPage() {
       </div>
 
       {/* Header */}
-      <header style={{
-        backgroundColor: '#FFFFFF',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-      }}>
-        <div style={{
-          maxWidth: '1280px', margin: '0 auto', padding: '1rem',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center'
-        }}>
-          <a href="#" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-            <img src="/placeholder.svg?height=40&width=40" alt="Logo" style={{ height: '40px', width: 'auto' }} />
-            <span style={{
-              marginLeft: '0.5rem', fontSize: '1.5rem', fontWeight: 'bold',
-              color: '#1E1F26', fontFamily: 'Helvetica Neue, sans-serif'
-            }}>ValueProp</span>
+      <header className="bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+          <a href="#" className="flex items-center no-underline">
+            <img src="/placeholder.svg?height=40&width=40" alt="Logo" className="h-10 w-auto" />
+            <span className="ml-2 text-2xl font-bold text-[#1E1F26] font-helvetica">DAI Vinci</span>
           </a>
-          <nav style={{ display: 'flex', alignItems: 'center' }}>
-            <a href="#pricing" style={{
-              marginLeft: '1.5rem', color: '#1E1F26', textDecoration: 'none', fontWeight: '500'
-            }}>Pricing</a>
-            <a href="#faq" style={{
-              marginLeft: '1.5rem', color: '#1E1F26', textDecoration: 'none', fontWeight: '500'
-            }}>FAQ</a>
-            <button
+          <nav className="flex items-center">
+            <a href="#pricing" className="ml-6 text-[#1E1F26] no-underline font-medium">Precios</a>
+            <a href="#faq" className="ml-6 text-[#1E1F26] no-underline font-medium">FAQ</a>
+            <Button
               onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
-              style={{
-                marginLeft: '1.5rem', padding: '0.5rem 1rem', backgroundColor: '#FF6600', color: 'white',
-                border: 'none', borderRadius: '0.25rem', cursor: 'pointer', fontWeight: '600'
-              }}
+              className="ml-6"
+              variant="default"
             >
-              {isLoading ? 'Loading...' : (isAuthenticated ? 'Go to App' : 'Login')}
-            </button>
+              {isLoading ? 'Cargando...' : (isAuthenticated ? 'Ir a la App' : 'Iniciar Sesión')}
+            </Button>
           </nav>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section style={{
-        backgroundColor: '#F5F7FA',
-        padding: '4rem 0',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-      }}>
-        <div style={{
-          maxWidth: '1280px', margin: '0 auto', padding: '0 1rem',
-          display: 'flex', flexDirection: 'column',
-          alignItems: 'center'
-        }}>
-          <h1 style={{
-            fontSize: '3rem', fontWeight: '700',
-            marginBottom: '1rem', fontFamily: 'Helvetica Neue, sans-serif',
-            color: '#1E1F26'
-          }}>
-            Design Your <span style={{ color: '#FF6600' }}>Value Proposition</span>
+      <section className="bg-[#F5F7FA] py-16 flex flex-col items-center text-center">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
+          <h1 className="text-5xl font-bold mb-4 font-helvetica text-[#1E1F26]">
+            Diseña Tu Propuesta de Valor con <span className="text-[#FF6600]">DAI Vinci</span>
           </h1>
-          <p style={{
-            fontSize: '1.25rem', color: '#6B7280', marginBottom: '2rem', maxWidth: '600px'
-          }}>
-            Create, test, and refine your value proposition with our intuitive canvas tool, inspired by Alexander Osterwalder's methodology.
+          <p className="text-xl text-[#6B7280] mb-8 max-w-2xl">
+            DAI Vinci te ayuda a estructurar, visualizar y perfeccionar la estrategia de tu empresa de manera simple y efectiva. Utiliza herramientas de análisis como el Business Model Canvas, Value Proposition Canvas, DAFO, PESTEL, y más, para crear un enfoque sólido que impulse tu negocio.
           </p>
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <button
+          <div className="flex gap-4">
+            <Button
               onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
-              style={{
-                padding: '0.75rem 1.5rem', backgroundColor: '#FF6600', color: 'white',
-                border: 'none', borderRadius: '0.25rem', fontWeight: '600',
-                fontSize: '1rem', cursor: 'pointer'
-              }}
+              size="lg"
             >
-              Get Started
-            </button>
-            <button
+              Empezar Ahora
+            </Button>
+            <Button
               onClick={() => window.scrollTo(0, document.body.scrollHeight)}
-              style={{
-                padding: '0.75rem 1.5rem', backgroundColor: '#1E1F26', color: 'white',
-                border: 'none', borderRadius: '0.25rem', fontWeight: '600',
-                fontSize: '1rem', cursor: 'pointer'
-              }}
+              variant="outline"
+              size="lg"
             >
-              Learn More
-            </button>
+              Aprende Más
+            </Button>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-<section style={{
-  backgroundColor: '#FFFFFF',
-  padding: '4rem 0',
-  borderTop: '1px solid #E6ECF2',
-  borderBottom: '1px solid #E6ECF2',
-}}>
-  <div style={{
-    maxWidth: '1280px', margin: '0 auto', padding: '0 1rem',
-    display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'
-  }}>
-    <h2 style={{
-      fontSize: '2.5rem', fontWeight: '700',
-      marginBottom: '2rem', color: '#1E1F26', fontFamily: 'Helvetica Neue, sans-serif'
-    }}>Features</h2>
-    <div style={{
-      display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-      gap: '1.5rem', width: '100%'
-    }}>
-      {features.map((feature, index) => (
-        <div key={index} style={{
-          padding: '2rem', borderRadius: '0.5rem', backgroundColor: '#F5F7FA',
-          boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', textAlign: 'center'
-        }}>
-          <div style={{ fontSize: '3rem' }}>{feature.icon}</div>
-          <h3 style={{
-            fontSize: '1.5rem', fontWeight: '600', color: '#FF6600', marginTop: '0.5rem'
-          }}>{feature.title}</h3>
-          <p style={{ color: '#6B7280', marginTop: '0.5rem' }}>{feature.description}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-{/* Pricing Section */}
-<section id="pricing" style={{
-  backgroundColor: '#F5F7FA', padding: '4rem 0',
-}}>
-  <div style={{
-    maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', textAlign: 'center'
-  }}>
-    <h2 style={{
-      fontSize: '2.5rem', fontWeight: '700', color: '#1E1F26',
-      fontFamily: 'Helvetica Neue, sans-serif', marginBottom: '2rem'
-    }}>Pricing</h2>
-    <div style={{
-      display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-      gap: '1.5rem', width: '100%'
-    }}>
-      {pricingPlans.map((plan, index) => (
-        <div key={index} style={{
-          padding: '2rem', borderRadius: '0.5rem', backgroundColor: '#FFFFFF',
-          boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', textAlign: 'center'
-        }}>
-          <h3 style={{
-            fontSize: '1.75rem', fontWeight: '700', color: '#FF6600'
-          }}>{plan.name}</h3>
-          <p style={{ fontSize: '1.5rem', fontWeight: '600', color: '#1E1F26', margin: '1rem 0' }}>
-            {plan.price}
+      <section className="bg-white py-16 border-t border-b border-[#E6ECF2]">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col items-center text-center">
+          <h2 className="text-4xl font-bold mb-4 text-[#1E1F26] font-helvetica">Características de DAI Vinci</h2>
+          <p className="text-xl text-[#6B7280] mb-8 max-w-2xl">
+            Las poderosas herramientas de DAI Vinci están diseñadas para que estructures y optimices cada aspecto de tu estrategia empresarial. Desde la planificación hasta la presentación, cada función está pensada para que el proceso sea simple y efectivo.
           </p>
-          <ul style={{ color: '#6B7280', listStyle: 'none', padding: 0, textAlign: 'left' }}>
-            {plan.features.map((feature, featureIndex) => (
-              <li key={featureIndex} style={{ marginBottom: '0.5rem' }}>
-                ✔ {feature}
-              </li>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+            {features.map((feature, index) => (
+              <Card key={index}>
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-center">
+                    <span className="text-4xl mr-2">{feature.icon}</span>
+                    <span className="text-xl font-semibold text-[#FF6600]">{feature.title}</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-[#6B7280]">{feature.description}</p>
+                </CardContent>
+              </Card>
             ))}
-          </ul>
-          <button style={{
-            marginTop: '1.5rem', padding: '0.5rem 1rem', backgroundColor: '#FF6600',
-            color: 'white', border: 'none', borderRadius: '0.25rem', fontWeight: '600',
-            fontSize: '1rem', cursor: 'pointer'
-          }}>
-            Choose Plan
-          </button>
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
-{/* FAQ Section */}
-<section id="faq" style={{
-  backgroundColor: '#FFFFFF', padding: '4rem 0',
-}}>
-  <div style={{
-    maxWidth: '1280px', margin: '0 auto', padding: '0 1rem', textAlign: 'center'
-  }}>
-    <h2 style={{
-      fontSize: '2.5rem', fontWeight: '700', color: '#1E1F26', fontFamily: 'Helvetica Neue, sans-serif',
-      marginBottom: '2rem'
-    }}>Frequently Asked Questions</h2>
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-      {faqs.map((faq, index) => (
-        <div key={index} style={{
-          marginBottom: '1.5rem', padding: '1rem', backgroundColor: '#F5F7FA',
-          borderRadius: '0.5rem', boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-          textAlign: 'left'
-        }}>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#FF6600' }}>{faq.question}</h3>
-          <p style={{ color: '#6B7280', marginTop: '0.5rem' }}>{faq.answer}</p>
+      {/* Testimonials Section */}
+      <section className="bg-[#F5F7FA] py-16">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">Lo que nuestros usuarios dicen sobre DAI Vinci</h2>
+          <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
+            Descubre cómo DAI Vinci ha transformado la estrategia de empresas en todo el mundo. La experiencia de nuestros usuarios habla de la simplicidad y efectividad que aporta la app a su planificación y ejecución empresarial.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index}>
+                <CardContent className="flex flex-col items-center p-6">
+                  <p className="text-lg text-[#6B7280] mb-4 italic">"{testimonial.quote}"</p>
+                  <img src={testimonial.image} alt={testimonial.name} className="w-16 h-16 rounded-full mb-2" />
+                  <h3 className="font-semibold text-[#1E1F26]">{testimonial.name}</h3>
+                  <p className="text-[#6B7280]">{testimonial.role}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
-{/* Footer */}
-<footer style={{
-  backgroundColor: '#1E1F26', color: 'white', padding: '2rem 0', textAlign: 'center'
-}}>
-  <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1rem' }}>
-    <p>&copy; {new Date().getFullYear()} ValueProp. All rights reserved.</p>
-    <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '1rem' }}>
-      <a href="#" style={{ color: '#FF6600', textDecoration: 'none' }}>Privacy Policy</a>
-      <a href="#" style={{ color: '#FF6600', textDecoration: 'none' }}>Terms of Service</a>
-      <a href="#" style={{ color: '#FF6600', textDecoration: 'none' }}>Contact Us</a>
+      {/* Pricing Section */}
+      <section id="pricing" className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">Planes de Suscripción de DAI Vinci</h2>
+          <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
+            Elige el plan que mejor se adapte a tus necesidades y empieza a optimizar tu estrategia de negocio con DAI Vinci.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {pricingPlans.map((plan, index) => (
+              <Card key={index}>
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-[#FF6600]">{plan.name}</CardTitle>
+                  <p className="text-2xl font-semibold text-[#1E1F26]">{plan.price}</p>
+                </CardHeader>
+                <CardContent>
+                  <ul className="text-[#6B7280] list-none p-0 text-left mb-6">
+                    {plan.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="mb-2">✔ {feature}</li>
+                    ))}
+                  </ul>
+                  <Button className="w-full">Elegir Plan</Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Feature Comparison Section */}
+      <section className="bg-[#F5F7FA] py-16">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">Comparativa de Características de Planes</h2>
+          <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
+            Compara nuestras opciones de planes para encontrar el que mejor se ajuste a las necesidades de tu equipo y de tus proyectos empresariales.
+          </p>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Característica</TableHead>
+                <TableHead>Plan Gratuito</TableHead>
+                <TableHead>Plan Premium</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {featureComparison.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.feature}</TableCell>
+                  <TableCell>{item.free}</TableCell>
+                  <TableCell>{item.premium}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-8">Preguntas Frecuentes sobre DAI Vinci</h2>
+          <div className="max-w-3xl mx-auto">
+            {faqs.map((faq, index) => (
+              <Card key={index} className="mb-4">
+                <CardHeader>
+                  <CardTitle className="text-xl font-semibold text-[#FF6600]">{faq.question}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-[#6B7280]">{faq.answer}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="bg-[#1E1F26] text-white py-16">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-4">¿Listo para transformar tu estrategia?</h2>
+          <p className="text-xl mb-8">Empieza tu prueba gratuita y lleva tu planificación empresarial al siguiente nivel con DAI Vinci.</p>
+          <Button size="lg" onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}>
+            Comienza Ahora
+          </Button>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[#1E1F26] text-white py-8 text-center">
+        <div className="max-w-7xl mx-auto px-4">
+          <p>&copy; {new Date().getFullYear()} DAI Vinci. Todos los derechos reservados.</p>
+          <div className="flex justify-center gap-4 mt-4">
+            <a href="#" className="text-[#FF6600] no-underline">Política de Privacidad</a>
+            <a href="#" className="text-[#FF6600] no-underline">Términos de Servicio</a>
+            <a href="#" className="text-[#FF6600] no-underline">Contáctanos</a>
+          </div>
+        </div>
+      </footer>
     </div>
-  </div>
-</footer>
-</div>
-);
+  )
 }
