@@ -5,43 +5,43 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 const languages = [
-  { code: 'es', name: 'Español' },
   { code: 'en', name: 'English' },
+  { code: 'es', name: 'Español' },
   { code: 'fr', name: 'Français' },
 ]
 
 const features = [
   { 
     icon: '🤖',
-    title: 'Asistente de IA',
-    description: 'Recibe recomendaciones y análisis en tiempo real que te ayudarán a fortalecer tu propuesta de valor con el apoyo de nuestro asistente de IA.'
+    title: 'AI Assistant',
+    description: 'Receive real-time recommendations and analysis to help strengthen your value proposition with the support of our AI assistant.'
   },
   {
     icon: '📄',
-    title: 'Exportación a PDF',
-    description: 'Descarga tus modelos de estrategia en formato PDF para compartirlos fácilmente con tu equipo y partes interesadas.'
+    title: 'PDF Export',
+    description: 'Download your strategy models in PDF format to easily share with your team and stakeholders.'
   },
   {
     icon: '💡',
-    title: 'Biblioteca de Ejemplos',
-    description: 'Accede a ejemplos de Canvases estratégicos basados en empresas exitosas para inspirarte y guiar tus propias estrategias.'
+    title: 'Example Library',
+    description: 'Access examples of strategic Canvases based on successful companies to inspire and guide your own strategies.'
   },
   {
     icon: '🎯',
-    title: 'Múltiples Canvases',
-    description: 'Crea y personaliza Business Model Canvas, Value Proposition, DAFO, PESTEL, y Empathy Map, con facilidad.'
+    title: 'Multiple Canvases',
+    description: 'Easily create and customize Business Model Canvas, Value Proposition, SWOT, PESTEL, and Empathy Map.'
   },
 ]
 
 const testimonials = [
   {
-    quote: "Esta app ha revolucionado cómo abordamos nuestra propuesta de valor. Es intuitiva y poderosa, una herramienta imprescindible para cualquier estratega.",
+    quote: "This app has revolutionized how we approach our value proposition. It's intuitive and powerful, an essential tool for any strategist.",
     name: "Sarah Johnson",
     role: "CEO, TechStart",
     image: "/placeholder.svg?height=100&width=100"
   },
   {
-    quote: "La perspectiva visual de esta herramienta nos ayudó a identificar puntos críticos en nuestra oferta que ni siquiera sabíamos que existían.",
+    quote: "The visual perspective of this tool helped us identify critical points in our offering that we didn't even know existed.",
     name: "Michael Chen",
     role: "Product Manager, InnovateCorp",
     image: "/placeholder.svg?height=100&width=100"
@@ -50,59 +50,57 @@ const testimonials = [
 
 const pricingPlans = [
   {
-    name: "Plan Gratuito",
-    price: "€0/mes",
+    name: "Free Plan",
+    price: "€0/month",
     features: [
-      "1 usuario",
-      "3 proyectos",
-      "Herramientas de Canvas limitadas"
+      "1 user",
+      "3 projects",
+      "Limited Canvas tools"
     ]
   },
   {
-    name: "Plan Premium Mensual",
-    price: "€9.99/mes",
+    name: "Monthly Premium Plan",
+    price: "€9.99/month",
     features: [
-      "Usuarios ilimitados",
-      "Proyectos ilimitados",
-      "Asistencia AI",
-      "Herramientas de Canvas completas",
-      "Exportación a PDF",
-      "Acceso a biblioteca de ejemplos"
-      
+      "Unlimited users",
+      "Unlimited projects",
+      "AI assistance",
+      "Full Canvas tools",
+      "PDF export",
+      "Access to example library"
     ]
   },
   {
-    name: "Plan Premium Anual",
-    price: "€99.99/año",
+    name: "Annual Premium Plan",
+    price: "€99.99/year",
     features: [
-      "Todo lo incluido en el plan mensual",
-      "Ahorro del 16% comparado con el plan mensual"
+      "Everything included in the monthly plan",
+      "Save 16% compared to monthly plan"
     ]
   }
 ]
 
 const featureComparison = [
-  { feature: "Número de Usuarios", free: "1", premium: "Ilimitados" },
-  { feature: "Número de Proyectos", free: "3", premium: "Ilimitados" },
-  { feature: "Asistencia AI", free: "No", premium: "Sí" },
-  { feature: "Herramientas de Canvas", free: "Limitadas", premium: "Ilimitadas" },
-  { feature: "Exportación a PDF", free: "❌", premium: "✅" },
-  { feature: "Biblioteca de Ejemplos", free: "❌", premium: "✅" }
-  
+  { feature: "Number of Users", free: "1", premium: "Unlimited" },
+  { feature: "Number of Projects", free: "3", premium: "Unlimited" },
+  { feature: "AI Assistance", free: "No", premium: "Yes" },
+  { feature: "Canvas Tools", free: "Limited", premium: "Unlimited" },
+  { feature: "PDF Export", free: "❌", premium: "✅" },
+  { feature: "Example Library", free: "❌", premium: "✅" }
 ]
 
 const faqs = [
   {
-    question: "¿Qué es un Value Proposition Canvas?",
-    answer: "Es una herramienta que ayuda a posicionar tu producto o servicio en torno a las necesidades y valores del cliente. Facilita el diseño de productos y servicios que tus clientes realmente quieren."
+    question: "What is a Value Proposition Canvas?",
+    answer: "It's a tool that helps position your product or service around customer needs and values. It facilitates the design of products and services that your customers really want."
   },
   {
-    question: "¿En qué se diferencia DAI Vinci de otras herramientas de planificación empresarial?",
-    answer: "DAI Vinci da vida al Value Proposition Canvas y otros modelos estratégicos con características interactivas y análisis impulsado por IA, ofreciendo una experiencia más dinámica y fácil de usar."
+    question: "How does DAI Vinci differ from other business planning tools?",
+    answer: "DAI Vinci brings the Value Proposition Canvas and other strategic models to life with interactive features and AI-driven analysis, offering a more dynamic and user-friendly experience."
   },
   {
-    question: "¿Puedo usar DAI Vinci para múltiples proyectos?",
-    answer: "Sí, dependiendo del plan que elijas, puedes gestionar varios proyectos dentro de la app, lo que te permite diseñar y comparar propuestas de valor para diferentes segmentos de clientes."
+    question: "Can I use DAI Vinci for multiple projects?",
+    answer: "Yes, depending on the plan you choose, you can manage several projects within the app, allowing you to design and compare value propositions for different customer segments."
   },
 ]
 
@@ -135,14 +133,14 @@ export default function LandingPage() {
             <span className="ml-2 text-2xl font-bold text-[#1E1F26] font-helvetica">DAI Vinci</span>
           </a>
           <nav className="flex items-center">
-            <a href="#pricing" className="ml-6 text-[#1E1F26] no-underline font-medium">Precios</a>
+            <a href="#pricing" className="ml-6 text-[#1E1F26] no-underline font-medium">Pricing</a>
             <a href="#faq" className="ml-6 text-[#1E1F26] no-underline font-medium">FAQ</a>
             <Button
               onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
               className="ml-6"
               variant="default"
             >
-              {isLoading ? 'Cargando...' : (isAuthenticated ? 'Ir a la App' : 'Iniciar Sesión')}
+              {isLoading ? 'Loading...' : (isAuthenticated ? 'Go to App' : 'Login')}
             </Button>
           </nav>
         </div>
@@ -152,24 +150,17 @@ export default function LandingPage() {
       <section className="bg-[#F5F7FA] py-16 flex flex-col items-center text-center">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
           <h1 className="text-5xl font-bold mb-4 font-helvetica text-[#1E1F26]">
-            Diseña Tu Propuesta de Valor con <span className="text-[#FF6600]">DAI Vinci</span>
+            Design Your Value Proposition with <span className="text-[#FF6600]">DAI Vinci</span>
           </h1>
           <p className="text-xl text-[#6B7280] mb-8 max-w-2xl">
-            DAI Vinci te ayuda a estructurar, visualizar y perfeccionar la estrategia de tu empresa de manera simple y efectiva. Utiliza herramientas de análisis como el Business Model Canvas, Value Proposition Canvas, DAFO, PESTEL, y más, para crear un enfoque sólido que impulse tu negocio.
+            DAI Vinci helps you structure, visualize, and refine your company's strategy simply and effectively. Use analysis tools like Business Model Canvas, Value Proposition Canvas, SWOT, PESTEL, and more to create a solid approach that drives your business.
           </p>
           <div className="flex gap-4">
             <Button
               onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
               size="lg"
             >
-              Empezar Ahora
-            </Button>
-            <Button
-              onClick={() => window.scrollTo(0, document.body.scrollHeight)}
-              variant="outline"
-              size="lg"
-            >
-              Aprende Más
+              Get Started Now
             </Button>
           </div>
         </div>
@@ -178,9 +169,9 @@ export default function LandingPage() {
       {/* Features Section */}
       <section className="bg-white py-16 border-t border-b border-[#E6ECF2]">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center text-center">
-          <h2 className="text-4xl font-bold mb-4 text-[#1E1F26] font-helvetica">Características de DAI Vinci</h2>
+          <h2 className="text-4xl font-bold mb-4 text-[#1E1F26] font-helvetica">DAI Vinci Features</h2>
           <p className="text-xl text-[#6B7280] mb-8 max-w-2xl">
-            Las poderosas herramientas de DAI Vinci están diseñadas para que estructures y optimices cada aspecto de tu estrategia empresarial. Desde la planificación hasta la presentación, cada función está pensada para que el proceso sea simple y efectivo.
+            DAI Vinci's powerful tools are designed to help you structure and optimize every aspect of your business strategy. From planning to presentation, each function is designed to make the process simple and effective.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
             {features.map((feature, index) => (
@@ -203,9 +194,9 @@ export default function LandingPage() {
       {/* Testimonials Section */}
       <section className="bg-[#F5F7FA] py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">Lo que nuestros usuarios dicen sobre DAI Vinci</h2>
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">What our users say about DAI Vinci</h2>
           <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
-            Descubre cómo DAI Vinci ha transformado la estrategia de empresas en todo el mundo. La experiencia de nuestros usuarios habla de la simplicidad y efectividad que aporta la app a su planificación y ejecución empresarial.
+            Discover how DAI Vinci has transformed business strategy for companies worldwide. Our users' experience speaks to the simplicity and effectiveness that the app brings to their business planning and execution.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {testimonials.map((testimonial, index) => (
@@ -225,9 +216,9 @@ export default function LandingPage() {
       {/* Pricing Section */}
       <section id="pricing" className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">Planes de Suscripción de DAI Vinci</h2>
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">DAI Vinci Subscription Plans</h2>
           <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
-            Elige el plan que mejor se adapte a tus necesidades y empieza a optimizar tu estrategia de negocio con DAI Vinci.
+            Choose the plan that best suits your needs and start optimizing your business strategy with DAI Vinci.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {pricingPlans.map((plan, index) => (
@@ -242,7 +233,7 @@ export default function LandingPage() {
                       <li key={featureIndex} className="mb-2">✔ {feature}</li>
                     ))}
                   </ul>
-                  <Button className="w-full">Elegir Plan</Button>
+                  <Button className="w-full">Choose Plan</Button>
                 </CardContent>
               </Card>
             ))}
@@ -253,16 +244,16 @@ export default function LandingPage() {
       {/* Feature Comparison Section */}
       <section className="bg-[#F5F7FA] py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">Comparativa de Características de Planes</h2>
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">Plan Feature Comparison</h2>
           <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
-            Compara nuestras opciones de planes para encontrar el que mejor se ajuste a las necesidades de tu equipo y de tus proyectos empresariales.
+            Compare our plan options to find the one that best fits the needs of your team and your business projects.
           </p>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-1/3 text-left font-bold">Característica</TableHead>
-                <TableHead className="w-1/3 text-center font-bold">Plan Gratuito</TableHead>
-                <TableHead className="w-1/3 text-center font-bold">Plan Premium</TableHead>
+                <TableHead className="w-1/3 text-left font-bold">Feature</TableHead>
+                <TableHead className="w-1/3 text-center font-bold">Free Plan</TableHead>
+                <TableHead className="w-1/3 text-center font-bold">Premium Plan</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -281,7 +272,7 @@ export default function LandingPage() {
       {/* FAQ Section */}
       <section id="faq" className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-8">Preguntas Frecuentes sobre DAI Vinci</h2>
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-8">Frequently Asked Questions about DAI Vinci</h2>
           <div className="max-w-3xl mx-auto">
             {faqs.map((faq, index) => (
               <Card key={index} className="mb-4">
@@ -300,10 +291,10 @@ export default function LandingPage() {
       {/* CTA Section */}
       <section className="bg-[#1E1F26] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">¿Listo para transformar tu estrategia?</h2>
-          <p className="text-xl mb-8">Empieza tu prueba gratuita y lleva tu planificación empresarial al siguiente nivel con DAI Vinci.</p>
+          <h2 className="text-4xl font-bold mb-4">Ready to transform your strategy?</h2>
+          <p className="text-xl mb-8">Start your free trial and take your business planning to the next level with DAI Vinci.</p>
           <Button size="lg" onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}>
-            Comienza Ahora
+            Start Now
           </Button>
         </div>
       </section>
@@ -311,11 +302,11 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="bg-[#1E1F26] text-white py-8 text-center">
         <div className="max-w-7xl mx-auto px-4">
-          <p>&copy; {new Date().getFullYear()} DAI Vinci. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} DAI Vinci. All rights reserved.</p>
           <div className="flex justify-center gap-4 mt-4">
-            <a href="#" className="text-[#FF6600] no-underline">Política de Privacidad</a>
-            <a href="#" className="text-[#FF6600] no-underline">Términos de Servicio</a>
-            <a href="#" className="text-[#FF6600] no-underline">Contáctanos</a>
+            <a href="#" className="text-[#FF6600] no-underline">Privacy Policy</a>
+            <a href="#" className="text-[#FF6600] no-underline">Terms of Service</a>
+            <a href="#" className="text-[#FF6600] no-underline">Contact Us</a>
           </div>
         </div>
       </footer>
