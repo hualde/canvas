@@ -44,7 +44,7 @@ const testimonials = [
     quote: "The visual perspective of this tool helped us identify critical points in our offering that we didn't even know existed.",
     name: "Michael Chen",
     role: "Product Manager, InnovateCorp",
-    image: "/images/cheng.png?height=100&width=130"
+    image: "/images/cheng.png?height=100&width=160"
   },
 ]
 
