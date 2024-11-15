@@ -15,6 +15,8 @@ import { Auth0ProviderWithNavigate } from './auth/auth0-provider';
 import { useInitializeUserSubscription } from './hooks/useInitializeUserSubscription';
 import { Examples } from './pages/Examples';
 import LandingPage from './pages/LandingPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 // Import example canvas components
 import AppleBusinessModelCanvas from './pages/examples/apple/business-model-canvas';
@@ -97,6 +99,9 @@ function AppContent() {
       <Routes>
         <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        
         
         <Route
           path="/"
