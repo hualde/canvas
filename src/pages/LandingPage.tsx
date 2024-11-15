@@ -95,11 +95,11 @@ const faqs = [
     answer: "It's a tool that helps position your product or service around customer needs and values. It facilitates the design of products and services that your customers really want."
   },
   {
-    question: "How does DAI Vinci differ from other business planning tools?",
-    answer: "DAI Vinci brings the Value Proposition Canvas and other strategic models to life with interactive features and AI-driven analysis, offering a more dynamic and user-friendly experience."
+    question: "How does D'AI Vinci differ from other business planning tools?",
+    answer: "D'AI Vinci brings the Value Proposition Canvas and other strategic models to life with interactive features and AI-driven analysis, offering a more dynamic and user-friendly experience."
   },
   {
-    question: "Can I use DAI Vinci for multiple projects?",
+    question: "Can I use D'AI Vinci for multiple projects?",
     answer: "Yes, depending on the plan you choose, you can manage several projects within the app, allowing you to design and compare value propositions for different customer segments."
   },
 ]
@@ -150,10 +150,10 @@ export default function LandingPage() {
       <section className="bg-[#F5F7FA] py-16 flex flex-col items-center text-center">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center">
           <h1 className="text-5xl font-bold mb-4 font-helvetica text-[#1E1F26]">
-            Design Your Value Proposition with <span className="text-[#FF6600]">DAI Vinci</span>
+            Design Your Value Proposition with <span className="text-[#FF6600]">D'AI Vinci</span>
           </h1>
           <p className="text-xl text-[#6B7280] mb-8 max-w-2xl">
-            DAI Vinci helps you structure, visualize, and refine your company's strategy simply and effectively. Use analysis tools like Business Model Canvas, Value Proposition Canvas, SWOT, PESTEL, and more to create a solid approach that drives your business.
+            D'AI Vinci helps you structure, visualize, and refine your company's strategy simply and effectively. Use analysis tools like Business Model Canvas, Value Proposition Canvas, SWOT, PESTEL, and more to create a solid approach that drives your business.
           </p>
           <div className="flex gap-4">
             <Button
@@ -169,9 +169,9 @@ export default function LandingPage() {
       {/* Features Section */}
       <section className="bg-white py-16 border-t border-b border-[#E6ECF2]">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center text-center">
-          <h2 className="text-4xl font-bold mb-4 text-[#1E1F26] font-helvetica">DAI Vinci Features</h2>
+          <h2 className="text-4xl font-bold mb-4 text-[#1E1F26] font-helvetica">D'AI Vinci Features</h2>
           <p className="text-xl text-[#6B7280] mb-8 max-w-2xl">
-            DAI Vinci's powerful tools are designed to help you structure and optimize every aspect of your business strategy. From planning to presentation, each function is designed to make the process simple and effective.
+            D'AI Vinci's powerful tools are designed to help you structure and optimize every aspect of your business strategy. From planning to presentation, each function is designed to make the process simple and effective.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
             {features.map((feature, index) => (
@@ -194,9 +194,9 @@ export default function LandingPage() {
       {/* Testimonials Section */}
       <section className="bg-[#F5F7FA] py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">What our users say about DAI Vinci</h2>
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">What our users say about D'AI Vinci</h2>
           <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
-            Discover how DAI Vinci has transformed business strategy for companies worldwide. Our users' experience speaks to the simplicity and effectiveness that the app brings to their business planning and execution.
+            Discover how D'AI Vinci has transformed business strategy for companies worldwide. Our users' experience speaks to the simplicity and effectiveness that the app brings to their business planning and execution.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {testimonials.map((testimonial, index) => (
@@ -215,31 +215,31 @@ export default function LandingPage() {
 
       {/* Pricing Section */}
       <section id="pricing" className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">DAI Vinci Subscription Plans</h2>
-          <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
-            Choose the plan that best suits your needs and start optimizing your business strategy with DAI Vinci.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {pricingPlans.map((plan, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-[#FF6600]">{plan.name}</CardTitle>
-                  <p className="text-2xl font-semibold text-[#1E1F26]">{plan.price}</p>
-                </CardHeader>
-                <CardContent>
-                  <ul className="text-[#6B7280] list-none p-0 text-left mb-6">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="mb-2">✔ {feature}</li>
-                    ))}
-                  </ul>
-                  <Button className="w-full">Choose Plan</Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">DAI Vinci Subscription Plans</h2>
+        <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
+          Choose the plan that best suits your needs and start optimizing your business strategy with DAI Vinci.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {pricingPlans.map((plan, index) => (
+            <Card key={index} className="flex flex-col min-h-[400px]">
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold text-[#FF6600]">{plan.name}</CardTitle>
+                <p className="text-2xl font-semibold text-[#1E1F26]">{plan.price}</p>
+              </CardHeader>
+              <CardContent className="flex flex-col justify-between flex-grow">
+                <ul className="text-[#6B7280] list-none p-0 text-left mb-6">
+                  {plan.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="mb-2">✔ {feature}</li>
+                  ))}
+                </ul>
+                <Button className="w-full mt-auto">Choose Plan</Button>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Feature Comparison Section */}
       <section className="bg-[#F5F7FA] py-16">
@@ -272,7 +272,7 @@ export default function LandingPage() {
       {/* FAQ Section */}
       <section id="faq" className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-8">Frequently Asked Questions about DAI Vinci</h2>
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-8">Frequently Asked Questions about D'AI Vinci</h2>
           <div className="max-w-3xl mx-auto">
             {faqs.map((faq, index) => (
               <Card key={index} className="mb-4">
@@ -292,7 +292,7 @@ export default function LandingPage() {
       <section className="bg-[#1E1F26] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-4">Ready to transform your strategy?</h2>
-          <p className="text-xl mb-8">Start your free trial and take your business planning to the next level with DAI Vinci.</p>
+          <p className="text-xl mb-8">Start your free trial and take your business planning to the next level with D'AI Vinci.</p>
           <Button size="lg" onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}>
             Start Now
           </Button>
@@ -302,7 +302,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="bg-[#1E1F26] text-white py-8 text-center">
         <div className="max-w-7xl mx-auto px-4">
-          <p>&copy; {new Date().getFullYear()} DAI Vinci. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} D'AI Vinci. All rights reserved.</p>
           <div className="flex justify-center gap-4 mt-4">
             <a href="#" className="text-[#FF6600] no-underline">Privacy Policy</a>
             <a href="#" className="text-[#FF6600] no-underline">Terms of Service</a>
