@@ -166,7 +166,7 @@ export function Tutorial() {
         <section>
           <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">¿Necesitas Ayuda?</h2>
           <p className="text-sm sm:text-base text-gray-600">
-            Si tienes alguna pregunta o necesitas más ayuda con cualquiera de los tipos de canvas o características, no dudes en contactar a nuestro equipo de soporte o usar el asistente de AI para obtener orientación. ¡Estamos aquí para ayudarte a sacar el máximo provecho de tus herramientas de análisis empresarial!
+            Si tienes alguna pregunta o necesitas más ayuda con cualquiera de los tipos de canvas o características, no dudes en contactar a nuestro equipo de soporte o usar el asistente de AI para obtener orientación. ¡Estamos aquí para ayudarte a sacar el máximo provecho de tus herramientas de análisis empresarial
           </p>
         </section>
       </div>
