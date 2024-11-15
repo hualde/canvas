@@ -44,7 +44,7 @@ const testimonials = [
     quote: "The visual perspective of this tool helped us identify critical points in our offering that we didn't even know existed.",
     name: "Michael Chen",
     role: "Product Manager, InnovateCorp",
-    image: "/images/cheng.png?height=100&width=100"
+    image: "/images/cheng.png?height=100&width=130"
   },
 ]
 
@@ -130,7 +130,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <a href="#" className="flex items-center no-underline">
             <img src="/images/logo.png" alt="Logo" className="h-20 w-auto" />
-            <span className="ml-2 text-2xl font-bold text-[#1E1F26] font-helvetica">DAI Vinci</span>
+            <span className="ml-2 text-2xl font-bold text-[#1E1F26] font-helvetica"></span>
           </a>
           <nav className="flex items-center">
             <a href="#pricing" className="ml-6 text-[#1E1F26] no-underline font-medium">Pricing</a>
