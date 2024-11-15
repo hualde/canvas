@@ -38,13 +38,13 @@ const testimonials = [
     quote: "This app has revolutionized how we approach our value proposition. It's intuitive and powerful, an essential tool for any strategist.",
     name: "Sarah Johnson",
     role: "CEO, TechStart",
-    image: "/placeholder.svg?height=100&width=100"
+    image: "/images/sarah.png"
   },
   {
     quote: "The visual perspective of this tool helped us identify critical points in our offering that we didn't even know existed.",
     name: "Michael Chen",
     role: "Product Manager, InnovateCorp",
-    image: "/placeholder.svg?height=100&width=100"
+    image: "/images/cheng.png"
   },
 ]
 
@@ -129,7 +129,7 @@ export default function LandingPage() {
       <header className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <a href="#" className="flex items-center no-underline">
-            <img src="/placeholder.svg?height=40&width=40" alt="Logo" className="h-10 w-auto" />
+            <img src="/images/logo.png" alt="Logo" className="h-10 w-auto" />
             <span className="ml-2 text-2xl font-bold text-[#1E1F26] font-helvetica">DAI Vinci</span>
           </a>
           <nav className="flex items-center">
