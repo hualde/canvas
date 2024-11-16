@@ -7,19 +7,19 @@
     "login": "Iniciar sesión"
   },
   "hero": {
-    "title": "Crea estrategias de negocio ganadoras con",
+    "title": "Crea estrategias empresariales ganadoras con",
     "description": "Utiliza nuestras herramientas de planificación estratégica impulsadas por IA para llevar tu negocio al siguiente nivel",
-    "getStarted": "Empezar ahora"
+    "getStarted": "Comienza ahora"
   },
   "features": {
     "title": "Características",
-    "description": "Descubre cómo nuestras herramientas pueden ayudarte a crear estrategias de negocio efectivas",
+    "description": "Descubre cómo nuestras herramientas pueden ayudarte a crear estrategias empresariales efectivas",
     "aiAssistant": {
-      "title": "Asistente IA",
+      "title": "Asistente de IA",
       "description": "Obtén sugerencias inteligentes y personalizadas para tu estrategia"
     },
     "pdfExport": {
-      "title": "Exportación a PDF",
+      "title": "Exportación PDF",
       "description": "Exporta tus lienzos estratégicos en formato PDF de alta calidad"
     },
     "exampleLibrary": {
@@ -28,7 +28,7 @@
     },
     "multipleCanvases": {
       "title": "Múltiples lienzos",
-      "description": "Crea y gestiona varios lienzos estratégicos para diferentes proyectos"
+      "description": "Crea y gestiona múltiples lienzos estratégicos para diferentes proyectos"
     }
   },
   "companies": {
@@ -38,7 +38,7 @@
     "title": "Lo que dicen nuestros clientes",
     "description": "Descubre cómo nuestras herramientas han ayudado a otros emprendedores y empresas",
     "sarah": {
-      "quote": "Esta plataforma ha revolucionado la forma en que planificamos nuestras estrategias de negocio. ¡Altamente recomendado!"
+      "quote": "Esta plataforma ha revolucionado la forma en que planificamos nuestras estrategias empresariales. ¡Altamente recomendado!"
     },
     "michael": {
       "quote": "Las herramientas de IA me han ahorrado horas de trabajo. Ahora puedo concentrarme en implementar nuestras estrategias en lugar de planificarlas."
@@ -49,7 +49,7 @@
     "description": "Elige el plan que mejor se adapte a tus necesidades",
     "choosePlan": "Elegir plan",
     "freePlan": {
-      "name": "Gratuito",
+      "name": "Gratis",
       "price": "€0/mes",
       "features": [
         "1 lienzo estratégico",
@@ -64,7 +64,7 @@
         "Lienzos ilimitados",
         "Exportación avanzada a PDF",
         "Acceso completo a la biblioteca de ejemplos",
-        "Asistente IA avanzado"
+        "Asistente de IA avanzado"
       ]
     },
     "annualPlan": {
@@ -81,11 +81,11 @@
     "title": "Comparación de características",
     "description": "Compara nuestros planes para encontrar el que mejor se adapte a tus necesidades",
     "feature": "Característica",
-    "freePlan": "Plan Gratuito",
-    "premiumPlan": "Plan Premium",
+    "freePlan": "Plan gratuito",
+    "premiumPlan": "Plan premium",
     "users": "Usuarios",
     "projects": "Proyectos",
-    "aiAssistance": "Asistencia IA",
+    "aiAssistance": "Asistencia de IA",
     "canvasTools": "Herramientas de lienzo",
     "pdfExport": "Exportación PDF",
     "exampleLibrary": "Biblioteca de ejemplos"
@@ -94,11 +94,11 @@
     "title": "Preguntas frecuentes",
     "valueProposition": {
       "question": "¿Qué es un lienzo de propuesta de valor?",
-      "answer": "Un lienzo de propuesta de valor es una herramienta visual que ayuda a las empresas a diseñar productos y servicios que los clientes realmente quieren."
+      "answer": "Un lienzo de propuesta de valor es una herramienta visual que ayuda a las empresas a diseñar productos y servicios que los clientes realmente desean."
     },
     "difference": {
       "question": "¿En qué se diferencia D'AI Vinci de otras herramientas de estrategia?",
-      "answer": "D'AI Vinci se distingue por su asistente IA integrado, que proporciona sugerencias personalizadas y análisis en tiempo real para tus estrategias de negocio."
+      "answer": "D'AI Vinci se destaca por su asistente de IA integrado, que proporciona sugerencias personalizadas y análisis en tiempo real para tus estrategias empresariales."
     },
     "multipleProjects": {
       "question": "¿Puedo trabajar en múltiples proyectos?",
@@ -106,14 +106,33 @@
     }
   },
   "cta": {
-    "title": "Comienza a crear estrategias ganadoras hoy",
-    "description": "Únete a miles de empresas que ya están utilizando D'AI Vinci para impulsar su éxito",
-    "startNow": "Comenzar ahora"
+    "title": "Empieza a crear estrategias ganadoras hoy",
+    "description": "Únete a miles de empresas que ya utilizan D'AI Vinci para impulsar su éxito",
+    "startNow": "Comienza ahora"
   },
   "footer": {
     "allRightsReserved": "Todos los derechos reservados",
     "privacyPolicy": "Política de privacidad",
     "termsOfService": "Términos de servicio",
     "contactUs": "Contáctanos"
+  },
+  "dashboard": {
+    "myCanvases": "Mis lienzos",
+    "newCanvas": "Nuevo lienzo",
+    "subscriptionSuccessful": "Suscripción exitosa",
+    "subscriptionThankYou": "Tu cuenta ha sido actualizada. ¡Gracias por tu suscripción!",
+    "subscriptionError": "Error al verificar el estado de la suscripción",
+    "freeTier": "Estás utilizando el plan gratuito",
+    "subscriptionCancelled": "Tu suscripción ha sido cancelada",
+    "subscriptionInactive": "Tu suscripción no está activa",
+    "upgradeToPremium": "¡Actualiza a Premium para obtener lienzos ilimitados, exportación PDF, asistente de IA y más funciones!",
+    "upgradeNow": "Actualizar ahora",
+    "canvasesCreated": "Lienzos creados:",
+    "updated": "Actualizado:",
+    "noCanvases": "Aún no hay lienzos. ¡Crea tu primer lienzo!",
+    "confirmDeletion": "Confirmar eliminación",
+    "deleteConfirmation": "¿Estás seguro de que quieres eliminar este lienzo? Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
   }
 }

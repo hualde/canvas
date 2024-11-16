@@ -9,6 +9,7 @@ import { useSubscriptionStatus } from '../hooks/useSubscriptionStatus';
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useTranslation } from 'react-i18next';
 
 interface Canvas {
   id: string;
@@ -30,6 +31,7 @@ export function Dashboard() {
   const [canCreateCanvas, setCanCreateCanvas] = useState(false);
   const [canvasCount, setCanvasCount] = useState(0);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -162,8 +164,8 @@ export function Dashboard() {
         {showSuccessMessage && (
           <Card className="mb-6 bg-green-100 border-l-4 border-green-500">
             <CardContent className="p-4">
-              <p className="font-bold text-green-700">Subscription successful</p>
-              <p className="text-green-700">Your account has been updated. Thank you for your subscription!</p>
+              <p className="font-bold text-green-700">{t('dashboard.subscriptionSuccessful')}</p>
+              <p className="text-green-700">{t('dashboard.subscriptionThankYou')}</p>
             </CardContent>
           </Card>
         )}
@@ -171,7 +173,7 @@ export function Dashboard() {
         {subscriptionError && (
           <Card className="mb-6 bg-red-100 border-l-4 border-red-500">
             <CardContent className="p-4">
-              <p className="font-bold text-red-700">Error checking subscription status</p>
+              <p className="font-bold text-red-700">{t('dashboard.subscriptionError')}</p>
               <p className="text-red-700">{subscriptionError}</p>
             </CardContent>
           </Card>
@@ -185,15 +187,15 @@ export function Dashboard() {
                 <div>
                   <p className="font-bold text-[#1E1F26]">
                     {subscriptionStatus === SUBSCRIPTION_STATUS.FREE 
-                      ? "You're using the free tier" 
+                      ? t('dashboard.freeTier') 
                       : subscriptionStatus === SUBSCRIPTION_STATUS.CANCELLED
-                        ? "Your subscription has been cancelled"
-                        : "Your subscription is not active"}
+                        ? t('dashboard.subscriptionCancelled')
+                        : t('dashboard.subscriptionInactive')}
                   </p>
                   <p className="mt-1 text-[#6B7280]">
-                    Upgrade to Premium for unlimited canvases, PDF export, AI assistant, and more features!
+                    {t('dashboard.upgradeToPremium')}
                     {' '}
-                    <Link to="/upgrade" className="font-bold underline text-[#FF6600]">Upgrade now</Link>
+                    <Link to="/upgrade" className="font-bold underline text-[#FF6600]">{t('dashboard.upgradeNow')}</Link>
                   </p>
                 </div>
               </div>
@@ -202,7 +204,7 @@ export function Dashboard() {
         )}
 
         <div className="flex justify-between items-start mb-8 flex-col sm:flex-row gap-4">
-          <h1 className="text-4xl font-bold text-[#1E1F26]">My Canvases</h1>
+          <h1 className="text-4xl font-bold text-[#1E1F26]">{t('dashboard.myCanvases')}</h1>
           <div className="relative w-full sm:w-auto">
             <Button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -214,7 +216,7 @@ export function Dashboard() {
               disabled={!canCreateCanvas && subscriptionStatus !== SUBSCRIPTION_STATUS.ACTIVE}
             >
               <Plus className="w-5 h-5 mr-2" />
-              New Canvas
+              {t('dashboard.newCanvas')}
               <ChevronDown className="w-4 h-4 ml-2" />
             </Button>
             {isDropdownOpen && (canCreateCanvas || subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE) && (
@@ -239,7 +241,7 @@ export function Dashboard() {
         <Card className="mb-6 bg-white">
           <CardContent className="p-4">
             <p className="text-[#6B7280]">
-              Canvases created: {canvasCount} / {subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE ? '∞' : TIER_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases}
+              {t('dashboard.canvasesCreated')} {canvasCount} / {subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE ? '∞' : TIER_LIMITS[SUBSCRIPTION_STATUS.FREE].maxCanvases}
             </p>
             {subscriptionStatus !== SUBSCRIPTION_STATUS.ACTIVE && (
               <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
@@ -264,7 +266,7 @@ export function Dashboard() {
                 </div>
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
                   <span className="text-sm text-[#6B7280]">
-                    Updated: {new Date(canvas.updated_at).toLocaleDateString()}
+                    {t('dashboard.updated')}: {new Date(canvas.updated_at).toLocaleDateString()}
                   </span>
                   <div className="flex space-x-2">
                     <Button
@@ -294,7 +296,7 @@ export function Dashboard() {
           <Card className="bg-white">
             <CardContent className="p-12 text-center">
               <p className="text-[#6B7280] text-lg">
-                No canvases yet. Create your first one!
+                {t('dashboard.noCanvases')}
               </p>
             </CardContent>
           </Card>
@@ -304,22 +306,22 @@ export function Dashboard() {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <Card className="bg-white max-w-md w-full">
               <CardHeader>
-                <CardTitle className="text-xl font-semibold">Confirm Deletion</CardTitle>
+                <CardTitle className="text-xl font-semibold">{t('dashboard.confirmDeletion')}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="mb-6">Are you sure you want to delete this canvas? This action cannot be undone.</p>
+                <p className="mb-6">{t('dashboard.deleteConfirmation')}</p>
                 <div className="flex justify-end space-x-4">
                   <Button
                     onClick={() => setCanvasToDelete(null)}
                     variant="outline"
                   >
-                    Cancel
+                    {t('dashboard.cancel')}
                   </Button>
                   <Button
                     onClick={handleDeleteCanvas}
                     variant="destructive"
                   >
-                    Delete
+                    {t('dashboard.delete')}
                   </Button>
                 </div>
               </CardContent>

@@ -115,5 +115,24 @@
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "contactUs": "Contact Us"
+  },
+  "dashboard": {
+    "myCanvases": "My Canvases",
+    "newCanvas": "New Canvas",
+    "subscriptionSuccessful": "Subscription successful",
+    "subscriptionThankYou": "Your account has been updated. Thank you for your subscription!",
+    "subscriptionError": "Error checking subscription status",
+    "freeTier": "You're using the free tier",
+    "subscriptionCancelled": "Your subscription has been cancelled",
+    "subscriptionInactive": "Your subscription is not active",
+    "upgradeToPremium": "Upgrade to Premium for unlimited canvases, PDF export, AI assistant, and more features!",
+    "upgradeNow": "Upgrade now",
+    "canvasesCreated": "Canvases created:",
+    "updated": "Updated:",
+    "noCanvases": "No canvases yet. Create your first one!",
+    "confirmDeletion": "Confirm Deletion",
+    "deleteConfirmation": "Are you sure you want to delete this canvas? This action cannot be undone.",
+    "cancel": "Cancel",
+    "delete": "Delete"
   }
 }

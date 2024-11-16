@@ -115,5 +115,24 @@
     "privacyPolicy": "Politique de confidentialité",
     "termsOfService": "Conditions d'utilisation",
     "contactUs": "Contactez-nous"
+  },
+  "dashboard": {
+    "myCanvases": "Mes canevas",
+    "newCanvas": "Nouveau canevas",
+    "subscriptionSuccessful": "Abonnement réussi",
+    "subscriptionThankYou": "Votre compte a été mis à jour. Merci pour votre abonnement !",
+    "subscriptionError": "Erreur lors de la vérification du statut de l'abonnement",
+    "freeTier": "Vous utilisez la version gratuite",
+    "subscriptionCancelled": "Votre abonnement a été annulé",
+    "subscriptionInactive": "Votre abonnement n'est pas actif",
+    "upgradeToPremium": "Passez à la version Premium pour des canevas illimités, l'exportation PDF, l'assistant IA et plus de fonctionnalités !",
+    "upgradeNow": "Mettre à niveau maintenant",
+    "canvasesCreated": "Canevas créés :",
+    "updated": "Mis à jour :",
+    "noCanvases": "Pas encore de canevas. Créez votre premier !",
+    "confirmDeletion": "Confirmer la suppression",
+    "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer ce canevas ? Cette action ne peut pas être annulée.",
+    "cancel": "Annuler",
+    "delete": "Supprimer"
   }
 }
