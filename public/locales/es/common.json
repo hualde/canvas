@@ -423,5 +423,40 @@
         "description": "Factores externos que podrían causar problemas al negocio"
       }
     }
+  },
+  "valuePropositionCanvas": {
+    "pdfExportError": "Error al exportar PDF: {{error}}",
+    "saveError": "Error al guardar el lienzo. Por favor, inténtelo de nuevo.",
+    "notFound": "Lienzo no encontrado",
+    "returnToDashboard": "Volver al Panel",
+    "projectName": "Nombre del Proyecto",
+    "author": "Autor",
+    "comments": "Comentarios",
+    "sections": {
+      "productsAndServices": {
+        "title": "Productos y Servicios",
+        "description": "¿Qué productos y servicios ofreces?"
+      },
+      "gainCreators": {
+        "title": "Creadores de Beneficios",
+        "description": "¿Cómo creas beneficios para tus clientes?"
+      },
+      "painRelievers": {
+        "title": "Aliviadores de Dolor",
+        "description": "¿Cómo alivias los dolores de tus clientes?"
+      },
+      "customerJobs": {
+        "title": "Trabajos del Cliente",
+        "description": "¿Qué trabajos necesitan realizar tus clientes?"
+      },
+      "gains": {
+        "title": "Beneficios",
+        "description": "¿Qué beneficios desean tus clientes?"
+      },
+      "pains": {
+        "title": "Dolores",
+        "description": "¿Qué dolores experimentan tus clientes?"
+      }
+    }
   }
 }

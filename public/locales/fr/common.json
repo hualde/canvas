@@ -423,5 +423,40 @@
         "description": "Facteurs externes qui pourraient causer des problèmes à l'entreprise"
       }
     }
+  },
+  "valuePropositionCanvas": {
+    "pdfExportError": "Échec de l'exportation du PDF : {{error}}",
+    "saveError": "Échec de l'enregistrement du canevas. Veuillez réessayer.",
+    "notFound": "Canevas non trouvé",
+    "returnToDashboard": "Retour au Tableau de Bord",
+    "projectName": "Nom du Projet",
+    "author": "Auteur",
+    "comments": "Commentaires",
+    "sections": {
+      "productsAndServices": {
+        "title": "Produits et Services",
+        "description": "Quels produits et services proposez-vous ?"
+      },
+      "gainCreators": {
+        "title": "Créateurs de Gains",
+        "description": "Comment créez-vous des gains pour vos clients ?"
+      },
+      "painRelievers": {
+        "title": "Soulageurs de Douleurs",
+        "description": "Comment soulagez-vous les douleurs de vos clients ?"
+      },
+      "customerJobs": {
+        "title": "Tâches du Client",
+        "description": "Quelles tâches vos clients doivent-ils accomplir ?"
+      },
+      "gains": {
+        "title": "Gains",
+        "description": "Quels gains vos clients désirent-ils ?"
+      },
+      "pains": {
+        "title": "Douleurs",
+        "description": "Quelles douleurs vos clients éprouvent-ils ?"
+      }
+    }
   }
 }

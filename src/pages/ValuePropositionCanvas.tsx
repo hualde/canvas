@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getCanvas, updateCanvas } from '../lib/db';
 import { CanvasSection } from '../components/CanvasSection';
 import { icons } from '../utils/icons';
 import { CanvasWrapper } from '../components/CanvasWrapper';
 import { exportToPDF } from '../utils/valuePropositionPdfExport';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from 'react-i18next';
 
 interface CanvasData {
   id: string;
@@ -26,6 +27,7 @@ interface CanvasData {
 
 export function ValuePropositionCanvas() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [canvas, setCanvas] = useState<CanvasData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [project_name, setProject_name] = useState('');
@@ -34,6 +36,7 @@ export function ValuePropositionCanvas() {
   const [comments, setComments] = useState('');
   const titleInputRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth0();
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -101,7 +104,7 @@ export function ValuePropositionCanvas() {
       } catch (error) {
         console.error('Error exporting PDF:', error);
         if (error instanceof Error) {
-          alert(error.message);
+          alert(t('valuePropositionCanvas.pdfExportError', { error: error.message }));
         }
       }
     }
@@ -109,7 +112,7 @@ export function ValuePropositionCanvas() {
 
   const handleAIAssist = () => {
     console.log('Opening AI Assistant...');
-    // Implementar la lógica del asistente AI aquí
+    // Implement AI assistant logic here
   };
 
   const handleSave = async () => {
@@ -119,6 +122,7 @@ export function ValuePropositionCanvas() {
         console.log('Canvas saved successfully!');
       } catch (error) {
         console.error('Error saving canvas:', error);
+        alert(t('valuePropositionCanvas.saveError'));
       }
     }
   };
@@ -135,7 +139,13 @@ export function ValuePropositionCanvas() {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
-          <p className="text-gray-600">Canvas not found</p>
+          <p className="text-gray-600">{t('valuePropositionCanvas.notFound')}</p>
+          <button
+            onClick={() => navigate('/')}
+            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+          >
+            {t('valuePropositionCanvas.returnToDashboard')}
+          </button>
         </div>
       </div>
     );
@@ -155,7 +165,7 @@ export function ValuePropositionCanvas() {
           onChange={(e) => setProject_name(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Project Name"
+          placeholder={t('valuePropositionCanvas.projectName')}
         />
         <input
           type="text"
@@ -163,7 +173,7 @@ export function ValuePropositionCanvas() {
           onChange={(e) => setAuthor(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Author"
+          placeholder={t('valuePropositionCanvas.author')}
         />
         <input
           type="date"
@@ -180,7 +190,7 @@ export function ValuePropositionCanvas() {
           onBlur={handleUpdateCanvasInfo}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           rows={4}
-          placeholder="Comments"
+          placeholder={t('valuePropositionCanvas.comments')}
         />
       </div>
 
@@ -191,30 +201,30 @@ export function ValuePropositionCanvas() {
           <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-4 h-full z-10">
             <div className="relative">
               <CanvasSection
-                title="Products and Services"
+                title={t('valuePropositionCanvas.sections.productsAndServices.title')}
                 items={canvas.content.productsAndServices || []}
                 onUpdate={(items) => handleSectionUpdate('productsAndServices', items)}
-                description="What products and services do you offer?"
+                description={t('valuePropositionCanvas.sections.productsAndServices.description')}
                 icon={icons.products}
                 className="h-full bg-white/50"
               />
             </div>
             <div className="relative">
               <CanvasSection
-                title="Gain Creators"
+                title={t('valuePropositionCanvas.sections.gainCreators.title')}
                 items={canvas.content.gainCreators || []}
                 onUpdate={(items) => handleSectionUpdate('gainCreators', items)}
-                description="How do you create customer gains?"
+                description={t('valuePropositionCanvas.sections.gainCreators.description')}
                 icon={icons.gainCreators}
                 className="h-full bg-white/50"
               />
             </div>
             <div className="relative col-span-1 sm:col-span-2">
               <CanvasSection
-                title="Pain Relievers"
+                title={t('valuePropositionCanvas.sections.painRelievers.title')}
                 items={canvas.content.painRelievers || []}
                 onUpdate={(items) => handleSectionUpdate('painRelievers', items)}
-                description="How do you relieve customer pains?"
+                description={t('valuePropositionCanvas.sections.painRelievers.description')}
                 icon={icons.painRelievers}
                 className="h-full bg-white/50"
               />
@@ -228,30 +238,30 @@ export function ValuePropositionCanvas() {
           <div className="absolute inset-0 grid grid-cols-1 sm:grid-cols-2 gap-2 p-4">
             <div className="relative z-20">
               <CanvasSection
-                title="Customer Jobs"
+                title={t('valuePropositionCanvas.sections.customerJobs.title')}
                 items={canvas.content.customerJobs || []}
                 onUpdate={(items) => handleSectionUpdate('customerJobs', items)}
-                description="What jobs do your customers need to get done?"
+                description={t('valuePropositionCanvas.sections.customerJobs.description')}
                 icon={icons.customerJobs}
                 className="h-full bg-white/50"
               />
             </div>
             <div className="relative z-20">
               <CanvasSection
-                title="Gains"
+                title={t('valuePropositionCanvas.sections.gains.title')}
                 items={canvas.content.gains || []}
                 onUpdate={(items) => handleSectionUpdate('gains', items)}
-                description="What gains do your customers desire?"
+                description={t('valuePropositionCanvas.sections.gains.description')}
                 icon={icons.gains}
                 className="h-full bg-white/50"
               />
             </div>
             <div className="relative col-span-1 sm:col-span-2 z-20">
               <CanvasSection
-                title="Pains"
+                title={t('valuePropositionCanvas.sections.pains.title')}
                 items={canvas.content.pains || []}
                 onUpdate={(items) => handleSectionUpdate('pains', items)}
-                description="What pains do your customers experience?"
+                description={t('valuePropositionCanvas.sections.pains.description')}
                 icon={icons.pains}
                 className="h-full bg-white/50"
               />

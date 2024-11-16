@@ -423,5 +423,40 @@
         "description": "External factors that could cause trouble for the business"
       }
     }
+  },
+  "valuePropositionCanvas": {
+    "pdfExportError": "Failed to export PDF: {{error}}",
+    "saveError": "Failed to save canvas. Please try again.",
+    "notFound": "Canvas not found",
+    "returnToDashboard": "Return to Dashboard",
+    "projectName": "Project Name",
+    "author": "Author",
+    "comments": "Comments",
+    "sections": {
+      "productsAndServices": {
+        "title": "Products and Services",
+        "description": "What products and services do you offer?"
+      },
+      "gainCreators": {
+        "title": "Gain Creators",
+        "description": "How do you create customer gains?"
+      },
+      "painRelievers": {
+        "title": "Pain Relievers",
+        "description": "How do you relieve customer pains?"
+      },
+      "customerJobs": {
+        "title": "Customer Jobs",
+        "description": "What jobs do your customers need to get done?"
+      },
+      "gains": {
+        "title": "Gains",
+        "description": "What gains do your customers desire?"
+      },
+      "pains": {
+        "title": "Pains",
+        "description": "What pains do your customers experience?"
+      }
+    }
   }
 }
