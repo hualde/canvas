@@ -1,15 +1,119 @@
 {
-    "header": {
-      "pricing": "Tarifs",
-      "faq": "FAQ",
-      "login": "Connexion",
-      "goToApp": "Accéder à l'app",
-      "loading": "Chargement..."
+  "header": {
+    "pricing": "Tarifs",
+    "faq": "FAQ",
+    "loading": "Chargement...",
+    "goToApp": "Accéder à l'application",
+    "login": "Se connecter"
+  },
+  "hero": {
+    "title": "Créez des stratégies d'entreprise gagnantes avec",
+    "description": "Utilisez nos outils de planification stratégique alimentés par l'IA pour faire passer votre entreprise au niveau supérieur",
+    "getStarted": "Commencer maintenant"
+  },
+  "features": {
+    "title": "Fonctionnalités",
+    "description": "Découvrez comment nos outils peuvent vous aider à créer des stratégies d'entreprise efficaces",
+    "aiAssistant": {
+      "title": "Assistant IA",
+      "description": "Obtenez des suggestions intelligentes et personnalisées pour votre stratégie"
     },
-    "footer": {
-      "allRightsReserved": "Tous droits réservés.",
-      "privacyPolicy": "Politique de confidentialité",
-      "termsOfService": "Conditions d'utilisation",
-      "contactUs": "Contactez-nous"
+    "pdfExport": {
+      "title": "Exportation PDF",
+      "description": "Exportez vos canevas stratégiques en format PDF de haute qualité"
+    },
+    "exampleLibrary": {
+      "title": "Bibliothèque d'exemples",
+      "description": "Inspirez-vous d'exemples de stratégies d'entreprises prospères"
+    },
+    "multipleCanvases": {
+      "title": "Canevas multiples",
+      "description": "Créez et gérez plusieurs canevas stratégiques pour différents projets"
     }
+  },
+  "companies": {
+    "title": "Entreprises qui nous font confiance"
+  },
+  "testimonials": {
+    "title": "Ce que disent nos clients",
+    "description": "Découvrez comment nos outils ont aidé d'autres entrepreneurs et entreprises",
+    "sarah": {
+      "quote": "Cette plateforme a révolutionné notre façon de planifier nos stratégies d'entreprise. Hautement recommandé !"
+    },
+    "michael": {
+      "quote": "Les outils d'IA m'ont fait gagner des heures de travail. Je peux maintenant me concentrer sur la mise en œuvre de nos stratégies plutôt que sur leur planification."
+    }
+  },
+  "pricing": {
+    "title": "Plans et tarifs",
+    "description": "Choisissez le plan qui convient le mieux à vos besoins",
+    "choosePlan": "Choisir le plan",
+    "freePlan": {
+      "name": "Gratuit",
+      "price": "0€/mois",
+      "features": [
+        "1 canevas stratégique",
+        "Exportation PDF de base",
+        "Accès à la bibliothèque d'exemples"
+      ]
+    },
+    "monthlyPlan": {
+      "name": "Mensuel",
+      "price": "19€/mois",
+      "features": [
+        "Canevas illimités",
+        "Exportation PDF avancée",
+        "Accès complet à la bibliothèque d'exemples",
+        "Assistant IA avancé"
+      ]
+    },
+    "annualPlan": {
+      "name": "Annuel",
+      "price": "190€/an",
+      "features": [
+        "Tout ce qui est inclus dans le plan mensuel",
+        "2 mois gratuits",
+        "Support prioritaire"
+      ]
+    }
+  },
+  "featureComparison": {
+    "title": "Comparaison des fonctionnalités",
+    "description": "Comparez nos plans pour trouver celui qui convient le mieux à vos besoins",
+    "feature": "Fonctionnalité",
+    "freePlan": "Plan Gratuit",
+    "premiumPlan": "Plan Premium",
+    "users": "Utilisateurs",
+    "projects": "Projets",
+    "aiAssistance": "Assistance IA",
+    "canvasTools": "Outils de canevas",
+    "pdfExport": "Exportation PDF",
+    "exampleLibrary": "Bibliothèque d'exemples"
+  },
+  "faq": {
+    "title": "Questions fréquemment posées",
+    "valueProposition": {
+      "question": "Qu'est-ce qu'un canevas de proposition de valeur ?",
+      "answer": "Un canevas de proposition de valeur est un outil visuel qui aide les entreprises à concevoir des produits et services que les clients veulent vraiment."
+    },
+    "difference": {
+      "question": "En quoi D'AI Vinci est-il différent des autres outils de stratégie ?",
+      "answer": "D'AI Vinci se distingue par son assistant IA intégré, qui fournit des suggestions personnalisées et des analyses en temps réel pour vos stratégies d'entreprise."
+    },
+    "multipleProjects": {
+      "question": "Puis-je travailler sur plusieurs projets ?",
+      "answer": "Oui, nos plans payants vous permettent de créer et de gérer simultanément plusieurs projets et canevas stratégiques."
+    }
+  },
+  "cta": {
+    "title": "Commencez à créer des stratégies gagnantes dès aujourd'hui",
+    "description": "Rejoignez des milliers d'entreprises qui utilisent déjà D'AI Vinci pour stimuler leur succès",
+    "startNow": "Commencer maintenant"
+  },
+  "footer": {
+    "allRightsReserved": "Tous droits réservés",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfService": "Conditions d'utilisation",
+    "contactUs": "Contactez-nous"
   }
+}
