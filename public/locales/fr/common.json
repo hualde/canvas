@@ -264,5 +264,52 @@
     "newItemPlaceholder": "Entrez un nouvel élément...",
     "cancel": "Annuler",
     "add": "Ajouter"
+  },
+  "canvas": {
+    "pdfExportError": "Échec de l'exportation du PDF. Veuillez réessayer.",
+    "saveError": "Échec de l'enregistrement du canevas. Veuillez réessayer.",
+    "notFound": "Canevas non trouvé",
+    "returnToDashboard": "Retour au Tableau de Bord",
+    "projectName": "Nom du Projet",
+    "author": "Auteur",
+    "comments": "Commentaires",
+    "sections": {
+      "keyPartners": {
+        "title": "Partenaires Clés",
+        "description": "Qui sont vos partenaires et fournisseurs clés ?"
+      },
+      "keyActivities": {
+        "title": "Activités Clés",
+        "description": "Quelles activités clés votre proposition de valeur nécessite-t-elle ?"
+      },
+      "keyResources": {
+        "title": "Ressources Clés",
+        "description": "Quelles ressources clés votre proposition de valeur nécessite-t-elle ?"
+      },
+      "valuePropositions": {
+        "title": "Propositions de Valeur",
+        "description": "Quelle valeur apportez-vous au client ?"
+      },
+      "customerRelationships": {
+        "title": "Relations Clients",
+        "description": "Quel type de relation chaque segment de clientèle attend-il ?"
+      },
+      "channels": {
+        "title": "Canaux",
+        "description": "Quels canaux vos clients préfèrent-ils ?"
+      },
+      "customerSegments": {
+        "title": "Segments de Clientèle",
+        "description": "Pour qui créez-vous de la valeur ?"
+      },
+      "costStructure": {
+        "title": "Structure de Coûts",
+        "description": "Quels sont les coûts les plus importants inhérents à votre modèle d'affaires ?"
+      },
+      "revenueStreams": {
+        "title": "Flux de Revenus",
+        "description": "Pour quelle valeur vos clients sont-ils vraiment prêts à payer ?"
+      }
+    }
   }
 }

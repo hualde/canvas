@@ -6,6 +6,7 @@ import { icons } from '../utils/icons';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import { CanvasWrapper } from '../components/CanvasWrapper';
 import { exportToPDF } from '../utils/pdfExport';
+import { useTranslation } from 'react-i18next';
 
 interface CanvasData {
   id: string;
@@ -39,6 +40,7 @@ export default function Canvas() {
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
   const titleInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -112,7 +114,7 @@ export default function Canvas() {
         console.log('PDF exported successfully');
       } catch (error) {
         console.error('Error exporting PDF:', error);
-        alert('Failed to export PDF. Please try again.');
+        alert(t('canvas.pdfExportError'));
       }
     }
   };
@@ -128,7 +130,7 @@ export default function Canvas() {
         console.log('Canvas saved successfully');
       } catch (error) {
         console.error('Error saving canvas:', error);
-        alert('Failed to save canvas. Please try again.');
+        alert(t('canvas.saveError'));
       }
     }
   };
@@ -145,12 +147,12 @@ export default function Canvas() {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
-          <p className="text-gray-600">Canvas not found</p>
+          <p className="text-gray-600">{t('canvas.notFound')}</p>
           <button
             onClick={() => navigate('/')}
             className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
           >
-            Return to Dashboard
+            {t('canvas.returnToDashboard')}
           </button>
         </div>
       </div>
@@ -171,7 +173,7 @@ export default function Canvas() {
           onChange={(e) => setProject_name(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Project Name"
+          placeholder={t('canvas.projectName')}
         />
         <input
           type="text"
@@ -179,7 +181,7 @@ export default function Canvas() {
           onChange={(e) => setAuthor(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Author"
+          placeholder={t('canvas.author')}
         />
         <input
           type="date"
@@ -196,7 +198,7 @@ export default function Canvas() {
           onBlur={handleUpdateCanvasInfo}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           rows={4}
-          placeholder="Comments"
+          placeholder={t('canvas.comments')}
         />
       </div>
 
@@ -204,62 +206,62 @@ export default function Canvas() {
         <div className="absolute inset-0 bg-blue-200/30"></div>
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <CanvasSection
-            title="Key Partners"
+            title={t('canvas.sections.keyPartners.title')}
             items={canvas.content.keyPartners}
             onUpdate={(items) => handleSectionUpdate('keyPartners', items)}
-            description="Who are your key partners and suppliers?"
+            description={t('canvas.sections.keyPartners.description')}
             className="h-full bg-white/50"
             icon={icons.keyPartnerships}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
             <CanvasSection
-              title="Key Activities"
+              title={t('canvas.sections.keyActivities.title')}
               items={canvas.content.keyActivities}
               onUpdate={(items) => handleSectionUpdate('keyActivities', items)}
-              description="What key activities does your value proposition require?"
+              description={t('canvas.sections.keyActivities.description')}
               className="h-full bg-white/50"
               icon={icons.keyActivities}
             />
             <CanvasSection
-              title="Key Resources"
+              title={t('canvas.sections.keyResources.title')}
               items={canvas.content.keyResources}
               onUpdate={(items) => handleSectionUpdate('keyResources', items)}
-              description="What key resources does your value proposition require?"
+              description={t('canvas.sections.keyResources.description')}
               className="h-full bg-white/50"
               icon={icons.keyResources}
             />
           </div>
           <CanvasSection
-            title="Value Propositions"
+            title={t('canvas.sections.valuePropositions.title')}
             items={canvas.content.valuePropositions}
             onUpdate={(items) => handleSectionUpdate('valuePropositions', items)}
-            description="What value do you deliver to the customer?"
+            description={t('canvas.sections.valuePropositions.description')}
             className="h-full bg-white/50"
             icon={icons.valuePropositions}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
             <CanvasSection
-              title="Customer Relationships"
+              title={t('canvas.sections.customerRelationships.title')}
               items={canvas.content.customerRelationships}
               onUpdate={(items) => handleSectionUpdate('customerRelationships', items)}
-              description="What relationship does each customer segment expect?"
+              description={t('canvas.sections.customerRelationships.description')}
               className="h-full bg-white/50"
               icon={icons.customerRelationships}
             />
             <CanvasSection
-              title="Channels"
+              title={t('canvas.sections.channels.title')}
               items={canvas.content.channels}
               onUpdate={(items) => handleSectionUpdate('channels', items)}
-              description="Which channels do your customers prefer?"
+              description={t('canvas.sections.channels.description')}
               className="h-full bg-white/50"
               icon={icons.channels}
             />
           </div>
           <CanvasSection
-            title="Customer Segments"
+            title={t('canvas.sections.customerSegments.title')}
             items={canvas.content.customerSegments}
             onUpdate={(items) => handleSectionUpdate('customerSegments', items)}
-            description="For whom are you creating value?"
+            description={t('canvas.sections.customerSegments.description')}
             className="h-full bg-white/50"
             icon={icons.customerSegments}
           />
@@ -267,18 +269,18 @@ export default function Canvas() {
 
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           <CanvasSection
-            title="Cost Structure"
+            title={t('canvas.sections.costStructure.title')}
             items={canvas.content.costStructure}
             onUpdate={(items) => handleSectionUpdate('costStructure', items)}
-            description="What are the most important costs inherent in your business model?"
+            description={t('canvas.sections.costStructure.description')}
             className="h-full bg-white/50"
             icon={icons.costStructure}
           />
           <CanvasSection
-            title="Revenue Streams"
+            title={t('canvas.sections.revenueStreams.title')}
             items={canvas.content.revenueStreams}
             onUpdate={(items) => handleSectionUpdate('revenueStreams', items)}
-            description="For what value are your customers really willing to pay?"
+            description={t('canvas.sections.revenueStreams.description')}
             className="h-full bg-white/50"
             icon={icons.revenueStreams}
           />

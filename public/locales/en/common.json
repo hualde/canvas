@@ -264,5 +264,52 @@
     "newItemPlaceholder": "Enter a new item...",
     "cancel": "Cancel",
     "add": "Add"
+  },
+  "canvas": {
+    "pdfExportError": "Failed to export PDF. Please try again.",
+    "saveError": "Failed to save canvas. Please try again.",
+    "notFound": "Canvas not found",
+    "returnToDashboard": "Return to Dashboard",
+    "projectName": "Project Name",
+    "author": "Author",
+    "comments": "Comments",
+    "sections": {
+      "keyPartners": {
+        "title": "Key Partners",
+        "description": "Who are your key partners and suppliers?"
+      },
+      "keyActivities": {
+        "title": "Key Activities",
+        "description": "What key activities does your value proposition require?"
+      },
+      "keyResources": {
+        "title": "Key Resources",
+        "description": "What key resources does your value proposition require?"
+      },
+      "valuePropositions": {
+        "title": "Value Propositions",
+        "description": "What value do you deliver to the customer?"
+      },
+      "customerRelationships": {
+        "title": "Customer Relationships",
+        "description": "What relationship does each customer segment expect?"
+      },
+      "channels": {
+        "title": "Channels",
+        "description": "Which channels do your customers prefer?"
+      },
+      "customerSegments": {
+        "title": "Customer Segments",
+        "description": "For whom are you creating value?"
+      },
+      "costStructure": {
+        "title": "Cost Structure",
+        "description": "What are the most important costs inherent in your business model?"
+      },
+      "revenueStreams": {
+        "title": "Revenue Streams",
+        "description": "For what value are your customers really willing to pay?"
+      }
+    }
   }
 }

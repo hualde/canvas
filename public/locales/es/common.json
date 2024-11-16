@@ -264,5 +264,52 @@
     "newItemPlaceholder": "Ingresa un nuevo elemento...",
     "cancel": "Cancelar",
     "add": "Añadir"
+  },
+  "canvas": {
+    "pdfExportError": "Error al exportar PDF. Por favor, inténtelo de nuevo.",
+    "saveError": "Error al guardar el lienzo. Por favor, inténtelo de nuevo.",
+    "notFound": "Lienzo no encontrado",
+    "returnToDashboard": "Volver al Panel",
+    "projectName": "Nombre del Proyecto",
+    "author": "Autor",
+    "comments": "Comentarios",
+    "sections": {
+      "keyPartners": {
+        "title": "Socios Clave",
+        "description": "¿Quiénes son tus socios y proveedores clave?"
+      },
+      "keyActivities": {
+        "title": "Actividades Clave",
+        "description": "¿Qué actividades clave requiere tu propuesta de valor?"
+      },
+      "keyResources": {
+        "title": "Recursos Clave",
+        "description": "¿Qué recursos clave requiere tu propuesta de valor?"
+      },
+      "valuePropositions": {
+        "title": "Propuestas de Valor",
+        "description": "¿Qué valor entregas al cliente?"
+      },
+      "customerRelationships": {
+        "title": "Relaciones con Clientes",
+        "description": "¿Qué tipo de relación espera cada segmento de clientes?"
+      },
+      "channels": {
+        "title": "Canales",
+        "description": "¿Qué canales prefieren tus clientes?"
+      },
+      "customerSegments": {
+        "title": "Segmentos de Clientes",
+        "description": "¿Para quién estás creando valor?"
+      },
+      "costStructure": {
+        "title": "Estructura de Costos",
+        "description": "¿Cuáles son los costos más importantes inherentes a tu modelo de negocio?"
+      },
+      "revenueStreams": {
+        "title": "Fuentes de Ingresos",
+        "description": "¿Por qué valor están realmente dispuestos a pagar tus clientes?"
+      }
+    }
   }
 }
