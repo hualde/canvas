@@ -311,5 +311,40 @@
         "description": "Pour quelle valeur vos clients sont-ils vraiment prêts à payer ?"
       }
     }
+  },
+  "empathyMap": {
+    "pdfExportError": "Échec de l'exportation du PDF. Veuillez réessayer.",
+    "saveError": "Échec de l'enregistrement de la carte d'empathie. Veuillez réessayer.",
+    "notFound": "Carte d'empathie non trouvée",
+    "returnToDashboard": "Retour au Tableau de Bord",
+    "projectName": "Nom du Projet",
+    "author": "Auteur",
+    "comments": "Commentaires",
+    "sections": {
+      "thinkAndFeel": {
+        "title": "Pense et Ressent ?",
+        "description": "Que pourrait penser et ressentir votre utilisateur ?"
+      },
+      "see": {
+        "title": "Voit ?",
+        "description": "Que voit votre utilisateur dans son environnement ?"
+      },
+      "hear": {
+        "title": "Entend ?",
+        "description": "Qu'entend votre utilisateur des autres ?"
+      },
+      "sayAndDo": {
+        "title": "Dit et Fait ?",
+        "description": "Que dit et fait votre utilisateur ?"
+      },
+      "pains": {
+        "title": "Douleur",
+        "description": "Quelles sont les peurs, frustrations et anxiétés de votre utilisateur ?"
+      },
+      "gains": {
+        "title": "Gain",
+        "description": "Quels sont les désirs, besoins et mesures de succès de votre utilisateur ?"
+      }
+    }
   }
 }

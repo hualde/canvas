@@ -311,5 +311,40 @@
         "description": "¿Por qué valor están realmente dispuestos a pagar tus clientes?"
       }
     }
+  },
+  "empathyMap": {
+    "pdfExportError": "Error al exportar PDF. Por favor, inténtelo de nuevo.",
+    "saveError": "Error al guardar el mapa de empatía. Por favor, inténtelo de nuevo.",
+    "notFound": "Mapa de empatía no encontrado",
+    "returnToDashboard": "Volver al Panel",
+    "projectName": "Nombre del Proyecto",
+    "author": "Autor",
+    "comments": "Comentarios",
+    "sections": {
+      "thinkAndFeel": {
+        "title": "¿Piensa y Siente?",
+        "description": "¿Qué podría estar pensando y sintiendo tu usuario?"
+      },
+      "see": {
+        "title": "¿Ve?",
+        "description": "¿Qué ve tu usuario en su entorno?"
+      },
+      "hear": {
+        "title": "¿Escucha?",
+        "description": "¿Qué escucha tu usuario de los demás?"
+      },
+      "sayAndDo": {
+        "title": "¿Dice y Hace?",
+        "description": "¿Qué dice y hace tu usuario?"
+      },
+      "pains": {
+        "title": "Dolor",
+        "description": "¿Cuáles son los miedos, frustraciones y ansiedades de tu usuario?"
+      },
+      "gains": {
+        "title": "Ganancia",
+        "description": "¿Cuáles son los deseos, necesidades y medidas de éxito de tu usuario?"
+      }
+    }
   }
 }

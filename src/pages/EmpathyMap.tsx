@@ -6,6 +6,7 @@ import { icons } from '../utils/icons';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import { CanvasWrapper } from '../components/CanvasWrapper';
 import { exportEmpathyMapToPDF } from '../utils/empathyMapPdfExport';
+import { useTranslation } from 'react-i18next';
 
 interface EmpathyMapData {
   id: string;
@@ -35,6 +36,7 @@ export function EmpathyMap() {
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
   const titleInputRef = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -101,7 +103,7 @@ export function EmpathyMap() {
         console.log('PDF exported successfully');
       } catch (error) {
         console.error('Error exporting PDF:', error);
-        alert('Failed to export PDF. Please try again.');
+        alert(t('empathyMap.pdfExportError'));
       }
     }
   };
@@ -117,7 +119,7 @@ export function EmpathyMap() {
         console.log('Canvas saved successfully');
       } catch (error) {
         console.error('Error saving canvas:', error);
-        alert('Failed to save canvas. Please try again.');
+        alert(t('empathyMap.saveError'));
       }
     }
   };
@@ -134,12 +136,12 @@ export function EmpathyMap() {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
-          <p className="text-gray-600">Canvas not found</p>
+          <p className="text-gray-600">{t('empathyMap.notFound')}</p>
           <button
             onClick={() => navigate('/')}
             className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
           >
-            Return to Dashboard
+            {t('empathyMap.returnToDashboard')}
           </button>
         </div>
       </div>
@@ -160,7 +162,7 @@ export function EmpathyMap() {
           onChange={(e) => setProject_name(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Project Name"
+          placeholder={t('empathyMap.projectName')}
         />
         <input
           type="text"
@@ -168,7 +170,7 @@ export function EmpathyMap() {
           onChange={(e) => setAuthor(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Author"
+          placeholder={t('empathyMap.author')}
         />
         <input
           type="date"
@@ -185,7 +187,7 @@ export function EmpathyMap() {
           onBlur={handleUpdateCanvasInfo}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           rows={4}
-          placeholder="Comments"
+          placeholder={t('empathyMap.comments')}
         />
       </div>
 
@@ -193,50 +195,50 @@ export function EmpathyMap() {
         <div className="absolute inset-0 bg-blue-200/30"></div>
         <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
           <CanvasSection
-            title="Think & Feel?"
+            title={t('empathyMap.sections.thinkAndFeel.title')}
             items={canvas.content.thinkAndFeel || []}
             onUpdate={(items) => handleSectionUpdate('thinkAndFeel', items)}
-            description="What might your user be thinking and feeling?"
+            description={t('empathyMap.sections.thinkAndFeel.description')}
             className="bg-white/50 border border-gray-200"
             icon={icons.think}
           />
           <CanvasSection
-            title="See?"
+            title={t('empathyMap.sections.see.title')}
             items={canvas.content.see || []}
             onUpdate={(items) => handleSectionUpdate('see', items)}
-            description="What does your user see in their environment?"
+            description={t('empathyMap.sections.see.description')}
             className="bg-white/50 border border-gray-200"
             icon={icons.see}
           />
           <CanvasSection
-            title="Hear?"
+            title={t('empathyMap.sections.hear.title')}
             items={canvas.content.hear || []}
             onUpdate={(items) => handleSectionUpdate('hear', items)}
-            description="What does your user hear from others?"
+            description={t('empathyMap.sections.hear.description')}
             className="bg-white/50 border border-gray-200"
             icon={icons.hear}
           />
           <CanvasSection
-            title="Say & Do?"
+            title={t('empathyMap.sections.sayAndDo.title')}
             items={canvas.content.sayAndDo || []}
             onUpdate={(items) => handleSectionUpdate('sayAndDo', items)}
-            description="What does your user say and do?"
+            description={t('empathyMap.sections.sayAndDo.description')}
             className="bg-white/50 border border-gray-200"
             icon={icons.sayDo}
           />
           <CanvasSection
-            title="Pain"
+            title={t('empathyMap.sections.pains.title')}
             items={canvas.content.pains || []}
             onUpdate={(items) => handleSectionUpdate('pains', items)}
-            description="What are your user's fears, frustrations, and anxieties?"
+            description={t('empathyMap.sections.pains.description')}
             className="!bg-green-100 border border-gray-200"
             icon={icons.pain}
           />
           <CanvasSection
-            title="Gain"
+            title={t('empathyMap.sections.gains.title')}
             items={canvas.content.gains || []}
             onUpdate={(items) => handleSectionUpdate('gains', items)}
-            description="What are your user's wants, needs, and measures of success?"
+            description={t('empathyMap.sections.gains.description')}
             className="!bg-green-100 border border-gray-200"
             icon={icons.gain}
           />

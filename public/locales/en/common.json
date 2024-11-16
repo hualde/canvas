@@ -311,5 +311,40 @@
         "description": "For what value are your customers really willing to pay?"
       }
     }
+  },
+  "empathyMap": {
+    "pdfExportError": "Failed to export PDF. Please try again.",
+    "saveError": "Failed to save empathy map. Please try again.",
+    "notFound": "Empathy map not found",
+    "returnToDashboard": "Return to Dashboard",
+    "projectName": "Project Name",
+    "author": "Author",
+    "comments": "Comments",
+    "sections": {
+      "thinkAndFeel": {
+        "title": "Think & Feel?",
+        "description": "What might your user be thinking and feeling?"
+      },
+      "see": {
+        "title": "See?",
+        "description": "What does your user see in their environment?"
+      },
+      "hear": {
+        "title": "Hear?",
+        "description": "What does your user hear from others?"
+      },
+      "sayAndDo": {
+        "title": "Say & Do?",
+        "description": "What does your user say and do?"
+      },
+      "pains": {
+        "title": "Pain",
+        "description": "What are your user's fears, frustrations, and anxieties?"
+      },
+      "gains": {
+        "title": "Gain",
+        "description": "What are your user's wants, needs, and measures of success?"
+      }
+    }
   }
 }
