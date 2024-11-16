@@ -104,6 +104,15 @@ const faqs = [
   },
 ]
 
+const companies = [
+  { name: 'McKinsey & Company', logo: '/images/mckinsey.png?height=80&width=200' },
+  { name: 'Boston Consulting Group', logo: '/images/bcg.png?height=80&width=200' },
+  { name: 'Deloitte', logo: '/images/deloitte.png?height=80&width=200' },
+  { name: 'Microsoft', logo: '/images/microsoft.png?height=80&width=200' },
+  { name: 'IBM', logo: '/images/ibm.png?height=80&width=200' },
+  { name: 'Salesforce', logo: '/images/salesforce.png?height=80&width=200' },
+]
+
 export default function LandingPage() {
   const [currentLanguage, setCurrentLanguage] = useState(languages[0])
   const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0()
@@ -191,6 +200,26 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Companies Section */}
+      <section className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-8 text-center">
+            Trusted by Industry Leaders
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+            {companies.map((company) => (
+              <div key={company.name} className="flex justify-center">
+                <img
+                  src={company.logo}
+                  alt={`${company.name} logo`}
+                  className="max-h-16 w-auto object-contain"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
       <section className="bg-[#F5F7FA] py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
@@ -215,31 +244,31 @@ export default function LandingPage() {
 
       {/* Pricing Section */}
       <section id="pricing" className="bg-white py-16">
-      <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">DAI Vinci Subscription Plans</h2>
-        <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
-          Choose the plan that best suits your needs and start optimizing your business strategy with DAI Vinci.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {pricingPlans.map((plan, index) => (
-            <Card key={index} className="flex flex-col min-h-[400px]">
-              <CardHeader>
-                <CardTitle className="text-2xl font-bold text-[#FF6600]">{plan.name}</CardTitle>
-                <p className="text-2xl font-semibold text-[#1E1F26]">{plan.price}</p>
-              </CardHeader>
-              <CardContent className="flex flex-col justify-between flex-grow">
-                <ul className="text-[#6B7280] list-none p-0 text-left mb-6">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="mb-2">✔ {feature}</li>
-                  ))}
-                </ul>
-                <Button className="w-full mt-auto">Choose Plan</Button>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold text-[#1E1F26] font-helvetica mb-4">D'AI Vinci Subscription Plans</h2>
+          <p className="text-xl text-[#6B7280] mb-8 max-w-2xl mx-auto">
+            Choose the plan that best suits your needs and start optimizing your business strategy with D'AI Vinci.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {pricingPlans.map((plan, index) => (
+              <Card key={index} className="flex flex-col min-h-[400px]">
+                <CardHeader>
+                  <CardTitle className="text-2xl font-bold text-[#FF6600]">{plan.name}</CardTitle>
+                  <p className="text-2xl font-semibold text-[#1E1F26]">{plan.price}</p>
+                </CardHeader>
+                <CardContent className="flex flex-col justify-between flex-grow">
+                  <ul className="text-[#6B7280] list-none p-0 text-left mb-6">
+                    {plan.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="mb-2">✔ {feature}</li>
+                    ))}
+                  </ul>
+                  <Button className="w-full mt-auto">Choose Plan</Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* Feature Comparison Section */}
       <section className="bg-[#F5F7FA] py-16">
