@@ -1,0 +1,107 @@
+{
+    "hero": {
+      "title": "Concevez votre proposition de valeur avec",
+      "description": "D'AI Vinci vous aide à structurer, visualiser et affiner la stratégie de votre entreprise de manière simple et efficace. Utilisez des outils d'analyse tels que le Business Model Canvas, le Value Proposition Canvas, SWOT, PESTEL et plus encore pour créer une approche solide qui fait progresser votre entreprise.",
+      "getStarted": "Commencer maintenant"
+    },
+    "features": {
+      "title": "Fonctionnalités de D'AI Vinci",
+      "description": "Les puissants outils de D'AI Vinci sont conçus pour vous aider à structurer et optimiser chaque aspect de votre stratégie d'entreprise. De la planification à la présentation, chaque fonctionnalité est conçue pour rendre le processus simple et efficace.",
+      "aiAssistant": {
+        "title": "Assistant IA",
+        "description": "Recevez des recommandations et des analyses en temps réel pour renforcer votre proposition de valeur avec le soutien de notre assistant IA."
+      },
+      "pdfExport": {
+        "title": "Exportation PDF",
+        "description": "Téléchargez vos modèles de stratégie au format PDF pour les partager facilement avec votre équipe et vos parties prenantes."
+      },
+      "exampleLibrary": {
+        "title": "Bibliothèque d'exemples",
+        "description": "Accédez à des exemples de canevas stratégiques basés sur des entreprises prospères pour inspirer et guider vos propres stratégies."
+      },
+      "multipleCanvases": {
+        "title": "Canevas multiples",
+        "description": "Créez et personnalisez facilement le Business Model Canvas, la Value Proposition, SWOT, PESTEL et l'Empathy Map."
+      }
+    },
+    "companies": {
+      "title": "Fait confiance par les leaders de l'industrie"
+    },
+    "testimonials": {
+      "title": "Ce que nos utilisateurs disent de D'AI Vinci",
+      "description": "Découvrez comment D'AI Vinci a transformé la stratégie d'entreprise de sociétés du monde entier. L'expérience de nos utilisateurs témoigne de la simplicité et de l'efficacité que l'application apporte à leur planification et exécution commerciale.",
+      "sarah": {
+        "quote": "Cette application a révolutionné notre approche de la proposition de valeur. Elle est intuitive et puissante, un outil essentiel pour tout stratège."
+      },
+      "michael": {
+        "quote": "La perspective visuelle de cet outil nous a aidés à identifier des points critiques dans notre offre dont nous n'avions même pas conscience."
+      }
+    },
+    "pricing": {
+      "title": "Plans d'abonnement D'AI Vinci",
+      "description": "Choisissez le plan qui correspond le mieux à vos besoins et commencez à optimiser votre stratégie d'entreprise avec D'AI Vinci.",
+      "choosePlan": "Choisir le plan",
+      "freePlan": {
+        "name": "Plan gratuit",
+        "price": "0€/mois",
+        "features": [
+          "1 utilisateur",
+          "3 projets",
+          "Outils de canevas limités"
+        ]
+      },
+      "monthlyPlan": {
+        "name": "Plan Premium Mensuel",
+        "price": "9,99€/mois",
+        "features": [
+          "Utilisateurs illimités",
+          "Projets illimités",
+          "Assistance IA",
+          "Outils de canevas complets",
+          "Exportation PDF",
+          "Accès à la bibliothèque d'exemples"
+        ]
+      },
+      "annualPlan": {
+        "name": "Plan Premium Annuel",
+        "price": "99,99€/an",
+        "features": [
+          "Tout ce qui est inclus dans le plan mensuel",
+          "Économisez 16% par rapport au plan mensuel"
+        ]
+      }
+    },
+    "featureComparison": {
+      "title": "Comparaison des fonctionnalités des plans",
+      "description": "Comparez nos options de plan pour trouver celui qui convient le mieux aux besoins de votre équipe et à vos projets d'entreprise.",
+      "feature": "Fonctionnalité",
+      "freePlan": "Plan gratuit",
+      "premiumPlan": "Plan Premium",
+      "users": "Nombre d'utilisateurs",
+      "projects": "Nombre de projets",
+      "aiAssistance": "Assistance IA",
+      "canvasTools": "Outils de canevas",
+      "pdfExport": "Exportation PDF",
+      "exampleLibrary": "Bibliothèque d'exemples"
+    },
+    "faq": {
+      "title": "Questions fréquemment posées sur D'AI Vinci",
+      "valueProposition": {
+        "question": "Qu'est-ce qu'un Value Proposition Canvas ?",
+        "answer": "C'est un outil qui aide à positionner votre produit ou service autour des besoins et des valeurs du client. Il facilite la conception de produits et services que vos clients veulent réellement."
+      },
+      "difference": {
+        "question": "En quoi D'AI Vinci est-il différent des autres outils de planification d'entreprise ?",
+        "answer": "D'AI Vinci donne vie au Value Proposition Canvas et à d'autres modèles stratégiques avec des fonctionnalités interactives et une analyse basée sur l'IA, offrant une expérience plus dynamique et conviviale."
+      },
+      "multipleProjects": {
+        "question": "Puis-je utiliser D'AI Vinci pour plusieurs projets ?",
+        "answer": "Oui, selon le plan que vous choisissez, vous pouvez gérer plusieurs projets au sein de l'application, vous permettant de concevoir et de comparer des propositions de valeur pour différents segments de clientèle."
+      }
+    },
+    "cta": {
+      "title": "Prêt à transformer votre stratégie ?",
+      "description": "Commencez votre essai gratuit et amenez votre planification d'entreprise au niveau supérieur avec D'AI Vinci.",
+      "startNow": "Commencer maintenant"
+    }
+  }

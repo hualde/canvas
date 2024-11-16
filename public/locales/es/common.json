@@ -1,0 +1,15 @@
+{
+    "header": {
+      "pricing": "Precios",
+      "faq": "Preguntas frecuentes",
+      "login": "Iniciar sesión",
+      "goToApp": "Ir a la aplicación",
+      "loading": "Cargando..."
+    },
+    "footer": {
+      "allRightsReserved": "Todos los derechos reservados.",
+      "privacyPolicy": "Política de privacidad",
+      "termsOfService": "Términos de servicio",
+      "contactUs": "Contáctenos"
+    }
+  }

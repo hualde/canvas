@@ -17,6 +17,9 @@ import { Examples } from './pages/Examples';
 import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
+import LanguageSelector from './components/LanguageSelector';
 
 // Import example canvas components
 import AppleBusinessModelCanvas from './pages/examples/apple/business-model-canvas';
@@ -102,7 +105,6 @@ function AppContent() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         
-        
         <Route
           path="/"
           element={
@@ -156,13 +158,16 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Auth0ProviderWithNavigate>
-        <div className="flex flex-col min-h-screen w-full">
-          <AppContent />
-        </div>
-      </Auth0ProviderWithNavigate>
-    </BrowserRouter>
+    <I18nextProvider i18n={i18n}>
+      <BrowserRouter>
+        <Auth0ProviderWithNavigate>
+          <div className="flex flex-col min-h-screen w-full">
+            <LanguageSelector />
+            <AppContent />
+          </div>
+        </Auth0ProviderWithNavigate>
+      </BrowserRouter>
+    </I18nextProvider>
   );
 }
 

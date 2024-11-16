@@ -1,0 +1,15 @@
+{
+    "header": {
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "loading": "Loading...",
+      "goToApp": "Go to App",
+      "login": "Log In"
+    },
+    "footer": {
+      "allRightsReserved": "All rights reserved.",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfService": "Terms of Service",
+      "contactUs": "Contact Us"
+    }
+  }

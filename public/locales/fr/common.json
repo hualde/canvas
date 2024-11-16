@@ -1,0 +1,15 @@
+{
+    "header": {
+      "pricing": "Tarifs",
+      "faq": "FAQ",
+      "login": "Connexion",
+      "goToApp": "Accéder à l'app",
+      "loading": "Chargement..."
+    },
+    "footer": {
+      "allRightsReserved": "Tous droits réservés.",
+      "privacyPolicy": "Politique de confidentialité",
+      "termsOfService": "Conditions d'utilisation",
+      "contactUs": "Contactez-nous"
+    }
+  }

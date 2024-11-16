@@ -1,0 +1,107 @@
+{
+    "hero": {
+      "title": "Design Your Value Proposition with",
+      "description": "D'AI Vinci helps you structure, visualize, and refine your business strategy simply and effectively. Use analysis tools like Business Model Canvas, Value Proposition Canvas, SWOT, PESTEL, and more to create a solid approach that drives your business forward.",
+      "getStarted": "Get Started Now"
+    },
+    "features": {
+      "title": "D'AI Vinci Features",
+      "description": "D'AI Vinci's powerful tools are designed to help you structure and optimize every aspect of your business strategy. From planning to presentation, each feature is designed to make the process simple and effective.",
+      "aiAssistant": {
+        "title": "AI Assistant",
+        "description": "Receive real-time recommendations and analysis to help strengthen your value proposition with the support of our AI assistant."
+      },
+      "pdfExport": {
+        "title": "PDF Export",
+        "description": "Download your strategy models in PDF format to easily share with your team and stakeholders."
+      },
+      "exampleLibrary": {
+        "title": "Example Library",
+        "description": "Access examples of strategic Canvases based on successful companies to inspire and guide your own strategies."
+      },
+      "multipleCanvases": {
+        "title": "Multiple Canvases",
+        "description": "Easily create and customize Business Model Canvas, Value Proposition, SWOT, PESTEL, and Empathy Map."
+      }
+    },
+    "companies": {
+      "title": "Trusted by Industry Leaders"
+    },
+    "testimonials": {
+      "title": "What Our Users Say About D'AI Vinci",
+      "description": "Discover how D'AI Vinci has transformed business strategy for companies worldwide. Our users' experience speaks to the simplicity and effectiveness the application brings to their business planning and execution.",
+      "sarah": {
+        "quote": "This app has revolutionized how we approach our value proposition. It's intuitive and powerful, an essential tool for any strategist."
+      },
+      "michael": {
+        "quote": "The visual perspective of this tool helped us identify critical points in our offering that we didn't even know existed."
+      }
+    },
+    "pricing": {
+      "title": "D'AI Vinci Subscription Plans",
+      "description": "Choose the plan that best fits your needs and start optimizing your business strategy with D'AI Vinci.",
+      "choosePlan": "Choose Plan",
+      "freePlan": {
+        "name": "Free Plan",
+        "price": "$0/month",
+        "features": [
+          "1 user",
+          "3 projects",
+          "Limited canvas tools"
+        ]
+      },
+      "monthlyPlan": {
+        "name": "Premium Monthly Plan",
+        "price": "$9.99/month",
+        "features": [
+          "Unlimited users",
+          "Unlimited projects",
+          "AI assistance",
+          "Full canvas tools",
+          "PDF export",
+          "Access to example library"
+        ]
+      },
+      "annualPlan": {
+        "name": "Premium Annual Plan",
+        "price": "$99.99/year",
+        "features": [
+          "Everything in monthly plan",
+          "Save 16% compared to monthly plan"
+        ]
+      }
+    },
+    "featureComparison": {
+      "title": "Plan Feature Comparison",
+      "description": "Compare our plan options to find the one that best suits your team's needs and business projects.",
+      "feature": "Feature",
+      "freePlan": "Free Plan",
+      "premiumPlan": "Premium Plan",
+      "users": "Number of users",
+      "projects": "Number of projects",
+      "aiAssistance": "AI assistance",
+      "canvasTools": "Canvas tools",
+      "pdfExport": "PDF export",
+      "exampleLibrary": "Example library"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions about D'AI Vinci",
+      "valueProposition": {
+        "question": "What is a Value Proposition Canvas?",
+        "answer": "It's a tool that helps position your product or service around customer needs and values. It facilitates designing products and services that customers really want."
+      },
+      "difference": {
+        "question": "How is D'AI Vinci different from other business planning tools?",
+        "answer": "D'AI Vinci brings the Value Proposition Canvas and other strategic models to life with interactive features and AI-driven analysis, offering a more dynamic and user-friendly experience."
+      },
+      "multipleProjects": {
+        "question": "Can I use D'AI Vinci for multiple projects?",
+        "answer": "Yes, depending on the plan you choose, you can manage several projects within the application, allowing you to design and compare value propositions for different customer segments."
+      }
+    },
+    "cta": {
+      "title": "Ready to Transform Your Strategy?",
+      "description": "Start your free trial and take your business planning to the next level with D'AI Vinci.",
+      "startNow": "Start Now"
+    }
+  }
