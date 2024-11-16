@@ -134,5 +134,105 @@
     "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer ce canevas ? Cette action ne peut pas être annulée.",
     "cancel": "Annuler",
     "delete": "Supprimer"
+  },
+  "tutorial": {
+    "backToDashboard": "Retour au Tableau de Bord",
+    "title": "Comment utiliser Value Canvas",
+    "introduction": {
+      "title": "Introduction",
+      "description": "Value Canvas est un outil complet conçu pour vous aider à créer et à gérer divers types de canevas d'analyse d'entreprise. Il vous permet de visualiser, d'analyser et d'améliorer vos stratégies d'entreprise de manière structurée et efficace."
+    },
+    "dashboard": {
+      "title": "Tableau de Bord",
+      "description": "Le tableau de bord est votre point de départ. Ici, vous pouvez :",
+      "features": [
+        "Voir tous vos canevas existants",
+        "Créer de nouveaux canevas de différents types",
+        "Modifier ou supprimer des canevas existants",
+        "Accéder à des exemples de canevas pour vous inspirer"
+      ]
+    },
+    "canvasTypes": {
+      "title": "Types de Canevas",
+      "description": "Value Canvas prend en charge plusieurs types d'outils d'analyse d'entreprise :",
+      "businessModel": {
+        "title": "Canevas de Modèle d'Affaires",
+        "description": "Visualisez et analysez votre modèle d'affaires complet."
+      },
+      "valueProposition": {
+        "title": "Canevas de Proposition de Valeur",
+        "description": "Concentrez-vous sur votre proposition de valeur et l'adéquation produit-marché."
+      },
+      "empathyMap": {
+        "title": "Carte d'Empathie",
+        "description": "Obtenez des informations sur les pensées, les sentiments et les comportements de vos clients."
+      },
+      "swot": {
+        "title": "Analyse SWOT",
+        "description": "Évaluez les Forces, Faiblesses, Opportunités et Menaces de votre entreprise."
+      },
+      "pestel": {
+        "title": "Analyse PESTEL",
+        "description": "Analysez les facteurs externes affectant votre entreprise : Politiques, Économiques, Sociaux, Technologiques, Environnementaux et Légaux."
+      }
+    },
+    "creatingEditing": {
+      "title": "Création et Édition de Canevas",
+      "description1": "Lors de la création d'un nouveau canevas ou de l'édition d'un canevas existant, vous verrez des sections spécifiques basées sur le type de canevas sur lequel vous travaillez. Chaque type de canevas a sa structure unique et ses domaines d'intérêt.",
+      "description2": "Chaque section a un bouton \"Ajouter un élément\" pour inclure de nouveaux éléments. Vous pouvez également modifier ou supprimer des éléments existants dans chaque section."
+    },
+    "canvasInfo": {
+      "title": "Informations sur le Canevas",
+      "description1": "En haut de chaque canevas, vous pouvez modifier les informations suivantes :",
+      "fields": [
+        "Titre du Canevas",
+        "Nom du Projet",
+        "Auteur",
+        "Date",
+        "Commentaires"
+      ],
+      "description2": "Ces informations vous aident à organiser et à identifier vos différents canevas à travers divers projets et analyses."
+    },
+    "specialFeatures": {
+      "title": "Fonctionnalités Spéciales",
+      "exportPdf": {
+        "title": "Exporter en PDF",
+        "description": "Vous pouvez exporter n'importe lequel de vos canevas en fichier PDF pour un partage ou une impression facile. Recherchez le bouton \"Exporter PDF\" en haut de votre canevas."
+      },
+      "aiAssistant": {
+        "title": "Assistant IA",
+        "description": "Le bouton IA, situé dans le coin inférieur droit de l'écran d'édition du canevas, fournit une assistance intelligente pour améliorer votre processus de création de canevas, quel que soit le type d'analyse sur lequel vous travaillez.",
+        "features": {
+          "title": "Fonctionnalités :",
+          "list": [
+            "Génère des idées pour chaque section de votre canevas",
+            "Analyse votre canevas actuel et suggère des améliorations",
+            "Fournit des informations et des exemples spécifiques à l'industrie",
+            "Répond aux questions sur la méthodologie de chaque type de canevas",
+            "Offre une analyse comparative entre différents types de canevas"
+          ]
+        },
+        "usage": "Pour utiliser l'assistant IA, cliquez sur le bouton violet avec l'icône d'étincelles. Ensuite, vous pouvez taper votre question ou votre demande, et l'IA fournira des suggestions et des idées pertinentes adaptées au canevas spécifique sur lequel vous travaillez."
+      },
+      "canvasExamples": {
+        "title": "Exemples de Canevas",
+        "description": "Accédez à une variété d'exemples de canevas d'entreprises connues pour vous inspirer et mieux comprendre comment appliquer ces outils à différents types d'entreprises."
+      }
+    },
+    "tips": {
+      "title": "Conseils pour une Utilisation Efficace",
+      "list": [
+        "Mettez régulièrement à jour vos canevas à mesure que vos stratégies d'entreprise évoluent",
+        "Utilisez plusieurs types de canevas pour obtenir une vue d'ensemble de votre entreprise",
+        "Tirez parti de l'assistant IA pour l'inspiration et des idées plus approfondies",
+        "Exportez en PDF pour les présentations, les discussions d'équipe ou les réunions avec les parties prenantes",
+        "Utilisez la section commentaires pour noter les décisions importantes, les changements ou les éléments d'action",
+        "Comparez et contrastez les idées de différents types de canevas pour informer votre stratégie"
+      ]
+    },
+    "needHelp": {
+      "title": "Besoin d'Aide ?",
+      "description": "Si vous avez des questions ou besoin d'une assistance supplémentaire avec l'un des types de canevas ou des fonctionnalités, n'hésitez pas à contacter notre équipe de support ou à utiliser l'assistant IA pour obtenir des conseils. Nous sommes là pour vous aider à tirer le meilleur parti de vos outils d'analyse d'entreprise !"
+    }
   }
 }

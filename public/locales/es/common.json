@@ -134,5 +134,105 @@
     "deleteConfirmation": "¿Estás seguro de que quieres eliminar este lienzo? Esta acción no se puede deshacer.",
     "cancel": "Cancelar",
     "delete": "Eliminar"
+  },
+  "tutorial": {
+    "backToDashboard": "Volver al Panel",
+    "title": "Cómo usar Value Canvas",
+    "introduction": {
+      "title": "Introducción",
+      "description": "Value Canvas es una herramienta integral diseñada para ayudarte a crear y gestionar varios tipos de lienzos de análisis de negocios. Te permite visualizar, analizar y mejorar tus estrategias de negocio de manera estructurada y eficiente."
+    },
+    "dashboard": {
+      "title": "Panel de Control",
+      "description": "El panel de control es tu punto de partida. Aquí puedes:",
+      "features": [
+        "Ver todos tus lienzos existentes",
+        "Crear nuevos lienzos de diferentes tipos",
+        "Editar o eliminar lienzos existentes",
+        "Acceder a ejemplos de lienzos para inspirarte"
+      ]
+    },
+    "canvasTypes": {
+      "title": "Tipos de Lienzos",
+      "description": "Value Canvas admite múltiples tipos de herramientas de análisis de negocios:",
+      "businessModel": {
+        "title": "Lienzo de Modelo de Negocio",
+        "description": "Visualiza y analiza tu modelo de negocio completo."
+      },
+      "valueProposition": {
+        "title": "Lienzo de Propuesta de Valor",
+        "description": "Enfócate en tu propuesta de valor y en el ajuste producto-mercado."
+      },
+      "empathyMap": {
+        "title": "Mapa de Empatía",
+        "description": "Obtén información sobre los pensamientos, sentimientos y comportamientos de tus clientes."
+      },
+      "swot": {
+        "title": "Análisis DAFO",
+        "description": "Evalúa las Debilidades, Amenazas, Fortalezas y Oportunidades de tu negocio."
+      },
+      "pestel": {
+        "title": "Análisis PESTEL",
+        "description": "Analiza los factores externos que afectan a tu negocio: Políticos, Económicos, Sociales, Tecnológicos, Ambientales y Legales."
+      }
+    },
+    "creatingEditing": {
+      "title": "Creación y Edición de Lienzos",
+      "description1": "Al crear un nuevo lienzo o editar uno existente, verás secciones específicas basadas en el tipo de lienzo en el que estás trabajando. Cada tipo de lienzo tiene su estructura única y áreas de enfoque.",
+      "description2": "Cada sección tiene un botón \"Añadir Elemento\" para incluir nuevos elementos. También puedes editar o eliminar elementos existentes dentro de cada sección."
+    },
+    "canvasInfo": {
+      "title": "Información del Lienzo",
+      "description1": "En la parte superior de cada lienzo, puedes editar la siguiente información:",
+      "fields": [
+        "Título del Lienzo",
+        "Nombre del Proyecto",
+        "Autor",
+        "Fecha",
+        "Comentarios"
+      ],
+      "description2": "Esta información te ayuda a organizar e identificar tus diferentes lienzos en varios proyectos y análisis."
+    },
+    "specialFeatures": {
+      "title": "Características Especiales",
+      "exportPdf": {
+        "title": "Exportar a PDF",
+        "description": "Puedes exportar cualquiera de tus lienzos a un archivo PDF para compartirlo o imprimirlo fácilmente. Busca el botón \"Exportar PDF\" en la parte superior de tu lienzo."
+      },
+      "aiAssistant": {
+        "title": "Asistente de IA",
+        "description": "El botón de IA, ubicado en la esquina inferior derecha de la pantalla de edición del lienzo, proporciona asistencia inteligente para mejorar tu proceso de creación de lienzos, independientemente del tipo de análisis en el que estés trabajando.",
+        "features": {
+          "title": "Características:",
+          "list": [
+            "Genera ideas para cada sección de tu lienzo",
+            "Analiza tu lienzo actual y sugiere mejoras",
+            "Proporciona información y ejemplos específicos de la industria",
+            "Responde preguntas sobre la metodología de cada tipo de lienzo",
+            "Ofrece análisis comparativos entre diferentes tipos de lienzos"
+          ]
+        },
+        "usage": "Para usar el asistente de IA, haz clic en el botón morado con el icono de chispas. Luego, puedes escribir tu pregunta o solicitud, y la IA proporcionará sugerencias e ideas relevantes adaptadas al lienzo específico en el que estás trabajando."
+      },
+      "canvasExamples": {
+        "title": "Ejemplos de Lienzos",
+        "description": "Accede a una variedad de ejemplos de lienzos de empresas conocidas para inspirarte y comprender mejor cómo aplicar estas herramientas a diferentes tipos de negocios."
+      }
+    },
+    "tips": {
+      "title": "Consejos para un Uso Efectivo",
+      "list": [
+        "Actualiza regularmente tus lienzos a medida que evolucionan tus estrategias de negocio",
+        "Utiliza múltiples tipos de lienzos para obtener una visión integral de tu negocio",
+        "Aprovecha el asistente de IA para inspirarte y obtener ideas más profundas",
+        "Exporta a PDF para presentaciones, discusiones de equipo o reuniones con partes interesadas",
+        "Utiliza la sección de comentarios para anotar decisiones importantes, cambios o elementos de acción",
+        "Compara y contrasta las ideas de diferentes tipos de lienzos para informar tu estrategia"
+      ]
+    },
+    "needHelp": {
+      "title": "¿Necesitas Ayuda?",
+      "description": "Si tienes alguna pregunta o necesitas más ayuda con cualquiera de los tipos de lienzos o características, no dudes en contactar a nuestro equipo de soporte o usar el asistente de IA para obtener orientación. ¡Estamos aquí para ayudarte a aprovechar al máximo tus herramientas de análisis de negocios!"
+    }
   }
 }

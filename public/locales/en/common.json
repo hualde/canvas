@@ -134,5 +134,105 @@
     "deleteConfirmation": "Are you sure you want to delete this canvas? This action cannot be undone.",
     "cancel": "Cancel",
     "delete": "Delete"
+  },
+  "tutorial": {
+    "backToDashboard": "Back to Dashboard",
+    "title": "How to Use Value Canvas",
+    "introduction": {
+      "title": "Introduction",
+      "description": "Value Canvas is a comprehensive tool designed to help you create and manage various types of business analysis canvases. It allows you to visualize, analyze, and improve your business strategies in a structured and efficient manner."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "The dashboard is your starting point. Here you can:",
+      "features": [
+        "View all your existing canvases",
+        "Create new canvases of different types",
+        "Edit or delete existing canvases",
+        "Access canvas examples for inspiration"
+      ]
+    },
+    "canvasTypes": {
+      "title": "Canvas Types",
+      "description": "Value Canvas supports multiple types of business analysis tools:",
+      "businessModel": {
+        "title": "Business Model Canvas",
+        "description": "Visualize and analyze your complete business model."
+      },
+      "valueProposition": {
+        "title": "Value Proposition Canvas",
+        "description": "Focus on your value proposition and product-market fit."
+      },
+      "empathyMap": {
+        "title": "Empathy Map",
+        "description": "Gain insights into your customers' thoughts, feelings, and behaviors."
+      },
+      "swot": {
+        "title": "SWOT Analysis",
+        "description": "Evaluate the Strengths, Weaknesses, Opportunities, and Threats of your business."
+      },
+      "pestel": {
+        "title": "PESTEL Analysis",
+        "description": "Analyze external factors affecting your business: Political, Economic, Social, Technological, Environmental, and Legal."
+      }
+    },
+    "creatingEditing": {
+      "title": "Creating and Editing Canvases",
+      "description1": "When creating a new canvas or editing an existing one, you'll see specific sections based on the type of canvas you're working on. Each canvas type has its unique structure and focus areas.",
+      "description2": "Each section has an \"Add Element\" button to include new items. You can also edit or delete existing elements within each section."
+    },
+    "canvasInfo": {
+      "title": "Canvas Information",
+      "description1": "At the top of each canvas, you can edit the following information:",
+      "fields": [
+        "Canvas Title",
+        "Project Name",
+        "Author",
+        "Date",
+        "Comments"
+      ],
+      "description2": "This information helps you organize and identify your different canvases across various projects and analyses."
+    },
+    "specialFeatures": {
+      "title": "Special Features",
+      "exportPdf": {
+        "title": "Export to PDF",
+        "description": "You can export any of your canvases to a PDF file for easy sharing or printing. Look for the \"Export PDF\" button at the top of your canvas."
+      },
+      "aiAssistant": {
+        "title": "AI Assistant",
+        "description": "The AI button, located in the bottom right corner of the canvas editing screen, provides intelligent assistance to enhance your canvas creation process, regardless of the type of analysis you're working on.",
+        "features": {
+          "title": "Features:",
+          "list": [
+            "Generates ideas for each section of your canvas",
+            "Analyzes your current canvas and suggests improvements",
+            "Provides industry-specific insights and examples",
+            "Answers questions about the methodology of each canvas type",
+            "Offers comparative analysis between different canvas types"
+          ]
+        },
+        "usage": "To use the AI assistant, click on the purple button with the sparkles icon. Then, you can type your question or request, and the AI will provide relevant suggestions and insights tailored to the specific canvas you're working on."
+      },
+      "canvasExamples": {
+        "title": "Canvas Examples",
+        "description": "Access a variety of canvas examples from well-known companies to inspire you and better understand how to apply these tools to different types of businesses."
+      }
+    },
+    "tips": {
+      "title": "Tips for Effective Use",
+      "list": [
+        "Regularly update your canvases as your business strategies evolve",
+        "Use multiple canvas types to gain a comprehensive view of your business",
+        "Leverage the AI assistant for inspiration and deeper insights",
+        "Export to PDF for presentations, team discussions, or stakeholder meetings",
+        "Use the comments section to note important decisions, changes, or action items",
+        "Compare and contrast insights from different canvas types to inform your strategy"
+      ]
+    },
+    "needHelp": {
+      "title": "Need Help?",
+      "description": "If you have any questions or need further assistance with any of the canvas types or features, don't hesitate to contact our support team or use the AI assistant for guidance. We're here to help you make the most of your business analysis tools!"
+    }
   }
 }

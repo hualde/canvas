@@ -1,8 +1,11 @@
 import React from 'react';
 import { ArrowLeft, FileText, PieChart, Users, BarChart2, Compass, Sparkles, Download, Palette } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export function Tutorial() {
+  const { t } = useTranslation();
+
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6">
       <Link
@@ -10,163 +13,127 @@ export function Tutorial() {
         className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6 sm:mb-8"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        <span className="text-sm sm:text-base">Back to Dashboard</span>
+        <span className="text-sm sm:text-base">{t('tutorial.backToDashboard')}</span>
       </Link>
 
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">How to Use Value Canvas</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">{t('tutorial.title')}</h1>
 
       <div className="prose prose-sm sm:prose prose-blue max-w-none">
         <section className="mb-8 sm:mb-12">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Introduction</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">{t('tutorial.introduction.title')}</h2>
           <p className="text-gray-600 mb-4">
-            Value Canvas is a comprehensive tool designed to help you create and manage various types of business analysis canvases. It allows you to visualize, analyze, and improve your business strategies in a structured and efficient manner.
+            {t('tutorial.introduction.description')}
           </p>
         </section>
 
         <section className="mb-8 sm:mb-12">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Dashboard</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">{t('tutorial.dashboard.title')}</h2>
           <p className="text-gray-600 mb-4">
-            The dashboard is your starting point. Here you can:
+            {t('tutorial.dashboard.description')}
           </p>
           <ul className="list-disc list-inside text-gray-600 space-y-2">
-            <li>View all your existing canvases</li>
-            <li>Create new canvases of different types</li>
-            <li>Edit or delete existing canvases</li>
-            <li>Access canvas examples for inspiration</li>
+            {t('tutorial.dashboard.features', { returnObjects: true }).map((feature, index) => (
+              <li key={index}>{feature}</li>
+            ))}
           </ul>
         </section>
 
         <section className="mb-8 sm:mb-12">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Canvas Types</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">{t('tutorial.canvasTypes.title')}</h2>
           <p className="text-gray-600 mb-4">
-            Value Canvas supports multiple types of business analysis tools:
+            {t('tutorial.canvasTypes.description')}
           </p>
           <ul className="list-none space-y-4">
-            <li className="flex items-start">
-              <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600 mr-2 mt-1" />
-              <div>
-                <h3 className="font-semibold">Business Model Canvas</h3>
-                <p className="text-sm sm:text-base text-gray-600">Visualize and analyze your complete business model.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <PieChart className="h-5 w-5 sm:h-6 sm:w-6 text-green-600 mr-2 mt-1" />
-              <div>
-                <h3 className="font-semibold">Value Proposition Canvas</h3>
-                <p className="text-sm sm:text-base text-gray-600">Focus on your value proposition and product-market fit.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <Users className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600 mr-2 mt-1" />
-              <div>
-                <h3 className="font-semibold">Empathy Map</h3>
-                <p className="text-sm sm:text-base text-gray-600">Gain insights into your customers' thoughts, feelings, and behaviors.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <BarChart2 className="h-5 w-5 sm:h-6 sm:w-6 text-orange-600 mr-2 mt-1" />
-              <div>
-                <h3 className="font-semibold">SWOT Analysis</h3>
-                <p className="text-sm sm:text-base text-gray-600">Evaluate the Strengths, Weaknesses, Opportunities, and Threats of your business.</p>
-              </div>
-            </li>
-            <li className="flex items-start">
-              <Compass className="h-5 w-5 sm:h-6 sm:w-6 text-red-600 mr-2 mt-1" />
-              <div>
-                <h3 className="font-semibold">PESTEL Analysis</h3>
-                <p className="text-sm sm:text-base text-gray-600">Analyze external factors affecting your business: Political, Economic, Social, Technological, Environmental, and Legal.</p>
-              </div>
-            </li>
+            {[
+              { icon: FileText, color: 'text-blue-600', key: 'businessModel' },
+              { icon: PieChart, color: 'text-green-600', key: 'valueProposition' },
+              { icon: Users, color: 'text-purple-600', key: 'empathyMap' },
+              { icon: BarChart2, color: 'text-orange-600', key: 'swot' },
+              { icon: Compass, color: 'text-red-600', key: 'pestel' },
+            ].map(({ icon: Icon, color, key }) => (
+              <li key={key} className="flex items-start">
+                <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${color} mr-2 mt-1`} />
+                <div>
+                  <h3 className="font-semibold">{t(`tutorial.canvasTypes.${key}.title`)}</h3>
+                  <p className="text-sm sm:text-base text-gray-600">{t(`tutorial.canvasTypes.${key}.description`)}</p>
+                </div>
+              </li>
+            ))}
           </ul>
         </section>
 
         <section className="mb-8 sm:mb-12">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Creating and Editing Canvases</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">{t('tutorial.creatingEditing.title')}</h2>
           <p className="text-sm sm:text-base text-gray-600 mb-4">
-            When creating a new canvas or editing an existing one, you'll see specific sections based on the type of canvas you're working on. Each canvas type has its unique structure and focus areas.
+            {t('tutorial.creatingEditing.description1')}
           </p>
           <p className="text-sm sm:text-base text-gray-600 mt-4">
-            Each section has an "Add Element" button to include new items. You can also edit or delete existing elements within each section.
+            {t('tutorial.creatingEditing.description2')}
           </p>
         </section>
 
         <section className="mb-8 sm:mb-12">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Canvas Information</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">{t('tutorial.canvasInfo.title')}</h2>
           <p className="text-sm sm:text-base text-gray-600 mb-4">
-            At the top of each canvas, you can edit the following information:
+            {t('tutorial.canvasInfo.description1')}
           </p>
           <ul className="list-disc list-inside text-sm sm:text-base text-gray-600 space-y-2">
-            <li>Canvas Title</li>
-            <li>Project Name</li>
-            <li>Author</li>
-            <li>Date</li>
-            <li>Comments</li>
+            {t('tutorial.canvasInfo.fields', { returnObjects: true }).map((field, index) => (
+              <li key={index}>{field}</li>
+            ))}
           </ul>
           <p className="text-sm sm:text-base text-gray-600 mt-4">
-            This information helps you organize and identify your different canvases across various projects and analyses.
+            {t('tutorial.canvasInfo.description2')}
           </p>
         </section>
 
         <section className="mb-8 sm:mb-12">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Special Features</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">{t('tutorial.specialFeatures.title')}</h2>
           <div className="space-y-6">
-            <div>
-              <div className="flex items-center space-x-2 mb-2">
-                <Download className="h-5 w-5 text-blue-600" />
-                <h3 className="text-lg sm:text-xl font-medium text-gray-800">Export to PDF</h3>
+            {[
+              { icon: Download, color: 'text-blue-600', key: 'exportPdf' },
+              { icon: Sparkles, color: 'text-purple-600', key: 'aiAssistant' },
+              { icon: Palette, color: 'text-green-600', key: 'canvasExamples' },
+            ].map(({ icon: Icon, color, key }) => (
+              <div key={key}>
+                <div className="flex items-center space-x-2 mb-2">
+                  <Icon className={`h-5 w-5 ${color}`} />
+                  <h3 className="text-lg sm:text-xl font-medium text-gray-800">{t(`tutorial.specialFeatures.${key}.title`)}</h3>
+                </div>
+                <p className="text-sm sm:text-base text-gray-600 mb-4">
+                  {t(`tutorial.specialFeatures.${key}.description`)}
+                </p>
+                {key === 'aiAssistant' && (
+                  <>
+                    <h4 className="text-base sm:text-lg font-medium text-gray-800 mb-2">{t('tutorial.specialFeatures.aiAssistant.features.title')}</h4>
+                    <ul className="list-disc list-inside text-sm sm:text-base text-gray-600 space-y-2">
+                      {t('tutorial.specialFeatures.aiAssistant.features.list', { returnObjects: true }).map((feature, index) => (
+                        <li key={index}>{feature}</li>
+                      ))}
+                    </ul>
+                    <p className="text-sm sm:text-base text-gray-600 mt-4">
+                      {t('tutorial.specialFeatures.aiAssistant.usage')}
+                    </p>
+                  </>
+                )}
               </div>
-              <p className="text-sm sm:text-base text-gray-600">
-                You can export any of your canvases to a PDF file for easy sharing or printing. Look for the "Export PDF" button at the top of your canvas.
-              </p>
-            </div>
-            <div>
-              <div className="flex items-center space-x-2 mb-2">
-                <Sparkles className="h-5 w-5 text-purple-600" />
-                <h3 className="text-lg sm:text-xl font-medium text-gray-800">AI Assistant</h3>
-              </div>
-              <p className="text-sm sm:text-base text-gray-600 mb-4">
-                The AI button, located in the bottom right corner of the canvas editing screen, provides intelligent assistance to enhance your canvas creation process, regardless of the type of analysis you're working on.
-              </p>
-              <h4 className="text-base sm:text-lg font-medium text-gray-800 mb-2">Features:</h4>
-              <ul className="list-disc list-inside text-sm sm:text-base text-gray-600 space-y-2">
-                <li>Generates ideas for each section of your canvas</li>
-                <li>Analyzes your current canvas and suggests improvements</li>
-                <li>Provides industry-specific insights and examples</li>
-                <li>Answers questions about the methodology of each canvas type</li>
-                <li>Offers comparative analysis between different canvas types</li>
-              </ul>
-              <p className="text-sm sm:text-base text-gray-600 mt-4">
-                To use the AI assistant, click on the purple button with the sparkles icon. Then, you can type your question or request, and the AI will provide relevant suggestions and insights tailored to the specific canvas you're working on.
-              </p>
-            </div>
-            <div>
-              <div className="flex items-center space-x-2 mb-2">
-                <Palette className="h-5 w-5 text-green-600" />
-                <h3 className="text-lg sm:text-xl font-medium text-gray-800">Canvas Examples</h3>
-              </div>
-              <p className="text-sm sm:text-base text-gray-600">
-                Access a variety of canvas examples from well-known companies to inspire you and better understand how to apply these tools to different types of businesses.
-              </p>
-            </div>
+            ))}
           </div>
         </section>
 
         <section className="mb-8 sm:mb-12">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Tips for Effective Use</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">{t('tutorial.tips.title')}</h2>
           <ul className="list-disc list-inside text-sm sm:text-base text-gray-600 space-y-2">
-            <li>Regularly update your canvases as your business strategies evolve</li>
-            <li>Use multiple canvas types to gain a comprehensive view of your business</li>
-            <li>Leverage the AI assistant for inspiration and deeper insights</li>
-            <li>Export to PDF for presentations, team discussions, or stakeholder meetings</li>
-            <li>Use the comments section to note important decisions, changes, or action items</li>
-            <li>Compare and contrast insights from different canvas types to inform your strategy</li>
+            {t('tutorial.tips.list', { returnObjects: true }).map((tip, index) => (
+              <li key={index}>{tip}</li>
+            ))}
           </ul>
         </section>
 
         <section>
-          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">Need Help?</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4">{t('tutorial.needHelp.title')}</h2>
           <p className="text-sm sm:text-base text-gray-600">
-            If you have any questions or need further assistance with any of the canvas types or features, don't hesitate to contact our support team or use the AI assistant for guidance. We're here to help you make the most of your business analysis tools!
+            {t('tutorial.needHelp.description')}
           </p>
         </section>
       </div>
