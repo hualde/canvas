@@ -145,7 +145,7 @@ export default function LandingPage() {
             <a href="#pricing" className="ml-6 text-[#1E1F26] no-underline font-medium">Pricing</a>
             <a href="#faq" className="ml-6 text-[#1E1F26] no-underline font-medium">FAQ</a>
             <Button
-              onClick={() => loginWithRedirect({ appState: { returnTo: "/app" } })}
+              onClick={() => loginWithRedirect({ appState: { returnTo: "/dashboard" } })}
               className="ml-6"
               variant="default"
             >
