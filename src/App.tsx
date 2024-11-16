@@ -18,7 +18,6 @@ import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import { I18nextProvider } from 'react-i18next';
-import i18n from './i18n';
 import LanguageSelector from './components/LanguageSelector';
 
 // Import example canvas components

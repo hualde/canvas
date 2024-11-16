@@ -14,6 +14,8 @@ i18n
   .init({
     fallbackLng: 'en',
     debug: true,
+    ns: ['common', 'landing'],
+    defaultNS: 'common',
     interpolation: {
       escapeValue: false,
     },
