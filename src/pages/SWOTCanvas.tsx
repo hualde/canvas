@@ -6,6 +6,7 @@ import { icons } from '../utils/icons';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import { CanvasWrapper } from '../components/CanvasWrapper';
 import { exportSWOTToPDF } from '../utils/swotPdfExport';
+import { useTranslation } from 'react-i18next';
 
 interface SWOTCanvasData {
   id: string;
@@ -32,6 +33,7 @@ export function SWOTCanvas() {
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -98,7 +100,7 @@ export function SWOTCanvas() {
         console.log('PDF exported successfully');
       } catch (error) {
         console.error('Error exporting PDF:', error);
-        alert('Failed to export PDF. Please try again.');
+        alert(t('swotCanvas.pdfExportError'));
       }
     }
   };
@@ -114,7 +116,7 @@ export function SWOTCanvas() {
         console.log('Canvas saved successfully');
       } catch (error) {
         console.error('Error saving canvas:', error);
-        alert('Failed to save canvas. Please try again.');
+        alert(t('swotCanvas.saveError'));
       }
     }
   };
@@ -131,12 +133,12 @@ export function SWOTCanvas() {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
-          <p className="text-gray-600">Canvas not found</p>
+          <p className="text-gray-600">{t('swotCanvas.notFound')}</p>
           <button
             onClick={() => navigate('/')}
             className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
           >
-            Return to Dashboard
+            {t('swotCanvas.returnToDashboard')}
           </button>
         </div>
       </div>
@@ -157,7 +159,7 @@ export function SWOTCanvas() {
           onChange={(e) => setProject_name(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Project Name"
+          placeholder={t('swotCanvas.projectName')}
         />
         <input
           type="text"
@@ -165,7 +167,7 @@ export function SWOTCanvas() {
           onChange={(e) => setAuthor(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Author"
+          placeholder={t('swotCanvas.author')}
         />
         <input
           type="date"
@@ -182,7 +184,7 @@ export function SWOTCanvas() {
           onBlur={handleUpdateCanvasInfo}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           rows={4}
-          placeholder="Comments"
+          placeholder={t('swotCanvas.comments')}
         />
       </div>
 
@@ -190,34 +192,34 @@ export function SWOTCanvas() {
         <div className="absolute inset-0 bg-blue-200/30"></div>
         <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <CanvasSection
-            title="Strengths"
+            title={t('swotCanvas.sections.strengths.title')}
             items={canvas.content.strengths || []}
             onUpdate={(items) => handleSectionUpdate('strengths', items)}
-            description="Internal factors that give an advantage over others"
+            description={t('swotCanvas.sections.strengths.description')}
             className="h-full bg-white/50"
             icon={icons.strength}
           />
           <CanvasSection
-            title="Weaknesses"
+            title={t('swotCanvas.sections.weaknesses.title')}
             items={canvas.content.weaknesses || []}
             onUpdate={(items) => handleSectionUpdate('weaknesses', items)}
-            description="Internal factors that place the business at a disadvantage"
+            description={t('swotCanvas.sections.weaknesses.description')}
             className="h-full bg-white/50"
             icon={icons.weakness}
           />
           <CanvasSection
-            title="Opportunities"
+            title={t('swotCanvas.sections.opportunities.title')}
             items={canvas.content.opportunities || []}
             onUpdate={(items) => handleSectionUpdate('opportunities', items)}
-            description="External factors that the business could exploit to its advantage"
+            description={t('swotCanvas.sections.opportunities.description')}
             className="h-full bg-white/50"
             icon={icons.opportunity}
           />
           <CanvasSection
-            title="Threats"
+            title={t('swotCanvas.sections.threats.title')}
             items={canvas.content.threats || []}
             onUpdate={(items) => handleSectionUpdate('threats', items)}
-            description="External factors that could cause trouble for the business"
+            description={t('swotCanvas.sections.threats.description')}
             className="h-full bg-white/50"
             icon={icons.threat}
           />

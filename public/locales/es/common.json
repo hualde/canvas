@@ -396,5 +396,32 @@
         "description": "¿Qué leyes y regulaciones afectan su operación?"
       }
     }
+  },
+  "swotCanvas": {
+    "pdfExportError": "Error al exportar PDF. Por favor, inténtelo de nuevo.",
+    "saveError": "Error al guardar el lienzo. Por favor, inténtelo de nuevo.",
+    "notFound": "Lienzo no encontrado",
+    "returnToDashboard": "Volver al Panel",
+    "projectName": "Nombre del Proyecto",
+    "author": "Autor",
+    "comments": "Comentarios",
+    "sections": {
+      "strengths": {
+        "title": "Fortalezas",
+        "description": "Factores internos que dan una ventaja sobre otros"
+      },
+      "weaknesses": {
+        "title": "Debilidades",
+        "description": "Factores internos que ponen al negocio en desventaja"
+      },
+      "opportunities": {
+        "title": "Oportunidades",
+        "description": "Factores externos que el negocio podría aprovechar"
+      },
+      "threats": {
+        "title": "Amenazas",
+        "description": "Factores externos que podrían causar problemas al negocio"
+      }
+    }
   }
 }

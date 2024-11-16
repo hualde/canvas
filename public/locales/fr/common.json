@@ -396,5 +396,32 @@
         "description": "Quelles lois et réglementations affectent votre activité ?"
       }
     }
+  },
+  "swotCanvas": {
+    "pdfExportError": "Échec de l'exportation du PDF. Veuillez réessayer.",
+    "saveError": "Échec de l'enregistrement du canevas. Veuillez réessayer.",
+    "notFound": "Canevas non trouvé",
+    "returnToDashboard": "Retour au Tableau de Bord",
+    "projectName": "Nom du Projet",
+    "author": "Auteur",
+    "comments": "Commentaires",
+    "sections": {
+      "strengths": {
+        "title": "Forces",
+        "description": "Facteurs internes qui donnent un avantage sur les autres"
+      },
+      "weaknesses": {
+        "title": "Faiblesses",
+        "description": "Facteurs internes qui placent l'entreprise en désavantage"
+      },
+      "opportunities": {
+        "title": "Opportunités",
+        "description": "Facteurs externes que l'entreprise pourrait exploiter à son avantage"
+      },
+      "threats": {
+        "title": "Menaces",
+        "description": "Facteurs externes qui pourraient causer des problèmes à l'entreprise"
+      }
+    }
   }
 }

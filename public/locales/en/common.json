@@ -396,5 +396,32 @@
         "description": "What laws and regulations affect your operation?"
       }
     }
+  },
+  "swotCanvas": {
+    "pdfExportError": "Failed to export PDF. Please try again.",
+    "saveError": "Failed to save canvas. Please try again.",
+    "notFound": "Canvas not found",
+    "returnToDashboard": "Return to Dashboard",
+    "projectName": "Project Name",
+    "author": "Author",
+    "comments": "Comments",
+    "sections": {
+      "strengths": {
+        "title": "Strengths",
+        "description": "Internal factors that give an advantage over others"
+      },
+      "weaknesses": {
+        "title": "Weaknesses",
+        "description": "Internal factors that place the business at a disadvantage"
+      },
+      "opportunities": {
+        "title": "Opportunities",
+        "description": "External factors that the business could exploit to its advantage"
+      },
+      "threats": {
+        "title": "Threats",
+        "description": "External factors that could cause trouble for the business"
+      }
+    }
   }
 }
