@@ -361,5 +361,40 @@
       "empathyMap": "Carte d'Empathie",
       "pestel": "Analyse PESTEL"
     }
+  },
+  "pestelCanvas": {
+    "pdfExportError": "Échec de l'exportation du PDF. Veuillez réessayer.",
+    "saveError": "Échec de l'enregistrement du canevas. Veuillez réessayer.",
+    "notFound": "Canevas non trouvé",
+    "returnToDashboard": "Retour au Tableau de Bord",
+    "projectName": "Nom du Projet",
+    "author": "Auteur",
+    "comments": "Commentaires",
+    "sections": {
+      "political": {
+        "label": "Politique",
+        "description": "Quels facteurs politiques peuvent affecter votre entreprise ?"
+      },
+      "economic": {
+        "label": "Économique",
+        "description": "Quelles sont les conditions économiques qui influencent votre marché ?"
+      },
+      "social": {
+        "label": "Social",
+        "description": "Quelles tendances sociales et culturelles affectent votre public ?"
+      },
+      "technological": {
+        "label": "Technologique",
+        "description": "Comment la technologie impacte-t-elle votre industrie et vos produits ?"
+      },
+      "environmental": {
+        "label": "Environnemental",
+        "description": "Quels facteurs environnementaux sont pertinents pour votre entreprise ?"
+      },
+      "legal": {
+        "label": "Juridique",
+        "description": "Quelles lois et réglementations affectent votre activité ?"
+      }
+    }
   }
 }

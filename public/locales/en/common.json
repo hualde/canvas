@@ -361,5 +361,40 @@
       "empathyMap": "Empathy Map",
       "pestel": "PESTEL Analysis"
     }
+  },
+  "pestelCanvas": {
+    "pdfExportError": "Failed to export PDF. Please try again.",
+    "saveError": "Failed to save canvas. Please try again.",
+    "notFound": "Canvas not found",
+    "returnToDashboard": "Return to Dashboard",
+    "projectName": "Project Name",
+    "author": "Author",
+    "comments": "Comments",
+    "sections": {
+      "political": {
+        "label": "Political",
+        "description": "What political factors can affect your business?"
+      },
+      "economic": {
+        "label": "Economic",
+        "description": "What are the economic conditions influencing your market?"
+      },
+      "social": {
+        "label": "Social",
+        "description": "What social and cultural trends affect your audience?"
+      },
+      "technological": {
+        "label": "Technological",
+        "description": "How does technology impact your industry and products?"
+      },
+      "environmental": {
+        "label": "Environmental",
+        "description": "What environmental factors are relevant to your business?"
+      },
+      "legal": {
+        "label": "Legal",
+        "description": "What laws and regulations affect your operation?"
+      }
+    }
   }
 }

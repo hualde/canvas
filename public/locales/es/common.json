@@ -361,5 +361,40 @@
       "empathyMap": "Mapa de Empatía",
       "pestel": "Análisis PESTEL"
     }
+  },
+  "pestelCanvas": {
+    "pdfExportError": "Error al exportar PDF. Por favor, inténtelo de nuevo.",
+    "saveError": "Error al guardar el lienzo. Por favor, inténtelo de nuevo.",
+    "notFound": "Lienzo no encontrado",
+    "returnToDashboard": "Volver al Panel",
+    "projectName": "Nombre del Proyecto",
+    "author": "Autor",
+    "comments": "Comentarios",
+    "sections": {
+      "political": {
+        "label": "Político",
+        "description": "¿Qué factores políticos pueden afectar a su negocio?"
+      },
+      "economic": {
+        "label": "Económico",
+        "description": "¿Cuáles son las condiciones económicas que influyen en su mercado?"
+      },
+      "social": {
+        "label": "Social",
+        "description": "¿Qué tendencias sociales y culturales afectan a su audiencia?"
+      },
+      "technological": {
+        "label": "Tecnológico",
+        "description": "¿Cómo impacta la tecnología en su industria y productos?"
+      },
+      "environmental": {
+        "label": "Ambiental",
+        "description": "¿Qué factores ambientales son relevantes para su negocio?"
+      },
+      "legal": {
+        "label": "Legal",
+        "description": "¿Qué leyes y regulaciones afectan su operación?"
+      }
+    }
   }
 }

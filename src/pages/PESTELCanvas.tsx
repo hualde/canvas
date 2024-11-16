@@ -6,6 +6,7 @@ import { icons } from '../utils/icons';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import { CanvasWrapper } from '../components/CanvasWrapper';
 import { exportPESTELToPDF } from '../utils/pestelPdfExport';
+import { useTranslation } from 'react-i18next';
 
 interface PESTELCanvasData {
   id: string;
@@ -29,43 +30,43 @@ const sections = [
     key: 'political', 
     color: '#4DB6AC', 
     lightColor: '#B2DFDB', 
-    label: 'Political', 
-    description: 'What political factors can affect your business?'
+    label: 'pestelCanvas.sections.political.label', 
+    description: 'pestelCanvas.sections.political.description'
   },
   { 
     key: 'economic', 
     color: '#FF7043', 
     lightColor: '#FFCCBC', 
-    label: 'Economic', 
-    description: 'What are the economic conditions influencing your market?'
+    label: 'pestelCanvas.sections.economic.label', 
+    description: 'pestelCanvas.sections.economic.description'
   },
   { 
     key: 'social', 
     color: '#C0CA33', 
     lightColor: '#F0F4C3', 
-    label: 'Social', 
-    description: 'What social and cultural trends affect your audience?'
+    label: 'pestelCanvas.sections.social.label', 
+    description: 'pestelCanvas.sections.social.description'
   },
   { 
     key: 'technological', 
     color: '#4DB6AC', 
     lightColor: '#B2DFDB', 
-    label: 'Technological', 
-    description: 'How does technology impact your industry and products?'
+    label: 'pestelCanvas.sections.technological.label', 
+    description: 'pestelCanvas.sections.technological.description'
   },
   { 
     key: 'environmental', 
     color: '#FF7043', 
     lightColor: '#FFCCBC', 
-    label: 'Environmental', 
-    description: 'What environmental factors are relevant to your business?'
+    label: 'pestelCanvas.sections.environmental.label', 
+    description: 'pestelCanvas.sections.environmental.description'
   },
   { 
     key: 'legal', 
     color: '#C0CA33', 
     lightColor: '#F0F4C3', 
-    label: 'Legal', 
-    description: 'What laws and regulations affect your operation?'
+    label: 'pestelCanvas.sections.legal.label', 
+    description: 'pestelCanvas.sections.legal.description'
   }
 ];
 
@@ -79,6 +80,7 @@ export function PESTELCanvas() {
   const [author, setAuthor] = useState('');
   const [date, setDate] = useState('');
   const [comments, setComments] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchCanvas() {
@@ -145,7 +147,7 @@ export function PESTELCanvas() {
         console.log('PDF exported successfully');
       } catch (error) {
         console.error('Error exporting PDF:', error);
-        alert('Failed to export PDF. Please try again.');
+        alert(t('pestelCanvas.pdfExportError'));
       }
     }
   };
@@ -161,7 +163,7 @@ export function PESTELCanvas() {
         console.log('Canvas saved successfully');
       } catch (error) {
         console.error('Error saving canvas:', error);
-        alert('Failed to save canvas. Please try again.');
+        alert(t('pestelCanvas.saveError'));
       }
     }
   };
@@ -178,12 +180,12 @@ export function PESTELCanvas() {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
-          <p className="text-gray-600">Canvas not found</p>
+          <p className="text-gray-600">{t('pestelCanvas.notFound')}</p>
           <button
             onClick={() => navigate('/')}
             className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
           >
-            Return to Dashboard
+            {t('pestelCanvas.returnToDashboard')}
           </button>
         </div>
       </div>
@@ -204,7 +206,7 @@ export function PESTELCanvas() {
           onChange={(e) => setProject_name(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Project Name"
+          placeholder={t('pestelCanvas.projectName')}
         />
         <input
           type="text"
@@ -212,7 +214,7 @@ export function PESTELCanvas() {
           onChange={(e) => setAuthor(e.target.value)}
           onBlur={handleUpdateCanvasInfo}
           className="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Author"
+          placeholder={t('pestelCanvas.author')}
         />
         <input
           type="date"
@@ -229,7 +231,7 @@ export function PESTELCanvas() {
           onBlur={handleUpdateCanvasInfo}
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           rows={4}
-          placeholder="Comments"
+          placeholder={t('pestelCanvas.comments')}
         />
       </div>
 
@@ -245,16 +247,16 @@ export function PESTELCanvas() {
                 className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
               >
                 <span className="text-2xl font-bold text-white">
-                  {section.key.charAt(0).toUpperCase()}
+                  {t(section.label).charAt(0).toUpperCase()}
                 </span>
               </div>
               <div 
                 style={{ backgroundColor: section.color }}
                 className="text-white text-center py-2 -mx-4 mb-4"
               >
-                <h3 className="text-lg font-semibold">{section.label}</h3>
+                <h3 className="text-lg font-semibold">{t(section.label)}</h3>
               </div>
-              <p className="text-sm text-gray-600 mb-4">{section.description}</p>
+              <p className="text-sm text-gray-600 mb-4">{t(section.description)}</p>
               <div className="min-h-[200px]">
                 <CanvasSection
                   title=""
