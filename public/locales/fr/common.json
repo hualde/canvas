@@ -245,5 +245,14 @@
     "exportPDF": "Exporter en PDF",
     "aiAssistant": "Assistant IA",
     "showExamples": "Afficher les Exemples"
+  },
+  "aiChat": {
+    "title": "Assistant IA",
+    "initialMessage": "Bonjour ! Je suis votre assistant IA. J'ai des informations sur votre canevas actuel. Comment puis-je vous aider aujourd'hui ?",
+    "prompt": "En vous basant sur le contenu suivant du canevas, veuillez répondre à cette question ou fournir des idées : {{inputMessage}}\n\nContenu du Canevas : {{canvasContent}}",
+    "errorMessage": "Je m'excuse, il y a eu une erreur lors du traitement de votre message. Veuillez réessayer.",
+    "closeAriaLabel": "Fermer l'Assistant IA",
+    "inputPlaceholder": "Tapez votre message...",
+    "sendButton": "Envoyer"
   }
 }

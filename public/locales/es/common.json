@@ -245,5 +245,14 @@
     "exportPDF": "Exportar PDF",
     "aiAssistant": "Asistente de IA",
     "showExamples": "Mostrar Ejemplos"
+  },
+  "aiChat": {
+    "title": "Asistente de IA",
+    "initialMessage": "¡Hola! Soy tu asistente de IA. Tengo información sobre tu lienzo actual. ¿Cómo puedo ayudarte hoy?",
+    "prompt": "Basándote en el siguiente contenido del lienzo, por favor responde a esta pregunta o proporciona ideas: {{inputMessage}}\n\nContenido del Lienzo: {{canvasContent}}",
+    "errorMessage": "Lo siento, hubo un error al procesar tu mensaje. Por favor, inténtalo de nuevo.",
+    "closeAriaLabel": "Cerrar Asistente de IA",
+    "inputPlaceholder": "Escribe tu mensaje...",
+    "sendButton": "Enviar"
   }
 }

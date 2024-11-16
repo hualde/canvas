@@ -245,5 +245,14 @@
     "exportPDF": "Export PDF",
     "aiAssistant": "AI Assistant",
     "showExamples": "Show Examples"
+  },
+  "aiChat": {
+    "title": "AI Assistant",
+    "initialMessage": "Hello! I'm your AI assistant. I have information about your current canvas. How can I help you today?",
+    "prompt": "Based on the following canvas content, please answer this question or provide insights: {{inputMessage}}\n\nCanvas Content: {{canvasContent}}",
+    "errorMessage": "I apologize, there was an error processing your message. Please try again.",
+    "closeAriaLabel": "Close AI Assistant",
+    "inputPlaceholder": "Type your message...",
+    "sendButton": "Send"
   }
 }
