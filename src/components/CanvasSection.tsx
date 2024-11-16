@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, X, AlertCircle } from 'lucide-react';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import { SUBSCRIPTION_STATUS, TIER_LIMITS } from '../constants/subscriptionTiers';
+import { useTranslation } from 'react-i18next';
 
 interface CanvasSectionProps {
   title: string;
@@ -17,6 +18,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
   const [isAdding, setIsAdding] = useState(false);
   const { subscriptionStatus } = useAuthWithSubscription();
   const [canAddMoreItems, setCanAddMoreItems] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const itemLimit = TIER_LIMITS[subscriptionStatus]?.maxItemsPerSection || TIER_LIMITS[SUBSCRIPTION_STATUS.FREE].maxItemsPerSection;
@@ -57,9 +59,10 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
           <button
             onClick={() => setIsAdding(true)}
             className="inline-flex items-center px-2 py-1 text-sm font-medium rounded text-blue-700 bg-blue-50 hover:bg-blue-100"
+            aria-label={t('canvasSection.addItem')}
           >
             <Plus className="h-4 w-4 mr-1" />
-            Add Item
+            {t('canvasSection.addItem')}
           </button>
         )}
       </div>
@@ -77,6 +80,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
               <button
                 onClick={() => handleRemoveItem(index)}
                 className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-opacity ml-2 flex-shrink-0"
+                aria-label={t('canvasSection.removeItem')}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -86,7 +90,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
 
         {items.length === 0 && !isAdding && (
           <p className="text-sm text-gray-500 text-center py-3">
-            No items yet. Click "Add Item" to get started.
+            {t('canvasSection.noItems')}
           </p>
         )}
       </div>
@@ -95,8 +99,8 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
         <div className="mt-4 p-2 bg-yellow-100 border border-yellow-400 rounded-md flex items-center">
           <AlertCircle className="h-5 w-5 text-yellow-700 mr-2" />
           <p className="text-sm text-yellow-700">
-            You've reached the maximum number of items for this section. 
-            <a href="/upgrade" className="font-medium underline ml-1">Upgrade to Premium</a> for unlimited items.
+            {t('canvasSection.maxItemsReached')}
+            <a href="/upgrade" className="font-medium underline ml-1">{t('canvasSection.upgradeToPremium')}</a>
           </p>
         </div>
       )}
@@ -113,7 +117,7 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
               }
             }}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-            placeholder="Enter a new item..."
+            placeholder={t('canvasSection.newItemPlaceholder')}
             rows={2}
             autoFocus
           />
@@ -125,14 +129,14 @@ export function CanvasSection({ title, items = [], onUpdate, description, classN
               }}
               className="px-3 py-1 text-sm text-gray-600 hover:text-gray-800"
             >
-              Cancel
+              {t('canvasSection.cancel')}
             </button>
             <button
               onClick={handleAddItem}
               disabled={!newItem.trim() || !canAddMoreItems}
               className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
             >
-              Add
+              {t('canvasSection.add')}
             </button>
           </div>
         </div>

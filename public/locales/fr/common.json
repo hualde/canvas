@@ -254,5 +254,15 @@
     "closeAriaLabel": "Fermer l'Assistant IA",
     "inputPlaceholder": "Tapez votre message...",
     "sendButton": "Envoyer"
+  },
+  "canvasSection": {
+    "addItem": "Ajouter un élément",
+    "removeItem": "Supprimer l'élément",
+    "noItems": "Pas encore d'éléments. Cliquez sur \"Ajouter un élément\" pour commencer.",
+    "maxItemsReached": "Vous avez atteint le nombre maximum d'éléments pour cette section.",
+    "upgradeToPremium": "Passer à Premium",
+    "newItemPlaceholder": "Entrez un nouvel élément...",
+    "cancel": "Annuler",
+    "add": "Ajouter"
   }
 }

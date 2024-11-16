@@ -254,5 +254,15 @@
     "closeAriaLabel": "Close AI Assistant",
     "inputPlaceholder": "Type your message...",
     "sendButton": "Send"
+  },
+  "canvasSection": {
+    "addItem": "Add Item",
+    "removeItem": "Remove Item",
+    "noItems": "No items yet. Click \"Add Item\" to get started.",
+    "maxItemsReached": "You've reached the maximum number of items for this section.",
+    "upgradeToPremium": "Upgrade to Premium",
+    "newItemPlaceholder": "Enter a new item...",
+    "cancel": "Cancel",
+    "add": "Add"
   }
 }
