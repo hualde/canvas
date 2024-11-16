@@ -16,6 +16,7 @@ i18n
     debug: true,
     ns: ['common', 'landing'],
     defaultNS: 'common',
+    supportedLngs: ['en', 'es', 'fr'],
     interpolation: {
       escapeValue: false,
     },
