@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from 'react-i18next';
 import { Layout } from './components/Layout';
 import { Dashboard } from './pages/Dashboard';
 import Canvas from './pages/Canvas';
@@ -17,7 +18,6 @@ import { Examples } from './pages/Examples';
 import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
-import { I18nextProvider } from 'react-i18next';
 import LanguageSelector from './components/LanguageSelector';
 
 // Import example canvas components
@@ -86,6 +86,7 @@ function HandleRedirect() {
 
 function AppContent() {
   const { isAuthenticated, isLoading } = useAuth0();
+  const { t } = useTranslation(['common', 'landing']);
   useInitializeUserSubscription();
 
   if (isLoading) {
@@ -156,17 +157,23 @@ function AppContent() {
 }
 
 function App() {
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
+
   return (
-    <I18nextProvider i18n={i18n}>
-      <BrowserRouter>
-        <Auth0ProviderWithNavigate>
-          <div className="flex flex-col min-h-screen w-full">
-            <LanguageSelector />
-            <AppContent />
+    <BrowserRouter>
+      <Auth0ProviderWithNavigate>
+        <div className="flex flex-col min-h-screen w-full">
+          <div className="p-4">
+            <LanguageSelector changeLanguage={changeLanguage} currentLanguage={i18n.language} />
           </div>
-        </Auth0ProviderWithNavigate>
-      </BrowserRouter>
-    </I18nextProvider>
+          <AppContent />
+        </div>
+      </Auth0ProviderWithNavigate>
+    </BrowserRouter>
   );
 }
 
