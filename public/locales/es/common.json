@@ -1,15 +1,53 @@
 {
-    "header": {
-      "pricing": "Precios",
-      "faq": "Preguntas frecuentes",
-      "login": "Iniciar sesión",
-      "goToApp": "Ir a la aplicación",
-      "loading": "Cargando..."
+  "hero": {
+    "title": "Crea estrategias de negocio ganadoras",
+    "description": "Utiliza nuestras herramientas de planificación estratégica impulsadas por IA para llevar tu negocio al siguiente nivel",
+    "getStarted": "Empezar"
+  },
+  "features": {
+    "title": "Características",
+    "description": "Descubre cómo nuestras herramientas pueden ayudarte a crear estrategias de negocio efectivas",
+    "aiAssistant": {
+      "title": "Asistente IA",
+      "description": "Obtén sugerencias inteligentes y personalizadas para tu estrategia"
     },
-    "footer": {
-      "allRightsReserved": "Todos los derechos reservados.",
-      "privacyPolicy": "Política de privacidad",
-      "termsOfService": "Términos de servicio",
-      "contactUs": "Contáctenos"
+    "pdfExport": {
+      "title": "Exportación a PDF",
+      "description": "Exporta tus lienzos estratégicos en formato PDF de alta calidad"
+    },
+    "exampleLibrary": {
+      "title": "Biblioteca de ejemplos",
+      "description": "Inspírate con ejemplos de estrategias de empresas exitosas"
+    },
+    "multipleCanvases": {
+      "title": "Múltiples lienzos",
+      "description": "Crea y gestiona varios lienzos estratégicos para diferentes proyectos"
+    }
+  },
+  "companies": {
+    "title": "Empresas que confían en nosotros"
+  },
+  "testimonials": {
+    "title": "Lo que dicen nuestros clientes",
+    "description": "Descubre cómo nuestras herramientas han ayudado a otros emprendedores y empresas",
+    "sarah": {
+      "quote": "Esta plataforma ha revolucionado la forma en que planificamos nuestras estrategias de negocio. ¡Altamente recomendado!"
+    },
+    "michael": {
+      "quote": "Las herramientas de IA me han ahorrado horas de trabajo. Ahora puedo concentrarme en implementar nuestras estrategias en lugar de planificarlas."
+    }
+  },
+  "pricing": {
+    "title": "Planes y precios",
+    "description": "Elige el plan que mejor se adapte a tus necesidades",
+    "freePlan": {
+      "name": "Gratuito",
+      "price": "€0/mes",
+      "features": [
+        "1 lienzo estratégico",
+        "Exportación básica a PDF",
+        "Acceso a la biblioteca de ejemplos"
+      ]
     }
   }
+}
