@@ -234,5 +234,16 @@
       "title": "¿Necesitas Ayuda?",
       "description": "Si tienes alguna pregunta o necesitas más ayuda con cualquiera de los tipos de lienzos o características, no dudes en contactar a nuestro equipo de soporte o usar el asistente de IA para obtener orientación. ¡Estamos aquí para ayudarte a aprovechar al máximo tus herramientas de análisis de negocios!"
     }
+  },
+  "canvasWrapper": {
+    "pleaseLogin": "Por favor, inicie sesión para acceder a esta página.",
+    "upgradeForAI": "Por favor, actualice a una suscripción premium para usar la función de Asistente de IA.",
+    "upgradeForPDF": "Por favor, actualice a una suscripción premium para usar la función de Exportar PDF.",
+    "upgradeForExamples": "Por favor, actualice a una suscripción premium para ver ejemplos de lienzos.",
+    "backToDashboard": "Volver al Panel",
+    "openMenu": "Abrir menú",
+    "exportPDF": "Exportar PDF",
+    "aiAssistant": "Asistente de IA",
+    "showExamples": "Mostrar Ejemplos"
   }
 }

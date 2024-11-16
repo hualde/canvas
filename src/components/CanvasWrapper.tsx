@@ -4,6 +4,7 @@ import { ArrowLeft, Download, Sparkles, BookOpen, Menu } from 'lucide-react';
 import { useAuthWithSubscription } from '../hooks/useAuthWithSubscription';
 import { SUBSCRIPTION_STATUS } from '../constants/subscriptionTiers';
 import { AIChat } from './AIChat';
+import { useTranslation } from 'react-i18next';
 
 interface CanvasWrapperProps {
   children: ReactNode;
@@ -22,6 +23,7 @@ export function CanvasWrapper({
   const { isAuthenticated, isLoading, subscriptionStatus } = useAuthWithSubscription();
   const [isAIChatOpen, setIsAIChatOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useTranslation();
 
   const isActive = subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE;
 
@@ -36,7 +38,7 @@ export function CanvasWrapper({
   if (!isAuthenticated) {
     return (
       <div className="flex justify-center items-center h-screen text-xl font-semibold text-gray-700">
-        Please log in to access this page.
+        {t('canvasWrapper.pleaseLogin')}
       </div>
     );
   }
@@ -45,7 +47,7 @@ export function CanvasWrapper({
     if (isActive) {
       setIsAIChatOpen(true);
     } else {
-      alert("Please upgrade to a premium subscription to use the AI Assistant feature.");
+      alert(t('canvasWrapper.upgradeForAI'));
     }
   };
 
@@ -53,7 +55,7 @@ export function CanvasWrapper({
     if (isActive) {
       onExportPDF();
     } else {
-      alert("Please upgrade to a premium subscription to use the Export PDF feature.");
+      alert(t('canvasWrapper.upgradeForPDF'));
     }
   };
 
@@ -61,7 +63,7 @@ export function CanvasWrapper({
     if (isActive) {
       navigate('/examples');
     } else {
-      alert("Please upgrade to a premium subscription to view example canvases.");
+      alert(t('canvasWrapper.upgradeForExamples'));
     }
   };
 
@@ -77,7 +79,7 @@ export function CanvasWrapper({
           className="inline-flex items-center text-gray-600 hover:text-gray-900"
         >
           <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Dashboard
+          {t('canvasWrapper.backToDashboard')}
         </button>
         <div className="flex items-center space-x-4">
           <div className="sm:hidden">
@@ -86,7 +88,7 @@ export function CanvasWrapper({
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
               aria-expanded="false"
             >
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">{t('canvasWrapper.openMenu')}</span>
               <Menu className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
@@ -96,33 +98,33 @@ export function CanvasWrapper({
               className={`inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
                 isActive ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
               } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 w-full sm:w-auto`}
-              aria-label="Export PDF"
+              aria-label={t('canvasWrapper.exportPDF')}
               disabled={!isActive}
             >
               <Download className="h-4 w-4 mr-2" />
-              Export PDF
+              {t('canvasWrapper.exportPDF')}
             </button>
             <button
               onClick={handleAIAssistClick}
               className={`inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
                 isActive ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-400 cursor-not-allowed'
               } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 w-full sm:w-auto`}
-              aria-label="AI Assistant"
+              aria-label={t('canvasWrapper.aiAssistant')}
               disabled={!isActive}
             >
               <Sparkles className="h-4 w-4 mr-2" />
-              AI Assistant
+              {t('canvasWrapper.aiAssistant')}
             </button>
             <button
               onClick={handleShowExamples}
               className={`inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white ${
                 isActive ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-gray-400 cursor-not-allowed'
               } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 w-full sm:w-auto`}
-              aria-label="Show Examples"
+              aria-label={t('canvasWrapper.showExamples')}
               disabled={!isActive}
             >
               <BookOpen className="h-4 w-4 mr-2" />
-              Show Examples
+              {t('canvasWrapper.showExamples')}
             </button>
           </div>
         </div>

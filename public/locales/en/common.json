@@ -234,5 +234,16 @@
       "title": "Need Help?",
       "description": "If you have any questions or need further assistance with any of the canvas types or features, don't hesitate to contact our support team or use the AI assistant for guidance. We're here to help you make the most of your business analysis tools!"
     }
+  },
+  "canvasWrapper": {
+    "pleaseLogin": "Please log in to access this page.",
+    "upgradeForAI": "Please upgrade to a premium subscription to use the AI Assistant feature.",
+    "upgradeForPDF": "Please upgrade to a premium subscription to use the Export PDF feature.",
+    "upgradeForExamples": "Please upgrade to a premium subscription to view example canvases.",
+    "backToDashboard": "Back to Dashboard",
+    "openMenu": "Open menu",
+    "exportPDF": "Export PDF",
+    "aiAssistant": "AI Assistant",
+    "showExamples": "Show Examples"
   }
 }

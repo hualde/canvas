@@ -234,5 +234,16 @@
       "title": "Besoin d'Aide ?",
       "description": "Si vous avez des questions ou besoin d'une assistance supplémentaire avec l'un des types de canevas ou des fonctionnalités, n'hésitez pas à contacter notre équipe de support ou à utiliser l'assistant IA pour obtenir des conseils. Nous sommes là pour vous aider à tirer le meilleur parti de vos outils d'analyse d'entreprise !"
     }
+  },
+  "canvasWrapper": {
+    "pleaseLogin": "Veuillez vous connecter pour accéder à cette page.",
+    "upgradeForAI": "Veuillez passer à un abonnement premium pour utiliser la fonction d'Assistant IA.",
+    "upgradeForPDF": "Veuillez passer à un abonnement premium pour utiliser la fonction d'exportation PDF.",
+    "upgradeForExamples": "Veuillez passer à un abonnement premium pour voir des exemples de canevas.",
+    "backToDashboard": "Retour au Tableau de Bord",
+    "openMenu": "Ouvrir le menu",
+    "exportPDF": "Exporter en PDF",
+    "aiAssistant": "Assistant IA",
+    "showExamples": "Afficher les Exemples"
   }
 }
