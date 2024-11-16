@@ -346,5 +346,20 @@
         "description": "Quels sont les désirs, besoins et mesures de succès de votre utilisateur ?"
       }
     }
+  },
+  "examples": {
+    "backToDashboard": "Retour au Tableau de Bord",
+    "back": "Retour",
+    "title": "Voir les Exemples de Canevas",
+    "selectCompany": "Sélectionner une Entreprise",
+    "selectCanvasType": "Sélectionner un Type de Canevas",
+    "viewExample": "Voir l'Exemple",
+    "canvasTypes": {
+      "business": "Canevas de Modèle d'Affaires",
+      "valueProposition": "Canevas de Proposition de Valeur",
+      "swot": "Analyse SWOT",
+      "empathyMap": "Carte d'Empathie",
+      "pestel": "Analyse PESTEL"
+    }
   }
 }

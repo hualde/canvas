@@ -346,5 +346,20 @@
         "description": "¿Cuáles son los deseos, necesidades y medidas de éxito de tu usuario?"
       }
     }
+  },
+  "examples": {
+    "backToDashboard": "Volver al Panel",
+    "back": "Volver",
+    "title": "Ver Ejemplos de Lienzos",
+    "selectCompany": "Seleccionar una Empresa",
+    "selectCanvasType": "Seleccionar un Tipo de Lienzo",
+    "viewExample": "Ver Ejemplo",
+    "canvasTypes": {
+      "business": "Lienzo de Modelo de Negocio",
+      "valueProposition": "Lienzo de Propuesta de Valor",
+      "swot": "Análisis DAFO",
+      "empathyMap": "Mapa de Empatía",
+      "pestel": "Análisis PESTEL"
+    }
   }
 }

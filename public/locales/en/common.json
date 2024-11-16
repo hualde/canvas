@@ -346,5 +346,20 @@
         "description": "What are your user's wants, needs, and measures of success?"
       }
     }
+  },
+  "examples": {
+    "backToDashboard": "Back to Dashboard",
+    "back": "Back",
+    "title": "View Example Canvases",
+    "selectCompany": "Select a Company",
+    "selectCanvasType": "Select a Canvas Type",
+    "viewExample": "View Example",
+    "canvasTypes": {
+      "business": "Business Model Canvas",
+      "valueProposition": "Value Proposition Canvas",
+      "swot": "SWOT Analysis",
+      "empathyMap": "Empathy Map",
+      "pestel": "PESTEL Analysis"
+    }
   }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FileText, PieChart, BarChart2, Users, Compass, ArrowLeft } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const companies = [
   { id: 'apple', name: 'Apple' },
@@ -11,17 +12,18 @@ const companies = [
 ];
 
 const canvasTypes = [
-  { id: 'business', name: 'Business Model Canvas', icon: FileText },
-  { id: 'value-proposition', name: 'Value Proposition Canvas', icon: PieChart },
-  { id: 'swot', name: 'SWOT Analysis', icon: BarChart2 },
-  { id: 'empathy-map', name: 'Empathy Map', icon: Users },
-  { id: 'pestel', name: 'PESTEL Analysis', icon: Compass },
+  { id: 'business', name: 'examples.canvasTypes.business', icon: FileText },
+  { id: 'value-proposition', name: 'examples.canvasTypes.valueProposition', icon: PieChart },
+  { id: 'swot', name: 'examples.canvasTypes.swot', icon: BarChart2 },
+  { id: 'empathy-map', name: 'examples.canvasTypes.empathyMap', icon: Users },
+  { id: 'pestel', name: 'examples.canvasTypes.pestel', icon: Compass },
 ];
 
 export function Examples() {
   const navigate = useNavigate();
   const [selectedCompany, setSelectedCompany] = useState('');
   const [selectedCanvas, setSelectedCanvas] = useState('');
+  const { t } = useTranslation();
 
   const handleViewExample = () => {
     if (selectedCompany && selectedCanvas) {
@@ -34,16 +36,16 @@ export function Examples() {
       <div className="mb-4 sm:mb-6 flex items-center">
         <Link to="/" className="inline-flex items-center text-gray-600 hover:text-gray-900">
           <ArrowLeft className="h-5 w-5 mr-2" />
-          <span className="hidden sm:inline">Back to Dashboard</span>
-          <span className="sm:hidden">Back</span>
+          <span className="hidden sm:inline">{t('examples.backToDashboard')}</span>
+          <span className="sm:hidden">{t('examples.back')}</span>
         </Link>
       </div>
 
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">View Example Canvases</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">{t('examples.title')}</h1>
 
       <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
         <div>
-          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Select a Company</h2>
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{t('examples.selectCompany')}</h2>
           <div className="grid gap-3 sm:gap-4">
             {companies.map((company) => (
               <button
@@ -62,7 +64,7 @@ export function Examples() {
         </div>
 
         <div>
-          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Select a Canvas Type</h2>
+          <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{t('examples.selectCanvasType')}</h2>
           <div className="grid gap-3 sm:gap-4">
             {canvasTypes.map((canvas) => {
               const Icon = canvas.icon;
@@ -77,7 +79,7 @@ export function Examples() {
                   }`}
                 >
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 flex-shrink-0" />
-                  <span className="text-sm sm:text-base">{canvas.name}</span>
+                  <span className="text-sm sm:text-base">{t(canvas.name)}</span>
                 </button>
               );
             })}
@@ -95,7 +97,7 @@ export function Examples() {
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}
         >
-          View Example
+          {t('examples.viewExample')}
         </button>
       </div>
     </div>
