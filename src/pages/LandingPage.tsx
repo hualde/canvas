@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from "@/components/ui/button"
@@ -249,7 +249,7 @@ export default function LandingPage() {
                 </CardHeader>
                 <CardContent className="flex flex-col justify-between flex-grow">
                   <ul className="text-[#6B7280] list-none p-0 text-left mb-6">
-                    {t(plan.featuresKey, { returnObjects: true }).map((feature: string, featureIndex: number) => (
+                    {(t(plan.featuresKey, { returnObjects: true }) as string[]).map((feature, featureIndex) => (
                       <li key={featureIndex} className="mb-2">✔ {feature}</li>
                     ))}
                   </ul>

@@ -1,8 +1,15 @@
 {
+  "header": {
+    "pricing": "Precios",
+    "faq": "Preguntas frecuentes",
+    "loading": "Cargando...",
+    "goToApp": "Ir a la aplicación",
+    "login": "Iniciar sesión"
+  },
   "hero": {
-    "title": "Crea estrategias de negocio ganadoras",
+    "title": "Crea estrategias de negocio ganadoras con",
     "description": "Utiliza nuestras herramientas de planificación estratégica impulsadas por IA para llevar tu negocio al siguiente nivel",
-    "getStarted": "Empezar"
+    "getStarted": "Empezar ahora"
   },
   "features": {
     "title": "Características",
@@ -40,6 +47,7 @@
   "pricing": {
     "title": "Planes y precios",
     "description": "Elige el plan que mejor se adapte a tus necesidades",
+    "choosePlan": "Elegir plan",
     "freePlan": {
       "name": "Gratuito",
       "price": "€0/mes",
@@ -48,6 +56,64 @@
         "Exportación básica a PDF",
         "Acceso a la biblioteca de ejemplos"
       ]
+    },
+    "monthlyPlan": {
+      "name": "Mensual",
+      "price": "€19/mes",
+      "features": [
+        "Lienzos ilimitados",
+        "Exportación avanzada a PDF",
+        "Acceso completo a la biblioteca de ejemplos",
+        "Asistente IA avanzado"
+      ]
+    },
+    "annualPlan": {
+      "name": "Anual",
+      "price": "€190/año",
+      "features": [
+        "Todo lo incluido en el plan mensual",
+        "2 meses gratis",
+        "Soporte prioritario"
+      ]
     }
+  },
+  "featureComparison": {
+    "title": "Comparación de características",
+    "description": "Compara nuestros planes para encontrar el que mejor se adapte a tus necesidades",
+    "feature": "Característica",
+    "freePlan": "Plan Gratuito",
+    "premiumPlan": "Plan Premium",
+    "users": "Usuarios",
+    "projects": "Proyectos",
+    "aiAssistance": "Asistencia IA",
+    "canvasTools": "Herramientas de lienzo",
+    "pdfExport": "Exportación PDF",
+    "exampleLibrary": "Biblioteca de ejemplos"
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "valueProposition": {
+      "question": "¿Qué es un lienzo de propuesta de valor?",
+      "answer": "Un lienzo de propuesta de valor es una herramienta visual que ayuda a las empresas a diseñar productos y servicios que los clientes realmente quieren."
+    },
+    "difference": {
+      "question": "¿En qué se diferencia D'AI Vinci de otras herramientas de estrategia?",
+      "answer": "D'AI Vinci se distingue por su asistente IA integrado, que proporciona sugerencias personalizadas y análisis en tiempo real para tus estrategias de negocio."
+    },
+    "multipleProjects": {
+      "question": "¿Puedo trabajar en múltiples proyectos?",
+      "answer": "Sí, nuestros planes de pago te permiten crear y gestionar múltiples proyectos y lienzos estratégicos simultáneamente."
+    }
+  },
+  "cta": {
+    "title": "Comienza a crear estrategias ganadoras hoy",
+    "description": "Únete a miles de empresas que ya están utilizando D'AI Vinci para impulsar su éxito",
+    "startNow": "Comenzar ahora"
+  },
+  "footer": {
+    "allRightsReserved": "Todos los derechos reservados",
+    "privacyPolicy": "Política de privacidad",
+    "termsOfService": "Términos de servicio",
+    "contactUs": "Contáctanos"
   }
 }
