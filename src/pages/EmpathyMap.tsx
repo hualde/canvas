@@ -71,7 +71,8 @@ export function EmpathyMap() {
 
   const handleSectionUpdate = async (section: keyof EmpathyMapData['content'], items: string[]) => {
     if (!canvas) return;
-    const updatedContent = { ...canvas.content, [section]: items };
+    const updatedItems = items.map(item => item.trim().replace(/^[•\-]\s*/, '')).filter(Boolean);
+    const updatedContent = { ...canvas.content, [section]: updatedItems };
     try {
       const updatedCanvas = await updateCanvas(canvas.id, { ...canvas, content: updatedContent });
       setCanvas(updatedCanvas);
@@ -152,8 +153,7 @@ export function EmpathyMap() {
     <CanvasWrapper
       title={canvas.title}
       onExportPDF={handleExportPDF}
-      onAIAssist={handleAIAssist}
-      onSave={handleSave}
+      canvasContent={canvas.content}
     >
       <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <input
