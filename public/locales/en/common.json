@@ -256,7 +256,7 @@
     "sendButton": "Send"
   },
   "canvasSection": {
-    "addItem": "+",
+    "addItem": "",
     "removeItem": "Remove Item",
     "noItems": "No items yet. Click \"Add Item\" to get started.",
     "maxItemsReached": "You've reached the maximum number of items for this section.",
