@@ -127,15 +127,21 @@ export async function exportSWOTToPDF(canvas: SWOTData) {
         doc.setFont('helvetica', 'normal');
         let currentY = y;
         items.forEach((item) => {
-          const lines = doc.splitTextToSize(item, maxWidth - 10);
-          doc.text(`• ${lines[0]}`, x, currentY);
-          currentY += 5;
+          // Remove any existing bullet points or dashes at the start of the item
+          const cleanedItem = item.trim().replace(/^[•\-]\s*/, '');
           
-          // For additional lines, don't add bullet points
-          for (let i = 1; i < lines.length; i++) {
-            if (currentY < y + maxHeight - 5) {
-              doc.text(lines[i], x + 3, currentY);
-              currentY += 5;
+          if (cleanedItem) {
+            const lines = doc.splitTextToSize(cleanedItem, maxWidth - 15); // Reduce maxWidth slightly to account for bullet point
+            doc.text('•', x, currentY);
+            doc.text(lines[0], x + 5, currentY);
+            currentY += 5;
+            
+            // For additional lines, don't add bullet points
+            for (let i = 1; i < lines.length; i++) {
+              if (currentY < y + maxHeight - 5) {
+                doc.text(lines[i], x + 5, currentY);
+                currentY += 5;
+              }
             }
           }
         });
