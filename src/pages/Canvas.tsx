@@ -81,7 +81,7 @@ export default function Canvas() {
 
   const handleSectionUpdate = async (section: keyof CanvasData['content'], items: string[]) => {
     if (!canvas) return;
-    const updatedItems = items.map(item => item.startsWith('• ') ? item : `• ${item}`);
+    const updatedItems = items.map(item => item.trim().replace(/^[•\-]\s*/, '')).filter(Boolean);
     const updatedContent = { ...canvas.content, [section]: updatedItems };
     try {
       const updatedCanvas = await updateCanvas(canvas.id, { ...canvas, content: updatedContent });
@@ -163,8 +163,7 @@ export default function Canvas() {
     <CanvasWrapper
       title={canvas.title}
       onExportPDF={handleExportPDF}
-      onAIAssist={handleAIAssist}
-      onSave={handleSave}
+      canvasContent={canvas.content}
     >
       <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <input
