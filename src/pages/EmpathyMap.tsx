@@ -71,7 +71,13 @@ export function EmpathyMap() {
 
   const handleSectionUpdate = async (section: keyof EmpathyMapData['content'], items: string[]) => {
     if (!canvas) return;
-    const updatedItems = items.map(item => item.trim().replace(/^[•\-]\s*/, '')).filter(Boolean);
+    const updatedItems = items.map(item => {
+      // Remove leading bullet points, dashes, or any whitespace
+      const trimmedItem = item.trim().replace(/^[•\-\s]+/, '');
+      // Ensure the item is not empty after trimming
+      return trimmedItem ? trimmedItem : null;
+    }).filter((item): item is string => item !== null);
+    
     const updatedContent = { ...canvas.content, [section]: updatedItems };
     try {
       const updatedCanvas = await updateCanvas(canvas.id, { ...canvas, content: updatedContent });
@@ -105,22 +111,6 @@ export function EmpathyMap() {
       } catch (error) {
         console.error('Error exporting PDF:', error);
         alert(t('empathyMap.pdfExportError'));
-      }
-    }
-  };
-
-  const handleAIAssist = () => {
-    console.log('AI Assist functionality not implemented yet');
-  };
-
-  const handleSave = async () => {
-    if (canvas) {
-      try {
-        await updateCanvas(canvas.id, canvas);
-        console.log('Canvas saved successfully');
-      } catch (error) {
-        console.error('Error saving canvas:', error);
-        alert(t('empathyMap.saveError'));
       }
     }
   };
