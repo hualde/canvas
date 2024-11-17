@@ -458,5 +458,13 @@
         "description": "What pains do your customers experience?"
       }
     }
+  },
+  "canvasTypes": {
+    "businessModelCanvas": "Business Model Canvas",
+    "leanCanvas": "Lean Canvas",
+    "valuePropositionCanvas": "Value Proposition Canvas",
+    "empathyMap": "Empathy Map",
+    "pestelAnalysis": "PESTEL Analysis",
+    "swotAnalysis": "SWOT Analysis"
   }
 }

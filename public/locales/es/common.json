@@ -458,5 +458,13 @@
         "description": "¿Qué dolores experimentan tus clientes?"
       }
     }
+  },
+  "canvasTypes": {
+    "businessModelCanvas": "Lienzo de Modelo de Negocio",
+    "leanCanvas": "Lienzo Lean",
+    "valuePropositionCanvas": "Lienzo de Propuesta de Valor",
+    "empathyMap": "Mapa de Empatía",
+    "pestelAnalysis": "Análisis PESTEL",
+    "swotAnalysis": "Análisis DAFO"
   }
 }

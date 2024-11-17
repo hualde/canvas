@@ -229,7 +229,7 @@ export function Dashboard() {
                       variant="ghost"
                       className="w-full justify-start rounded-none"
                     >
-                      {type.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} Canvas
+                      {t(`canvasTypes.${type}`)}
                     </Button>
                   ))}
                 </CardContent>
