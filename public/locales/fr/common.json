@@ -458,5 +458,13 @@
         "description": "Quelles douleurs vos clients éprouvent-ils ?"
       }
     }
-  }
+  },
+  "canvasTypes": {
+    "businessModelCanvas": "Canevas de Modèle d'Affaires",
+    "leanCanvas": "Canevas Lean",
+    "valuePropositionCanvas": "Canevas de Proposition de Valeur",
+    "empathyMap": "Carte d'Empathie",
+    "pestelAnalysis": "Analyse PESTEL",
+    "swotAnalysis": "Analyse SWOT"
+}
 }
