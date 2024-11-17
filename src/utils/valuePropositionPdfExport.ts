@@ -127,15 +127,21 @@ export async function exportToPDF(canvas: ValuePropositionCanvasData) {
       doc.setFont('helvetica', 'normal');
       let currentY = y;
       items.forEach((item) => {
-        const lines = doc.splitTextToSize(item, width);
-        doc.text(`• ${lines[0]}`, x, currentY);
-        currentY += 4;
+        // Remove any existing bullet points or dashes at the start of the item
+        const cleanedItem = item.trim().replace(/^[•\-]\s*/, '');
         
-        // For additional lines, don't add bullet points
-        for (let i = 1; i < lines.length; i++) {
-          if (currentY < y + height) {
-            doc.text(lines[i], x + 3, currentY);
-            currentY += 4;
+        if (cleanedItem) {
+          const lines = doc.splitTextToSize(cleanedItem, width - 5); // Reduce width slightly to account for bullet point
+          doc.text('•', x, currentY);
+          doc.text(lines[0], x + 3, currentY);
+          currentY += 4;
+          
+          // For additional lines, don't add bullet points
+          for (let i = 1; i < lines.length; i++) {
+            if (currentY < y + height) {
+              doc.text(lines[i], x + 3, currentY);
+              currentY += 4;
+            }
           }
         }
       });
