@@ -222,14 +222,20 @@ export function Dashboard() {
             {isDropdownOpen && (canCreateCanvas || subscriptionStatus === SUBSCRIPTION_STATUS.ACTIVE) && (
               <Card className="absolute right-0 mt-2 w-56 z-10">
                 <CardContent className="p-0">
-                  {['business', 'value-proposition', 'swot', 'empathy-map', 'pestel'].map((type) => (
+                  {[
+                    { key: 'business', translationKey: 'businessModelCanvas' },
+                    { key: 'value-proposition', translationKey: 'valuePropositionCanvas' },
+                    { key: 'swot', translationKey: 'swotAnalysis' },
+                    { key: 'empathy-map', translationKey: 'empathyMap' },
+                    { key: 'pestel', translationKey: 'pestelAnalysis' }
+                  ].map(({ key, translationKey }) => (
                     <Button
-                      key={type}
-                      onClick={() => handleCreateCanvas(type as any)}
+                      key={key}
+                      onClick={() => handleCreateCanvas(key as any)}
                       variant="ghost"
                       className="w-full justify-start rounded-none"
                     >
-                      {t(`canvasTypes.${type}`)}
+                      {t(`canvasTypes.${translationKey}`)}
                     </Button>
                   ))}
                 </CardContent>
