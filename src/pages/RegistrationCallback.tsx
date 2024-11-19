@@ -27,14 +27,18 @@ export default function RegistrationCallback() {
   function trackRegistrationEvent() {
     console.log('RegistrationCallback: Ejecutando trackRegistrationEvent');
     if (window.twq) {
-      console.log('RegistrationCallback: Enviando evento a X Ads');
+      console.log('RegistrationCallback: Enviando evento a X Ads', {
+        status: 'completed',
+        conversion_id: user?.sub,
+        email_address: user?.email
+      });
       window.twq('event', 'tw-or5as-or5au', {
-        status: 'completed', // Asumimos que el registro se ha completado en este punto
-        conversion_id: user?.sub, // Usamos el ID único del usuario de Auth0
-        email_address: user?.email // Usamos el email del usuario de Auth0
+        status: 'completed',
+        conversion_id: user?.sub,
+        email_address: user?.email
       });
     } else {
-      console.log('RegistrationCallback: window.twq no está disponible');
+      console.error('RegistrationCallback: window.twq no está disponible');
     }
   }
 
