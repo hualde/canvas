@@ -8,7 +8,7 @@ export function Auth0ProviderWithNavigate({ children }: { children: React.ReactN
   const clientId = process.env.AUTH0_CLIENT_ID || 'QRC2hhMda2sfEz9igJhuvIZutrHrP5tO';
 
   const onRedirectCallback = (appState: any) => {
-    navigate(appState?.returnTo || window.location.pathname);
+    navigate('/registration-callback');  // Redirige a nuestra nueva página
   };
 
   return (
@@ -16,7 +16,7 @@ export function Auth0ProviderWithNavigate({ children }: { children: React.ReactN
       domain={domain}
       clientId={clientId}
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: `${window.location.origin}/registration-callback`,  // Actualiza la URI de redirección
       }}
       onRedirectCallback={onRedirectCallback}
       // Añadir esta línea para incluir los metadatos del usuario en el token

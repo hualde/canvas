@@ -19,6 +19,7 @@ import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import LanguageSelector from './components/LanguageSelector';
+import RegistrationCallback from './pages/RegistrationCallback';
 
 // Import example canvas components
 import AppleBusinessModelCanvas from './pages/examples/apple/business-model-canvas';
@@ -104,6 +105,7 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/registration-callback" element={<RegistrationCallback />} />
         
         <Route
           path="/"
