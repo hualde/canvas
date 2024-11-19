@@ -50,7 +50,7 @@
     "choosePlan": "Elegir plan",
     "freePlan": {
       "name": "Gratis",
-      "price": "€0/mes",
+      "price": "0$/mes",
       "features": [
         "1 lienzo estratégico",
         "Exportación básica a PDF",
@@ -59,7 +59,7 @@
     },
     "monthlyPlan": {
       "name": "Mensual",
-      "price": "€19/mes",
+      "price": "9.99$/mes",
       "features": [
         "Lienzos ilimitados",
         "Exportación avanzada a PDF",
@@ -69,7 +69,7 @@
     },
     "annualPlan": {
       "name": "Anual",
-      "price": "€190/año",
+      "price": "99.99$/año",
       "features": [
         "Todo lo incluido en el plan mensual",
         "2 meses gratis",

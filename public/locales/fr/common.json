@@ -50,7 +50,7 @@
     "choosePlan": "Choisir le plan",
     "freePlan": {
       "name": "Gratuit",
-      "price": "0€/mois",
+      "price": "0$/mois",
       "features": [
         "1 canevas stratégique",
         "Exportation PDF de base",
@@ -59,7 +59,7 @@
     },
     "monthlyPlan": {
       "name": "Mensuel",
-      "price": "19€/mois",
+      "price": "9.99$/mois",
       "features": [
         "Canevas illimités",
         "Exportation PDF avancée",
@@ -69,7 +69,7 @@
     },
     "annualPlan": {
       "name": "Annuel",
-      "price": "190€/an",
+      "price": "99.99$/an",
       "features": [
         "Tout ce qui est inclus dans le plan mensuel",
         "2 mois gratuits",

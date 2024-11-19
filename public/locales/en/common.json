@@ -50,7 +50,7 @@
     "choosePlan": "Choose Plan",
     "freePlan": {
       "name": "Free",
-      "price": "€0/month",
+      "price": "0$/month",
       "features": [
         "1 strategic canvas",
         "Basic PDF export",
@@ -59,7 +59,7 @@
     },
     "monthlyPlan": {
       "name": "Monthly",
-      "price": "€19/month",
+      "price": "9.99$/month",
       "features": [
         "Unlimited canvases",
         "Advanced PDF export",
@@ -69,7 +69,7 @@
     },
     "annualPlan": {
       "name": "Annual",
-      "price": "€190/year",
+      "price": "99.99$/year",
       "features": [
         "Everything in the monthly plan",
         "2 months free",
