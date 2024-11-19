@@ -306,8 +306,8 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4">
           <p>&copy; {new Date().getFullYear()} D'AI Vinci. {t('footer.allRightsReserved')}</p>
           <div className="flex justify-center gap-4 mt-4">
-            <a href="#" className="text-[#FF6600] no-underline">{t('footer.privacyPolicy')}</a>
-            <a href="#" className="text-[#FF6600] no-underline">{t('footer.termsOfService')}</a>
+            <a href="/privacy-policy" className="text-[#FF6600] no-underline">{t('footer.privacyPolicy')}</a>
+            <a href="/terms-of-service" className="text-[#FF6600] no-underline">{t('footer.termsOfService')}</a>
             <a href="#" className="text-[#FF6600] no-underline">{t('footer.contactUs')}</a>
           </div>
         </div>
