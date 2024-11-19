@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import Image from 'next/image'
+
 
 
 const features = [
@@ -107,15 +107,11 @@ export default function LandingPage() {
       <header className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <a href="#" className="flex items-center no-underline">
-            <div className="relative w-20 h-20">
-              <Image
-                src="/images/logo.png"
-                alt="Logo"
-                layout="fill"
-                objectFit="contain"
-                priority
-              />
-            </div>
+            <img 
+              src="/images/logo.png" 
+              alt="Logo" 
+              className="h-12 w-auto sm:h-16 md:h-20 object-contain" 
+            />
             <span className="ml-2 text-2xl font-bold text-[#1E1F26] font-helvetica"></span>
           </a>
           <nav className="flex items-center">
