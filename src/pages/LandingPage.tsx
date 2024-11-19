@@ -106,7 +106,15 @@ export default function LandingPage() {
       <header className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <a href="#" className="flex items-center no-underline">
-            <img src="/images/logo.png" alt="Logo" className="h-20 w-auto" />
+            <div className="relative w-20 h-20">
+              <Image
+                src="/images/logo.png"
+                alt="Logo"
+                layout="fill"
+                objectFit="contain"
+                priority
+              />
+            </div>
             <span className="ml-2 text-2xl font-bold text-[#1E1F26] font-helvetica"></span>
           </a>
           <nav className="flex items-center">
